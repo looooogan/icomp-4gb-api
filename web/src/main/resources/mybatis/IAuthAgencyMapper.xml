@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.mapper.IAuthAgencyMapper">
+    <resultMap id="authAgencyQueryMap" type="com.common.pojo.AuthAgency">
+        <!-- 机构id -->
+        <id property="id" column="auth_agency.id"/>
+
+        <!-- 编码 -->
+        <result property="code" column="auth_agency.code"/>
+        <!-- 机构名称 -->
+        <result property="name" column="auth_agency.name"/>
+        <!-- 机构电话 -->
+        <result property="tel" column="auth_agency.tel"/>
+        <!-- 创建时间 -->
+        <result property="createDate" column="auth_agency.create_date"/>
+        <!-- 法人 -->
+        <result property="corporate" column="auth_agency.corporate"/>
+        <!--  -->
+        <result property="isDel" column="auth_agency.is_del"/>
+    </resultMap>
+    <!--添加-->
+    <insert id="addAuthAgency" parameterType="com.common.pojo.AuthAgency">
+        INSERT INTO auth_agency (
+            <!-- 机构id -->
+            id,
+            <!-- 编码 -->
+            code,
+            <!-- 机构名称 -->
+            name,
+            <!-- 机构电话 -->
+            tel,
+            <!-- 创建时间 -->
+            create_date,
+            <!-- 法人 -->
+            corporate,
+            <!--  -->
+            is_del
+        )
+        VALUES (
+            <!-- 机构id -->
+            #{id},
+            <!-- 编码 -->
+            #{code},
+            <!-- 机构名称 -->
+            #{name},
+            <!-- 机构电话 -->
+            #{tel},
+            <!-- 创建时间 -->
+            #{createDate},
+            <!-- 法人 -->
+            #{corporate},
+            <!--  -->
+            #{isDel}
+        )
+    </insert>
+
+    <!--删除-->
+    <delete id="delAuthAgency" parameterType="com.common.pojo.AuthAgency">
+        DELETE
+        FROM auth_agency
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--逻辑删除-->
+    <delete id="delAuthAgencyForLogic" parameterType="com.common.pojo.AuthAgency">
+        UPDATE auth_agency SET
+        is_del = 1
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--根据VO删除-->
+    <delete id="delAuthAgencyByVo" parameterType="com.common.vo.AuthAgencyVO">
+        UPDATE auth_agency SET is_del = 1
+        WHERE
+            1=1
+            <!-- 机构id -->
+            <if test="id != null and id != '' " >
+                and id =  #{id}
+            </if>
+            <!-- 编码 -->
+            <if test="code != null and code != '' " >
+                and code =  #{code}
+            </if>
+            <!-- 机构名称 -->
+            <if test="name != null and name != '' " >
+                and name =  #{name}
+            </if>
+            <!-- 机构电话 -->
+            <if test="tel != null and tel != '' " >
+                and tel =  #{tel}
+            </if>
+            <!-- 创建时间 -->
+            <if test="createDate != null and createDate != '' " >
+                and create_date =  #{createDate}
+            </if>
+            <!-- 法人 -->
+            <if test="corporate != null and corporate != '' " >
+                and corporate =  #{corporate}
+            </if>
+            <!--  -->
+            <if test="isDel != null and isDel != '' " >
+                and is_del =  #{isDel}
+            </if>
+    </delete>
+
+    <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
+    <update id="updAuthAgency" parameterType="com.common.pojo.AuthAgency">
+        UPDATE auth_agency
+        SET
+            <!-- 编码 -->
+            <if test="code != null and code != '' " >
+                code =  #{code},
+            </if>
+            <!-- 机构名称 -->
+            <if test="name != null and name != '' " >
+                name =  #{name},
+            </if>
+            <!-- 机构电话 -->
+            <if test="tel != null and tel != '' " >
+                tel =  #{tel},
+            </if>
+            <!-- 创建时间 -->
+            <if test="createDate != null and createDate != '' " >
+                create_date =  #{createDate},
+            </if>
+            <!-- 法人 -->
+            <if test="corporate != null and corporate != '' " >
+                corporate =  #{corporate},
+            </if>
+            <!--  -->
+            <if test="isDel != null and isDel != '' " >
+                is_del =  #{isDel},
+            </if>
+            <!-- 机构id -->
+            id = #{id}
+        WHERE
+            1 = 1
+            and id = #{id}
+    </update>
+
+    <!--分页查询 -->
+    <select id="getAuthAgencyByPage" parameterType="com.common.vo.AuthAgencyVO" resultMap="authAgencyQueryMap">
+        SELECT
+        /*authAgency begin*/
+            <!-- 机构id -->
+            auth_agency.id as 'auth_agency.id',
+            <!-- 编码 -->
+            auth_agency.code as 'auth_agency.code',
+            <!-- 机构名称 -->
+            auth_agency.name as 'auth_agency.name',
+            <!-- 机构电话 -->
+            auth_agency.tel as 'auth_agency.tel',
+            <!-- 创建时间 -->
+            auth_agency.create_date as 'auth_agency.create_date',
+            <!-- 法人 -->
+            auth_agency.corporate as 'auth_agency.corporate',
+            <!--  -->
+            auth_agency.is_del as 'auth_agency.is_del'
+        /*authAgency end*/
+        FROM auth_agency as auth_agency
+        WHERE
+            1 = 1 AND  auth_agency.is_del = 0
+        /*auth_agency begin*/
+            <!-- 机构id -->
+            <if test="id != null and id != '' " >
+                and auth_agency.id = #{id}
+            </if>
+            <!-- 编码 -->
+            <if test="code != null and code != '' " >
+                and auth_agency.code = #{code}
+            </if>
+            <!-- 机构名称 -->
+            <if test="name != null and name != '' " >
+                and auth_agency.name = #{name}
+            </if>
+            <!-- 机构电话 -->
+            <if test="tel != null and tel != '' " >
+                and auth_agency.tel = #{tel}
+            </if>
+            <!-- 创建时间 -->
+            <if test="createDate != null and createDate != '' " >
+                and auth_agency.create_date &lt;= #{createDateEnd}
+            </if>
+            <if test="createDate != null and createDate != '' " >
+                and auth_agency.create_date &gt;= #{createDateBegin}
+            </if>
+            <!-- 法人 -->
+            <if test="corporate != null and corporate != '' " >
+                and auth_agency.corporate = #{corporate}
+            </if>
+            <!--  -->
+            <if test="isDel != null and isDel != '' " >
+                and auth_agency.is_del = #{isDel}
+            </if>
+        /*auth_agency end*/
+        ORDER BY auth_agency.id desc
+        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
+        LIMIT #{startRecord},#{pageSize}
+        </if>
+    </select>
+
+
+    <!--查询记录数-->
+    <select id="getAuthAgencyCount" parameterType="com.common.vo.AuthAgencyVO" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM auth_agency as auth_agency
+        WHERE
+            1 = 1 AND  auth_agency.is_del = 0
+        /*auth_agency begin*/
+        <!-- 机构id -->
+        <if test="id != null and id != '' " >
+            and auth_agency.id = #{id}
+        </if>
+        <!-- 编码 -->
+        <if test="code != null and code != '' " >
+            and auth_agency.code = #{code}
+        </if>
+        <!-- 机构名称 -->
+        <if test="name != null and name != '' " >
+            and auth_agency.name = #{name}
+        </if>
+        <!-- 机构电话 -->
+        <if test="tel != null and tel != '' " >
+            and auth_agency.tel = #{tel}
+        </if>
+        <!-- 创建时间 -->
+        <if test="createDate != null and createDate != '' " >
+            and auth_agency.create_date &lt;= #{createDateEnd}
+        </if>
+        <if test="createDate != null and createDate != '' " >
+            and auth_agency.create_date &gt;= #{createDateBegin}
+        </if>
+        <!-- 法人 -->
+        <if test="corporate != null and corporate != '' " >
+            and auth_agency.corporate = #{corporate}
+        </if>
+        <!--  -->
+        <if test="isDel != null and isDel != '' " >
+            and auth_agency.is_del = #{isDel}
+        </if>
+        /*auth_agency end*/
+    </select>
+
+    <!--根据vo查询 -->
+    <select id="getAuthAgency" parameterType="com.common.vo.AuthAgencyVO" resultMap="authAgencyQueryMap">
+        SELECT
+        /*auth_agency begin*/
+        <!-- 机构id -->
+        auth_agency.id as 'auth_agency.id',
+        <!-- 编码 -->
+        auth_agency.code as 'auth_agency.code',
+        <!-- 机构名称 -->
+        auth_agency.name as 'auth_agency.name',
+        <!-- 机构电话 -->
+        auth_agency.tel as 'auth_agency.tel',
+        <!-- 创建时间 -->
+        auth_agency.create_date as 'auth_agency.create_date',
+        <!-- 法人 -->
+        auth_agency.corporate as 'auth_agency.corporate',
+        <!--  -->
+        auth_agency.is_del as 'auth_agency.is_del'
+        /*auth_agency end*/
+        FROM auth_agency as auth_agency
+        WHERE
+            1 = 1 AND  auth_agency.is_del = 0
+        /*auth_agency begin*/
+        <!-- 机构id -->
+        <if test="id != null and id != '' " >
+            and auth_agency.id = #{id}
+        </if>
+        <!-- 编码 -->
+        <if test="code != null and code != '' " >
+            and auth_agency.code = #{code}
+        </if>
+        <!-- 机构名称 -->
+        <if test="name != null and name != '' " >
+            and auth_agency.name = #{name}
+        </if>
+        <!-- 机构电话 -->
+        <if test="tel != null and tel != '' " >
+            and auth_agency.tel = #{tel}
+        </if>
+        <!-- 创建时间 -->
+        <if test="createDate != null and createDate != '' " >
+            and auth_agency.create_date &lt;= #{createDateEnd}
+        </if>
+        <if test="createDate != null and createDate != '' " >
+            and auth_agency.create_date &gt;= #{createDateBegin}
+        </if>
+        <!-- 法人 -->
+        <if test="corporate != null and corporate != '' " >
+            and auth_agency.corporate = #{corporate}
+        </if>
+        <!--  -->
+        <if test="isDel != null and isDel != '' " >
+            and auth_agency.is_del = #{isDel}
+        </if>
+        /*auth_agency end*/
+    </select>
+</mapper>

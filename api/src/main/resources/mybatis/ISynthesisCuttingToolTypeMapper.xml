@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.mapper.ISynthesisCuttingToolTypeMapper">
+    <resultMap id="synthesisCuttingToolTypeQueryMap" type="com.common.pojo.SynthesisCuttingToolType">
+        <!-- id -->
+        <id property="id" column="synthesis_cutting_tool_type.id"/>
+
+        <!-- 名称 -->
+        <result property="name" column="synthesis_cutting_tool_type.name"/>
+        <!-- 逻辑删除 -->
+        <result property="isDel" column="synthesis_cutting_tool_type.is_del"/>
+    </resultMap>
+    <!--添加-->
+    <insert id="addSynthesisCuttingToolType" parameterType="com.common.pojo.SynthesisCuttingToolType">
+        INSERT INTO synthesis_cutting_tool_type (
+            <!-- id -->
+            id,
+            <!-- 名称 -->
+            name,
+            <!-- 逻辑删除 -->
+            is_del
+        )
+        VALUES (
+            <!-- id -->
+            #{id},
+            <!-- 名称 -->
+            #{name},
+            <!-- 逻辑删除 -->
+            #{isDel}
+        )
+    </insert>
+
+    <!--删除-->
+    <delete id="delSynthesisCuttingToolType" parameterType="com.common.pojo.SynthesisCuttingToolType">
+        DELETE
+        FROM synthesis_cutting_tool_type
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--逻辑删除-->
+    <delete id="delSynthesisCuttingToolTypeForLogic" parameterType="com.common.pojo.SynthesisCuttingToolType">
+        UPDATE synthesis_cutting_tool_type SET
+        is_del = 1
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--根据VO删除-->
+    <delete id="delSynthesisCuttingToolTypeByVo" parameterType="com.common.vo.SynthesisCuttingToolTypeVO">
+        UPDATE synthesis_cutting_tool_type SET is_del = 1
+        WHERE
+            1=1
+            <!-- id -->
+            <if test="id != null and id != '' " >
+                and id =  #{id}
+            </if>
+            <!-- 名称 -->
+            <if test="name != null and name != '' " >
+                and name =  #{name}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                and is_del =  #{isDel}
+            </if>
+    </delete>
+
+    <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
+    <update id="updSynthesisCuttingToolType" parameterType="com.common.pojo.SynthesisCuttingToolType">
+        UPDATE synthesis_cutting_tool_type
+        SET
+            <!-- 名称 -->
+            <if test="name != null and name != '' " >
+                name =  #{name},
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                is_del =  #{isDel},
+            </if>
+            <!-- id -->
+            id = #{id}
+        WHERE
+            1 = 1
+            and id = #{id}
+    </update>
+
+    <!--分页查询 -->
+    <select id="getSynthesisCuttingToolTypeByPage" parameterType="com.common.vo.SynthesisCuttingToolTypeVO" resultMap="synthesisCuttingToolTypeQueryMap">
+        SELECT
+        /*synthesisCuttingToolType begin*/
+            <!-- id -->
+            synthesis_cutting_tool_type.id as 'synthesis_cutting_tool_type.id',
+            <!-- 名称 -->
+            synthesis_cutting_tool_type.name as 'synthesis_cutting_tool_type.name',
+            <!-- 逻辑删除 -->
+            synthesis_cutting_tool_type.is_del as 'synthesis_cutting_tool_type.is_del'
+        /*synthesisCuttingToolType end*/
+        FROM synthesis_cutting_tool_type as synthesis_cutting_tool_type
+        WHERE
+            1 = 1 AND  synthesis_cutting_tool_type.is_del = 0
+        /*synthesis_cutting_tool_type begin*/
+            <!-- id -->
+            <if test="id != null and id != '' " >
+                and synthesis_cutting_tool_type.id = #{id}
+            </if>
+            <!-- 名称 -->
+            <if test="name != null and name != '' " >
+                and synthesis_cutting_tool_type.name = #{name}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                and synthesis_cutting_tool_type.is_del = #{isDel}
+            </if>
+        /*synthesis_cutting_tool_type end*/
+        ORDER BY synthesis_cutting_tool_type.id desc
+        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
+        LIMIT #{startRecord},#{pageSize}
+        </if>
+    </select>
+
+
+    <!--查询记录数-->
+    <select id="getSynthesisCuttingToolTypeCount" parameterType="com.common.vo.SynthesisCuttingToolTypeVO" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM synthesis_cutting_tool_type as synthesis_cutting_tool_type
+        WHERE
+            1 = 1 AND  synthesis_cutting_tool_type.is_del = 0
+        /*synthesis_cutting_tool_type begin*/
+        <!-- id -->
+        <if test="id != null and id != '' " >
+            and synthesis_cutting_tool_type.id = #{id}
+        </if>
+        <!-- 名称 -->
+        <if test="name != null and name != '' " >
+            and synthesis_cutting_tool_type.name = #{name}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="isDel != null and isDel != '' " >
+            and synthesis_cutting_tool_type.is_del = #{isDel}
+        </if>
+        /*synthesis_cutting_tool_type end*/
+    </select>
+
+    <!--根据vo查询 -->
+    <select id="getSynthesisCuttingToolType" parameterType="com.common.vo.SynthesisCuttingToolTypeVO" resultMap="synthesisCuttingToolTypeQueryMap">
+        SELECT
+        /*synthesis_cutting_tool_type begin*/
+        <!-- id -->
+        synthesis_cutting_tool_type.id as 'synthesis_cutting_tool_type.id',
+        <!-- 名称 -->
+        synthesis_cutting_tool_type.name as 'synthesis_cutting_tool_type.name',
+        <!-- 逻辑删除 -->
+        synthesis_cutting_tool_type.is_del as 'synthesis_cutting_tool_type.is_del'
+        /*synthesis_cutting_tool_type end*/
+        FROM synthesis_cutting_tool_type as synthesis_cutting_tool_type
+        WHERE
+            1 = 1 AND  synthesis_cutting_tool_type.is_del = 0
+        /*synthesis_cutting_tool_type begin*/
+        <!-- id -->
+        <if test="id != null and id != '' " >
+            and synthesis_cutting_tool_type.id = #{id}
+        </if>
+        <!-- 名称 -->
+        <if test="name != null and name != '' " >
+            and synthesis_cutting_tool_type.name = #{name}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="isDel != null and isDel != '' " >
+            and synthesis_cutting_tool_type.is_del = #{isDel}
+        </if>
+        /*synthesis_cutting_tool_type end*/
+    </select>
+</mapper>

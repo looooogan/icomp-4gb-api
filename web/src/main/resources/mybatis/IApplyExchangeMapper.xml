@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.mapper.IApplyExchangeMapper">
+    <resultMap id="applyExchangeQueryMap" type="com.common.pojo.ApplyExchange">
+        <!-- 换领申请ID -->
+        <id property="id" column="apply_exchange.id"/>
+
+        <!-- 换领申请流水号 -->
+        <result property="code" column="apply_exchange.code"/>
+        <!-- 数量 -->
+        <result property="count" column="apply_exchange.count"/>
+        <!-- 备货数量 -->
+        <result property="quantity" column="apply_exchange.quantity"/>
+        <!-- 送回数量 -->
+        <result property="receiveCount" column="apply_exchange.receive_count"/>
+        <!-- 坏刀数量 -->
+        <result property="brokenCount" column="apply_exchange.broken_count"/>
+        <!-- 丢失数量 -->
+        <result property="lostCount" column="apply_exchange.lost_count"/>
+        <!-- 到使用寿命数量 -->
+        <result property="lifeOverNumber" column="apply_exchange.life_over_number"/>
+        <!-- 申请人 -->
+        <result property="applyUser" column="apply_exchange.apply_user"/>
+        <!-- 申请时间 -->
+        <result property="applyTime" column="apply_exchange.apply_time"/>
+        <!--  -->
+        <result property="isDel" column="apply_exchange.is_del"/>
+        <!-- 申请人名称 -->
+        <result property="applyUserName" column="apply_exchange.apply_user_name"/>
+    </resultMap>
+    <!--添加-->
+    <insert id="addApplyExchange" parameterType="com.common.pojo.ApplyExchange">
+        INSERT INTO apply_exchange (
+            <!-- 换领申请ID -->
+            id,
+            <!-- 换领申请流水号 -->
+            code,
+            <!-- 数量 -->
+            count,
+            <!-- 备货数量 -->
+            quantity,
+            <!-- 送回数量 -->
+            receive_count,
+            <!-- 坏刀数量 -->
+            broken_count,
+            <!-- 丢失数量 -->
+            lost_count,
+            <!-- 到使用寿命数量 -->
+            life_over_number,
+            <!-- 申请人 -->
+            apply_user,
+            <!-- 申请时间 -->
+            apply_time,
+            <!--  -->
+            is_del,
+            <!-- 申请人名称 -->
+            apply_user_name
+        )
+        VALUES (
+            <!-- 换领申请ID -->
+            #{id},
+            <!-- 换领申请流水号 -->
+            #{code},
+            <!-- 数量 -->
+            #{count},
+            <!-- 备货数量 -->
+            #{quantity},
+            <!-- 送回数量 -->
+            #{receiveCount},
+            <!-- 坏刀数量 -->
+            #{brokenCount},
+            <!-- 丢失数量 -->
+            #{lostCount},
+            <!-- 到使用寿命数量 -->
+            #{lifeOverNumber},
+            <!-- 申请人 -->
+            #{applyUser},
+            <!-- 申请时间 -->
+            #{applyTime},
+            <!--  -->
+            #{isDel},
+            <!-- 申请人名称 -->
+            #{applyUserName}
+        )
+    </insert>
+
+    <!--删除-->
+    <delete id="delApplyExchange" parameterType="com.common.pojo.ApplyExchange">
+        DELETE
+        FROM apply_exchange
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--逻辑删除-->
+    <delete id="delApplyExchangeForLogic" parameterType="com.common.pojo.ApplyExchange">
+        UPDATE apply_exchange SET
+        is_del = 1
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--根据VO删除-->
+    <delete id="delApplyExchangeByVo" parameterType="com.common.vo.ApplyExchangeVO">
+        UPDATE apply_exchange SET is_del = 1
+        WHERE
+            1=1
+            <!-- 换领申请ID -->
+            <if test="id != null and id != '' " >
+                and id =  #{id}
+            </if>
+            <!-- 换领申请流水号 -->
+            <if test="code != null and code != '' " >
+                and code =  #{code}
+            </if>
+            <!-- 数量 -->
+            <if test="count != null and count != '' " >
+                and count =  #{count}
+            </if>
+            <!-- 备货数量 -->
+            <if test="quantity != null and quantity != '' " >
+                and quantity =  #{quantity}
+            </if>
+            <!-- 送回数量 -->
+            <if test="receiveCount != null and receiveCount != '' " >
+                and receive_count =  #{receiveCount}
+            </if>
+            <!-- 坏刀数量 -->
+            <if test="brokenCount != null and brokenCount != '' " >
+                and broken_count =  #{brokenCount}
+            </if>
+            <!-- 丢失数量 -->
+            <if test="lostCount != null and lostCount != '' " >
+                and lost_count =  #{lostCount}
+            </if>
+            <!-- 到使用寿命数量 -->
+            <if test="lifeOverNumber != null and lifeOverNumber != '' " >
+                and life_over_number =  #{lifeOverNumber}
+            </if>
+            <!-- 申请人 -->
+            <if test="applyUser != null and applyUser != '' " >
+                and apply_user =  #{applyUser}
+            </if>
+            <!-- 申请时间 -->
+            <if test="applyTime != null and applyTime != '' " >
+                and apply_time =  #{applyTime}
+            </if>
+            <!--  -->
+            <if test="isDel != null and isDel != '' " >
+                and is_del =  #{isDel}
+            </if>
+            <!-- 申请人名称 -->
+            <if test="applyUserName != null and applyUserName != '' " >
+                and apply_user_name =  #{applyUserName}
+            </if>
+    </delete>
+
+    <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
+    <update id="updApplyExchange" parameterType="com.common.pojo.ApplyExchange">
+        UPDATE apply_exchange
+        SET
+            <!-- 换领申请流水号 -->
+            <if test="code != null and code != '' " >
+                code =  #{code},
+            </if>
+            <!-- 数量 -->
+            <if test="count != null and count != '' " >
+                count =  #{count},
+            </if>
+            <!-- 备货数量 -->
+            <if test="quantity != null and quantity != '' " >
+                quantity =  #{quantity},
+            </if>
+            <!-- 送回数量 -->
+            <if test="receiveCount != null and receiveCount != '' " >
+                receive_count =  #{receiveCount},
+            </if>
+            <!-- 坏刀数量 -->
+            <if test="brokenCount != null and brokenCount != '' " >
+                broken_count =  #{brokenCount},
+            </if>
+            <!-- 丢失数量 -->
+            <if test="lostCount != null and lostCount != '' " >
+                lost_count =  #{lostCount},
+            </if>
+            <!-- 到使用寿命数量 -->
+            <if test="lifeOverNumber != null and lifeOverNumber != '' " >
+                life_over_number =  #{lifeOverNumber},
+            </if>
+            <!-- 申请人 -->
+            <if test="applyUser != null and applyUser != '' " >
+                apply_user =  #{applyUser},
+            </if>
+            <!-- 申请时间 -->
+            <if test="applyTime != null and applyTime != '' " >
+                apply_time =  #{applyTime},
+            </if>
+            <!--  -->
+            <if test="isDel != null and isDel != '' " >
+                is_del =  #{isDel},
+            </if>
+            <!-- 申请人名称 -->
+            <if test="applyUserName != null and applyUserName != '' " >
+                apply_user_name =  #{applyUserName},
+            </if>
+            <!-- 换领申请ID -->
+            id = #{id}
+        WHERE
+            1 = 1
+            and id = #{id}
+    </update>
+
+    <!--分页查询 -->
+    <select id="getApplyExchangeByPage" parameterType="com.common.vo.ApplyExchangeVO" resultMap="applyExchangeQueryMap">
+        SELECT
+        /*applyExchange begin*/
+            <!-- 换领申请ID -->
+            apply_exchange.id as 'apply_exchange.id',
+            <!-- 换领申请流水号 -->
+            apply_exchange.code as 'apply_exchange.code',
+            <!-- 数量 -->
+            apply_exchange.count as 'apply_exchange.count',
+            <!-- 备货数量 -->
+            apply_exchange.quantity as 'apply_exchange.quantity',
+            <!-- 送回数量 -->
+            apply_exchange.receive_count as 'apply_exchange.receive_count',
+            <!-- 坏刀数量 -->
+            apply_exchange.broken_count as 'apply_exchange.broken_count',
+            <!-- 丢失数量 -->
+            apply_exchange.lost_count as 'apply_exchange.lost_count',
+            <!-- 到使用寿命数量 -->
+            apply_exchange.life_over_number as 'apply_exchange.life_over_number',
+            <!-- 申请人 -->
+            apply_exchange.apply_user as 'apply_exchange.apply_user',
+            <!-- 申请时间 -->
+            apply_exchange.apply_time as 'apply_exchange.apply_time',
+            <!--  -->
+            apply_exchange.is_del as 'apply_exchange.is_del',
+            <!-- 申请人名称 -->
+            apply_exchange.apply_user_name as 'apply_exchange.apply_user_name'
+        /*applyExchange end*/
+        FROM apply_exchange as apply_exchange
+        WHERE
+            1 = 1 AND  apply_exchange.is_del = 0
+        /*apply_exchange begin*/
+            <!-- 换领申请ID -->
+            <if test="id != null and id != '' " >
+                and apply_exchange.id = #{id}
+            </if>
+            <!-- 换领申请流水号 -->
+            <if test="code != null and code != '' " >
+                and apply_exchange.code = #{code}
+            </if>
+            <!-- 数量 -->
+            <if test="count != null and count != '' " >
+                and apply_exchange.count = #{count}
+            </if>
+            <!-- 备货数量 -->
+            <if test="quantity != null and quantity != '' " >
+                and apply_exchange.quantity = #{quantity}
+            </if>
+            <!-- 送回数量 -->
+            <if test="receiveCount != null and receiveCount != '' " >
+                and apply_exchange.receive_count = #{receiveCount}
+            </if>
+            <!-- 坏刀数量 -->
+            <if test="brokenCount != null and brokenCount != '' " >
+                and apply_exchange.broken_count = #{brokenCount}
+            </if>
+            <!-- 丢失数量 -->
+            <if test="lostCount != null and lostCount != '' " >
+                and apply_exchange.lost_count = #{lostCount}
+            </if>
+            <!-- 到使用寿命数量 -->
+            <if test="lifeOverNumber != null and lifeOverNumber != '' " >
+                and apply_exchange.life_over_number = #{lifeOverNumber}
+            </if>
+            <!-- 申请人 -->
+            <if test="applyUser != null and applyUser != '' " >
+                and apply_exchange.apply_user = #{applyUser}
+            </if>
+            <!-- 申请时间 -->
+            <if test="applyTime != null and applyTime != '' " >
+                and apply_exchange.apply_time &lt;= #{applyTimeEnd}
+            </if>
+            <if test="applyTime != null and applyTime != '' " >
+                and apply_exchange.apply_time &gt;= #{applyTimeBegin}
+            </if>
+            <!--  -->
+            <if test="isDel != null and isDel != '' " >
+                and apply_exchange.is_del = #{isDel}
+            </if>
+            <!-- 申请人名称 -->
+            <if test="applyUserName != null and applyUserName != '' " >
+                and apply_exchange.apply_user_name = #{applyUserName}
+            </if>
+        /*apply_exchange end*/
+        ORDER BY apply_exchange.id desc
+        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
+        LIMIT #{startRecord},#{pageSize}
+        </if>
+    </select>
+
+
+    <!--查询记录数-->
+    <select id="getApplyExchangeCount" parameterType="com.common.vo.ApplyExchangeVO" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM apply_exchange as apply_exchange
+        WHERE
+            1 = 1 AND  apply_exchange.is_del = 0
+        /*apply_exchange begin*/
+        <!-- 换领申请ID -->
+        <if test="id != null and id != '' " >
+            and apply_exchange.id = #{id}
+        </if>
+        <!-- 换领申请流水号 -->
+        <if test="code != null and code != '' " >
+            and apply_exchange.code = #{code}
+        </if>
+        <!-- 数量 -->
+        <if test="count != null and count != '' " >
+            and apply_exchange.count = #{count}
+        </if>
+        <!-- 备货数量 -->
+        <if test="quantity != null and quantity != '' " >
+            and apply_exchange.quantity = #{quantity}
+        </if>
+        <!-- 送回数量 -->
+        <if test="receiveCount != null and receiveCount != '' " >
+            and apply_exchange.receive_count = #{receiveCount}
+        </if>
+        <!-- 坏刀数量 -->
+        <if test="brokenCount != null and brokenCount != '' " >
+            and apply_exchange.broken_count = #{brokenCount}
+        </if>
+        <!-- 丢失数量 -->
+        <if test="lostCount != null and lostCount != '' " >
+            and apply_exchange.lost_count = #{lostCount}
+        </if>
+        <!-- 到使用寿命数量 -->
+        <if test="lifeOverNumber != null and lifeOverNumber != '' " >
+            and apply_exchange.life_over_number = #{lifeOverNumber}
+        </if>
+        <!-- 申请人 -->
+        <if test="applyUser != null and applyUser != '' " >
+            and apply_exchange.apply_user = #{applyUser}
+        </if>
+        <!-- 申请时间 -->
+        <if test="applyTime != null and applyTime != '' " >
+            and apply_exchange.apply_time &lt;= #{applyTimeEnd}
+        </if>
+        <if test="applyTime != null and applyTime != '' " >
+            and apply_exchange.apply_time &gt;= #{applyTimeBegin}
+        </if>
+        <!--  -->
+        <if test="isDel != null and isDel != '' " >
+            and apply_exchange.is_del = #{isDel}
+        </if>
+        <!-- 申请人名称 -->
+        <if test="applyUserName != null and applyUserName != '' " >
+            and apply_exchange.apply_user_name = #{applyUserName}
+        </if>
+        /*apply_exchange end*/
+    </select>
+
+    <!--根据vo查询 -->
+    <select id="getApplyExchange" parameterType="com.common.vo.ApplyExchangeVO" resultMap="applyExchangeQueryMap">
+        SELECT
+        /*apply_exchange begin*/
+        <!-- 换领申请ID -->
+        apply_exchange.id as 'apply_exchange.id',
+        <!-- 换领申请流水号 -->
+        apply_exchange.code as 'apply_exchange.code',
+        <!-- 数量 -->
+        apply_exchange.count as 'apply_exchange.count',
+        <!-- 备货数量 -->
+        apply_exchange.quantity as 'apply_exchange.quantity',
+        <!-- 送回数量 -->
+        apply_exchange.receive_count as 'apply_exchange.receive_count',
+        <!-- 坏刀数量 -->
+        apply_exchange.broken_count as 'apply_exchange.broken_count',
+        <!-- 丢失数量 -->
+        apply_exchange.lost_count as 'apply_exchange.lost_count',
+        <!-- 到使用寿命数量 -->
+        apply_exchange.life_over_number as 'apply_exchange.life_over_number',
+        <!-- 申请人 -->
+        apply_exchange.apply_user as 'apply_exchange.apply_user',
+        <!-- 申请时间 -->
+        apply_exchange.apply_time as 'apply_exchange.apply_time',
+        <!--  -->
+        apply_exchange.is_del as 'apply_exchange.is_del',
+        <!-- 申请人名称 -->
+        apply_exchange.apply_user_name as 'apply_exchange.apply_user_name'
+        /*apply_exchange end*/
+        FROM apply_exchange as apply_exchange
+        WHERE
+            1 = 1 AND  apply_exchange.is_del = 0
+        /*apply_exchange begin*/
+        <!-- 换领申请ID -->
+        <if test="id != null and id != '' " >
+            and apply_exchange.id = #{id}
+        </if>
+        <!-- 换领申请流水号 -->
+        <if test="code != null and code != '' " >
+            and apply_exchange.code = #{code}
+        </if>
+        <!-- 数量 -->
+        <if test="count != null and count != '' " >
+            and apply_exchange.count = #{count}
+        </if>
+        <!-- 备货数量 -->
+        <if test="quantity != null and quantity != '' " >
+            and apply_exchange.quantity = #{quantity}
+        </if>
+        <!-- 送回数量 -->
+        <if test="receiveCount != null and receiveCount != '' " >
+            and apply_exchange.receive_count = #{receiveCount}
+        </if>
+        <!-- 坏刀数量 -->
+        <if test="brokenCount != null and brokenCount != '' " >
+            and apply_exchange.broken_count = #{brokenCount}
+        </if>
+        <!-- 丢失数量 -->
+        <if test="lostCount != null and lostCount != '' " >
+            and apply_exchange.lost_count = #{lostCount}
+        </if>
+        <!-- 到使用寿命数量 -->
+        <if test="lifeOverNumber != null and lifeOverNumber != '' " >
+            and apply_exchange.life_over_number = #{lifeOverNumber}
+        </if>
+        <!-- 申请人 -->
+        <if test="applyUser != null and applyUser != '' " >
+            and apply_exchange.apply_user = #{applyUser}
+        </if>
+        <!-- 申请时间 -->
+        <if test="applyTime != null and applyTime != '' " >
+            and apply_exchange.apply_time &lt;= #{applyTimeEnd}
+        </if>
+        <if test="applyTime != null and applyTime != '' " >
+            and apply_exchange.apply_time &gt;= #{applyTimeBegin}
+        </if>
+        <!--  -->
+        <if test="isDel != null and isDel != '' " >
+            and apply_exchange.is_del = #{isDel}
+        </if>
+        <!-- 申请人名称 -->
+        <if test="applyUserName != null and applyUserName != '' " >
+            and apply_exchange.apply_user_name = #{applyUserName}
+        </if>
+        /*apply_exchange end*/
+    </select>
+</mapper>

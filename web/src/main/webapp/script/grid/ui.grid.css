@@ -1,0 +1,198 @@
+.ui-grid {
+
+}
+.ui-grid-frame >table>thead>tr>th {
+	text-align: center;
+}
+.ui-grid-frame {
+	border: #d3d3d3 1px solid;
+}
+
+.ui-grid-frame table {
+	border-top-width: 3px;
+	border-top-style: solid;
+	border-top-color: #d3d3d3;
+	border-collapse: collapse;
+}
+
+.ui-grid-frame table thead tr th {
+	font-family: "Microsoft Yahei";
+	line-height: 30px;
+	font-weight: bold;
+	color: #383838;
+	text-decoration: none;
+	font-size: 14px;
+	background-color: #4380DF;
+	border-bottom: 1px solid #000000;
+	background-image: url(../../styel/zh_CN/image/table_c.png);
+}
+
+.ui-grid-frame table tbody tr td {
+	height: 30px;
+	line-height: 30px;
+	border-color: #d3d3d3;
+	border-style: solid;
+	border-width: 0px 1px 1px 0px;
+	background: #ffffff;
+}
+
+.ui-grid-frame table tbody tr.hover td {
+	background: #ffdcba;
+}
+
+.ui-grid-frame table tbody tr.hover th {
+	background: #ffdcba;
+}
+
+.ui-grid-thtx {
+	padding: 0px 10px;
+	font-weight: bold;
+	font-size: 14px;
+	color: #272727
+}
+
+
+.ui-grid-tdtx {
+	padding: 0px 10px;
+	font-weight: normal;
+	font-size: 12px;
+	color: #333333;
+}
+
+.ui-grid-bar {
+	background-color: #d3d3d3;
+	padding: 0px 1px;
+	border-color: #d3d3d3;
+	border-style: solid;
+	border-width: 0px 1px 1px 1px;
+	height: 25px;
+	padding-top: 1px;
+}
+
+.ui-grid-rowno {
+	width: 1px;
+	padding: 0px 10px;
+	height: 30px;
+	line-height: 30px;
+	border-color: #d3d3d3;
+	border-style: solid;
+	border-width: 0px 1px 1px 0px;
+}
+
+.tree-wrap {
+	float: left;
+	margin-top: 6px;
+	margin-left: 6px;
+}
+
+.treeclick {
+	cursor: pointer;
+}
+
+/* 普通翻页器-默认居中 */
+.m-page {
+	margin: 0px 0 0;
+	text-align: center;
+	line-height: 22px;
+	font-size: 0;
+	letter-spacing: -0.307em; *
+letter-spacing: normal; *
+word-spacing: -1px;
+	word-wrap: normal;
+	white-space: nowrap;
+	color: #d3d3d3;
+}
+
+.m-page a,.m-page i {
+	display: inline-block; *
+display: inline; *
+zoom: 1;
+	vertical-align: top;
+	padding: 0 12px;
+	margin-left: -1px;
+	border: 1px solid #d3d3d3;
+	font-size: 12px;
+	letter-spacing: normal;
+	word-spacing: normal;
+	background: #fff;
+}
+
+.m-page a,.m-page a:hover {
+	text-decoration: none;
+	color: #9E5E08;
+}
+
+.m-page a.first {
+	margin-left: 0;
+}
+
+.m-page a.last {
+	margin-right: 0;
+}
+
+.m-page a .pagearr {
+	font-weight: bold;
+	font-family: \5b8b\4f53;
+	vertical-align: top; *
+vertical-align: middle;
+}
+
+.m-page a.pageprv .pagearr {
+	margin-right: 3px;
+}
+
+.m-page a.pagenxt .pagearr {
+	margin-left: 3px;
+}
+
+.m-page a.number {
+	width: 20px;
+	text-align: center;
+}
+
+.m-page a:hover {
+	background: #f5f5f5;
+}
+
+.m-page a:active {
+	background: #f0f0f0;
+}
+
+.m-page a.z-crt,.m-page a.z-crt:hover,.m-page a.z-crt:active {
+	cursor: default;
+	color: #999;
+}
+
+.m-page a.z-dis,.m-page a.z-dis:hover,.m-page a.z-dis:active {
+	cursor: default;
+	color: #ccc;
+	background: #fff;
+}
+
+/* 居左 */
+.m-page-lt {
+	text-align: left;
+}
+
+/* 居右 */
+.m-page-rt {
+	text-align: right;
+}
+
+/* 较小 */
+.m-page-sm {
+	line-height: 22px;
+}
+
+.m-page-sm a,.m-page-sm i {
+	padding: 0 8px;
+}
+
+/* 分离 */
+.m-page-sr a,.m-page-sr i {
+	margin: 0 3px;
+}
+
+.m-page-sr i {
+	border: 0;
+}

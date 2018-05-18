@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.mapper.ISynthesisCuttingToolMaterialInventoryMapper">
+    <resultMap id="synthesisCuttingToolMaterialInventoryQueryMap" type="com.common.pojo.SynthesisCuttingToolMaterialInventory">
+        <!-- 标识 -->
+        <id property="id" column="synthesis_cutting_tool_material_inventory.id"/>
+
+        <!-- 合成刀编码 -->
+        <result property="synthesisCuttingToolCode" column="synthesis_cutting_tool_material_inventory.synthesis_cutting_tool_code"/>
+        <!-- 合成刀业务编码 -->
+        <result property="synthesisCode" column="synthesis_cutting_tool_material_inventory.synthesis_code"/>
+        <!-- 备刀库数量 -->
+        <result property="prepareLibraryCount" column="synthesis_cutting_tool_material_inventory.prepare_library_count"/>
+        <!-- 待刃磨数量 -->
+        <result property="forGrindingCount" column="synthesis_cutting_tool_material_inventory.for_grinding_count"/>
+        <!-- 安装数量 设备上 -->
+        <result property="inUseCount" column="synthesis_cutting_tool_material_inventory.in_use_count"/>
+        <!-- 总数 -->
+        <result property="total" column="synthesis_cutting_tool_material_inventory.total"/>
+        <!-- 逻辑删除 -->
+        <result property="isDel" column="synthesis_cutting_tool_material_inventory.is_del"/>
+        <!-- 待换装数量 -->
+        <result property="toExchangeCount" column="synthesis_cutting_tool_material_inventory.to_exchange_count"/>
+        <!-- 待组装数量 -->
+        <result property="toInstallCount" column="synthesis_cutting_tool_material_inventory.to_install_count"/>
+        <!-- 合成刀编码 -->
+        <association property="synthesisCuttingTool"  column="synthesis_cutting_tool.code" resultMap="synthesisCuttingToolMaterialInventorySynthesisCuttingToolMap"/>
+    </resultMap>
+        <resultMap id="synthesisCuttingToolMaterialInventorySynthesisCuttingToolMap" type="com.common.pojo.SynthesisCuttingTool">
+            <!-- id -->
+            <id property="id" column="synthesis_cutting_tool.id"/>
+
+            <!-- 编码 -->
+            <result property="code" column="synthesis_cutting_tool.code"/>
+            <!-- 合成刀业务编码 -->
+            <result property="synthesisCode" column="synthesis_cutting_tool.synthesis_code"/>
+            <!-- 图纸url -->
+            <result property="picUrl" column="synthesis_cutting_tool.pic_url"/>
+            <!-- 逻辑删除 -->
+            <result property="isDel" column="synthesis_cutting_tool.is_del"/>
+            <!-- 合成刀类型  -->
+            <result property="synthesisCuttingToolTypeId" column="synthesis_cutting_tool.synthesis_cutting_tool_type_id"/>
+            <!--  -->
+            <result property="abc" column="synthesis_cutting_tool.abc"/>
+        </resultMap>
+    <!--添加-->
+    <insert id="addSynthesisCuttingToolMaterialInventory" parameterType="com.common.pojo.SynthesisCuttingToolMaterialInventory">
+        INSERT INTO synthesis_cutting_tool_material_inventory (
+            <!-- 标识 -->
+            id,
+            <!-- 合成刀编码 -->
+            synthesis_cutting_tool_code,
+            <!-- 合成刀业务编码 -->
+            synthesis_code,
+            <!-- 备刀库数量 -->
+            prepare_library_count,
+            <!-- 待刃磨数量 -->
+            for_grinding_count,
+            <!-- 安装数量 设备上 -->
+            in_use_count,
+            <!-- 总数 -->
+            total,
+            <!-- 逻辑删除 -->
+            is_del,
+            <!-- 待换装数量 -->
+            to_exchange_count,
+            <!-- 待组装数量 -->
+            to_install_count
+        )
+        VALUES (
+            <!-- 标识 -->
+            #{id},
+            <!-- 合成刀编码 -->
+            #{synthesisCuttingToolCode},
+            <!-- 合成刀业务编码 -->
+            #{synthesisCode},
+            <!-- 备刀库数量 -->
+            #{prepareLibraryCount},
+            <!-- 待刃磨数量 -->
+            #{forGrindingCount},
+            <!-- 安装数量 设备上 -->
+            #{inUseCount},
+            <!-- 总数 -->
+            #{total},
+            <!-- 逻辑删除 -->
+            #{isDel},
+            <!-- 待换装数量 -->
+            #{toExchangeCount},
+            <!-- 待组装数量 -->
+            #{toInstallCount}
+        )
+    </insert>
+
+    <!--删除-->
+    <delete id="delSynthesisCuttingToolMaterialInventory" parameterType="com.common.pojo.SynthesisCuttingToolMaterialInventory">
+        DELETE
+        FROM synthesis_cutting_tool_material_inventory
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--逻辑删除-->
+    <delete id="delSynthesisCuttingToolMaterialInventoryForLogic" parameterType="com.common.pojo.SynthesisCuttingToolMaterialInventory">
+        UPDATE synthesis_cutting_tool_material_inventory SET
+        is_del = 1
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--根据VO删除-->
+    <delete id="delSynthesisCuttingToolMaterialInventoryByVo" parameterType="com.common.vo.SynthesisCuttingToolMaterialInventoryVO">
+        UPDATE synthesis_cutting_tool_material_inventory SET is_del = 1
+        WHERE
+            1=1
+            <!-- 标识 -->
+            <if test="id != null and id != '' " >
+                and id =  #{id}
+            </if>
+            <!-- 合成刀编码 -->
+            <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+                and synthesis_cutting_tool_code =  #{synthesisCuttingToolCode}
+            </if>
+            <!-- 合成刀业务编码 -->
+            <if test="synthesisCode != null and synthesisCode != '' " >
+                and synthesis_code =  #{synthesisCode}
+            </if>
+            <!-- 备刀库数量 -->
+            <if test="prepareLibraryCount != null and prepareLibraryCount != '' " >
+                and prepare_library_count =  #{prepareLibraryCount}
+            </if>
+            <!-- 待刃磨数量 -->
+            <if test="forGrindingCount != null and forGrindingCount != '' " >
+                and for_grinding_count =  #{forGrindingCount}
+            </if>
+            <!-- 安装数量 设备上 -->
+            <if test="inUseCount != null and inUseCount != '' " >
+                and in_use_count =  #{inUseCount}
+            </if>
+            <!-- 总数 -->
+            <if test="total != null and total != '' " >
+                and total =  #{total}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                and is_del =  #{isDel}
+            </if>
+            <!-- 待换装数量 -->
+            <if test="toExchangeCount != null and toExchangeCount != '' " >
+                and to_exchange_count =  #{toExchangeCount}
+            </if>
+            <!-- 待组装数量 -->
+            <if test="toInstallCount != null and toInstallCount != '' " >
+                and to_install_count =  #{toInstallCount}
+            </if>
+    </delete>
+
+    <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
+    <update id="updSynthesisCuttingToolMaterialInventory" parameterType="com.common.pojo.SynthesisCuttingToolMaterialInventory">
+        UPDATE synthesis_cutting_tool_material_inventory
+        SET
+            <!-- 合成刀编码 -->
+            <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+                synthesis_cutting_tool_code =  #{synthesisCuttingToolCode},
+            </if>
+            <!-- 合成刀业务编码 -->
+            <if test="synthesisCode != null and synthesisCode != '' " >
+                synthesis_code =  #{synthesisCode},
+            </if>
+            <!-- 备刀库数量 -->
+            <if test="prepareLibraryCount != null and prepareLibraryCount != '' " >
+                prepare_library_count =  #{prepareLibraryCount},
+            </if>
+            <!-- 待刃磨数量 -->
+            <if test="forGrindingCount != null and forGrindingCount != '' " >
+                for_grinding_count =  #{forGrindingCount},
+            </if>
+            <!-- 安装数量 设备上 -->
+            <if test="inUseCount != null and inUseCount != '' " >
+                in_use_count =  #{inUseCount},
+            </if>
+            <!-- 总数 -->
+            <if test="total != null and total != '' " >
+                total =  #{total},
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                is_del =  #{isDel},
+            </if>
+            <!-- 待换装数量 -->
+            <if test="toExchangeCount != null and toExchangeCount != '' " >
+                to_exchange_count =  #{toExchangeCount},
+            </if>
+            <!-- 待组装数量 -->
+            <if test="toInstallCount != null and toInstallCount != '' " >
+                to_install_count =  #{toInstallCount},
+            </if>
+            <!-- 标识 -->
+            id = #{id}
+        WHERE
+            1 = 1
+            and id = #{id}
+    </update>
+
+    <!--分页查询 -->
+    <select id="getSynthesisCuttingToolMaterialInventoryByPage" parameterType="com.common.vo.SynthesisCuttingToolMaterialInventoryVO" resultMap="synthesisCuttingToolMaterialInventoryQueryMap">
+        SELECT
+        /*synthesisCuttingToolMaterialInventory begin*/
+            <!-- 标识 -->
+            synthesis_cutting_tool_material_inventory.id as 'synthesis_cutting_tool_material_inventory.id',
+            <!-- 合成刀编码 -->
+            synthesis_cutting_tool_material_inventory.synthesis_cutting_tool_code as 'synthesis_cutting_tool_material_inventory.synthesis_cutting_tool_code',
+            <!-- 合成刀业务编码 -->
+            synthesis_cutting_tool_material_inventory.synthesis_code as 'synthesis_cutting_tool_material_inventory.synthesis_code',
+            <!-- 备刀库数量 -->
+            synthesis_cutting_tool_material_inventory.prepare_library_count as 'synthesis_cutting_tool_material_inventory.prepare_library_count',
+            <!-- 待刃磨数量 -->
+            synthesis_cutting_tool_material_inventory.for_grinding_count as 'synthesis_cutting_tool_material_inventory.for_grinding_count',
+            <!-- 安装数量 设备上 -->
+            synthesis_cutting_tool_material_inventory.in_use_count as 'synthesis_cutting_tool_material_inventory.in_use_count',
+            <!-- 总数 -->
+            synthesis_cutting_tool_material_inventory.total as 'synthesis_cutting_tool_material_inventory.total',
+            <!-- 逻辑删除 -->
+            synthesis_cutting_tool_material_inventory.is_del as 'synthesis_cutting_tool_material_inventory.is_del',
+            <!-- 待换装数量 -->
+            synthesis_cutting_tool_material_inventory.to_exchange_count as 'synthesis_cutting_tool_material_inventory.to_exchange_count',
+            <!-- 待组装数量 -->
+            synthesis_cutting_tool_material_inventory.to_install_count as 'synthesis_cutting_tool_material_inventory.to_install_count',
+        /*synthesisCuttingToolMaterialInventory end*/
+        /*synthesis_cutting_tool begin*/
+            <!-- id -->
+            synthesis_cutting_tool.id as 'synthesis_cutting_tool.id',
+            <!-- 编码 -->
+            synthesis_cutting_tool.code as 'synthesis_cutting_tool.code',
+            <!-- 合成刀业务编码 -->
+            synthesis_cutting_tool.synthesis_code as 'synthesis_cutting_tool.synthesis_code',
+            <!-- 图纸url -->
+            synthesis_cutting_tool.pic_url as 'synthesis_cutting_tool.pic_url',
+            <!-- 逻辑删除 -->
+            synthesis_cutting_tool.is_del as 'synthesis_cutting_tool.is_del',
+            <!-- 合成刀类型  -->
+            synthesis_cutting_tool.synthesis_cutting_tool_type_id as 'synthesis_cutting_tool.synthesis_cutting_tool_type_id',
+            <!--  -->
+            synthesis_cutting_tool.abc as 'synthesis_cutting_tool.abc'
+        /*synthesis_cutting_tool end*/
+        FROM synthesis_cutting_tool_material_inventory as synthesis_cutting_tool_material_inventory
+        LEFT JOIN synthesis_cutting_tool as synthesis_cutting_tool ON synthesis_cutting_tool.code = synthesis_cutting_tool_material_inventory.synthesis_cutting_tool_code
+        WHERE
+            1 = 1 AND  synthesis_cutting_tool_material_inventory.is_del = 0
+        /*synthesis_cutting_tool_material_inventory begin*/
+            <!-- 标识 -->
+            <if test="id != null and id != '' " >
+                and synthesis_cutting_tool_material_inventory.id = #{id}
+            </if>
+            <!-- 合成刀编码 -->
+            <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+                and synthesis_cutting_tool_material_inventory.synthesis_cutting_tool_code = #{synthesisCuttingToolCode}
+            </if>
+            <!-- 合成刀业务编码 -->
+            <if test="synthesisCode != null and synthesisCode != '' " >
+                and synthesis_cutting_tool_material_inventory.synthesis_code = #{synthesisCode}
+            </if>
+            <!-- 备刀库数量 -->
+            <if test="prepareLibraryCount != null and prepareLibraryCount != '' " >
+                and synthesis_cutting_tool_material_inventory.prepare_library_count = #{prepareLibraryCount}
+            </if>
+            <!-- 待刃磨数量 -->
+            <if test="forGrindingCount != null and forGrindingCount != '' " >
+                and synthesis_cutting_tool_material_inventory.for_grinding_count = #{forGrindingCount}
+            </if>
+            <!-- 安装数量 设备上 -->
+            <if test="inUseCount != null and inUseCount != '' " >
+                and synthesis_cutting_tool_material_inventory.in_use_count = #{inUseCount}
+            </if>
+            <!-- 总数 -->
+            <if test="total != null and total != '' " >
+                and synthesis_cutting_tool_material_inventory.total = #{total}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                and synthesis_cutting_tool_material_inventory.is_del = #{isDel}
+            </if>
+            <!-- 待换装数量 -->
+            <if test="toExchangeCount != null and toExchangeCount != '' " >
+                and synthesis_cutting_tool_material_inventory.to_exchange_count = #{toExchangeCount}
+            </if>
+            <!-- 待组装数量 -->
+            <if test="toInstallCount != null and toInstallCount != '' " >
+                and synthesis_cutting_tool_material_inventory.to_install_count = #{toInstallCount}
+            </if>
+        /*synthesis_cutting_tool_material_inventory end*/
+        /*synthesis_cutting_tool begin*/
+            <if test="synthesisCuttingToolVO != null ">
+            <!-- id -->
+            <if test="synthesisCuttingToolVO.id != null and synthesisCuttingToolVO.id != '' " >
+                and synthesis_cutting_tool.id = #{synthesisCuttingToolVO.id}
+            </if>
+            <!-- 编码 -->
+            <if test="synthesisCuttingToolVO.code != null and synthesisCuttingToolVO.code != '' " >
+                and synthesis_cutting_tool.code = #{synthesisCuttingToolVO.code}
+            </if>
+            <!-- 合成刀业务编码 -->
+            <if test="synthesisCuttingToolVO.synthesisCode != null and synthesisCuttingToolVO.synthesisCode != '' " >
+                and synthesis_cutting_tool.synthesis_code = #{synthesisCuttingToolVO.synthesisCode}
+            </if>
+            <!-- 图纸url -->
+            <if test="synthesisCuttingToolVO.picUrl != null and synthesisCuttingToolVO.picUrl != '' " >
+                and synthesis_cutting_tool.pic_url = #{synthesisCuttingToolVO.picUrl}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="synthesisCuttingToolVO.isDel != null and synthesisCuttingToolVO.isDel != '' " >
+                and synthesis_cutting_tool.is_del = #{synthesisCuttingToolVO.isDel}
+            </if>
+            <!-- 合成刀类型  -->
+            <if test="synthesisCuttingToolVO.synthesisCuttingToolTypeId != null and synthesisCuttingToolVO.synthesisCuttingToolTypeId != '' " >
+                and synthesis_cutting_tool.synthesis_cutting_tool_type_id = #{synthesisCuttingToolVO.synthesisCuttingToolTypeId}
+            </if>
+            <!--  -->
+            <if test="synthesisCuttingToolVO.abc != null and synthesisCuttingToolVO.abc != '' " >
+                and synthesis_cutting_tool.abc = #{synthesisCuttingToolVO.abc}
+            </if>
+            </if>
+        /*synthesis_cutting_tool end*/
+        ORDER BY synthesis_cutting_tool_material_inventory.id desc
+        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
+        LIMIT #{startRecord},#{pageSize}
+        </if>
+    </select>
+
+
+    <!--查询记录数-->
+    <select id="getSynthesisCuttingToolMaterialInventoryCount" parameterType="com.common.vo.SynthesisCuttingToolMaterialInventoryVO" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM synthesis_cutting_tool_material_inventory as synthesis_cutting_tool_material_inventory
+        LEFT JOIN synthesis_cutting_tool as synthesis_cutting_tool ON synthesis_cutting_tool.code = synthesis_cutting_tool_material_inventory.synthesis_cutting_tool_code
+        WHERE
+            1 = 1 AND  synthesis_cutting_tool_material_inventory.is_del = 0
+        /*synthesis_cutting_tool_material_inventory begin*/
+        <!-- 标识 -->
+        <if test="id != null and id != '' " >
+            and synthesis_cutting_tool_material_inventory.id = #{id}
+        </if>
+        <!-- 合成刀编码 -->
+        <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+            and synthesis_cutting_tool_material_inventory.synthesis_cutting_tool_code = #{synthesisCuttingToolCode}
+        </if>
+        <!-- 合成刀业务编码 -->
+        <if test="synthesisCode != null and synthesisCode != '' " >
+            and synthesis_cutting_tool_material_inventory.synthesis_code = #{synthesisCode}
+        </if>
+        <!-- 备刀库数量 -->
+        <if test="prepareLibraryCount != null and prepareLibraryCount != '' " >
+            and synthesis_cutting_tool_material_inventory.prepare_library_count = #{prepareLibraryCount}
+        </if>
+        <!-- 待刃磨数量 -->
+        <if test="forGrindingCount != null and forGrindingCount != '' " >
+            and synthesis_cutting_tool_material_inventory.for_grinding_count = #{forGrindingCount}
+        </if>
+        <!-- 安装数量 设备上 -->
+        <if test="inUseCount != null and inUseCount != '' " >
+            and synthesis_cutting_tool_material_inventory.in_use_count = #{inUseCount}
+        </if>
+        <!-- 总数 -->
+        <if test="total != null and total != '' " >
+            and synthesis_cutting_tool_material_inventory.total = #{total}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="isDel != null and isDel != '' " >
+            and synthesis_cutting_tool_material_inventory.is_del = #{isDel}
+        </if>
+        <!-- 待换装数量 -->
+        <if test="toExchangeCount != null and toExchangeCount != '' " >
+            and synthesis_cutting_tool_material_inventory.to_exchange_count = #{toExchangeCount}
+        </if>
+        <!-- 待组装数量 -->
+        <if test="toInstallCount != null and toInstallCount != '' " >
+            and synthesis_cutting_tool_material_inventory.to_install_count = #{toInstallCount}
+        </if>
+        /*synthesis_cutting_tool_material_inventory end*/
+        /*synthesis_cutting_tool begin*/
+        <if test="synthesisCuttingToolVO != null ">
+        <!-- id -->
+        <if test="synthesisCuttingToolVO.id != null and synthesisCuttingToolVO.id != '' " >
+            and synthesis_cutting_tool.id = #{synthesisCuttingToolVO.id}
+        </if>
+        <!-- 编码 -->
+        <if test="synthesisCuttingToolVO.code != null and synthesisCuttingToolVO.code != '' " >
+            and synthesis_cutting_tool.code = #{synthesisCuttingToolVO.code}
+        </if>
+        <!-- 合成刀业务编码 -->
+        <if test="synthesisCuttingToolVO.synthesisCode != null and synthesisCuttingToolVO.synthesisCode != '' " >
+            and synthesis_cutting_tool.synthesis_code = #{synthesisCuttingToolVO.synthesisCode}
+        </if>
+        <!-- 图纸url -->
+        <if test="synthesisCuttingToolVO.picUrl != null and synthesisCuttingToolVO.picUrl != '' " >
+            and synthesis_cutting_tool.pic_url = #{synthesisCuttingToolVO.picUrl}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="synthesisCuttingToolVO.isDel != null and synthesisCuttingToolVO.isDel != '' " >
+            and synthesis_cutting_tool.is_del = #{synthesisCuttingToolVO.isDel}
+        </if>
+        <!-- 合成刀类型  -->
+        <if test="synthesisCuttingToolVO.synthesisCuttingToolTypeId != null and synthesisCuttingToolVO.synthesisCuttingToolTypeId != '' " >
+            and synthesis_cutting_tool.synthesis_cutting_tool_type_id = #{synthesisCuttingToolVO.synthesisCuttingToolTypeId}
+        </if>
+        <!--  -->
+        <if test="synthesisCuttingToolVO.abc != null and synthesisCuttingToolVO.abc != '' " >
+            and synthesis_cutting_tool.abc = #{synthesisCuttingToolVO.abc}
+        </if>
+        </if>
+        /*synthesis_cutting_tool end*/
+    </select>
+
+    <!--根据vo查询 -->
+    <select id="getSynthesisCuttingToolMaterialInventory" parameterType="com.common.vo.SynthesisCuttingToolMaterialInventoryVO" resultMap="synthesisCuttingToolMaterialInventoryQueryMap">
+        SELECT
+        /*synthesis_cutting_tool_material_inventory begin*/
+        <!-- 标识 -->
+        synthesis_cutting_tool_material_inventory.id as 'synthesis_cutting_tool_material_inventory.id',
+        <!-- 合成刀编码 -->
+        synthesis_cutting_tool_material_inventory.synthesis_cutting_tool_code as 'synthesis_cutting_tool_material_inventory.synthesis_cutting_tool_code',
+        <!-- 合成刀业务编码 -->
+        synthesis_cutting_tool_material_inventory.synthesis_code as 'synthesis_cutting_tool_material_inventory.synthesis_code',
+        <!-- 备刀库数量 -->
+        synthesis_cutting_tool_material_inventory.prepare_library_count as 'synthesis_cutting_tool_material_inventory.prepare_library_count',
+        <!-- 待刃磨数量 -->
+        synthesis_cutting_tool_material_inventory.for_grinding_count as 'synthesis_cutting_tool_material_inventory.for_grinding_count',
+        <!-- 安装数量 设备上 -->
+        synthesis_cutting_tool_material_inventory.in_use_count as 'synthesis_cutting_tool_material_inventory.in_use_count',
+        <!-- 总数 -->
+        synthesis_cutting_tool_material_inventory.total as 'synthesis_cutting_tool_material_inventory.total',
+        <!-- 逻辑删除 -->
+        synthesis_cutting_tool_material_inventory.is_del as 'synthesis_cutting_tool_material_inventory.is_del',
+        <!-- 待换装数量 -->
+        synthesis_cutting_tool_material_inventory.to_exchange_count as 'synthesis_cutting_tool_material_inventory.to_exchange_count',
+        <!-- 待组装数量 -->
+        synthesis_cutting_tool_material_inventory.to_install_count as 'synthesis_cutting_tool_material_inventory.to_install_count',
+        /*synthesis_cutting_tool_material_inventory end*/
+        /*synthesis_cutting_tool begin*/
+        <!-- id -->
+        synthesis_cutting_tool.id as 'synthesis_cutting_tool.id',
+        <!-- 编码 -->
+        synthesis_cutting_tool.code as 'synthesis_cutting_tool.code',
+        <!-- 合成刀业务编码 -->
+        synthesis_cutting_tool.synthesis_code as 'synthesis_cutting_tool.synthesis_code',
+        <!-- 图纸url -->
+        synthesis_cutting_tool.pic_url as 'synthesis_cutting_tool.pic_url',
+        <!-- 逻辑删除 -->
+        synthesis_cutting_tool.is_del as 'synthesis_cutting_tool.is_del',
+        <!-- 合成刀类型  -->
+        synthesis_cutting_tool.synthesis_cutting_tool_type_id as 'synthesis_cutting_tool.synthesis_cutting_tool_type_id',
+        <!--  -->
+        synthesis_cutting_tool.abc as 'synthesis_cutting_tool.abc'
+        /*synthesis_cutting_tool end*/
+        FROM synthesis_cutting_tool_material_inventory as synthesis_cutting_tool_material_inventory
+        LEFT JOIN synthesis_cutting_tool as synthesis_cutting_tool ON synthesis_cutting_tool.code = synthesis_cutting_tool_material_inventory.synthesis_cutting_tool_code
+        WHERE
+            1 = 1 AND  synthesis_cutting_tool_material_inventory.is_del = 0
+        /*synthesis_cutting_tool_material_inventory begin*/
+        <!-- 标识 -->
+        <if test="id != null and id != '' " >
+            and synthesis_cutting_tool_material_inventory.id = #{id}
+        </if>
+        <!-- 合成刀编码 -->
+        <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+            and synthesis_cutting_tool_material_inventory.synthesis_cutting_tool_code = #{synthesisCuttingToolCode}
+        </if>
+        <!-- 合成刀业务编码 -->
+        <if test="synthesisCode != null and synthesisCode != '' " >
+            and synthesis_cutting_tool_material_inventory.synthesis_code = #{synthesisCode}
+        </if>
+        <!-- 备刀库数量 -->
+        <if test="prepareLibraryCount != null and prepareLibraryCount != '' " >
+            and synthesis_cutting_tool_material_inventory.prepare_library_count = #{prepareLibraryCount}
+        </if>
+        <!-- 待刃磨数量 -->
+        <if test="forGrindingCount != null and forGrindingCount != '' " >
+            and synthesis_cutting_tool_material_inventory.for_grinding_count = #{forGrindingCount}
+        </if>
+        <!-- 安装数量 设备上 -->
+        <if test="inUseCount != null and inUseCount != '' " >
+            and synthesis_cutting_tool_material_inventory.in_use_count = #{inUseCount}
+        </if>
+        <!-- 总数 -->
+        <if test="total != null and total != '' " >
+            and synthesis_cutting_tool_material_inventory.total = #{total}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="isDel != null and isDel != '' " >
+            and synthesis_cutting_tool_material_inventory.is_del = #{isDel}
+        </if>
+        <!-- 待换装数量 -->
+        <if test="toExchangeCount != null and toExchangeCount != '' " >
+            and synthesis_cutting_tool_material_inventory.to_exchange_count = #{toExchangeCount}
+        </if>
+        <!-- 待组装数量 -->
+        <if test="toInstallCount != null and toInstallCount != '' " >
+            and synthesis_cutting_tool_material_inventory.to_install_count = #{toInstallCount}
+        </if>
+        /*synthesis_cutting_tool_material_inventory end*/
+        /*synthesis_cutting_tools begin*/
+        <if test="synthesisCuttingToolVO != null ">
+        <!-- id -->
+        <if test="synthesisCuttingToolVO.id != null and synthesisCuttingToolVO.id != '' " >
+            and synthesis_cutting_tools.id = #{synthesisCuttingToolVO.id}
+        </if>
+        <!-- 编码 -->
+        <if test="synthesisCuttingToolVO.code != null and synthesisCuttingToolVO.code != '' " >
+            and synthesis_cutting_tools.code = #{synthesisCuttingToolVO.code}
+        </if>
+        <!-- 合成刀业务编码 -->
+        <if test="synthesisCuttingToolVO.synthesisCode != null and synthesisCuttingToolVO.synthesisCode != '' " >
+            and synthesis_cutting_tools.synthesis_code = #{synthesisCuttingToolVO.synthesisCode}
+        </if>
+        <!-- 图纸url -->
+        <if test="synthesisCuttingToolVO.picUrl != null and synthesisCuttingToolVO.picUrl != '' " >
+            and synthesis_cutting_tools.pic_url = #{synthesisCuttingToolVO.picUrl}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="synthesisCuttingToolVO.isDel != null and synthesisCuttingToolVO.isDel != '' " >
+            and synthesis_cutting_tools.is_del = #{synthesisCuttingToolVO.isDel}
+        </if>
+        <!-- 合成刀类型  -->
+        <if test="synthesisCuttingToolVO.synthesisCuttingToolTypeId != null and synthesisCuttingToolVO.synthesisCuttingToolTypeId != '' " >
+            and synthesis_cutting_tools.synthesis_cutting_tool_type_id = #{synthesisCuttingToolVO.synthesisCuttingToolTypeId}
+        </if>
+        <!--  -->
+        <if test="synthesisCuttingToolVO.abc != null and synthesisCuttingToolVO.abc != '' " >
+            and synthesis_cutting_tools.abc = #{synthesisCuttingToolVO.abc}
+        </if>
+        </if>
+        /*synthesis_cutting_tool end*/
+    </select>
+</mapper>

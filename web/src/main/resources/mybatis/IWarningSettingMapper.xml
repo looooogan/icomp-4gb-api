@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.mapper.IWarningSettingMapper">
+    <resultMap id="warningSettingQueryMap" type="com.common.pojo.WarningSetting">
+        <!-- 标识 -->
+        <id property="id" column="warning_setting.id"/>
+
+        <!-- 名称 -->
+        <result property="name" column="warning_setting.name"/>
+    </resultMap>
+    <!--添加-->
+    <insert id="addWarningSetting" parameterType="com.common.pojo.WarningSetting">
+        INSERT INTO warning_setting (
+            <!-- 标识 -->
+            id,
+            <!-- 名称 -->
+            name
+        )
+        VALUES (
+            <!-- 标识 -->
+            #{id},
+            <!-- 名称 -->
+            #{name}
+        )
+    </insert>
+
+    <!--删除-->
+    <delete id="delWarningSetting" parameterType="com.common.pojo.WarningSetting">
+        DELETE
+        FROM warning_setting
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--逻辑删除-->
+    <delete id="delWarningSettingForLogic" parameterType="com.common.pojo.WarningSetting">
+        UPDATE warning_setting SET
+        is_del = 1
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--根据VO删除-->
+    <delete id="delWarningSettingByVo" parameterType="com.common.vo.WarningSettingVO">
+        UPDATE warning_setting SET is_del = 1
+        WHERE
+            1=1
+            <!-- 标识 -->
+            <if test="id != null and id != '' " >
+                and id =  #{id}
+            </if>
+            <!-- 名称 -->
+            <if test="name != null and name != '' " >
+                and name =  #{name}
+            </if>
+    </delete>
+
+    <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
+    <update id="updWarningSetting" parameterType="com.common.pojo.WarningSetting">
+        UPDATE warning_setting
+        SET
+            <!-- 名称 -->
+            <if test="name != null and name != '' " >
+                name =  #{name},
+            </if>
+            <!-- 标识 -->
+            id = #{id}
+        WHERE
+            1 = 1
+            and id = #{id}
+    </update>
+
+    <!--分页查询 -->
+    <select id="getWarningSettingByPage" parameterType="com.common.vo.WarningSettingVO" resultMap="warningSettingQueryMap">
+        SELECT
+        /*warningSetting begin*/
+            <!-- 标识 -->
+            warning_setting.id as 'warning_setting.id',
+            <!-- 名称 -->
+            warning_setting.name as 'warning_setting.name'
+        /*warningSetting end*/
+        FROM warning_setting as warning_setting
+        WHERE
+            1 = 1 AND  warning_setting.is_del = 0
+        /*warning_setting begin*/
+            <!-- 标识 -->
+            <if test="id != null and id != '' " >
+                and warning_setting.id = #{id}
+            </if>
+            <!-- 名称 -->
+            <if test="name != null and name != '' " >
+                and warning_setting.name = #{name}
+            </if>
+        /*warning_setting end*/
+        ORDER BY warning_setting.id desc
+        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
+        LIMIT #{startRecord},#{pageSize}
+        </if>
+    </select>
+
+
+    <!--查询记录数-->
+    <select id="getWarningSettingCount" parameterType="com.common.vo.WarningSettingVO" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM warning_setting as warning_setting
+        WHERE
+            1 = 1 AND  warning_setting.is_del = 0
+        /*warning_setting begin*/
+        <!-- 标识 -->
+        <if test="id != null and id != '' " >
+            and warning_setting.id = #{id}
+        </if>
+        <!-- 名称 -->
+        <if test="name != null and name != '' " >
+            and warning_setting.name = #{name}
+        </if>
+        /*warning_setting end*/
+    </select>
+
+    <!--根据vo查询 -->
+    <select id="getWarningSetting" parameterType="com.common.vo.WarningSettingVO" resultMap="warningSettingQueryMap">
+        SELECT
+        /*warning_setting begin*/
+        <!-- 标识 -->
+        warning_setting.id as 'warning_setting.id',
+        <!-- 名称 -->
+        warning_setting.name as 'warning_setting.name'
+        /*warning_setting end*/
+        FROM warning_setting as warning_setting
+        WHERE
+            1 = 1 AND  warning_setting.is_del = 0
+        /*warning_setting begin*/
+        <!-- 标识 -->
+        <if test="id != null and id != '' " >
+            and warning_setting.id = #{id}
+        </if>
+        <!-- 名称 -->
+        <if test="name != null and name != '' " >
+            and warning_setting.name = #{name}
+        </if>
+        /*warning_setting end*/
+    </select>
+</mapper>

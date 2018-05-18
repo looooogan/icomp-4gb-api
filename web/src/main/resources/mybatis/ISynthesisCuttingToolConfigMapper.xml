@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.mapper.ISynthesisCuttingToolConfigMapper">
+    <resultMap id="synthesisCuttingToolConfigQueryMap" type="com.common.pojo.SynthesisCuttingToolConfig">
+        <!-- 标识 -->
+        <id property="id" column="synthesis_cutting_tool_config.id"/>
+
+        <!-- 合成刀编码 -->
+        <result property="synthesisCuttingToolCode" column="synthesis_cutting_tool_config.synthesis_cutting_tool_code"/>
+        <!-- 合成刀类型 1复合刀具 2刀片 3热套 4一体刀 5 -->
+        <result property="synthesisCuttingToolTypeId" column="synthesis_cutting_tool_config.synthesis_cutting_tool_type_id"/>
+        <!-- 逻辑删除 -->
+        <result property="isDel" column="synthesis_cutting_tool_config.is_del"/>
+        <!-- 数量 -->
+        <result property="count" column="synthesis_cutting_tool_config.count"/>
+        <!-- 图纸url -->
+        <result property="picurl" column="synthesis_cutting_tool_config.picUrl"/>
+        <!-- 位置 -->
+        <result property="location" column="synthesis_cutting_tool_config.location"/>
+        <!-- 合成刀编码 -->
+        <association property="synthesisCuttingTool"  column="synthesis_cutting_tool.code" resultMap="synthesisCuttingToolConfigSynthesisCuttingToolMap"/>
+        <!-- 合成刀类型 1复合刀具 2刀片 3热套 4一体刀 5 -->
+        <association property="synthesisCuttingToolType"  column="synthesis_cutting_tool_type.id" resultMap="synthesisCuttingToolConfigSynthesisCuttingToolTypeMap"/>
+    </resultMap>
+        <resultMap id="synthesisCuttingToolConfigSynthesisCuttingToolMap" type="com.common.pojo.SynthesisCuttingTool">
+            <!-- id -->
+            <id property="id" column="synthesis_cutting_tool.id"/>
+
+            <!-- 编码 -->
+            <result property="code" column="synthesis_cutting_tool.code"/>
+            <!-- 合成刀业务编码 -->
+            <result property="synthesisCode" column="synthesis_cutting_tool.synthesis_code"/>
+            <!-- 图纸url -->
+            <result property="picUrl" column="synthesis_cutting_tool.pic_url"/>
+            <!-- 逻辑删除 -->
+            <result property="isDel" column="synthesis_cutting_tool.is_del"/>
+            <!-- 合成刀类型  -->
+            <result property="synthesisCuttingToolTypeId" column="synthesis_cutting_tool.synthesis_cutting_tool_type_id"/>
+            <!--  -->
+            <result property="abc" column="synthesis_cutting_tool.abc"/>
+        </resultMap>
+        <resultMap id="synthesisCuttingToolConfigSynthesisCuttingToolTypeMap" type="com.common.pojo.SynthesisCuttingToolType">
+            <!-- id -->
+            <id property="id" column="synthesis_cutting_tool_type.id"/>
+
+            <!-- 名称 -->
+            <result property="name" column="synthesis_cutting_tool_type.name"/>
+            <!-- 逻辑删除 -->
+            <result property="isDel" column="synthesis_cutting_tool_type.is_del"/>
+        </resultMap>
+    <!--添加-->
+    <insert id="addSynthesisCuttingToolConfig"  useGeneratedKeys="true" keyProperty="id"  parameterType="com.common.pojo.SynthesisCuttingToolConfig">
+        INSERT INTO synthesis_cutting_tool_config (
+            <!-- 标识 -->
+            id,
+            <!-- 合成刀编码 -->
+            synthesis_cutting_tool_code,
+            <!-- 合成刀类型 1复合刀具 2刀片 3热套 4一体刀 5 -->
+            synthesis_cutting_tool_type_id,
+            <!-- 逻辑删除 -->
+            is_del,
+            <!-- 数量 -->
+            count,
+            <!-- 图纸url -->
+            picUrl,
+            <!-- 位置 -->
+            location
+        )
+        VALUES (
+            <!-- 标识 -->
+            #{id},
+            <!-- 合成刀编码 -->
+            #{synthesisCuttingToolCode},
+            <!-- 合成刀类型 1复合刀具 2刀片 3热套 4一体刀 5 -->
+            #{synthesisCuttingToolTypeId},
+            <!-- 逻辑删除 -->
+            #{isDel},
+            <!-- 数量 -->
+            #{count},
+            <!-- 图纸url -->
+            #{picurl},
+            <!-- 位置 -->
+            #{location}
+        )
+        <selectKey  resultType="java.lang.Integer"  order="AFTER"  keyProperty="id">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <!--删除-->
+    <delete id="delSynthesisCuttingToolConfig" parameterType="com.common.pojo.SynthesisCuttingToolConfig">
+        DELETE
+        FROM synthesis_cutting_tool_config
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--逻辑删除-->
+    <delete id="delSynthesisCuttingToolConfigForLogic" parameterType="com.common.pojo.SynthesisCuttingToolConfig">
+        UPDATE synthesis_cutting_tool_config SET
+        is_del = 1
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--根据VO删除-->
+    <delete id="delSynthesisCuttingToolConfigByVo" parameterType="com.common.vo.SynthesisCuttingToolConfigVO">
+        UPDATE synthesis_cutting_tool_config SET is_del = 1
+        WHERE
+            1=1
+            <!-- 标识 -->
+            <if test="id != null and id != '' " >
+                and id =  #{id}
+            </if>
+            <!-- 合成刀编码 -->
+            <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+                and synthesis_cutting_tool_code =  #{synthesisCuttingToolCode}
+            </if>
+            <!-- 合成刀类型 1复合刀具 2刀片 3热套 4一体刀 5 -->
+            <if test="synthesisCuttingToolTypeId != null and synthesisCuttingToolTypeId != '' " >
+                and synthesis_cutting_tool_type_id =  #{synthesisCuttingToolTypeId}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                and is_del =  #{isDel}
+            </if>
+            <!-- 数量 -->
+            <if test="count != null and count != '' " >
+                and count =  #{count}
+            </if>
+            <!-- 图纸url -->
+            <if test="picurl != null and picurl != '' " >
+                and picUrl =  #{picurl}
+            </if>
+            <!-- 位置 -->
+            <if test="location != null and location != '' " >
+                and location =  #{location}
+            </if>
+    </delete>
+
+    <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
+    <update id="updSynthesisCuttingToolConfig" parameterType="com.common.pojo.SynthesisCuttingToolConfig">
+        UPDATE synthesis_cutting_tool_config
+        SET
+            <!-- 合成刀编码 -->
+            <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+                synthesis_cutting_tool_code =  #{synthesisCuttingToolCode},
+            </if>
+            <!-- 合成刀类型 1复合刀具 2刀片 3热套 4一体刀 5 -->
+            <if test="synthesisCuttingToolTypeId != null and synthesisCuttingToolTypeId != '' " >
+                synthesis_cutting_tool_type_id =  #{synthesisCuttingToolTypeId},
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                is_del =  #{isDel},
+            </if>
+            <!-- 数量 -->
+            <if test="count != null and count != '' " >
+                count =  #{count},
+            </if>
+            <!-- 图纸url -->
+            <if test="picurl != null and picurl != '' " >
+                picUrl =  #{picurl},
+            </if>
+            <!-- 位置 -->
+            <if test="location != null and location != '' " >
+                location =  #{location},
+            </if>
+            <!-- 标识 -->
+            id = #{id}
+        WHERE
+            1 = 1
+            and id = #{id}
+    </update>
+
+    <!--分页查询 -->
+    <select id="getSynthesisCuttingToolConfigByPage" parameterType="com.common.vo.SynthesisCuttingToolConfigVO" resultMap="synthesisCuttingToolConfigQueryMap">
+        SELECT
+        /*synthesisCuttingToolConfig begin*/
+            <!-- 标识 -->
+            synthesis_cutting_tool_config.id as 'synthesis_cutting_tool_config.id',
+            <!-- 合成刀编码 -->
+            synthesis_cutting_tool_config.synthesis_cutting_tool_code as 'synthesis_cutting_tool_config.synthesis_cutting_tool_code',
+            <!-- 合成刀类型 1复合刀具 2刀片 3热套 4一体刀 5 -->
+            synthesis_cutting_tool_config.synthesis_cutting_tool_type_id as 'synthesis_cutting_tool_config.synthesis_cutting_tool_type_id',
+            <!-- 逻辑删除 -->
+            synthesis_cutting_tool_config.is_del as 'synthesis_cutting_tool_config.is_del',
+            <!-- 数量 -->
+            synthesis_cutting_tool_config.count as 'synthesis_cutting_tool_config.count',
+            <!-- 图纸url -->
+            synthesis_cutting_tool_config.picUrl as 'synthesis_cutting_tool_config.picUrl',
+            <!-- 位置 -->
+            synthesis_cutting_tool_config.location as 'synthesis_cutting_tool_config.location',
+        /*synthesisCuttingToolConfig end*/
+        /*synthesis_cutting_tool begin*/
+            <!-- id -->
+            synthesis_cutting_tool.id as 'synthesis_cutting_tool.id',
+            <!-- 编码 -->
+            synthesis_cutting_tool.code as 'synthesis_cutting_tool.code',
+            <!-- 合成刀业务编码 -->
+            synthesis_cutting_tool.synthesis_code as 'synthesis_cutting_tool.synthesis_code',
+            <!-- 图纸url -->
+            synthesis_cutting_tool.pic_url as 'synthesis_cutting_tool.pic_url',
+            <!-- 逻辑删除 -->
+            synthesis_cutting_tool.is_del as 'synthesis_cutting_tool.is_del',
+            <!-- 合成刀类型  -->
+            synthesis_cutting_tool.synthesis_cutting_tool_type_id as 'synthesis_cutting_tool.synthesis_cutting_tool_type_id',
+            <!--  -->
+            synthesis_cutting_tool.abc as 'synthesis_cutting_tool.abc',
+        /*synthesis_cutting_tool end*/
+        /*synthesis_cutting_tool_type begin*/
+            <!-- id -->
+            synthesis_cutting_tool_type.id as 'synthesis_cutting_tool_type.id',
+            <!-- 名称 -->
+            synthesis_cutting_tool_type.name as 'synthesis_cutting_tool_type.name',
+            <!-- 逻辑删除 -->
+            synthesis_cutting_tool_type.is_del as 'synthesis_cutting_tool_type.is_del'
+        /*synthesis_cutting_tool_type end*/
+        FROM synthesis_cutting_tool_config as synthesis_cutting_tool_config
+        LEFT JOIN synthesis_cutting_tool as synthesis_cutting_tool ON synthesis_cutting_tool.code = synthesis_cutting_tool_config.synthesis_cutting_tool_code
+        LEFT JOIN synthesis_cutting_tool_type as synthesis_cutting_tool_type ON synthesis_cutting_tool_type.id = synthesis_cutting_tool_config.synthesis_cutting_tool_type_id
+        WHERE
+            1 = 1 AND  synthesis_cutting_tool_config.is_del = 0
+        /*synthesis_cutting_tool_config begin*/
+            <!-- 标识 -->
+            <if test="id != null and id != '' " >
+                and synthesis_cutting_tool_config.id = #{id}
+            </if>
+            <!-- 合成刀编码 -->
+            <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+                and synthesis_cutting_tool_config.synthesis_cutting_tool_code = #{synthesisCuttingToolCode}
+            </if>
+            <!-- 合成刀类型 1复合刀具 2刀片 3热套 4一体刀 5 -->
+            <if test="synthesisCuttingToolTypeId != null and synthesisCuttingToolTypeId != '' " >
+                and synthesis_cutting_tool_config.synthesis_cutting_tool_type_id = #{synthesisCuttingToolTypeId}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                and synthesis_cutting_tool_config.is_del = #{isDel}
+            </if>
+            <!-- 数量 -->
+            <if test="count != null and count != '' " >
+                and synthesis_cutting_tool_config.count = #{count}
+            </if>
+            <!-- 图纸url -->
+            <if test="picurl != null and picurl != '' " >
+                and synthesis_cutting_tool_config.picUrl = #{picurl}
+            </if>
+            <!-- 位置 -->
+            <if test="location != null and location != '' " >
+                and synthesis_cutting_tool_config.location = #{location}
+            </if>
+        /*synthesis_cutting_tool_config end*/
+        /*synthesis_cutting_tool begin*/
+            <if test="synthesisCuttingToolVO != null">
+            <!-- id -->
+            <if test="synthesisCuttingToolVO.id != null and synthesisCuttingToolVO.id != '' " >
+                and synthesis_cutting_tool.id = #{synthesisCuttingToolVO.id}
+            </if>
+            <!-- 编码 -->
+            <if test="synthesisCuttingToolVO.code != null and synthesisCuttingToolVO.code != '' " >
+                and synthesis_cutting_tool.code = #{synthesisCuttingToolVO.code}
+            </if>
+            <!-- 合成刀业务编码 -->
+            <if test="synthesisCuttingToolVO.synthesisCode != null and synthesisCuttingToolVO.synthesisCode != '' " >
+                and synthesis_cutting_tool.synthesis_code = #{synthesisCuttingToolVO.synthesisCode}
+            </if>
+            <!-- 图纸url -->
+            <if test="synthesisCuttingToolVO.picUrl != null and synthesisCuttingToolVO.picUrl != '' " >
+                and synthesis_cutting_tool.pic_url = #{synthesisCuttingToolVO.picUrl}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="synthesisCuttingToolVO.isDel != null and synthesisCuttingToolVO.isDel != '' " >
+                and synthesis_cutting_tool.is_del = #{synthesisCuttingToolVO.isDel}
+            </if>
+            <!-- 合成刀类型  -->
+            <if test="synthesisCuttingToolVO.synthesisCuttingToolTypeId != null and synthesisCuttingToolVO.synthesisCuttingToolTypeId != '' " >
+                and synthesis_cutting_tool.synthesis_cutting_tool_type_id = #{synthesisCuttingToolVO.synthesisCuttingToolTypeId}
+            </if>
+            <!--  -->
+            <if test="synthesisCuttingToolVO.abc != null and synthesisCuttingToolVO.abc != '' " >
+                and synthesis_cutting_tool.abc = #{synthesisCuttingToolVO.abc}
+            </if>
+            </if>
+        /*synthesis_cutting_tool end*/
+        /*synthesis_cutting_tool_type begin*/
+            <if test="synthesisCuttingToolTypeVO != null">
+            <!-- id -->
+            <if test="synthesisCuttingToolTypeVO.id != null and synthesisCuttingToolTypeVO.id != '' " >
+                and synthesis_cutting_tool_type.id = #{synthesisCuttingToolTypeVO.id}
+            </if>
+            <!-- 名称 -->
+            <if test="synthesisCuttingToolTypeVO.name != null and synthesisCuttingToolTypeVO.name != '' " >
+                and synthesis_cutting_tool_type.name = #{synthesisCuttingToolTypeVO.name}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="synthesisCuttingToolTypeVO.isDel != null and synthesisCuttingToolTypeVO.isDel != '' " >
+                and synthesis_cutting_tool_type.is_del = #{synthesisCuttingToolTypeVO.isDel}
+            </if>
+            </if>
+        /*synthesis_cutting_tool_type end*/
+        ORDER BY synthesis_cutting_tool_config.id desc
+        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
+        LIMIT #{startRecord},#{pageSize}
+        </if>
+    </select>
+
+
+    <!--查询记录数-->
+    <select id="getSynthesisCuttingToolConfigCount" parameterType="com.common.vo.SynthesisCuttingToolConfigVO" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM synthesis_cutting_tool_config as synthesis_cutting_tool_config
+        LEFT JOIN synthesis_cutting_tool as synthesis_cutting_tool ON synthesis_cutting_tool.code = synthesis_cutting_tool_config.synthesis_cutting_tool_code
+        LEFT JOIN synthesis_cutting_tool_type as synthesis_cutting_tool_type ON synthesis_cutting_tool_type.id = synthesis_cutting_tool_config.synthesis_cutting_tool_type_id
+        WHERE
+            1 = 1 AND  synthesis_cutting_tool_config.is_del = 0
+        /*synthesis_cutting_tool_config begin*/
+        <!-- 标识 -->
+        <if test="id != null and id != '' " >
+            and synthesis_cutting_tool_config.id = #{id}
+        </if>
+        <!-- 合成刀编码 -->
+        <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+            and synthesis_cutting_tool_config.synthesis_cutting_tool_code = #{synthesisCuttingToolCode}
+        </if>
+        <!-- 合成刀类型 1复合刀具 2刀片 3热套 4一体刀 5 -->
+        <if test="synthesisCuttingToolTypeId != null and synthesisCuttingToolTypeId != '' " >
+            and synthesis_cutting_tool_config.synthesis_cutting_tool_type_id = #{synthesisCuttingToolTypeId}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="isDel != null and isDel != '' " >
+            and synthesis_cutting_tool_config.is_del = #{isDel}
+        </if>
+        <!-- 数量 -->
+        <if test="count != null and count != '' " >
+            and synthesis_cutting_tool_config.count = #{count}
+        </if>
+        <!-- 图纸url -->
+        <if test="picurl != null and picurl != '' " >
+            and synthesis_cutting_tool_config.picUrl = #{picurl}
+        </if>
+        <!-- 位置 -->
+        <if test="location != null and location != '' " >
+            and synthesis_cutting_tool_config.location = #{location}
+        </if>
+        /*synthesis_cutting_tool_config end*/
+        /*synthesis_cutting_tool begin*/
+        <if test="synthesisCuttingToolVO != null">
+        <!-- id -->
+        <if test="synthesisCuttingToolVO.id != null and synthesisCuttingToolVO.id != '' " >
+            and synthesis_cutting_tool.id = #{synthesisCuttingToolVO.id}
+        </if>
+        <!-- 编码 -->
+        <if test="synthesisCuttingToolVO.code != null and synthesisCuttingToolVO.code != '' " >
+            and synthesis_cutting_tool.code = #{synthesisCuttingToolVO.code}
+        </if>
+        <!-- 合成刀业务编码 -->
+        <if test="synthesisCuttingToolVO.synthesisCode != null and synthesisCuttingToolVO.synthesisCode != '' " >
+            and synthesis_cutting_tool.synthesis_code = #{synthesisCuttingToolVO.synthesisCode}
+        </if>
+        <!-- 图纸url -->
+        <if test="synthesisCuttingToolVO.picUrl != null and synthesisCuttingToolVO.picUrl != '' " >
+            and synthesis_cutting_tool.pic_url = #{synthesisCuttingToolVO.picUrl}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="synthesisCuttingToolVO.isDel != null and synthesisCuttingToolVO.isDel != '' " >
+            and synthesis_cutting_tool.is_del = #{synthesisCuttingToolVO.isDel}
+        </if>
+        <!-- 合成刀类型  -->
+        <if test="synthesisCuttingToolVO.synthesisCuttingToolTypeId != null and synthesisCuttingToolVO.synthesisCuttingToolTypeId != '' " >
+            and synthesis_cutting_tool.synthesis_cutting_tool_type_id = #{synthesisCuttingToolVO.synthesisCuttingToolTypeId}
+        </if>
+        <!--  -->
+        <if test="synthesisCuttingToolVO.abc != null and synthesisCuttingToolVO.abc != '' " >
+            and synthesis_cutting_tool.abc = #{synthesisCuttingToolVO.abc}
+        </if>
+        </if>
+        /*synthesis_cutting_tool end*/
+        /*synthesis_cutting_tool_type begin*/
+        <if test="synthesisCuttingToolTypeVO != null">
+        <!-- id -->
+        <if test="synthesisCuttingToolTypeVO.id != null and synthesisCuttingToolTypeVO.id != '' " >
+            and synthesis_cutting_tool_type.id = #{synthesisCuttingToolTypeVO.id}
+        </if>
+        <!-- 名称 -->
+        <if test="synthesisCuttingToolTypeVO.name != null and synthesisCuttingToolTypeVO.name != '' " >
+            and synthesis_cutting_tool_type.name = #{synthesisCuttingToolTypeVO.name}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="synthesisCuttingToolTypeVO.isDel != null and synthesisCuttingToolTypeVO.isDel != '' " >
+            and synthesis_cutting_tool_type.is_del = #{synthesisCuttingToolTypeVO.isDel}
+        </if>
+        </if>
+        /*synthesis_cutting_tool_type end*/
+    </select>
+
+    <!--根据vo查询 -->
+    <select id="getSynthesisCuttingToolConfig" parameterType="com.common.vo.SynthesisCuttingToolConfigVO" resultMap="synthesisCuttingToolConfigQueryMap">
+        SELECT
+        /*synthesis_cutting_tool_config begin*/
+        <!-- 标识 -->
+        synthesis_cutting_tool_config.id as 'synthesis_cutting_tool_config.id',
+        <!-- 合成刀编码 -->
+        synthesis_cutting_tool_config.synthesis_cutting_tool_code as 'synthesis_cutting_tool_config.synthesis_cutting_tool_code',
+        <!-- 合成刀类型 1复合刀具 2刀片 3热套 4一体刀 5 -->
+        synthesis_cutting_tool_config.synthesis_cutting_tool_type_id as 'synthesis_cutting_tool_config.synthesis_cutting_tool_type_id',
+        <!-- 逻辑删除 -->
+        synthesis_cutting_tool_config.is_del as 'synthesis_cutting_tool_config.is_del',
+        <!-- 数量 -->
+        synthesis_cutting_tool_config.count as 'synthesis_cutting_tool_config.count',
+        <!-- 图纸url -->
+        synthesis_cutting_tool_config.picUrl as 'synthesis_cutting_tool_config.picUrl',
+        <!-- 位置 -->
+        synthesis_cutting_tool_config.location as 'synthesis_cutting_tool_config.location',
+        /*synthesis_cutting_tool_config end*/
+        /*synthesis_cutting_tool begin*/
+        <!-- id -->
+        synthesis_cutting_tool.id as 'synthesis_cutting_tool.id',
+        <!-- 编码 -->
+        synthesis_cutting_tool.code as 'synthesis_cutting_tool.code',
+        <!-- 合成刀业务编码 -->
+        synthesis_cutting_tool.synthesis_code as 'synthesis_cutting_tool.synthesis_code',
+        <!-- 图纸url -->
+        synthesis_cutting_tool.pic_url as 'synthesis_cutting_tool.pic_url',
+        <!-- 逻辑删除 -->
+        synthesis_cutting_tool.is_del as 'synthesis_cutting_tool.is_del',
+        <!-- 合成刀类型  -->
+        synthesis_cutting_tool.synthesis_cutting_tool_type_id as 'synthesis_cutting_tool.synthesis_cutting_tool_type_id',
+        <!--  -->
+        synthesis_cutting_tool.abc as 'synthesis_cutting_tool.abc',
+        /*synthesis_cutting_tool end*/
+        /*synthesis_cutting_tool_type begin*/
+        <!-- id -->
+        synthesis_cutting_tool_type.id as 'synthesis_cutting_tool_type.id',
+        <!-- 名称 -->
+        synthesis_cutting_tool_type.name as 'synthesis_cutting_tool_type.name',
+        <!-- 逻辑删除 -->
+        synthesis_cutting_tool_type.is_del as 'synthesis_cutting_tool_type.is_del'
+        /*synthesis_cutting_tool_type end*/
+        FROM synthesis_cutting_tool_config as synthesis_cutting_tool_config
+        LEFT JOIN synthesis_cutting_tool as synthesis_cutting_tool ON synthesis_cutting_tool.code = synthesis_cutting_tool_config.synthesis_cutting_tool_code
+        LEFT JOIN synthesis_cutting_tool_type as synthesis_cutting_tool_type ON synthesis_cutting_tool_type.id = synthesis_cutting_tool_config.synthesis_cutting_tool_type_id
+        WHERE
+            1 = 1 AND  synthesis_cutting_tool_config.is_del = 0
+        /*synthesis_cutting_tool_config begin*/
+        <!-- 标识 -->
+        <if test="id != null and id != '' " >
+            and synthesis_cutting_tool_config.id = #{id}
+        </if>
+        <!-- 合成刀编码 -->
+        <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+            and synthesis_cutting_tool_config.synthesis_cutting_tool_code = #{synthesisCuttingToolCode}
+        </if>
+        <!-- 合成刀类型 1复合刀具 2刀片 3热套 4一体刀 5 -->
+        <if test="synthesisCuttingToolTypeId != null and synthesisCuttingToolTypeId != '' " >
+            and synthesis_cutting_tool_config.synthesis_cutting_tool_type_id = #{synthesisCuttingToolTypeId}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="isDel != null and isDel != '' " >
+            and synthesis_cutting_tool_config.is_del = #{isDel}
+        </if>
+        <!-- 数量 -->
+        <if test="count != null and count != '' " >
+            and synthesis_cutting_tool_config.count = #{count}
+        </if>
+        <!-- 图纸url -->
+        <if test="picurl != null and picurl != '' " >
+            and synthesis_cutting_tool_config.picUrl = #{picurl}
+        </if>
+        <!-- 位置 -->
+        <if test="location != null and location != '' " >
+            and synthesis_cutting_tool_config.location = #{location}
+        </if>
+        /*synthesis_cutting_tool_config end*/
+        /*synthesis_cutting_tools begin*/
+        <if test="synthesisCuttingToolVO != null">
+        <!-- id -->
+        <if test="synthesisCuttingToolVO.id != null and synthesisCuttingToolVO.id != '' " >
+            and synthesis_cutting_tools.id = #{synthesisCuttingToolVO.id}
+        </if>
+        <!-- 编码 -->
+        <if test="synthesisCuttingToolVO.code != null and synthesisCuttingToolVO.code != '' " >
+            and synthesis_cutting_tools.code = #{synthesisCuttingToolVO.code}
+        </if>
+        <!-- 合成刀业务编码 -->
+        <if test="synthesisCuttingToolVO.synthesisCode != null and synthesisCuttingToolVO.synthesisCode != '' " >
+            and synthesis_cutting_tools.synthesis_code = #{synthesisCuttingToolVO.synthesisCode}
+        </if>
+        <!-- 图纸url -->
+        <if test="synthesisCuttingToolVO.picUrl != null and synthesisCuttingToolVO.picUrl != '' " >
+            and synthesis_cutting_tools.pic_url = #{synthesisCuttingToolVO.picUrl}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="synthesisCuttingToolVO.isDel != null and synthesisCuttingToolVO.isDel != '' " >
+            and synthesis_cutting_tools.is_del = #{synthesisCuttingToolVO.isDel}
+        </if>
+        <!-- 合成刀类型  -->
+        <if test="synthesisCuttingToolVO.synthesisCuttingToolTypeId != null and synthesisCuttingToolVO.synthesisCuttingToolTypeId != '' " >
+            and synthesis_cutting_tools.synthesis_cutting_tool_type_id = #{synthesisCuttingToolVO.synthesisCuttingToolTypeId}
+        </if>
+        <!--  -->
+        <if test="synthesisCuttingToolVO.abc != null and synthesisCuttingToolVO.abc != '' " >
+            and synthesis_cutting_tools.abc = #{synthesisCuttingToolVO.abc}
+        </if>
+        </if>
+        /*synthesis_cutting_tool end*/
+        /*synthesis_cutting_tool_types begin*/
+        <if test="synthesisCuttingToolTypeVO != null">
+        <!-- id -->
+        <if test="synthesisCuttingToolTypeVO.id != null and synthesisCuttingToolTypeVO.id != '' " >
+            and synthesis_cutting_tool_types.id = #{synthesisCuttingToolTypeVO.id}
+        </if>
+        <!-- 名称 -->
+        <if test="synthesisCuttingToolTypeVO.name != null and synthesisCuttingToolTypeVO.name != '' " >
+            and synthesis_cutting_tool_types.name = #{synthesisCuttingToolTypeVO.name}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="synthesisCuttingToolTypeVO.isDel != null and synthesisCuttingToolTypeVO.isDel != '' " >
+            and synthesis_cutting_tool_types.is_del = #{synthesisCuttingToolTypeVO.isDel}
+        </if>
+        </if>
+        /*synthesis_cutting_tool_type end*/
+    </select>
+</mapper>

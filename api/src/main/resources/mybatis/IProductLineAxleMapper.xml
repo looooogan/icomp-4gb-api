@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.mapper.IProductLineAxleMapper">
+    <resultMap id="productLineAxleQueryMap" type="com.common.pojo.ProductLineAxle">
+        <!-- 轴ID -->
+        <id property="id" column="product_line_axle.id"/>
+
+        <!-- 轴编码 -->
+        <result property="code" column="product_line_axle.code"/>
+        <!-- 轴名称 -->
+        <result property="name" column="product_line_axle.name"/>
+        <!--  -->
+        <result property="isDel" column="product_line_axle.is_del"/>
+    </resultMap>
+    <!--添加-->
+    <insert id="addProductLineAxle" parameterType="com.common.pojo.ProductLineAxle">
+        INSERT INTO product_line_axle (
+            <!-- 轴ID -->
+            id,
+            <!-- 轴编码 -->
+            code,
+            <!-- 轴名称 -->
+            name,
+            <!--  -->
+            is_del
+        )
+        VALUES (
+            <!-- 轴ID -->
+            #{id},
+            <!-- 轴编码 -->
+            #{code},
+            <!-- 轴名称 -->
+            #{name},
+            <!--  -->
+            #{isDel}
+        )
+    </insert>
+
+    <!--删除-->
+    <delete id="delProductLineAxle" parameterType="com.common.pojo.ProductLineAxle">
+        DELETE
+        FROM product_line_axle
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--逻辑删除-->
+    <delete id="delProductLineAxleForLogic" parameterType="com.common.pojo.ProductLineAxle">
+        UPDATE product_line_axle SET
+        is_del = 1
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--根据VO删除-->
+    <delete id="delProductLineAxleByVo" parameterType="com.common.vo.ProductLineAxleVO">
+        UPDATE product_line_axle SET is_del = 1
+        WHERE
+            1=1
+            <!-- 轴ID -->
+            <if test="id != null and id != '' " >
+                and id =  #{id}
+            </if>
+            <!-- 轴编码 -->
+            <if test="code != null and code != '' " >
+                and code =  #{code}
+            </if>
+            <!-- 轴名称 -->
+            <if test="name != null and name != '' " >
+                and name =  #{name}
+            </if>
+            <!--  -->
+            <if test="isDel != null and isDel != '' " >
+                and is_del =  #{isDel}
+            </if>
+    </delete>
+
+    <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
+    <update id="updProductLineAxle" parameterType="com.common.pojo.ProductLineAxle">
+        UPDATE product_line_axle
+        SET
+            <!-- 轴编码 -->
+            <if test="code != null and code != '' " >
+                code =  #{code},
+            </if>
+            <!-- 轴名称 -->
+            <if test="name != null and name != '' " >
+                name =  #{name},
+            </if>
+            <!--  -->
+            <if test="isDel != null and isDel != '' " >
+                is_del =  #{isDel},
+            </if>
+            <!-- 轴ID -->
+            id = #{id}
+        WHERE
+            1 = 1
+            and id = #{id}
+    </update>
+
+    <!--分页查询 -->
+    <select id="getProductLineAxleByPage" parameterType="com.common.vo.ProductLineAxleVO" resultMap="productLineAxleQueryMap">
+        SELECT
+        /*productLineAxle begin*/
+            <!-- 轴ID -->
+            product_line_axle.id as 'product_line_axle.id',
+            <!-- 轴编码 -->
+            product_line_axle.code as 'product_line_axle.code',
+            <!-- 轴名称 -->
+            product_line_axle.name as 'product_line_axle.name',
+            <!--  -->
+            product_line_axle.is_del as 'product_line_axle.is_del'
+        /*productLineAxle end*/
+        FROM product_line_axle as product_line_axle
+        WHERE
+            1 = 1 AND  product_line_axle.is_del = 0
+        /*product_line_axle begin*/
+            <!-- 轴ID -->
+            <if test="id != null and id != '' " >
+                and product_line_axle.id = #{id}
+            </if>
+            <!-- 轴编码 -->
+            <if test="code != null and code != '' " >
+                and product_line_axle.code = #{code}
+            </if>
+            <!-- 轴名称 -->
+            <if test="name != null and name != '' " >
+                and product_line_axle.name = #{name}
+            </if>
+            <!--  -->
+            <if test="isDel != null and isDel != '' " >
+                and product_line_axle.is_del = #{isDel}
+            </if>
+        /*product_line_axle end*/
+        ORDER BY product_line_axle.id desc
+        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
+        LIMIT #{startRecord},#{pageSize}
+        </if>
+    </select>
+
+
+    <!--查询记录数-->
+    <select id="getProductLineAxleCount" parameterType="com.common.vo.ProductLineAxleVO" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM product_line_axle as product_line_axle
+        WHERE
+            1 = 1 AND  product_line_axle.is_del = 0
+        /*product_line_axle begin*/
+        <!-- 轴ID -->
+        <if test="id != null and id != '' " >
+            and product_line_axle.id = #{id}
+        </if>
+        <!-- 轴编码 -->
+        <if test="code != null and code != '' " >
+            and product_line_axle.code = #{code}
+        </if>
+        <!-- 轴名称 -->
+        <if test="name != null and name != '' " >
+            and product_line_axle.name = #{name}
+        </if>
+        <!--  -->
+        <if test="isDel != null and isDel != '' " >
+            and product_line_axle.is_del = #{isDel}
+        </if>
+        /*product_line_axle end*/
+    </select>
+
+    <!--根据vo查询 -->
+    <select id="getProductLineAxle" parameterType="com.common.vo.ProductLineAxleVO" resultMap="productLineAxleQueryMap">
+        SELECT
+        /*product_line_axle begin*/
+        <!-- 轴ID -->
+        product_line_axle.id as 'product_line_axle.id',
+        <!-- 轴编码 -->
+        product_line_axle.code as 'product_line_axle.code',
+        <!-- 轴名称 -->
+        product_line_axle.name as 'product_line_axle.name',
+        <!--  -->
+        product_line_axle.is_del as 'product_line_axle.is_del'
+        /*product_line_axle end*/
+        FROM product_line_axle as product_line_axle
+        WHERE
+            1 = 1 AND  product_line_axle.is_del = 0
+        /*product_line_axle begin*/
+        <!-- 轴ID -->
+        <if test="id != null and id != '' " >
+            and product_line_axle.id = #{id}
+        </if>
+        <!-- 轴编码 -->
+        <if test="code != null and code != '' " >
+            and product_line_axle.code = #{code}
+        </if>
+        <!-- 轴名称 -->
+        <if test="name != null and name != '' " >
+            and product_line_axle.name = #{name}
+        </if>
+        <!--  -->
+        <if test="isDel != null and isDel != '' " >
+            and product_line_axle.is_del = #{isDel}
+        </if>
+        /*product_line_axle end*/
+    </select>
+</mapper>

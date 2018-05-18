@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	http://www.springframework.org/schema/tx  
+	http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+    http://www.springframework.org/schema/aop 
+    http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+    <!-- 引入属性文件 -->
+	<context:property-placeholder location="classpath:jdbc.properties" ignore-unresolvable="true"/>	
+
+	<!-- 配置数据源 -->
+	<bean name="mysqlDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init"  destroy-method="close">
+		<property name="url" value="${url}" />
+		<property name="username" value="${username}" />
+		<property name="password" value="${password}" />
+		<property name="initialSize" value="1" />
+		<property name="maxActive" value="80" />
+		<property name="minIdle" value="10" />
+		<property name="maxWait" value="60000" />
+<!-- 		<property name="validationQuery" value="${validationQuery}" /> -->
+		<property name="testOnBorrow" value="false" />
+		<property name="testOnReturn" value="false" />
+		<property name="testWhileIdle" value="true" />
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+		<property name="minEvictableIdleTimeMillis" value="25200000" />
+		<property name="removeAbandoned" value="true" />
+		<property name="removeAbandonedTimeout" value="1800" />
+		<property name="logAbandoned" value="true" />
+		<property name="filters" value="mergeStat" />
+	</bean>
+
+	<!--配置数据源 -->
+	<bean id="qimingDataSource" class="com.alibaba.druid.pool.DruidDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+		<property name="url" value="${qimingurl}"/>
+		<property name="username" value="${qimingusername}"/>
+		<property name="password" value="${qimingpassword}"/>
+		<!-- 连接池启动时的初始值 -->
+		<property name="initialSize" value="3" />
+		<!-- 连接池的最大值 -->
+		<property name="maxActive" value="300" />
+		<!-- 最大空闲值.当经过一个高峰时间后，连接池可以慢慢将已经用不到的连接慢慢释放一部分，一直减少到maxIdle为止 -->
+		<property name="maxIdle" value="2" />
+		<!-- 最小空闲值.当空闲的连接数少于阀值时，连接池就会预申请去一些连接，以免洪峰来时来不及申请 -->
+		<property name="minIdle" value="1" />
+		<!-- end -->
+	</bean>
+
+	<!--<bean name="qimingDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">-->
+		<!--<property name="driverClassName" value="${qimingdriver}"/>-->
+		<!--<property name="url" value="${qimingurl}" />-->
+		<!--<property name="username" value="${qimingusername}" />-->
+		<!--<property name="password" value="${qimingpassword}" />-->
+		<!--<property name="initialSize" value="1" />-->
+		<!--<property name="maxActive" value="80" />-->
+		<!--<property name="minIdle" value="10" />-->
+		<!--<property name="maxWait" value="60000" />-->
+		<!--<property name="testOnBorrow" value="false" />-->
+		<!--<property name="testOnReturn" value="false" />-->
+		<!--<property name="testWhileIdle" value="true" />-->
+		<!--<property name="timeBetweenEvictionRunsMillis" value="60000" />-->
+		<!--<property name="minEvictableIdleTimeMillis" value="25200000" />-->
+		<!--<property name="removeAbandoned" value="true" />-->
+		<!--<property name="removeAbandonedTimeout" value="1800" />-->
+		<!--<property name="logAbandoned" value="true" />-->
+		<!--<property name="filters" value="mergeStat" />-->
+	<!--</bean>-->
+
+	<bean id="multipleDataSource" class="com.common.data.MultipleDataSource">
+		<property name="defaultTargetDataSource" ref="mysqlDataSource"/>
+		<property name="targetDataSources">
+			<map>
+				<entry key="mySqlDataSource" value-ref="mysqlDataSource"/>
+				<entry key="qimingDataSource" value-ref="qimingDataSource"/>
+			</map>
+		</property>
+	</bean>
+
+	<bean id="dataSourceInterceptor" class="com.common.data.DataSourceInterceptor" />
+	<aop:config>
+		<aop:aspect ref="dataSourceInterceptor">
+			<aop:pointcut id="pointcutAop" expression="execution(* com.service.*.*.*.*(..))" />
+			<aop:before pointcut-ref="pointcutAop" method="before" />
+		</aop:aspect>
+	</aop:config>
+
+	<!-- myBatis文件 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="multipleDataSource" />
+		<!-- 自动扫描entity目录, 省掉Configuration.xml里的手工配置 -->
+		<property name="typeAliasesPackage" value="com.common.pojo" />
+		<!-- 显式指定Mapper文件位置 -->
+		<property name="mapperLocations" value="classpath:mybatis/*Mapper.xml" />
+	</bean>
+<!-- 	<bean id="sqlSessionFactory" -->
+<!--          class="org.mybatis.spring.SqlSessionFactoryBean" -->
+<!--           p:dataSource-ref="dataSource" -->
+<!--           p:mapperLocations="classpath:com/verification/*/dao/*.xml"/> -->
+<!--            p:configLocation="classpath:conf/mybatis-config.xml" -->
+<!-- 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" -->
+<!--       p:basePackage="com.verification.*.dao" -->
+<!--       p:sqlSessionFactoryBeanName="sqlSessionFactory"/> -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.common.mapper" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	</bean>
+
+	<!-- 配置事务管理器 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="multipleDataSource" />
+	</bean>
+
+
+	<!-- 注解方式配置事物 -->
+	<!-- <tx:annotation-driven transaction-manager="transactionManager" /> -->
+
+	<!-- 拦截器方式配置事物 -->
+	<tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="add*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+			<tx:method name="upd*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+			<tx:method name="del*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+            <tx:method name="edit*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+            <tx:method name="remove*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+            <tx:method name="insert*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+            <tx:method name="save*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+            <tx:method name="update*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+            <tx:method name="modify*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+            <tx:method name="delete*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+			<tx:method name="write*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+			<tx:method name="*Data" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+
+			<tx:method name="*" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+	<aop:config>
+		<aop:pointcut id="transactionPointcut" expression="execution(* com.service.*.*.*.*(..))" />
+		<aop:advisor pointcut-ref="transactionPointcut" advice-ref="transactionAdvice" />
+	</aop:config>
+	<!-- 配置druid监控spring jdbc -->
+<!-- 	<bean id="druid-stat-interceptor" class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor"> -->
+<!-- 	</bean> -->
+<!-- 	<bean id="druid-stat-pointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut" scope="prototype"> -->
+<!-- 		<property name="patterns"> -->
+<!-- 			<list> -->
+<!-- 				<value>com.dahafo.demo.um.service.impl</value> -->
+<!-- 			</list> -->
+			
+<!-- 		</property> -->
+<!-- 	</bean> -->
+<!-- 	<aop:config> -->
+<!-- 		<aop:advisor advice-ref="druid-stat-interceptor" pointcut-ref="druid-stat-pointcut" /> -->
+<!-- 	</aop:config> -->
+</beans>

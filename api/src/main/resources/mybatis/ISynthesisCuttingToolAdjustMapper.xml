@@ -1,0 +1,695 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.mapper.ISynthesisCuttingToolAdjustMapper">
+    <resultMap id="synthesisCuttingToolAdjustQueryMap" type="com.common.pojo.SynthesisCuttingToolAdjust">
+        <!-- 调刀记录id -->
+        <id property="id" column="synthesis_cutting_tool_adjust.id"/>
+
+        <!-- 合成刀业务编码 -->
+        <result property="synthesisCode" column="synthesis_cutting_tool_adjust.synthesis_code"/>
+        <!-- 材料号 -->
+        <result property="businessCode" column="synthesis_cutting_tool_adjust.business_code"/>
+        <!-- 生产关联关系code -->
+        <result property="productLineCode" column="synthesis_cutting_tool_adjust.product_line_code"/>
+        <!-- 工序名称 -->
+        <result property="processName" column="synthesis_cutting_tool_adjust.process_name"/>
+        <!-- 工序编码 -->
+        <result property="processCode" column="synthesis_cutting_tool_adjust.process_code"/>
+        <!-- 设备名称 -->
+        <result property="equipmentName" column="synthesis_cutting_tool_adjust.equipment_name"/>
+        <!-- 设备编码 -->
+        <result property="equipmentCode" column="synthesis_cutting_tool_adjust.equipment_code"/>
+        <!-- 轴编码 -->
+        <result property="axleCode" column="synthesis_cutting_tool_adjust.axle_code"/>
+        <!-- 轴名称 -->
+        <result property="axleName" column="synthesis_cutting_tool_adjust.axle_name"/>
+        <!-- 零部件名称 -->
+        <result property="partsName" column="synthesis_cutting_tool_adjust.parts_name"/>
+        <!-- 零件编码 -->
+        <result property="partsCode" column="synthesis_cutting_tool_adjust.parts_code"/>
+        <!-- 调到人编码 -->
+        <result property="adjustCustomerCode" column="synthesis_cutting_tool_adjust.adjust_customer_code"/>
+        <!-- 调刀人姓名 -->
+        <result property="adjustCustomerName" column="synthesis_cutting_tool_adjust.adjust_customer_name"/>
+        <!-- 调刀时间 -->
+        <result property="adjustTime" column="synthesis_cutting_tool_adjust.adjust_time"/>
+        <!-- 合成刀code -->
+        <result property="synthesisCuttingToolCode" column="synthesis_cutting_tool_adjust.synthesis_cutting_tool_code"/>
+        <!-- 材料刀编码 -->
+        <result property="cuttingToolCode" column="synthesis_cutting_tool_adjust.cutting_tool__code"/>
+        <!-- 流水线code -->
+        <result property="assemblylineCode" column="synthesis_cutting_tool_adjust.assemblyline_code"/>
+        <!-- 流水线名称 -->
+        <result property="assemblylineName" column="synthesis_cutting_tool_adjust.assemblyline_name"/>
+        <!-- 逻辑删除 -->
+        <result property="isDel" column="synthesis_cutting_tool_adjust.is_del"/>
+    </resultMap>
+    <!--添加-->
+    <insert id="addSynthesisCuttingToolAdjust" parameterType="com.common.pojo.SynthesisCuttingToolAdjust">
+        INSERT INTO synthesis_cutting_tool_adjust (
+            <!-- 调刀记录id -->
+            id,
+            <!-- 合成刀业务编码 -->
+            synthesis_code,
+            <!-- 材料号 -->
+            business_code,
+            <!-- 生产关联关系code -->
+            product_line_code,
+            <!-- 工序名称 -->
+            process_name,
+            <!-- 工序编码 -->
+            process_code,
+            <!-- 设备名称 -->
+            equipment_name,
+            <!-- 设备编码 -->
+            equipment_code,
+            <!-- 轴编码 -->
+            axle_code,
+            <!-- 轴名称 -->
+            axle_name,
+            <!-- 零部件名称 -->
+            parts_name,
+            <!-- 零件编码 -->
+            parts_code,
+            <!-- 调到人编码 -->
+            adjust_customer_code,
+            <!-- 调刀人姓名 -->
+            adjust_customer_name,
+            <!-- 调刀时间 -->
+            adjust_time,
+            <!-- 合成刀code -->
+            synthesis_cutting_tool_code,
+            <!-- 材料刀编码 -->
+            cutting_tool__code,
+            <!-- 流水线code -->
+            assemblyline_code,
+            <!-- 流水线名称 -->
+            assemblyline_name,
+            <!-- 逻辑删除 -->
+            is_del
+        )
+        VALUES (
+            <!-- 调刀记录id -->
+            #{id},
+            <!-- 合成刀业务编码 -->
+            #{synthesisCode},
+            <!-- 材料号 -->
+            #{businessCode},
+            <!-- 生产关联关系code -->
+            #{productLineCode},
+            <!-- 工序名称 -->
+            #{processName},
+            <!-- 工序编码 -->
+            #{processCode},
+            <!-- 设备名称 -->
+            #{equipmentName},
+            <!-- 设备编码 -->
+            #{equipmentCode},
+            <!-- 轴编码 -->
+            #{axleCode},
+            <!-- 轴名称 -->
+            #{axleName},
+            <!-- 零部件名称 -->
+            #{partsName},
+            <!-- 零件编码 -->
+            #{partsCode},
+            <!-- 调到人编码 -->
+            #{adjustCustomerCode},
+            <!-- 调刀人姓名 -->
+            #{adjustCustomerName},
+            <!-- 调刀时间 -->
+            #{adjustTime},
+            <!-- 合成刀code -->
+            #{synthesisCuttingToolCode},
+            <!-- 材料刀编码 -->
+            #{cuttingToolCode},
+            <!-- 流水线code -->
+            #{assemblylineCode},
+            <!-- 流水线名称 -->
+            #{assemblylineName},
+            <!-- 逻辑删除 -->
+            #{isDel}
+        )
+    </insert>
+
+    <!--删除-->
+    <delete id="delSynthesisCuttingToolAdjust" parameterType="com.common.pojo.SynthesisCuttingToolAdjust">
+        DELETE
+        FROM synthesis_cutting_tool_adjust
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--逻辑删除-->
+    <delete id="delSynthesisCuttingToolAdjustForLogic" parameterType="com.common.pojo.SynthesisCuttingToolAdjust">
+        UPDATE synthesis_cutting_tool_adjust SET
+        is_del = 1
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--根据VO删除-->
+    <delete id="delSynthesisCuttingToolAdjustByVo" parameterType="com.common.vo.SynthesisCuttingToolAdjustVO">
+        UPDATE synthesis_cutting_tool_adjust SET is_del = 1
+        WHERE
+            1=1
+            <!-- 调刀记录id -->
+            <if test="id != null and id != '' " >
+                and id =  #{id}
+            </if>
+            <!-- 合成刀业务编码 -->
+            <if test="synthesisCode != null and synthesisCode != '' " >
+                and synthesis_code =  #{synthesisCode}
+            </if>
+            <!-- 材料号 -->
+            <if test="businessCode != null and businessCode != '' " >
+                and business_code =  #{businessCode}
+            </if>
+            <!-- 生产关联关系code -->
+            <if test="productLineCode != null and productLineCode != '' " >
+                and product_line_code =  #{productLineCode}
+            </if>
+            <!-- 工序名称 -->
+            <if test="processName != null and processName != '' " >
+                and process_name =  #{processName}
+            </if>
+            <!-- 工序编码 -->
+            <if test="processCode != null and processCode != '' " >
+                and process_code =  #{processCode}
+            </if>
+            <!-- 设备名称 -->
+            <if test="equipmentName != null and equipmentName != '' " >
+                and equipment_name =  #{equipmentName}
+            </if>
+            <!-- 设备编码 -->
+            <if test="equipmentCode != null and equipmentCode != '' " >
+                and equipment_code =  #{equipmentCode}
+            </if>
+            <!-- 轴编码 -->
+            <if test="axleCode != null and axleCode != '' " >
+                and axle_code =  #{axleCode}
+            </if>
+            <!-- 轴名称 -->
+            <if test="axleName != null and axleName != '' " >
+                and axle_name =  #{axleName}
+            </if>
+            <!-- 零部件名称 -->
+            <if test="partsName != null and partsName != '' " >
+                and parts_name =  #{partsName}
+            </if>
+            <!-- 零件编码 -->
+            <if test="partsCode != null and partsCode != '' " >
+                and parts_code =  #{partsCode}
+            </if>
+            <!-- 调到人编码 -->
+            <if test="adjustCustomerCode != null and adjustCustomerCode != '' " >
+                and adjust_customer_code =  #{adjustCustomerCode}
+            </if>
+            <!-- 调刀人姓名 -->
+            <if test="adjustCustomerName != null and adjustCustomerName != '' " >
+                and adjust_customer_name =  #{adjustCustomerName}
+            </if>
+            <!-- 调刀时间 -->
+            <if test="adjustTime != null and adjustTime != '' " >
+                and adjust_time =  #{adjustTime}
+            </if>
+            <!-- 合成刀code -->
+            <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+                and synthesis_cutting_tool_code =  #{synthesisCuttingToolCode}
+            </if>
+            <!-- 材料刀编码 -->
+            <if test="cuttingToolCode != null and cuttingToolCode != '' " >
+                and cutting_tool__code =  #{cuttingToolCode}
+            </if>
+            <!-- 流水线code -->
+            <if test="assemblylineCode != null and assemblylineCode != '' " >
+                and assemblyline_code =  #{assemblylineCode}
+            </if>
+            <!-- 流水线名称 -->
+            <if test="assemblylineName != null and assemblylineName != '' " >
+                and assemblyline_name =  #{assemblylineName}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                and is_del =  #{isDel}
+            </if>
+    </delete>
+
+    <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
+    <update id="updSynthesisCuttingToolAdjust" parameterType="com.common.pojo.SynthesisCuttingToolAdjust">
+        UPDATE synthesis_cutting_tool_adjust
+        SET
+            <!-- 合成刀业务编码 -->
+            <if test="synthesisCode != null and synthesisCode != '' " >
+                synthesis_code =  #{synthesisCode},
+            </if>
+            <!-- 材料号 -->
+            <if test="businessCode != null and businessCode != '' " >
+                business_code =  #{businessCode},
+            </if>
+            <!-- 生产关联关系code -->
+            <if test="productLineCode != null and productLineCode != '' " >
+                product_line_code =  #{productLineCode},
+            </if>
+            <!-- 工序名称 -->
+            <if test="processName != null and processName != '' " >
+                process_name =  #{processName},
+            </if>
+            <!-- 工序编码 -->
+            <if test="processCode != null and processCode != '' " >
+                process_code =  #{processCode},
+            </if>
+            <!-- 设备名称 -->
+            <if test="equipmentName != null and equipmentName != '' " >
+                equipment_name =  #{equipmentName},
+            </if>
+            <!-- 设备编码 -->
+            <if test="equipmentCode != null and equipmentCode != '' " >
+                equipment_code =  #{equipmentCode},
+            </if>
+            <!-- 轴编码 -->
+            <if test="axleCode != null and axleCode != '' " >
+                axle_code =  #{axleCode},
+            </if>
+            <!-- 轴名称 -->
+            <if test="axleName != null and axleName != '' " >
+                axle_name =  #{axleName},
+            </if>
+            <!-- 零部件名称 -->
+            <if test="partsName != null and partsName != '' " >
+                parts_name =  #{partsName},
+            </if>
+            <!-- 零件编码 -->
+            <if test="partsCode != null and partsCode != '' " >
+                parts_code =  #{partsCode},
+            </if>
+            <!-- 调到人编码 -->
+            <if test="adjustCustomerCode != null and adjustCustomerCode != '' " >
+                adjust_customer_code =  #{adjustCustomerCode},
+            </if>
+            <!-- 调刀人姓名 -->
+            <if test="adjustCustomerName != null and adjustCustomerName != '' " >
+                adjust_customer_name =  #{adjustCustomerName},
+            </if>
+            <!-- 调刀时间 -->
+            <if test="adjustTime != null and adjustTime != '' " >
+                adjust_time =  #{adjustTime},
+            </if>
+            <!-- 合成刀code -->
+            <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+                synthesis_cutting_tool_code =  #{synthesisCuttingToolCode},
+            </if>
+            <!-- 材料刀编码 -->
+            <if test="cuttingToolCode != null and cuttingToolCode != '' " >
+                cutting_tool__code =  #{cuttingToolCode},
+            </if>
+            <!-- 流水线code -->
+            <if test="assemblylineCode != null and assemblylineCode != '' " >
+                assemblyline_code =  #{assemblylineCode},
+            </if>
+            <!-- 流水线名称 -->
+            <if test="assemblylineName != null and assemblylineName != '' " >
+                assemblyline_name =  #{assemblylineName},
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                is_del =  #{isDel},
+            </if>
+            <!-- 调刀记录id -->
+            id = #{id}
+        WHERE
+            1 = 1
+            and id = #{id}
+    </update>
+
+    <!--分页查询 -->
+    <select id="getSynthesisCuttingToolAdjustByPage" parameterType="com.common.vo.SynthesisCuttingToolAdjustVO" resultMap="synthesisCuttingToolAdjustQueryMap">
+        SELECT
+        /*synthesisCuttingToolAdjust begin*/
+            <!-- 调刀记录id -->
+            synthesis_cutting_tool_adjust.id as 'synthesis_cutting_tool_adjust.id',
+            <!-- 合成刀业务编码 -->
+            synthesis_cutting_tool_adjust.synthesis_code as 'synthesis_cutting_tool_adjust.synthesis_code',
+            <!-- 材料号 -->
+            synthesis_cutting_tool_adjust.business_code as 'synthesis_cutting_tool_adjust.business_code',
+            <!-- 生产关联关系code -->
+            synthesis_cutting_tool_adjust.product_line_code as 'synthesis_cutting_tool_adjust.product_line_code',
+            <!-- 工序名称 -->
+            synthesis_cutting_tool_adjust.process_name as 'synthesis_cutting_tool_adjust.process_name',
+            <!-- 工序编码 -->
+            synthesis_cutting_tool_adjust.process_code as 'synthesis_cutting_tool_adjust.process_code',
+            <!-- 设备名称 -->
+            synthesis_cutting_tool_adjust.equipment_name as 'synthesis_cutting_tool_adjust.equipment_name',
+            <!-- 设备编码 -->
+            synthesis_cutting_tool_adjust.equipment_code as 'synthesis_cutting_tool_adjust.equipment_code',
+            <!-- 轴编码 -->
+            synthesis_cutting_tool_adjust.axle_code as 'synthesis_cutting_tool_adjust.axle_code',
+            <!-- 轴名称 -->
+            synthesis_cutting_tool_adjust.axle_name as 'synthesis_cutting_tool_adjust.axle_name',
+            <!-- 零部件名称 -->
+            synthesis_cutting_tool_adjust.parts_name as 'synthesis_cutting_tool_adjust.parts_name',
+            <!-- 零件编码 -->
+            synthesis_cutting_tool_adjust.parts_code as 'synthesis_cutting_tool_adjust.parts_code',
+            <!-- 调到人编码 -->
+            synthesis_cutting_tool_adjust.adjust_customer_code as 'synthesis_cutting_tool_adjust.adjust_customer_code',
+            <!-- 调刀人姓名 -->
+            synthesis_cutting_tool_adjust.adjust_customer_name as 'synthesis_cutting_tool_adjust.adjust_customer_name',
+            <!-- 调刀时间 -->
+            synthesis_cutting_tool_adjust.adjust_time as 'synthesis_cutting_tool_adjust.adjust_time',
+            <!-- 合成刀code -->
+            synthesis_cutting_tool_adjust.synthesis_cutting_tool_code as 'synthesis_cutting_tool_adjust.synthesis_cutting_tool_code',
+            <!-- 材料刀编码 -->
+            synthesis_cutting_tool_adjust.cutting_tool__code as 'synthesis_cutting_tool_adjust.cutting_tool__code',
+            <!-- 流水线code -->
+            synthesis_cutting_tool_adjust.assemblyline_code as 'synthesis_cutting_tool_adjust.assemblyline_code',
+            <!-- 流水线名称 -->
+            synthesis_cutting_tool_adjust.assemblyline_name as 'synthesis_cutting_tool_adjust.assemblyline_name',
+            <!-- 逻辑删除 -->
+            synthesis_cutting_tool_adjust.is_del as 'synthesis_cutting_tool_adjust.is_del'
+        /*synthesisCuttingToolAdjust end*/
+        FROM synthesis_cutting_tool_adjust as synthesis_cutting_tool_adjust
+        WHERE
+            1 = 1 AND  synthesis_cutting_tool_adjust.is_del = 0
+        /*synthesis_cutting_tool_adjust begin*/
+            <!-- 调刀记录id -->
+            <if test="id != null and id != '' " >
+                and synthesis_cutting_tool_adjust.id = #{id}
+            </if>
+            <!-- 合成刀业务编码 -->
+            <if test="synthesisCode != null and synthesisCode != '' " >
+                and synthesis_cutting_tool_adjust.synthesis_code = #{synthesisCode}
+            </if>
+            <!-- 材料号 -->
+            <if test="businessCode != null and businessCode != '' " >
+                and synthesis_cutting_tool_adjust.business_code = #{businessCode}
+            </if>
+            <!-- 生产关联关系code -->
+            <if test="productLineCode != null and productLineCode != '' " >
+                and synthesis_cutting_tool_adjust.product_line_code = #{productLineCode}
+            </if>
+            <!-- 工序名称 -->
+            <if test="processName != null and processName != '' " >
+                and synthesis_cutting_tool_adjust.process_name = #{processName}
+            </if>
+            <!-- 工序编码 -->
+            <if test="processCode != null and processCode != '' " >
+                and synthesis_cutting_tool_adjust.process_code = #{processCode}
+            </if>
+            <!-- 设备名称 -->
+            <if test="equipmentName != null and equipmentName != '' " >
+                and synthesis_cutting_tool_adjust.equipment_name = #{equipmentName}
+            </if>
+            <!-- 设备编码 -->
+            <if test="equipmentCode != null and equipmentCode != '' " >
+                and synthesis_cutting_tool_adjust.equipment_code = #{equipmentCode}
+            </if>
+            <!-- 轴编码 -->
+            <if test="axleCode != null and axleCode != '' " >
+                and synthesis_cutting_tool_adjust.axle_code = #{axleCode}
+            </if>
+            <!-- 轴名称 -->
+            <if test="axleName != null and axleName != '' " >
+                and synthesis_cutting_tool_adjust.axle_name = #{axleName}
+            </if>
+            <!-- 零部件名称 -->
+            <if test="partsName != null and partsName != '' " >
+                and synthesis_cutting_tool_adjust.parts_name = #{partsName}
+            </if>
+            <!-- 零件编码 -->
+            <if test="partsCode != null and partsCode != '' " >
+                and synthesis_cutting_tool_adjust.parts_code = #{partsCode}
+            </if>
+            <!-- 调到人编码 -->
+            <if test="adjustCustomerCode != null and adjustCustomerCode != '' " >
+                and synthesis_cutting_tool_adjust.adjust_customer_code = #{adjustCustomerCode}
+            </if>
+            <!-- 调刀人姓名 -->
+            <if test="adjustCustomerName != null and adjustCustomerName != '' " >
+                and synthesis_cutting_tool_adjust.adjust_customer_name = #{adjustCustomerName}
+            </if>
+            <!-- 调刀时间 -->
+            <if test="adjustTime != null and adjustTime != '' " >
+                and synthesis_cutting_tool_adjust.adjust_time &lt;= #{adjustTimeEnd}
+            </if>
+            <if test="adjustTime != null and adjustTime != '' " >
+                and synthesis_cutting_tool_adjust.adjust_time &gt;= #{adjustTimeBegin}
+            </if>
+            <!-- 合成刀code -->
+            <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+                and synthesis_cutting_tool_adjust.synthesis_cutting_tool_code = #{synthesisCuttingToolCode}
+            </if>
+            <!-- 材料刀编码 -->
+            <if test="cuttingToolCode != null and cuttingToolCode != '' " >
+                and synthesis_cutting_tool_adjust.cutting_tool__code = #{cuttingToolCode}
+            </if>
+            <!-- 流水线code -->
+            <if test="assemblylineCode != null and assemblylineCode != '' " >
+                and synthesis_cutting_tool_adjust.assemblyline_code = #{assemblylineCode}
+            </if>
+            <!-- 流水线名称 -->
+            <if test="assemblylineName != null and assemblylineName != '' " >
+                and synthesis_cutting_tool_adjust.assemblyline_name = #{assemblylineName}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                and synthesis_cutting_tool_adjust.is_del = #{isDel}
+            </if>
+        /*synthesis_cutting_tool_adjust end*/
+        ORDER BY synthesis_cutting_tool_adjust.id desc
+        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
+        LIMIT #{startRecord},#{pageSize}
+        </if>
+    </select>
+
+
+    <!--查询记录数-->
+    <select id="getSynthesisCuttingToolAdjustCount" parameterType="com.common.vo.SynthesisCuttingToolAdjustVO" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM synthesis_cutting_tool_adjust as synthesis_cutting_tool_adjust
+        WHERE
+            1 = 1 AND  synthesis_cutting_tool_adjust.is_del = 0
+        /*synthesis_cutting_tool_adjust begin*/
+        <!-- 调刀记录id -->
+        <if test="id != null and id != '' " >
+            and synthesis_cutting_tool_adjust.id = #{id}
+        </if>
+        <!-- 合成刀业务编码 -->
+        <if test="synthesisCode != null and synthesisCode != '' " >
+            and synthesis_cutting_tool_adjust.synthesis_code = #{synthesisCode}
+        </if>
+        <!-- 材料号 -->
+        <if test="businessCode != null and businessCode != '' " >
+            and synthesis_cutting_tool_adjust.business_code = #{businessCode}
+        </if>
+        <!-- 生产关联关系code -->
+        <if test="productLineCode != null and productLineCode != '' " >
+            and synthesis_cutting_tool_adjust.product_line_code = #{productLineCode}
+        </if>
+        <!-- 工序名称 -->
+        <if test="processName != null and processName != '' " >
+            and synthesis_cutting_tool_adjust.process_name = #{processName}
+        </if>
+        <!-- 工序编码 -->
+        <if test="processCode != null and processCode != '' " >
+            and synthesis_cutting_tool_adjust.process_code = #{processCode}
+        </if>
+        <!-- 设备名称 -->
+        <if test="equipmentName != null and equipmentName != '' " >
+            and synthesis_cutting_tool_adjust.equipment_name = #{equipmentName}
+        </if>
+        <!-- 设备编码 -->
+        <if test="equipmentCode != null and equipmentCode != '' " >
+            and synthesis_cutting_tool_adjust.equipment_code = #{equipmentCode}
+        </if>
+        <!-- 轴编码 -->
+        <if test="axleCode != null and axleCode != '' " >
+            and synthesis_cutting_tool_adjust.axle_code = #{axleCode}
+        </if>
+        <!-- 轴名称 -->
+        <if test="axleName != null and axleName != '' " >
+            and synthesis_cutting_tool_adjust.axle_name = #{axleName}
+        </if>
+        <!-- 零部件名称 -->
+        <if test="partsName != null and partsName != '' " >
+            and synthesis_cutting_tool_adjust.parts_name = #{partsName}
+        </if>
+        <!-- 零件编码 -->
+        <if test="partsCode != null and partsCode != '' " >
+            and synthesis_cutting_tool_adjust.parts_code = #{partsCode}
+        </if>
+        <!-- 调到人编码 -->
+        <if test="adjustCustomerCode != null and adjustCustomerCode != '' " >
+            and synthesis_cutting_tool_adjust.adjust_customer_code = #{adjustCustomerCode}
+        </if>
+        <!-- 调刀人姓名 -->
+        <if test="adjustCustomerName != null and adjustCustomerName != '' " >
+            and synthesis_cutting_tool_adjust.adjust_customer_name = #{adjustCustomerName}
+        </if>
+        <!-- 调刀时间 -->
+        <if test="adjustTime != null and adjustTime != '' " >
+            and synthesis_cutting_tool_adjust.adjust_time &lt;= #{adjustTimeEnd}
+        </if>
+        <if test="adjustTime != null and adjustTime != '' " >
+            and synthesis_cutting_tool_adjust.adjust_time &gt;= #{adjustTimeBegin}
+        </if>
+        <!-- 合成刀code -->
+        <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+            and synthesis_cutting_tool_adjust.synthesis_cutting_tool_code = #{synthesisCuttingToolCode}
+        </if>
+        <!-- 材料刀编码 -->
+        <if test="cuttingToolCode != null and cuttingToolCode != '' " >
+            and synthesis_cutting_tool_adjust.cutting_tool__code = #{cuttingToolCode}
+        </if>
+        <!-- 流水线code -->
+        <if test="assemblylineCode != null and assemblylineCode != '' " >
+            and synthesis_cutting_tool_adjust.assemblyline_code = #{assemblylineCode}
+        </if>
+        <!-- 流水线名称 -->
+        <if test="assemblylineName != null and assemblylineName != '' " >
+            and synthesis_cutting_tool_adjust.assemblyline_name = #{assemblylineName}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="isDel != null and isDel != '' " >
+            and synthesis_cutting_tool_adjust.is_del = #{isDel}
+        </if>
+        /*synthesis_cutting_tool_adjust end*/
+    </select>
+
+    <!--根据vo查询 -->
+    <select id="getSynthesisCuttingToolAdjust" parameterType="com.common.vo.SynthesisCuttingToolAdjustVO" resultMap="synthesisCuttingToolAdjustQueryMap">
+        SELECT
+        /*synthesis_cutting_tool_adjust begin*/
+        <!-- 调刀记录id -->
+        synthesis_cutting_tool_adjust.id as 'synthesis_cutting_tool_adjust.id',
+        <!-- 合成刀业务编码 -->
+        synthesis_cutting_tool_adjust.synthesis_code as 'synthesis_cutting_tool_adjust.synthesis_code',
+        <!-- 材料号 -->
+        synthesis_cutting_tool_adjust.business_code as 'synthesis_cutting_tool_adjust.business_code',
+        <!-- 生产关联关系code -->
+        synthesis_cutting_tool_adjust.product_line_code as 'synthesis_cutting_tool_adjust.product_line_code',
+        <!-- 工序名称 -->
+        synthesis_cutting_tool_adjust.process_name as 'synthesis_cutting_tool_adjust.process_name',
+        <!-- 工序编码 -->
+        synthesis_cutting_tool_adjust.process_code as 'synthesis_cutting_tool_adjust.process_code',
+        <!-- 设备名称 -->
+        synthesis_cutting_tool_adjust.equipment_name as 'synthesis_cutting_tool_adjust.equipment_name',
+        <!-- 设备编码 -->
+        synthesis_cutting_tool_adjust.equipment_code as 'synthesis_cutting_tool_adjust.equipment_code',
+        <!-- 轴编码 -->
+        synthesis_cutting_tool_adjust.axle_code as 'synthesis_cutting_tool_adjust.axle_code',
+        <!-- 轴名称 -->
+        synthesis_cutting_tool_adjust.axle_name as 'synthesis_cutting_tool_adjust.axle_name',
+        <!-- 零部件名称 -->
+        synthesis_cutting_tool_adjust.parts_name as 'synthesis_cutting_tool_adjust.parts_name',
+        <!-- 零件编码 -->
+        synthesis_cutting_tool_adjust.parts_code as 'synthesis_cutting_tool_adjust.parts_code',
+        <!-- 调到人编码 -->
+        synthesis_cutting_tool_adjust.adjust_customer_code as 'synthesis_cutting_tool_adjust.adjust_customer_code',
+        <!-- 调刀人姓名 -->
+        synthesis_cutting_tool_adjust.adjust_customer_name as 'synthesis_cutting_tool_adjust.adjust_customer_name',
+        <!-- 调刀时间 -->
+        synthesis_cutting_tool_adjust.adjust_time as 'synthesis_cutting_tool_adjust.adjust_time',
+        <!-- 合成刀code -->
+        synthesis_cutting_tool_adjust.synthesis_cutting_tool_code as 'synthesis_cutting_tool_adjust.synthesis_cutting_tool_code',
+        <!-- 材料刀编码 -->
+        synthesis_cutting_tool_adjust.cutting_tool__code as 'synthesis_cutting_tool_adjust.cutting_tool__code',
+        <!-- 流水线code -->
+        synthesis_cutting_tool_adjust.assemblyline_code as 'synthesis_cutting_tool_adjust.assemblyline_code',
+        <!-- 流水线名称 -->
+        synthesis_cutting_tool_adjust.assemblyline_name as 'synthesis_cutting_tool_adjust.assemblyline_name',
+        <!-- 逻辑删除 -->
+        synthesis_cutting_tool_adjust.is_del as 'synthesis_cutting_tool_adjust.is_del'
+        /*synthesis_cutting_tool_adjust end*/
+        FROM synthesis_cutting_tool_adjust as synthesis_cutting_tool_adjust
+        WHERE
+            1 = 1 AND  synthesis_cutting_tool_adjust.is_del = 0
+        /*synthesis_cutting_tool_adjust begin*/
+        <!-- 调刀记录id -->
+        <if test="id != null and id != '' " >
+            and synthesis_cutting_tool_adjust.id = #{id}
+        </if>
+        <!-- 合成刀业务编码 -->
+        <if test="synthesisCode != null and synthesisCode != '' " >
+            and synthesis_cutting_tool_adjust.synthesis_code = #{synthesisCode}
+        </if>
+        <!-- 材料号 -->
+        <if test="businessCode != null and businessCode != '' " >
+            and synthesis_cutting_tool_adjust.business_code = #{businessCode}
+        </if>
+        <!-- 生产关联关系code -->
+        <if test="productLineCode != null and productLineCode != '' " >
+            and synthesis_cutting_tool_adjust.product_line_code = #{productLineCode}
+        </if>
+        <!-- 工序名称 -->
+        <if test="processName != null and processName != '' " >
+            and synthesis_cutting_tool_adjust.process_name = #{processName}
+        </if>
+        <!-- 工序编码 -->
+        <if test="processCode != null and processCode != '' " >
+            and synthesis_cutting_tool_adjust.process_code = #{processCode}
+        </if>
+        <!-- 设备名称 -->
+        <if test="equipmentName != null and equipmentName != '' " >
+            and synthesis_cutting_tool_adjust.equipment_name = #{equipmentName}
+        </if>
+        <!-- 设备编码 -->
+        <if test="equipmentCode != null and equipmentCode != '' " >
+            and synthesis_cutting_tool_adjust.equipment_code = #{equipmentCode}
+        </if>
+        <!-- 轴编码 -->
+        <if test="axleCode != null and axleCode != '' " >
+            and synthesis_cutting_tool_adjust.axle_code = #{axleCode}
+        </if>
+        <!-- 轴名称 -->
+        <if test="axleName != null and axleName != '' " >
+            and synthesis_cutting_tool_adjust.axle_name = #{axleName}
+        </if>
+        <!-- 零部件名称 -->
+        <if test="partsName != null and partsName != '' " >
+            and synthesis_cutting_tool_adjust.parts_name = #{partsName}
+        </if>
+        <!-- 零件编码 -->
+        <if test="partsCode != null and partsCode != '' " >
+            and synthesis_cutting_tool_adjust.parts_code = #{partsCode}
+        </if>
+        <!-- 调到人编码 -->
+        <if test="adjustCustomerCode != null and adjustCustomerCode != '' " >
+            and synthesis_cutting_tool_adjust.adjust_customer_code = #{adjustCustomerCode}
+        </if>
+        <!-- 调刀人姓名 -->
+        <if test="adjustCustomerName != null and adjustCustomerName != '' " >
+            and synthesis_cutting_tool_adjust.adjust_customer_name = #{adjustCustomerName}
+        </if>
+        <!-- 调刀时间 -->
+        <if test="adjustTime != null and adjustTime != '' " >
+            and synthesis_cutting_tool_adjust.adjust_time &lt;= #{adjustTimeEnd}
+        </if>
+        <if test="adjustTime != null and adjustTime != '' " >
+            and synthesis_cutting_tool_adjust.adjust_time &gt;= #{adjustTimeBegin}
+        </if>
+        <!-- 合成刀code -->
+        <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+            and synthesis_cutting_tool_adjust.synthesis_cutting_tool_code = #{synthesisCuttingToolCode}
+        </if>
+        <!-- 材料刀编码 -->
+        <if test="cuttingToolCode != null and cuttingToolCode != '' " >
+            and synthesis_cutting_tool_adjust.cutting_tool__code = #{cuttingToolCode}
+        </if>
+        <!-- 流水线code -->
+        <if test="assemblylineCode != null and assemblylineCode != '' " >
+            and synthesis_cutting_tool_adjust.assemblyline_code = #{assemblylineCode}
+        </if>
+        <!-- 流水线名称 -->
+        <if test="assemblylineName != null and assemblylineName != '' " >
+            and synthesis_cutting_tool_adjust.assemblyline_name = #{assemblylineName}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="isDel != null and isDel != '' " >
+            and synthesis_cutting_tool_adjust.is_del = #{isDel}
+        </if>
+        /*synthesis_cutting_tool_adjust end*/
+    </select>
+</mapper>

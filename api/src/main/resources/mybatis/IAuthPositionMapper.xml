@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.mapper.IAuthPositionMapper">
+    <resultMap id="authPositionQueryMap" type="com.common.pojo.AuthPosition">
+        <!--  -->
+        <id property="id" column="auth_position.id"/>
+
+        <!--  -->
+        <result property="isDel" column="auth_position.is_del"/>
+        <!-- 职务编码 -->
+        <result property="code" column="auth_position.code"/>
+        <!-- 职务名称 -->
+        <result property="name" column="auth_position.name"/>
+        <!--  -->
+        <result property="authDepartmentCode1" column="auth_position.auth_department_code1"/>
+        <!--  -->
+        <association property="authDepartment"  column="auth_department.id" resultMap="authPositionAuthDepartmentMap"/>
+    </resultMap>
+        <resultMap id="authPositionAuthDepartmentMap" type="com.common.pojo.AuthDepartment">
+            <!-- 部门id -->
+            <id property="id" column="auth_department.id"/>
+
+            <!-- 部门编码 -->
+            <result property="code" column="auth_department.code"/>
+            <!-- 部门名称 -->
+            <result property="name" column="auth_department.name"/>
+            <!-- 部门电话 -->
+            <result property="phone" column="auth_department.phone"/>
+            <!-- 部门负责人 -->
+            <result property="leaderName" column="auth_department.leader_name"/>
+            <!-- 负责人手机 -->
+            <result property="leaderMobile" column="auth_department.leader_mobile"/>
+            <!-- 描述 -->
+            <result property="description" column="auth_department.description"/>
+            <!--  -->
+            <result property="isDel" column="auth_department.is_del"/>
+            <!--  -->
+            <result property="authAgencyCode" column="auth_department.auth_agency_code"/>
+        </resultMap>
+    <!--添加-->
+    <insert id="addAuthPosition" parameterType="com.common.pojo.AuthPosition">
+        INSERT INTO auth_position (
+            <!--  -->
+            id,
+            <!--  -->
+            is_del,
+            <!-- 职务编码 -->
+            code,
+            <!-- 职务名称 -->
+            name,
+            <!--  -->
+            auth_department_code1
+        )
+        VALUES (
+            <!--  -->
+            #{id},
+            <!--  -->
+            #{isDel},
+            <!-- 职务编码 -->
+            #{code},
+            <!-- 职务名称 -->
+            #{name},
+            <!--  -->
+            #{authDepartmentCode1}
+        )
+    </insert>
+
+    <!--删除-->
+    <delete id="delAuthPosition" parameterType="com.common.pojo.AuthPosition">
+        DELETE
+        FROM auth_position
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--逻辑删除-->
+    <delete id="delAuthPositionForLogic" parameterType="com.common.pojo.AuthPosition">
+        UPDATE auth_position SET
+        is_del = 1
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--根据VO删除-->
+    <delete id="delAuthPositionByVo" parameterType="com.common.vo.AuthPositionVO">
+        UPDATE auth_position SET is_del = 1
+        WHERE
+            1=1
+            <!--  -->
+            <if test="id != null and id != '' " >
+                and id =  #{id}
+            </if>
+            <!--  -->
+            <if test="isDel != null and isDel != '' " >
+                and is_del =  #{isDel}
+            </if>
+            <!-- 职务编码 -->
+            <if test="code != null and code != '' " >
+                and code =  #{code}
+            </if>
+            <!-- 职务名称 -->
+            <if test="name != null and name != '' " >
+                and name =  #{name}
+            </if>
+            <!--  -->
+            <if test="authDepartmentCode1 != null and authDepartmentCode1 != '' " >
+                and auth_department_code1 =  #{authDepartmentCode1}
+            </if>
+    </delete>
+
+    <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
+    <update id="updAuthPosition" parameterType="com.common.pojo.AuthPosition">
+        UPDATE auth_position
+        SET
+            <!--  -->
+            <if test="isDel != null and isDel != '' " >
+                is_del =  #{isDel},
+            </if>
+            <!-- 职务编码 -->
+            <if test="code != null and code != '' " >
+                code =  #{code},
+            </if>
+            <!-- 职务名称 -->
+            <if test="name != null and name != '' " >
+                name =  #{name},
+            </if>
+            <!--  -->
+            <if test="authDepartmentCode1 != null and authDepartmentCode1 != '' " >
+                auth_department_code1 =  #{authDepartmentCode1},
+            </if>
+            <!--  -->
+            id = #{id}
+        WHERE
+            1 = 1
+            and id = #{id}
+    </update>
+
+    <!--分页查询 -->
+    <select id="getAuthPositionByPage" parameterType="com.common.vo.AuthPositionVO" resultMap="authPositionQueryMap">
+        SELECT
+        /*authPosition begin*/
+            <!--  -->
+            auth_position.id as 'auth_position.id',
+            <!--  -->
+            auth_position.is_del as 'auth_position.is_del',
+            <!-- 职务编码 -->
+            auth_position.code as 'auth_position.code',
+            <!-- 职务名称 -->
+            auth_position.name as 'auth_position.name',
+            <!--  -->
+            auth_position.auth_department_code1 as 'auth_position.auth_department_code1',
+        /*authPosition end*/
+        /*auth_department begin*/
+            <!-- 部门id -->
+            auth_department.id as 'auth_department.id',
+            <!-- 部门编码 -->
+            auth_department.code as 'auth_department.code',
+            <!-- 部门名称 -->
+            auth_department.name as 'auth_department.name',
+            <!-- 部门电话 -->
+            auth_department.phone as 'auth_department.phone',
+            <!-- 部门负责人 -->
+            auth_department.leader_name as 'auth_department.leader_name',
+            <!-- 负责人手机 -->
+            auth_department.leader_mobile as 'auth_department.leader_mobile',
+            <!-- 描述 -->
+            auth_department.description as 'auth_department.description',
+            <!--  -->
+            auth_department.is_del as 'auth_department.is_del',
+            <!--  -->
+            auth_department.auth_agency_code as 'auth_department.auth_agency_code'
+        /*auth_department end*/
+        FROM auth_position as auth_position
+        LEFT JOIN auth_department as auth_department ON auth_department.id = auth_position.auth_department_code1
+        WHERE
+            1 = 1 AND  auth_position.is_del = 0
+        /*auth_position begin*/
+            <!--  -->
+            <if test="id != null and id != '' " >
+                and auth_position.id = #{id}
+            </if>
+            <!--  -->
+            <if test="isDel != null and isDel != '' " >
+                and auth_position.is_del = #{isDel}
+            </if>
+            <!-- 职务编码 -->
+            <if test="code != null and code != '' " >
+                and auth_position.code = #{code}
+            </if>
+            <!-- 职务名称 -->
+            <if test="name != null and name != '' " >
+                and auth_position.name = #{name}
+            </if>
+            <!--  -->
+            <if test="authDepartmentCode1 != null and authDepartmentCode1 != '' " >
+                and auth_position.auth_department_code1 = #{authDepartmentCode1}
+            </if>
+        /*auth_position end*/
+        /*auth_department begin*/
+            <if test="authDepartmentVO != null and authDepartmentVO != ''">
+            <!-- 部门id -->
+            <if test="authDepartmentVO.id != null and authDepartmentVO.id != '' " >
+                and auth_department.id = #{authDepartmentVO.id}
+            </if>
+            <!-- 部门编码 -->
+            <if test="authDepartmentVO.code != null and authDepartmentVO.code != '' " >
+                and auth_department.code = #{authDepartmentVO.code}
+            </if>
+            <!-- 部门名称 -->
+            <if test="authDepartmentVO.name != null and authDepartmentVO.name != '' " >
+                and auth_department.name = #{authDepartmentVO.name}
+            </if>
+            <!-- 部门电话 -->
+            <if test="authDepartmentVO.phone != null and authDepartmentVO.phone != '' " >
+                and auth_department.phone = #{authDepartmentVO.phone}
+            </if>
+            <!-- 部门负责人 -->
+            <if test="authDepartmentVO.leaderName != null and authDepartmentVO.leaderName != '' " >
+                and auth_department.leader_name = #{authDepartmentVO.leaderName}
+            </if>
+            <!-- 负责人手机 -->
+            <if test="authDepartmentVO.leaderMobile != null and authDepartmentVO.leaderMobile != '' " >
+                and auth_department.leader_mobile = #{authDepartmentVO.leaderMobile}
+            </if>
+            <!-- 描述 -->
+            <if test="authDepartmentVO.description != null and authDepartmentVO.description != '' " >
+                and auth_department.description = #{authDepartmentVO.description}
+            </if>
+            <!--  -->
+            <if test="authDepartmentVO.isDel != null and authDepartmentVO.isDel != '' " >
+                and auth_department.is_del = #{authDepartmentVO.isDel}
+            </if>
+            <!--  -->
+            <if test="authDepartmentVO.authAgencyCode != null and authDepartmentVO.authAgencyCode != '' " >
+                and auth_department.auth_agency_code = #{authDepartmentVO.authAgencyCode}
+            </if>
+            </if>
+        /*auth_department end*/
+        ORDER BY auth_position.id desc
+        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
+        LIMIT #{startRecord},#{pageSize}
+        </if>
+    </select>
+
+
+    <!--查询记录数-->
+    <select id="getAuthPositionCount" parameterType="com.common.vo.AuthPositionVO" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM auth_position as auth_position
+        LEFT JOIN auth_department as auth_department ON auth_department.id = auth_position.auth_department_code1
+        WHERE
+            1 = 1 AND  auth_position.is_del = 0
+        /*auth_position begin*/
+        <!--  -->
+        <if test="id != null and id != '' " >
+            and auth_position.id = #{id}
+        </if>
+        <!--  -->
+        <if test="isDel != null and isDel != '' " >
+            and auth_position.is_del = #{isDel}
+        </if>
+        <!-- 职务编码 -->
+        <if test="code != null and code != '' " >
+            and auth_position.code = #{code}
+        </if>
+        <!-- 职务名称 -->
+        <if test="name != null and name != '' " >
+            and auth_position.name = #{name}
+        </if>
+        <!--  -->
+        <if test="authDepartmentCode1 != null and authDepartmentCode1 != '' " >
+            and auth_position.auth_department_code1 = #{authDepartmentCode1}
+        </if>
+        /*auth_position end*/
+        /*auth_department begin*/
+        <if test="authDepartmentVO != null and authDepartmentVO != ''">
+        <!-- 部门id -->
+        <if test="authDepartmentVO.id != null and authDepartmentVO.id != '' " >
+            and auth_department.id = #{authDepartmentVO.id}
+        </if>
+        <!-- 部门编码 -->
+        <if test="authDepartmentVO.code != null and authDepartmentVO.code != '' " >
+            and auth_department.code = #{authDepartmentVO.code}
+        </if>
+        <!-- 部门名称 -->
+        <if test="authDepartmentVO.name != null and authDepartmentVO.name != '' " >
+            and auth_department.name = #{authDepartmentVO.name}
+        </if>
+        <!-- 部门电话 -->
+        <if test="authDepartmentVO.phone != null and authDepartmentVO.phone != '' " >
+            and auth_department.phone = #{authDepartmentVO.phone}
+        </if>
+        <!-- 部门负责人 -->
+        <if test="authDepartmentVO.leaderName != null and authDepartmentVO.leaderName != '' " >
+            and auth_department.leader_name = #{authDepartmentVO.leaderName}
+        </if>
+        <!-- 负责人手机 -->
+        <if test="authDepartmentVO.leaderMobile != null and authDepartmentVO.leaderMobile != '' " >
+            and auth_department.leader_mobile = #{authDepartmentVO.leaderMobile}
+        </if>
+        <!-- 描述 -->
+        <if test="authDepartmentVO.description != null and authDepartmentVO.description != '' " >
+            and auth_department.description = #{authDepartmentVO.description}
+        </if>
+        <!--  -->
+        <if test="authDepartmentVO.isDel != null and authDepartmentVO.isDel != '' " >
+            and auth_department.is_del = #{authDepartmentVO.isDel}
+        </if>
+        <!--  -->
+        <if test="authDepartmentVO.authAgencyCode != null and authDepartmentVO.authAgencyCode != '' " >
+            and auth_department.auth_agency_code = #{authDepartmentVO.authAgencyCode}
+        </if>
+        </if>
+        /*auth_department end*/
+    </select>
+
+    <!--根据vo查询 -->
+    <select id="getAuthPosition" parameterType="com.common.vo.AuthPositionVO" resultMap="authPositionQueryMap">
+        SELECT
+        /*auth_position begin*/
+        <!--  -->
+        auth_position.id as 'auth_position.id',
+        <!--  -->
+        auth_position.is_del as 'auth_position.is_del',
+        <!-- 职务编码 -->
+        auth_position.code as 'auth_position.code',
+        <!-- 职务名称 -->
+        auth_position.name as 'auth_position.name',
+        <!--  -->
+        auth_position.auth_department_code1 as 'auth_position.auth_department_code1',
+        /*auth_position end*/
+        /*auth_department begin*/
+        <!-- 部门id -->
+        auth_department.id as 'auth_department.id',
+        <!-- 部门编码 -->
+        auth_department.code as 'auth_department.code',
+        <!-- 部门名称 -->
+        auth_department.name as 'auth_department.name',
+        <!-- 部门电话 -->
+        auth_department.phone as 'auth_department.phone',
+        <!-- 部门负责人 -->
+        auth_department.leader_name as 'auth_department.leader_name',
+        <!-- 负责人手机 -->
+        auth_department.leader_mobile as 'auth_department.leader_mobile',
+        <!-- 描述 -->
+        auth_department.description as 'auth_department.description',
+        <!--  -->
+        auth_department.is_del as 'auth_department.is_del',
+        <!--  -->
+        auth_department.auth_agency_code as 'auth_department.auth_agency_code'
+        /*auth_department end*/
+        FROM auth_position as auth_position
+        LEFT JOIN auth_department as auth_department ON auth_department.id = auth_position.auth_department_code1
+        WHERE
+            1 = 1 AND  auth_position.is_del = 0
+        /*auth_position begin*/
+        <!--  -->
+        <if test="id != null and id != '' " >
+            and auth_position.id = #{id}
+        </if>
+        <!--  -->
+        <if test="isDel != null and isDel != '' " >
+            and auth_position.is_del = #{isDel}
+        </if>
+        <!-- 职务编码 -->
+        <if test="code != null and code != '' " >
+            and auth_position.code = #{code}
+        </if>
+        <!-- 职务名称 -->
+        <if test="name != null and name != '' " >
+            and auth_position.name = #{name}
+        </if>
+        <!--  -->
+        <if test="authDepartmentCode1 != null and authDepartmentCode1 != '' " >
+            and auth_position.auth_department_code1 = #{authDepartmentCode1}
+        </if>
+        /*auth_position end*/
+        /*auth_departments begin*/
+        <if test="authDepartmentVO != null and authDepartmentVO != ''">
+        <!-- 部门id -->
+        <if test="authDepartmentVO.id != null and authDepartmentVO.id != '' " >
+            and auth_departments.id = #{authDepartmentVO.id}
+        </if>
+        <!-- 部门编码 -->
+        <if test="authDepartmentVO.code != null and authDepartmentVO.code != '' " >
+            and auth_departments.code = #{authDepartmentVO.code}
+        </if>
+        <!-- 部门名称 -->
+        <if test="authDepartmentVO.name != null and authDepartmentVO.name != '' " >
+            and auth_departments.name = #{authDepartmentVO.name}
+        </if>
+        <!-- 部门电话 -->
+        <if test="authDepartmentVO.phone != null and authDepartmentVO.phone != '' " >
+            and auth_departments.phone = #{authDepartmentVO.phone}
+        </if>
+        <!-- 部门负责人 -->
+        <if test="authDepartmentVO.leaderName != null and authDepartmentVO.leaderName != '' " >
+            and auth_departments.leader_name = #{authDepartmentVO.leaderName}
+        </if>
+        <!-- 负责人手机 -->
+        <if test="authDepartmentVO.leaderMobile != null and authDepartmentVO.leaderMobile != '' " >
+            and auth_departments.leader_mobile = #{authDepartmentVO.leaderMobile}
+        </if>
+        <!-- 描述 -->
+        <if test="authDepartmentVO.description != null and authDepartmentVO.description != '' " >
+            and auth_departments.description = #{authDepartmentVO.description}
+        </if>
+        <!--  -->
+        <if test="authDepartmentVO.isDel != null and authDepartmentVO.isDel != '' " >
+            and auth_departments.is_del = #{authDepartmentVO.isDel}
+        </if>
+        <!--  -->
+        <if test="authDepartmentVO.authAgencyCode != null and authDepartmentVO.authAgencyCode != '' " >
+            and auth_departments.auth_agency_code = #{authDepartmentVO.authAgencyCode}
+        </if>
+        </if>
+        /*auth_department end*/
+    </select>
+</mapper>

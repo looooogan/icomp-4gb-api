@@ -1,0 +1,551 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.mapper.IAuthAuthorizationMapper">
+    <resultMap id="authAuthorizationQueryMap" type="com.common.pojo.AuthAuthorization">
+        <!--  -->
+        <id property="id" column="auth_authorization.id"/>
+
+        <!-- 授权原因（0断刀,1丢刀,2补领,3到寿,4卸下后安上,5重复换装,6重复复磨,7重复初始化设备,8库存盘点,9出库报废，10其它） -->
+        <result property="reason" column="auth_authorization.reason"/>
+        <!-- 授权时间 -->
+        <result property="authorizedTime" column="auth_authorization.authorized_time"/>
+        <!-- 备注（情况简述） -->
+        <result property="note" column="auth_authorization.note"/>
+        <!-- 用户 -->
+        <result property="customerCode" column="auth_authorization.customer_code"/>
+        <!-- 删除区分(0有效1删除) -->
+        <result property="isDel" column="auth_authorization.is_del"/>
+        <!-- 用户 -->
+        <association property="authCustomer"  column="auth_customer.code" resultMap="authAuthorizationAuthCustomerMap"/>
+    </resultMap>
+        <resultMap id="authAuthorizationAuthCustomerMap" type="com.common.pojo.AuthCustomer">
+            <!--  -->
+            <id property="id" column="auth_customer.id"/>
+
+            <!-- 职位 -->
+            <result property="positionId" column="auth_customer.position_id"/>
+            <!-- 用户名[16位数字字母组合] -->
+            <result property="account" column="auth_customer.account"/>
+            <!-- 用户密码[16位数字字母组合] -->
+            <result property="password" column="auth_customer.password"/>
+            <!-- 员工卡号[20位员工卡] -->
+            <result property="employeeCode" column="auth_customer.employee_code"/>
+            <!-- 用户类型(0系统用户1普通用户) -->
+            <result property="type" column="auth_customer.type"/>
+            <!-- 用户锁定区分(0正常1锁定) -->
+            <result property="lockFlag" column="auth_customer.lock_flag"/>
+            <!--  -->
+            <result property="isDel" column="auth_customer.is_del"/>
+            <!-- 用户编码 -->
+            <result property="code" column="auth_customer.code"/>
+            <!-- RFID标签 -->
+            <result property="rfidContainerCode" column="auth_customer.rfid_container_code"/>
+            <!-- 部门 -->
+            <result property="departmentCode" column="auth_customer.department_code"/>
+            <!-- 机构 -->
+            <result property="agencyCode" column="auth_customer.agency_code"/>
+            <!-- 真实姓名 -->
+            <result property="name" column="auth_customer.name"/>
+            <!--  -->
+            <result property="rfidCode" column="auth_customer.rfid_code"/>
+        </resultMap>
+    <!--添加-->
+    <insert id="addAuthAuthorization" parameterType="com.common.pojo.AuthAuthorization">
+        INSERT INTO auth_authorization (
+            <!--  -->
+            id,
+            <!-- 授权原因（0断刀,1丢刀,2补领,3到寿,4卸下后安上,5重复换装,6重复复磨,7重复初始化设备,8库存盘点,9出库报废，10其它） -->
+            reason,
+            <!-- 授权时间 -->
+            authorized_time,
+            <!-- 备注（情况简述） -->
+            note,
+            <!-- 用户 -->
+            customer_code,
+            <!-- 删除区分(0有效1删除) -->
+            is_del
+        )
+        VALUES (
+            <!--  -->
+            #{id},
+            <!-- 授权原因（0断刀,1丢刀,2补领,3到寿,4卸下后安上,5重复换装,6重复复磨,7重复初始化设备,8库存盘点,9出库报废，10其它） -->
+            #{reason},
+            <!-- 授权时间 -->
+            #{authorizedTime},
+            <!-- 备注（情况简述） -->
+            #{note},
+            <!-- 用户 -->
+            #{customerCode},
+            <!-- 删除区分(0有效1删除) -->
+            #{isDel}
+        )
+    </insert>
+
+    <!--删除-->
+    <delete id="delAuthAuthorization" parameterType="com.common.pojo.AuthAuthorization">
+        DELETE
+        FROM auth_authorization
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--逻辑删除-->
+    <delete id="delAuthAuthorizationForLogic" parameterType="com.common.pojo.AuthAuthorization">
+        UPDATE auth_authorization SET
+        is_del = 1
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--根据VO删除-->
+    <delete id="delAuthAuthorizationByVo" parameterType="com.common.vo.AuthAuthorizationVO">
+        UPDATE auth_authorization SET is_del = 1
+        WHERE
+            1=1
+            <!--  -->
+            <if test="id != null and id != '' " >
+                and id =  #{id}
+            </if>
+            <!-- 授权原因（0断刀,1丢刀,2补领,3到寿,4卸下后安上,5重复换装,6重复复磨,7重复初始化设备,8库存盘点,9出库报废，10其它） -->
+            <if test="reason != null and reason != '' " >
+                and reason =  #{reason}
+            </if>
+            <!-- 授权时间 -->
+            <if test="authorizedTime != null and authorizedTime != '' " >
+                and authorized_time =  #{authorizedTime}
+            </if>
+            <!-- 备注（情况简述） -->
+            <if test="note != null and note != '' " >
+                and note =  #{note}
+            </if>
+            <!-- 用户 -->
+            <if test="customerCode != null and customerCode != '' " >
+                and customer_code =  #{customerCode}
+            </if>
+            <!-- 删除区分(0有效1删除) -->
+            <if test="isDel != null and isDel != '' " >
+                and is_del =  #{isDel}
+            </if>
+    </delete>
+
+    <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
+    <update id="updAuthAuthorization" parameterType="com.common.pojo.AuthAuthorization">
+        UPDATE auth_authorization
+        SET
+            <!-- 授权原因（0断刀,1丢刀,2补领,3到寿,4卸下后安上,5重复换装,6重复复磨,7重复初始化设备,8库存盘点,9出库报废，10其它） -->
+            <if test="reason != null and reason != '' " >
+                reason =  #{reason},
+            </if>
+            <!-- 授权时间 -->
+            <if test="authorizedTime != null and authorizedTime != '' " >
+                authorized_time =  #{authorizedTime},
+            </if>
+            <!-- 备注（情况简述） -->
+            <if test="note != null and note != '' " >
+                note =  #{note},
+            </if>
+            <!-- 用户 -->
+            <if test="customerCode != null and customerCode != '' " >
+                customer_code =  #{customerCode},
+            </if>
+            <!-- 删除区分(0有效1删除) -->
+            <if test="isDel != null and isDel != '' " >
+                is_del =  #{isDel},
+            </if>
+            <!--  -->
+            id = #{id}
+        WHERE
+            1 = 1
+            and id = #{id}
+    </update>
+
+    <!--分页查询 -->
+    <select id="getAuthAuthorizationByPage" parameterType="com.common.vo.AuthAuthorizationVO" resultMap="authAuthorizationQueryMap">
+        SELECT
+        /*authAuthorization begin*/
+            <!--  -->
+            auth_authorization.id as 'auth_authorization.id',
+            <!-- 授权原因（0断刀,1丢刀,2补领,3到寿,4卸下后安上,5重复换装,6重复复磨,7重复初始化设备,8库存盘点,9出库报废，10其它） -->
+            auth_authorization.reason as 'auth_authorization.reason',
+            <!-- 授权时间 -->
+            auth_authorization.authorized_time as 'auth_authorization.authorized_time',
+            <!-- 备注（情况简述） -->
+            auth_authorization.note as 'auth_authorization.note',
+            <!-- 用户 -->
+            auth_authorization.customer_code as 'auth_authorization.customer_code',
+            <!-- 删除区分(0有效1删除) -->
+            auth_authorization.is_del as 'auth_authorization.is_del',
+        /*authAuthorization end*/
+        /*auth_customer begin*/
+            <!--  -->
+            auth_customer.id as 'auth_customer.id',
+            <!-- 职位 -->
+            auth_customer.position_id as 'auth_customer.position_id',
+            <!-- 用户名[16位数字字母组合] -->
+            auth_customer.account as 'auth_customer.account',
+            <!-- 用户密码[16位数字字母组合] -->
+            auth_customer.password as 'auth_customer.password',
+            <!-- 员工卡号[20位员工卡] -->
+            auth_customer.employee_code as 'auth_customer.employee_code',
+            <!-- 用户类型(0系统用户1普通用户) -->
+            auth_customer.type as 'auth_customer.type',
+            <!-- 用户锁定区分(0正常1锁定) -->
+            auth_customer.lock_flag as 'auth_customer.lock_flag',
+            <!--  -->
+            auth_customer.is_del as 'auth_customer.is_del',
+            <!-- 用户编码 -->
+            auth_customer.code as 'auth_customer.code',
+            <!-- RFID标签 -->
+            auth_customer.rfid_container_code as 'auth_customer.rfid_container_code',
+            <!-- 部门 -->
+            auth_customer.department_code as 'auth_customer.department_code',
+            <!-- 机构 -->
+            auth_customer.agency_code as 'auth_customer.agency_code',
+            <!-- 真实姓名 -->
+            auth_customer.name as 'auth_customer.name',
+            <!--  -->
+            auth_customer.rfid_code as 'auth_customer.rfid_code'
+        /*auth_customer end*/
+        FROM auth_authorization as auth_authorization
+        LEFT JOIN auth_customer as auth_customer ON auth_customer.code = auth_authorization.customer_code
+        WHERE
+            1 = 1 AND  auth_authorization.is_del = 0
+        /*auth_authorization begin*/
+            <!--  -->
+            <if test="id != null and id != '' " >
+                and auth_authorization.id = #{id}
+            </if>
+            <!-- 授权原因（0断刀,1丢刀,2补领,3到寿,4卸下后安上,5重复换装,6重复复磨,7重复初始化设备,8库存盘点,9出库报废，10其它） -->
+            <if test="reason != null and reason != '' " >
+                and auth_authorization.reason = #{reason}
+            </if>
+            <!-- 授权时间 -->
+            <if test="authorizedTime != null and authorizedTime != '' " >
+                and auth_authorization.authorized_time &lt;= #{authorizedTimeEnd}
+            </if>
+            <if test="authorizedTime != null and authorizedTime != '' " >
+                and auth_authorization.authorized_time &gt;= #{authorizedTimeBegin}
+            </if>
+            <!-- 备注（情况简述） -->
+            <if test="note != null and note != '' " >
+                and auth_authorization.note = #{note}
+            </if>
+            <!-- 用户 -->
+            <if test="customerCode != null and customerCode != '' " >
+                and auth_authorization.customer_code = #{customerCode}
+            </if>
+            <!-- 删除区分(0有效1删除) -->
+            <if test="isDel != null and isDel != '' " >
+                and auth_authorization.is_del = #{isDel}
+            </if>
+        /*auth_authorization end*/
+        /*auth_customer begin*/
+            <if test="authCustomerVO != null">
+            <!--  -->
+            <if test="authCustomerVO.id != null and authCustomerVO.id != '' " >
+                and auth_customer.id = #{authCustomerVO.id}
+            </if>
+            <!-- 职位 -->
+            <if test="authCustomerVO.positionId != null and authCustomerVO.positionId != '' " >
+                and auth_customer.position_id = #{authCustomerVO.positionId}
+            </if>
+            <!-- 用户名[16位数字字母组合] -->
+            <if test="authCustomerVO.account != null and authCustomerVO.account != '' " >
+                and auth_customer.account = #{authCustomerVO.account}
+            </if>
+            <!-- 用户密码[16位数字字母组合] -->
+            <if test="authCustomerVO.password != null and authCustomerVO.password != '' " >
+                and auth_customer.password = #{authCustomerVO.password}
+            </if>
+            <!-- 员工卡号[20位员工卡] -->
+            <if test="authCustomerVO.employeeCode != null and authCustomerVO.employeeCode != '' " >
+                and auth_customer.employee_code = #{authCustomerVO.employeeCode}
+            </if>
+            <!-- 用户类型(0系统用户1普通用户) -->
+            <if test="authCustomerVO.type != null and authCustomerVO.type != '' " >
+                and auth_customer.type = #{authCustomerVO.type}
+            </if>
+            <!-- 用户锁定区分(0正常1锁定) -->
+            <if test="authCustomerVO.lockFlag != null and authCustomerVO.lockFlag != '' " >
+                and auth_customer.lock_flag = #{authCustomerVO.lockFlag}
+            </if>
+            <!--  -->
+            <if test="authCustomerVO.isDel != null and authCustomerVO.isDel != '' " >
+                and auth_customer.is_del = #{authCustomerVO.isDel}
+            </if>
+            <!-- 用户编码 -->
+            <if test="authCustomerVO.code != null and authCustomerVO.code != '' " >
+                and auth_customer.code = #{authCustomerVO.code}
+            </if>
+            <!-- RFID标签 -->
+            <if test="authCustomerVO.rfidContainerCode != null and authCustomerVO.rfidContainerCode != '' " >
+                and auth_customer.rfid_container_code = #{authCustomerVO.rfidContainerCode}
+            </if>
+            <!-- 部门 -->
+            <if test="authCustomerVO.departmentCode != null and authCustomerVO.departmentCode != '' " >
+                and auth_customer.department_code = #{authCustomerVO.departmentCode}
+            </if>
+            <!-- 机构 -->
+            <if test="authCustomerVO.agencyCode != null and authCustomerVO.agencyCode != '' " >
+                and auth_customer.agency_code = #{authCustomerVO.agencyCode}
+            </if>
+            <!-- 真实姓名 -->
+            <if test="authCustomerVO.name != null and authCustomerVO.name != '' " >
+                and auth_customer.name = #{authCustomerVO.name}
+            </if>
+            <!--  -->
+            <if test="authCustomerVO.rfidCode != null and authCustomerVO.rfidCode != '' " >
+                and auth_customer.rfid_code = #{authCustomerVO.rfidCode}
+            </if>
+            </if>
+        /*auth_customer end*/
+        ORDER BY auth_authorization.id desc
+        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
+        LIMIT #{startRecord},#{pageSize}
+        </if>
+    </select>
+
+
+    <!--查询记录数-->
+    <select id="getAuthAuthorizationCount" parameterType="com.common.vo.AuthAuthorizationVO" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM auth_authorization as auth_authorization
+        LEFT JOIN auth_customer as auth_customer ON auth_customer.code = auth_authorization.customer_code
+        WHERE
+            1 = 1 AND  auth_authorization.is_del = 0
+        /*auth_authorization begin*/
+        <!--  -->
+        <if test="id != null and id != '' " >
+            and auth_authorization.id = #{id}
+        </if>
+        <!-- 授权原因（0断刀,1丢刀,2补领,3到寿,4卸下后安上,5重复换装,6重复复磨,7重复初始化设备,8库存盘点,9出库报废，10其它） -->
+        <if test="reason != null and reason != '' " >
+            and auth_authorization.reason = #{reason}
+        </if>
+        <!-- 授权时间 -->
+        <if test="authorizedTime != null and authorizedTime != '' " >
+            and auth_authorization.authorized_time &lt;= #{authorizedTimeEnd}
+        </if>
+        <if test="authorizedTime != null and authorizedTime != '' " >
+            and auth_authorization.authorized_time &gt;= #{authorizedTimeBegin}
+        </if>
+        <!-- 备注（情况简述） -->
+        <if test="note != null and note != '' " >
+            and auth_authorization.note = #{note}
+        </if>
+        <!-- 用户 -->
+        <if test="customerCode != null and customerCode != '' " >
+            and auth_authorization.customer_code = #{customerCode}
+        </if>
+        <!-- 删除区分(0有效1删除) -->
+        <if test="isDel != null and isDel != '' " >
+            and auth_authorization.is_del = #{isDel}
+        </if>
+        /*auth_authorization end*/
+        /*auth_customer begin*/
+        <if test="authCustomerVO != null">
+        <!--  -->
+        <if test="authCustomerVO.id != null and authCustomerVO.id != '' " >
+            and auth_customer.id = #{authCustomerVO.id}
+        </if>
+        <!-- 职位 -->
+        <if test="authCustomerVO.positionId != null and authCustomerVO.positionId != '' " >
+            and auth_customer.position_id = #{authCustomerVO.positionId}
+        </if>
+        <!-- 用户名[16位数字字母组合] -->
+        <if test="authCustomerVO.account != null and authCustomerVO.account != '' " >
+            and auth_customer.account = #{authCustomerVO.account}
+        </if>
+        <!-- 用户密码[16位数字字母组合] -->
+        <if test="authCustomerVO.password != null and authCustomerVO.password != '' " >
+            and auth_customer.password = #{authCustomerVO.password}
+        </if>
+        <!-- 员工卡号[20位员工卡] -->
+        <if test="authCustomerVO.employeeCode != null and authCustomerVO.employeeCode != '' " >
+            and auth_customer.employee_code = #{authCustomerVO.employeeCode}
+        </if>
+        <!-- 用户类型(0系统用户1普通用户) -->
+        <if test="authCustomerVO.type != null and authCustomerVO.type != '' " >
+            and auth_customer.type = #{authCustomerVO.type}
+        </if>
+        <!-- 用户锁定区分(0正常1锁定) -->
+        <if test="authCustomerVO.lockFlag != null and authCustomerVO.lockFlag != '' " >
+            and auth_customer.lock_flag = #{authCustomerVO.lockFlag}
+        </if>
+        <!--  -->
+        <if test="authCustomerVO.isDel != null and authCustomerVO.isDel != '' " >
+            and auth_customer.is_del = #{authCustomerVO.isDel}
+        </if>
+        <!-- 用户编码 -->
+        <if test="authCustomerVO.code != null and authCustomerVO.code != '' " >
+            and auth_customer.code = #{authCustomerVO.code}
+        </if>
+        <!-- RFID标签 -->
+        <if test="authCustomerVO.rfidContainerCode != null and authCustomerVO.rfidContainerCode != '' " >
+            and auth_customer.rfid_container_code = #{authCustomerVO.rfidContainerCode}
+        </if>
+        <!-- 部门 -->
+        <if test="authCustomerVO.departmentCode != null and authCustomerVO.departmentCode != '' " >
+            and auth_customer.department_code = #{authCustomerVO.departmentCode}
+        </if>
+        <!-- 机构 -->
+        <if test="authCustomerVO.agencyCode != null and authCustomerVO.agencyCode != '' " >
+            and auth_customer.agency_code = #{authCustomerVO.agencyCode}
+        </if>
+        <!-- 真实姓名 -->
+        <if test="authCustomerVO.name != null and authCustomerVO.name != '' " >
+            and auth_customer.name = #{authCustomerVO.name}
+        </if>
+        <!--  -->
+        <if test="authCustomerVO.rfidCode != null and authCustomerVO.rfidCode != '' " >
+            and auth_customer.rfid_code = #{authCustomerVO.rfidCode}
+        </if>
+        </if>
+        /*auth_customer end*/
+    </select>
+
+    <!--根据vo查询 -->
+    <select id="getAuthAuthorization" parameterType="com.common.vo.AuthAuthorizationVO" resultMap="authAuthorizationQueryMap">
+        SELECT
+        /*auth_authorization begin*/
+        <!--  -->
+        auth_authorization.id as 'auth_authorization.id',
+        <!-- 授权原因（0断刀,1丢刀,2补领,3到寿,4卸下后安上,5重复换装,6重复复磨,7重复初始化设备,8库存盘点,9出库报废，10其它） -->
+        auth_authorization.reason as 'auth_authorization.reason',
+        <!-- 授权时间 -->
+        auth_authorization.authorized_time as 'auth_authorization.authorized_time',
+        <!-- 备注（情况简述） -->
+        auth_authorization.note as 'auth_authorization.note',
+        <!-- 用户 -->
+        auth_authorization.customer_code as 'auth_authorization.customer_code',
+        <!-- 删除区分(0有效1删除) -->
+        auth_authorization.is_del as 'auth_authorization.is_del',
+        /*auth_authorization end*/
+        /*auth_customer begin*/
+        <!--  -->
+        auth_customer.id as 'auth_customer.id',
+        <!-- 职位 -->
+        auth_customer.position_id as 'auth_customer.position_id',
+        <!-- 用户名[16位数字字母组合] -->
+        auth_customer.account as 'auth_customer.account',
+        <!-- 用户密码[16位数字字母组合] -->
+        auth_customer.password as 'auth_customer.password',
+        <!-- 员工卡号[20位员工卡] -->
+        auth_customer.employee_code as 'auth_customer.employee_code',
+        <!-- 用户类型(0系统用户1普通用户) -->
+        auth_customer.type as 'auth_customer.type',
+        <!-- 用户锁定区分(0正常1锁定) -->
+        auth_customer.lock_flag as 'auth_customer.lock_flag',
+        <!--  -->
+        auth_customer.is_del as 'auth_customer.is_del',
+        <!-- 用户编码 -->
+        auth_customer.code as 'auth_customer.code',
+        <!-- RFID标签 -->
+        auth_customer.rfid_container_code as 'auth_customer.rfid_container_code',
+        <!-- 部门 -->
+        auth_customer.department_code as 'auth_customer.department_code',
+        <!-- 机构 -->
+        auth_customer.agency_code as 'auth_customer.agency_code',
+        <!-- 真实姓名 -->
+        auth_customer.name as 'auth_customer.name',
+        <!--  -->
+        auth_customer.rfid_code as 'auth_customer.rfid_code'
+        /*auth_customer end*/
+        FROM auth_authorization as auth_authorization
+        LEFT JOIN auth_customer as auth_customer ON auth_customer.code = auth_authorization.customer_code
+        WHERE
+            1 = 1 AND  auth_authorization.is_del = 0
+        /*auth_authorization begin*/
+        <!--  -->
+        <if test="id != null and id != '' " >
+            and auth_authorization.id = #{id}
+        </if>
+        <!-- 授权原因（0断刀,1丢刀,2补领,3到寿,4卸下后安上,5重复换装,6重复复磨,7重复初始化设备,8库存盘点,9出库报废，10其它） -->
+        <if test="reason != null and reason != '' " >
+            and auth_authorization.reason = #{reason}
+        </if>
+        <!-- 授权时间 -->
+        <if test="authorizedTime != null and authorizedTime != '' " >
+            and auth_authorization.authorized_time &lt;= #{authorizedTimeEnd}
+        </if>
+        <if test="authorizedTime != null and authorizedTime != '' " >
+            and auth_authorization.authorized_time &gt;= #{authorizedTimeBegin}
+        </if>
+        <!-- 备注（情况简述） -->
+        <if test="note != null and note != '' " >
+            and auth_authorization.note = #{note}
+        </if>
+        <!-- 用户 -->
+        <if test="customerCode != null and customerCode != '' " >
+            and auth_authorization.customer_code = #{customerCode}
+        </if>
+        <!-- 删除区分(0有效1删除) -->
+        <if test="isDel != null and isDel != '' " >
+            and auth_authorization.is_del = #{isDel}
+        </if>
+        /*auth_authorization end*/
+        /*auth_customers begin*/
+        <if test="authCustomerVO != null">
+        <!--  -->
+        <if test="authCustomerVO.id != null and authCustomerVO.id != '' " >
+            and auth_customers.id = #{authCustomerVO.id}
+        </if>
+        <!-- 职位 -->
+        <if test="authCustomerVO.positionId != null and authCustomerVO.positionId != '' " >
+            and auth_customers.position_id = #{authCustomerVO.positionId}
+        </if>
+        <!-- 用户名[16位数字字母组合] -->
+        <if test="authCustomerVO.account != null and authCustomerVO.account != '' " >
+            and auth_customers.account = #{authCustomerVO.account}
+        </if>
+        <!-- 用户密码[16位数字字母组合] -->
+        <if test="authCustomerVO.password != null and authCustomerVO.password != '' " >
+            and auth_customers.password = #{authCustomerVO.password}
+        </if>
+        <!-- 员工卡号[20位员工卡] -->
+        <if test="authCustomerVO.employeeCode != null and authCustomerVO.employeeCode != '' " >
+            and auth_customers.employee_code = #{authCustomerVO.employeeCode}
+        </if>
+        <!-- 用户类型(0系统用户1普通用户) -->
+        <if test="authCustomerVO.type != null and authCustomerVO.type != '' " >
+            and auth_customers.type = #{authCustomerVO.type}
+        </if>
+        <!-- 用户锁定区分(0正常1锁定) -->
+        <if test="authCustomerVO.lockFlag != null and authCustomerVO.lockFlag != '' " >
+            and auth_customers.lock_flag = #{authCustomerVO.lockFlag}
+        </if>
+        <!--  -->
+        <if test="authCustomerVO.isDel != null and authCustomerVO.isDel != '' " >
+            and auth_customers.is_del = #{authCustomerVO.isDel}
+        </if>
+        <!-- 用户编码 -->
+        <if test="authCustomerVO.code != null and authCustomerVO.code != '' " >
+            and auth_customers.code = #{authCustomerVO.code}
+        </if>
+        <!-- RFID标签 -->
+        <if test="authCustomerVO.rfidContainerCode != null and authCustomerVO.rfidContainerCode != '' " >
+            and auth_customers.rfid_container_code = #{authCustomerVO.rfidContainerCode}
+        </if>
+        <!-- 部门 -->
+        <if test="authCustomerVO.departmentCode != null and authCustomerVO.departmentCode != '' " >
+            and auth_customers.department_code = #{authCustomerVO.departmentCode}
+        </if>
+        <!-- 机构 -->
+        <if test="authCustomerVO.agencyCode != null and authCustomerVO.agencyCode != '' " >
+            and auth_customers.agency_code = #{authCustomerVO.agencyCode}
+        </if>
+        <!-- 真实姓名 -->
+        <if test="authCustomerVO.name != null and authCustomerVO.name != '' " >
+            and auth_customers.name = #{authCustomerVO.name}
+        </if>
+        <!--  -->
+        <if test="authCustomerVO.rfidCode != null and authCustomerVO.rfidCode != '' " >
+            and auth_customers.rfid_code = #{authCustomerVO.rfidCode}
+        </if>
+        </if>
+        /*auth_customer end*/
+    </select>
+</mapper>

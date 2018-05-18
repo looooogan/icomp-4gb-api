@@ -1,0 +1,1133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.mapper.IInsideFactoryMapper">
+    <resultMap id="insideFactoryQueryMap" type="com.common.pojo.InsideFactory">
+        <!-- 场内刃磨id -->
+        <id property="id" column="inside_factory.id"/>
+
+        <!-- 材料号 -->
+        <result property="materialNum" column="inside_factory.material_num"/>
+        <!-- 复磨数量 -->
+        <result property="numberGrinding" column="inside_factory.number_grinding"/>
+        <!-- 刀具类型（1钻头2.刀片） -->
+        <result property="toolType" column="inside_factory.tool_type"/>
+        <!-- 审批人 -->
+        <result property="approver" column="inside_factory.approver"/>
+        <!-- 修复状态(1 待刃磨 2已刃磨） -->
+        <result property="repairState" column="inside_factory.repair_state"/>
+        <!-- 逻辑删除 -->
+        <result property="isDel" column="inside_factory.is_del"/>
+        <!--  -->
+        <result property="cuttingToolCode" column="inside_factory.cutting_tool_code"/>
+        <!-- 刃磨设备 -->
+        <result property="productLineEquipmentCode" column="inside_factory.product_line_equipment_code"/>
+        <!-- 操作人 -->
+        <result property="oprator" column="inside_factory.oprator"/>
+        <!-- 操作人姓名 -->
+        <result property="opratorName" column="inside_factory.oprator_name"/>
+        <!-- 刃磨时间 -->
+        <result property="createTime" column="inside_factory.create_time"/>
+        <!--  -->
+        <association property="cuttingTool"  column="cutting_tool.code" resultMap="insideFactoryCuttingToolMap"/>
+        <!-- 刃磨设备 -->
+        <association property="productLineEquipment"  column="product_line_equipment.code" resultMap="insideFactoryProductLineEquipmentMap"/>
+    </resultMap>
+        <resultMap id="insideFactoryCuttingToolMap" type="com.common.pojo.CuttingTool">
+            <!-- 材料刀id -->
+            <id property="id" column="cutting_tool.id"/>
+
+            <!-- 刀具编码 -->
+            <result property="code" column="cutting_tool.code"/>
+            <!-- 库位码 -->
+            <result property="libraryCode" column="cutting_tool.library_code"/>
+            <!-- 业务编码 -->
+            <result property="businessCode" column="cutting_tool.business_code"/>
+            <!-- 名称 -->
+            <result property="name" column="cutting_tool.name"/>
+            <!-- 刀具分类(1刀具2辅具3配套9其他） -->
+            <result property="type" column="cutting_tool.type"/>
+            <!-- 消耗类别(1:可刃磨钻头2可刃磨刀片3一次性刀片9其他 -->
+            <result property="consumeType" column="cutting_tool.consume_type"/>
+            <!-- 图纸 -->
+            <result property="pic" column="cutting_tool.pic"/>
+            <!-- 规格型号 -->
+            <result property="specifications" column="cutting_tool.specifications"/>
+            <!-- 刃口数 -->
+            <result property="cutNumber" column="cutting_tool.cut_number"/>
+            <!-- 品牌 -->
+            <result property="brand" column="cutting_tool.brand"/>
+            <!-- 修磨类别(0:厂内修磨，1厂外修磨，2厂外涂层 -->
+            <result property="grinding" column="cutting_tool.grinding"/>
+            <!-- 可使用次数 -->
+            <result property="sharpenNum" column="cutting_tool.sharpen_num"/>
+            <!-- 最大库存 -->
+            <result property="materialMax" column="cutting_tool.material_max"/>
+            <!-- 最小库存 -->
+            <result property="materialMin" column="cutting_tool.material_min"/>
+            <!-- 可刃磨次数 -->
+            <result property="toolNumber" column="cutting_tool.tool_number"/>
+            <!-- 复磨标准 -->
+            <result property="sharpenCriterion" column="cutting_tool.sharpen_criterion"/>
+            <!-- 刀具长度 -->
+            <result property="materialLength" column="cutting_tool.material_length"/>
+            <!-- 可刃磨长度 -->
+            <result property="sharpenLength" column="cutting_tool.sharpen_length"/>
+            <!--  -->
+            <result property="isDel" column="cutting_tool.is_del"/>
+            <!--  -->
+            <result property="beiMin" column="cutting_tool.bei_min"/>
+            <!--  -->
+            <result property="beiMax" column="cutting_tool.bei_max"/>
+            <!--  -->
+            <result property="toolPrice" column="cutting_tool.tool_price"/>
+            <!--  -->
+            <result property="averagePrice" column="cutting_tool.average_price"/>
+            <!--  -->
+            <result property="parametersType" column="cutting_tool.parameters_type"/>
+            <!-- 用途类型 1 刀片,钻头，合成刀，热套类 2 一体刀 3筒刀 4专机 9其他 -->
+            <result property="userfulType" column="cutting_tool.userful_type"/>
+            <!-- 启明编码 -->
+            <result property="qimingCode" column="cutting_tool.qiming_code"/>
+            <!-- 物料编码 -->
+            <result property="wuliaoCode" column="cutting_tool.wuliao_code"/>
+        </resultMap>
+        <resultMap id="insideFactoryProductLineEquipmentMap" type="com.common.pojo.ProductLineEquipment">
+            <!-- 设备id -->
+            <id property="id" column="product_line_equipment.id"/>
+
+            <!-- RFID载体 -->
+            <result property="rfidContainerCode" column="product_line_equipment.rfid_container_code"/>
+            <!-- 当前是否使用(0是,1否) -->
+            <result property="statues" column="product_line_equipment.statues"/>
+            <!-- 编码 -->
+            <result property="code" column="product_line_equipment.code"/>
+            <!-- 名称 -->
+            <result property="name" column="product_line_equipment.name"/>
+            <!-- 设备类型(0:加工设备1:对刀设备2:专机) -->
+            <result property="type" column="product_line_equipment.type"/>
+            <!--  -->
+            <result property="isDel" column="product_line_equipment.is_del"/>
+        </resultMap>
+    <!--添加-->
+    <insert id="addInsideFactory" parameterType="com.common.pojo.InsideFactory">
+        INSERT INTO inside_factory (
+            <!-- 场内刃磨id -->
+            id,
+            <!-- 材料号 -->
+            material_num,
+            <!-- 复磨数量 -->
+            number_grinding,
+            <!-- 刀具类型（1钻头2.刀片） -->
+            tool_type,
+            <!-- 审批人 -->
+            approver,
+            <!-- 修复状态(1 待刃磨 2已刃磨） -->
+            repair_state,
+            <!-- 逻辑删除 -->
+            is_del,
+            <!--  -->
+            cutting_tool_code,
+            <!-- 刃磨设备 -->
+            product_line_equipment_code,
+            <!-- 操作人 -->
+            oprator,
+            <!-- 操作人姓名 -->
+            oprator_name,
+            <!-- 刃磨时间 -->
+            create_time
+        )
+        VALUES (
+            <!-- 场内刃磨id -->
+            #{id},
+            <!-- 材料号 -->
+            #{materialNum},
+            <!-- 复磨数量 -->
+            #{numberGrinding},
+            <!-- 刀具类型（1钻头2.刀片） -->
+            #{toolType},
+            <!-- 审批人 -->
+            #{approver},
+            <!-- 修复状态(1 待刃磨 2已刃磨） -->
+            #{repairState},
+            <!-- 逻辑删除 -->
+            #{isDel},
+            <!--  -->
+            #{cuttingToolCode},
+            <!-- 刃磨设备 -->
+            #{productLineEquipmentCode},
+            <!-- 操作人 -->
+            #{oprator},
+            <!-- 操作人姓名 -->
+            #{opratorName},
+            <!-- 刃磨时间 -->
+            #{createTime}
+        )
+    </insert>
+
+    <!--删除-->
+    <delete id="delInsideFactory" parameterType="com.common.pojo.InsideFactory">
+        DELETE
+        FROM inside_factory
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--逻辑删除-->
+    <delete id="delInsideFactoryForLogic" parameterType="com.common.pojo.InsideFactory">
+        UPDATE inside_factory SET
+        is_del = 1
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--根据VO删除-->
+    <delete id="delInsideFactoryByVo" parameterType="com.common.vo.InsideFactoryVO">
+        UPDATE inside_factory SET is_del = 1
+        WHERE
+            1=1
+            <!-- 场内刃磨id -->
+            <if test="id != null and id != '' " >
+                and id =  #{id}
+            </if>
+            <!-- 材料号 -->
+            <if test="materialNum != null and materialNum != '' " >
+                and material_num =  #{materialNum}
+            </if>
+            <!-- 复磨数量 -->
+            <if test="numberGrinding != null and numberGrinding != '' " >
+                and number_grinding =  #{numberGrinding}
+            </if>
+            <!-- 刀具类型（1钻头2.刀片） -->
+            <if test="toolType != null and toolType != '' " >
+                and tool_type =  #{toolType}
+            </if>
+            <!-- 审批人 -->
+            <if test="approver != null and approver != '' " >
+                and approver =  #{approver}
+            </if>
+            <!-- 修复状态(1 待刃磨 2已刃磨） -->
+            <if test="repairState != null and repairState != '' " >
+                and repair_state =  #{repairState}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                and is_del =  #{isDel}
+            </if>
+            <!--  -->
+            <if test="cuttingToolCode != null and cuttingToolCode != '' " >
+                and cutting_tool_code =  #{cuttingToolCode}
+            </if>
+            <!-- 刃磨设备 -->
+            <if test="productLineEquipmentCode != null and productLineEquipmentCode != '' " >
+                and product_line_equipment_code =  #{productLineEquipmentCode}
+            </if>
+            <!-- 操作人 -->
+            <if test="oprator != null and oprator != '' " >
+                and oprator =  #{oprator}
+            </if>
+            <!-- 操作人姓名 -->
+            <if test="opratorName != null and opratorName != '' " >
+                and oprator_name =  #{opratorName}
+            </if>
+            <!-- 刃磨时间 -->
+            <if test="createTime != null and createTime != '' " >
+                and create_time =  #{createTime}
+            </if>
+    </delete>
+
+    <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
+    <update id="updInsideFactory" parameterType="com.common.pojo.InsideFactory">
+        UPDATE inside_factory
+        SET
+            <!-- 材料号 -->
+            <if test="materialNum != null and materialNum != '' " >
+                material_num =  #{materialNum},
+            </if>
+            <!-- 复磨数量 -->
+            <if test="numberGrinding != null and numberGrinding != '' " >
+                number_grinding =  #{numberGrinding},
+            </if>
+            <!-- 刀具类型（1钻头2.刀片） -->
+            <if test="toolType != null and toolType != '' " >
+                tool_type =  #{toolType},
+            </if>
+            <!-- 审批人 -->
+            <if test="approver != null and approver != '' " >
+                approver =  #{approver},
+            </if>
+            <!-- 修复状态(1 待刃磨 2已刃磨） -->
+            <if test="repairState != null and repairState != '' " >
+                repair_state =  #{repairState},
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                is_del =  #{isDel},
+            </if>
+            <!--  -->
+            <if test="cuttingToolCode != null and cuttingToolCode != '' " >
+                cutting_tool_code =  #{cuttingToolCode},
+            </if>
+            <!-- 刃磨设备 -->
+            <if test="productLineEquipmentCode != null and productLineEquipmentCode != '' " >
+                product_line_equipment_code =  #{productLineEquipmentCode},
+            </if>
+            <!-- 操作人 -->
+            <if test="oprator != null and oprator != '' " >
+                oprator =  #{oprator},
+            </if>
+            <!-- 操作人姓名 -->
+            <if test="opratorName != null and opratorName != '' " >
+                oprator_name =  #{opratorName},
+            </if>
+            <!-- 刃磨时间 -->
+            <if test="createTime != null and createTime != '' " >
+                create_time =  #{createTime},
+            </if>
+            <!-- 场内刃磨id -->
+            id = #{id}
+        WHERE
+            1 = 1
+            and id = #{id}
+    </update>
+
+    <!--分页查询 -->
+    <select id="getInsideFactoryByPage" parameterType="com.common.vo.InsideFactoryVO" resultMap="insideFactoryQueryMap">
+        SELECT
+        /*insideFactory begin*/
+            <!-- 场内刃磨id -->
+            inside_factory.id as 'inside_factory.id',
+            <!-- 材料号 -->
+            inside_factory.material_num as 'inside_factory.material_num',
+            <!-- 复磨数量 -->
+            inside_factory.number_grinding as 'inside_factory.number_grinding',
+            <!-- 刀具类型（1钻头2.刀片） -->
+            inside_factory.tool_type as 'inside_factory.tool_type',
+            <!-- 审批人 -->
+            inside_factory.approver as 'inside_factory.approver',
+            <!-- 修复状态(1 待刃磨 2已刃磨） -->
+            inside_factory.repair_state as 'inside_factory.repair_state',
+            <!-- 逻辑删除 -->
+            inside_factory.is_del as 'inside_factory.is_del',
+            <!--  -->
+            inside_factory.cutting_tool_code as 'inside_factory.cutting_tool_code',
+            <!-- 刃磨设备 -->
+            inside_factory.product_line_equipment_code as 'inside_factory.product_line_equipment_code',
+            <!-- 操作人 -->
+            inside_factory.oprator as 'inside_factory.oprator',
+            <!-- 操作人姓名 -->
+            inside_factory.oprator_name as 'inside_factory.oprator_name',
+            <!-- 刃磨时间 -->
+            inside_factory.create_time as 'inside_factory.create_time',
+        /*insideFactory end*/
+        /*cutting_tool begin*/
+            <!-- 材料刀id -->
+            cutting_tool.id as 'cutting_tool.id',
+            <!-- 刀具编码 -->
+            cutting_tool.code as 'cutting_tool.code',
+            <!-- 库位码 -->
+            cutting_tool.library_code as 'cutting_tool.library_code',
+            <!-- 业务编码 -->
+            cutting_tool.business_code as 'cutting_tool.business_code',
+            <!-- 名称 -->
+            cutting_tool.name as 'cutting_tool.name',
+            <!-- 刀具分类(1刀具2辅具3配套9其他） -->
+            cutting_tool.type as 'cutting_tool.type',
+            <!-- 消耗类别(1:可刃磨钻头2可刃磨刀片3一次性刀片9其他 -->
+            cutting_tool.consume_type as 'cutting_tool.consume_type',
+            <!-- 图纸 -->
+            cutting_tool.pic as 'cutting_tool.pic',
+            <!-- 规格型号 -->
+            cutting_tool.specifications as 'cutting_tool.specifications',
+            <!-- 刃口数 -->
+            cutting_tool.cut_number as 'cutting_tool.cut_number',
+            <!-- 品牌 -->
+            cutting_tool.brand as 'cutting_tool.brand',
+            <!-- 修磨类别(0:厂内修磨，1厂外修磨，2厂外涂层 -->
+            cutting_tool.grinding as 'cutting_tool.grinding',
+            <!-- 可使用次数 -->
+            cutting_tool.sharpen_num as 'cutting_tool.sharpen_num',
+            <!-- 最大库存 -->
+            cutting_tool.material_max as 'cutting_tool.material_max',
+            <!-- 最小库存 -->
+            cutting_tool.material_min as 'cutting_tool.material_min',
+            <!-- 可刃磨次数 -->
+            cutting_tool.tool_number as 'cutting_tool.tool_number',
+            <!-- 复磨标准 -->
+            cutting_tool.sharpen_criterion as 'cutting_tool.sharpen_criterion',
+            <!-- 刀具长度 -->
+            cutting_tool.material_length as 'cutting_tool.material_length',
+            <!-- 可刃磨长度 -->
+            cutting_tool.sharpen_length as 'cutting_tool.sharpen_length',
+            <!--  -->
+            cutting_tool.is_del as 'cutting_tool.is_del',
+            <!--  -->
+            cutting_tool.bei_min as 'cutting_tool.bei_min',
+            <!--  -->
+            cutting_tool.bei_max as 'cutting_tool.bei_max',
+            <!--  -->
+            cutting_tool.tool_price as 'cutting_tool.tool_price',
+            <!--  -->
+            cutting_tool.average_price as 'cutting_tool.average_price',
+            <!--  -->
+            cutting_tool.parameters_type as 'cutting_tool.parameters_type',
+            <!-- 用途类型 1 刀片,钻头，合成刀，热套类 2 一体刀 3筒刀 4专机 9其他 -->
+            cutting_tool.userful_type as 'cutting_tool.userful_type',
+            <!-- 启明编码 -->
+            cutting_tool.qiming_code as 'cutting_tool.qiming_code',
+            <!-- 物料编码 -->
+            cutting_tool.wuliao_code as 'cutting_tool.wuliao_code',
+        /*cutting_tool end*/
+        /*product_line_equipment begin*/
+            <!-- 设备id -->
+            product_line_equipment.id as 'product_line_equipment.id',
+            <!-- RFID载体 -->
+            product_line_equipment.rfid_container_code as 'product_line_equipment.rfid_container_code',
+            <!-- 当前是否使用(0是,1否) -->
+            product_line_equipment.statues as 'product_line_equipment.statues',
+            <!-- 编码 -->
+            product_line_equipment.code as 'product_line_equipment.code',
+            <!-- 名称 -->
+            product_line_equipment.name as 'product_line_equipment.name',
+            <!-- 设备类型(0:加工设备1:对刀设备2:专机) -->
+            product_line_equipment.type as 'product_line_equipment.type',
+            <!--  -->
+            product_line_equipment.is_del as 'product_line_equipment.is_del'
+        /*product_line_equipment end*/
+        FROM inside_factory as inside_factory
+        LEFT JOIN cutting_tool as cutting_tool ON cutting_tool.code = inside_factory.cutting_tool_code
+        LEFT JOIN product_line_equipment as product_line_equipment ON product_line_equipment.code = inside_factory.product_line_equipment_code
+        WHERE
+            1 = 1 AND  inside_factory.is_del = 0
+        /*inside_factory begin*/
+            <!-- 场内刃磨id -->
+            <if test="id != null and id != '' " >
+                and inside_factory.id = #{id}
+            </if>
+            <!-- 材料号 -->
+            <if test="materialNum != null and materialNum != '' " >
+                and inside_factory.material_num = #{materialNum}
+            </if>
+            <!-- 复磨数量 -->
+            <if test="numberGrinding != null and numberGrinding != '' " >
+                and inside_factory.number_grinding = #{numberGrinding}
+            </if>
+            <!-- 刀具类型（1钻头2.刀片） -->
+            <if test="toolType != null and toolType != '' " >
+                and inside_factory.tool_type = #{toolType}
+            </if>
+            <!-- 审批人 -->
+            <if test="approver != null and approver != '' " >
+                and inside_factory.approver = #{approver}
+            </if>
+            <!-- 修复状态(1 待刃磨 2已刃磨） -->
+            <if test="repairState != null and repairState != '' " >
+                and inside_factory.repair_state = #{repairState}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                and inside_factory.is_del = #{isDel}
+            </if>
+            <!--  -->
+            <if test="cuttingToolCode != null and cuttingToolCode != '' " >
+                and inside_factory.cutting_tool_code = #{cuttingToolCode}
+            </if>
+            <!-- 刃磨设备 -->
+            <if test="productLineEquipmentCode != null and productLineEquipmentCode != '' " >
+                and inside_factory.product_line_equipment_code = #{productLineEquipmentCode}
+            </if>
+            <!-- 操作人 -->
+            <if test="oprator != null and oprator != '' " >
+                and inside_factory.oprator = #{oprator}
+            </if>
+            <!-- 操作人姓名 -->
+            <if test="opratorName != null and opratorName != '' " >
+                and inside_factory.oprator_name = #{opratorName}
+            </if>
+            <!-- 刃磨时间 -->
+            <if test="createTime != null and createTime != '' " >
+                and inside_factory.create_time &lt;= #{createTimeEnd}
+            </if>
+            <if test="createTime != null and createTime != '' " >
+                and inside_factory.create_time &gt;= #{createTimeBegin}
+            </if>
+        /*inside_factory end*/
+        /*cutting_tool begin*/
+            <if test="cuttingToolVO != null ">
+            <!-- 材料刀id -->
+            <if test="cuttingToolVO.id != null and cuttingToolVO.id != '' " >
+                and cutting_tool.id = #{cuttingToolVO.id}
+            </if>
+            <!-- 刀具编码 -->
+            <if test="cuttingToolVO.code != null and cuttingToolVO.code != '' " >
+                and cutting_tool.code = #{cuttingToolVO.code}
+            </if>
+            <!-- 库位码 -->
+            <if test="cuttingToolVO.libraryCode != null and cuttingToolVO.libraryCode != '' " >
+                and cutting_tool.library_code = #{cuttingToolVO.libraryCode}
+            </if>
+            <!-- 业务编码 -->
+            <if test="cuttingToolVO.businessCode != null and cuttingToolVO.businessCode != '' " >
+                and cutting_tool.business_code = #{cuttingToolVO.businessCode}
+            </if>
+            <!-- 名称 -->
+            <if test="cuttingToolVO.name != null and cuttingToolVO.name != '' " >
+                and cutting_tool.name = #{cuttingToolVO.name}
+            </if>
+            <!-- 刀具分类(1刀具2辅具3配套9其他） -->
+            <if test="cuttingToolVO.type != null and cuttingToolVO.type != '' " >
+                and cutting_tool.type = #{cuttingToolVO.type}
+            </if>
+            <!-- 消耗类别(1:可刃磨钻头2可刃磨刀片3一次性刀片9其他 -->
+            <if test="cuttingToolVO.consumeType != null and cuttingToolVO.consumeType != '' " >
+                and cutting_tool.consume_type = #{cuttingToolVO.consumeType}
+            </if>
+            <!-- 图纸 -->
+            <if test="cuttingToolVO.pic != null and cuttingToolVO.pic != '' " >
+                and cutting_tool.pic = #{cuttingToolVO.pic}
+            </if>
+            <!-- 规格型号 -->
+            <if test="cuttingToolVO.specifications != null and cuttingToolVO.specifications != '' " >
+                and cutting_tool.specifications = #{cuttingToolVO.specifications}
+            </if>
+            <!-- 刃口数 -->
+            <if test="cuttingToolVO.cutNumber != null and cuttingToolVO.cutNumber != '' " >
+                and cutting_tool.cut_number = #{cuttingToolVO.cutNumber}
+            </if>
+            <!-- 品牌 -->
+            <if test="cuttingToolVO.brand != null and cuttingToolVO.brand != '' " >
+                and cutting_tool.brand = #{cuttingToolVO.brand}
+            </if>
+            <!-- 修磨类别(0:厂内修磨，1厂外修磨，2厂外涂层 -->
+            <if test="cuttingToolVO.grinding != null and cuttingToolVO.grinding != '' " >
+                and cutting_tool.grinding = #{cuttingToolVO.grinding}
+            </if>
+            <!-- 可使用次数 -->
+            <if test="cuttingToolVO.sharpenNum != null and cuttingToolVO.sharpenNum != '' " >
+                and cutting_tool.sharpen_num = #{cuttingToolVO.sharpenNum}
+            </if>
+            <!-- 最大库存 -->
+            <if test="cuttingToolVO.materialMax != null and cuttingToolVO.materialMax != '' " >
+                and cutting_tool.material_max = #{cuttingToolVO.materialMax}
+            </if>
+            <!-- 最小库存 -->
+            <if test="cuttingToolVO.materialMin != null and cuttingToolVO.materialMin != '' " >
+                and cutting_tool.material_min = #{cuttingToolVO.materialMin}
+            </if>
+            <!-- 可刃磨次数 -->
+            <if test="cuttingToolVO.toolNumber != null and cuttingToolVO.toolNumber != '' " >
+                and cutting_tool.tool_number = #{cuttingToolVO.toolNumber}
+            </if>
+            <!-- 复磨标准 -->
+            <if test="cuttingToolVO.sharpenCriterion != null and cuttingToolVO.sharpenCriterion != '' " >
+                and cutting_tool.sharpen_criterion = #{cuttingToolVO.sharpenCriterion}
+            </if>
+            <!-- 刀具长度 -->
+            <if test="cuttingToolVO.materialLength != null and cuttingToolVO.materialLength != '' " >
+                and cutting_tool.material_length = #{cuttingToolVO.materialLength}
+            </if>
+            <!-- 可刃磨长度 -->
+            <if test="cuttingToolVO.sharpenLength != null and cuttingToolVO.sharpenLength != '' " >
+                and cutting_tool.sharpen_length = #{cuttingToolVO.sharpenLength}
+            </if>
+            <!--  -->
+            <if test="cuttingToolVO.isDel != null and cuttingToolVO.isDel != '' " >
+                and cutting_tool.is_del = #{cuttingToolVO.isDel}
+            </if>
+            <!--  -->
+            <if test="cuttingToolVO.beiMin != null and cuttingToolVO.beiMin != '' " >
+                and cutting_tool.bei_min = #{cuttingToolVO.beiMin}
+            </if>
+            <!--  -->
+            <if test="cuttingToolVO.beiMax != null and cuttingToolVO.beiMax != '' " >
+                and cutting_tool.bei_max = #{cuttingToolVO.beiMax}
+            </if>
+            <!--  -->
+            <if test="cuttingToolVO.toolPrice != null and cuttingToolVO.toolPrice != '' " >
+                and cutting_tool.tool_price = #{cuttingToolVO.toolPrice}
+            </if>
+            <!--  -->
+            <if test="cuttingToolVO.averagePrice != null and cuttingToolVO.averagePrice != '' " >
+                and cutting_tool.average_price = #{cuttingToolVO.averagePrice}
+            </if>
+            <!--  -->
+            <if test="cuttingToolVO.parametersType != null and cuttingToolVO.parametersType != '' " >
+                and cutting_tool.parameters_type = #{cuttingToolVO.parametersType}
+            </if>
+            <!-- 用途类型 1 刀片,钻头，合成刀，热套类 2 一体刀 3筒刀 4专机 9其他 -->
+            <if test="cuttingToolVO.userfulType != null and cuttingToolVO.userfulType != '' " >
+                and cutting_tool.userful_type = #{cuttingToolVO.userfulType}
+            </if>
+            <!-- 启明编码 -->
+            <if test="cuttingToolVO.qimingCode != null and cuttingToolVO.qimingCode != '' " >
+                and cutting_tool.qiming_code = #{cuttingToolVO.qimingCode}
+            </if>
+            <!-- 物料编码 -->
+            <if test="cuttingToolVO.wuliaoCode != null and cuttingToolVO.wuliaoCode != '' " >
+                and cutting_tool.wuliao_code = #{cuttingToolVO.wuliaoCode}
+            </if>
+            </if>
+        /*cutting_tool end*/
+        /*product_line_equipment begin*/
+            <if test="productLineEquipmentVO != null ">
+            <!-- 设备id -->
+            <if test="productLineEquipmentVO.id != null and productLineEquipmentVO.id != '' " >
+                and product_line_equipment.id = #{productLineEquipmentVO.id}
+            </if>
+            <!-- RFID载体 -->
+            <if test="productLineEquipmentVO.rfidContainerCode != null and productLineEquipmentVO.rfidContainerCode != '' " >
+                and product_line_equipment.rfid_container_code = #{productLineEquipmentVO.rfidContainerCode}
+            </if>
+            <!-- 当前是否使用(0是,1否) -->
+            <if test="productLineEquipmentVO.statues != null and productLineEquipmentVO.statues != '' " >
+                and product_line_equipment.statues = #{productLineEquipmentVO.statues}
+            </if>
+            <!-- 编码 -->
+            <if test="productLineEquipmentVO.code != null and productLineEquipmentVO.code != '' " >
+                and product_line_equipment.code = #{productLineEquipmentVO.code}
+            </if>
+            <!-- 名称 -->
+            <if test="productLineEquipmentVO.name != null and productLineEquipmentVO.name != '' " >
+                and product_line_equipment.name = #{productLineEquipmentVO.name}
+            </if>
+            <!-- 设备类型(0:加工设备1:对刀设备2:专机) -->
+            <if test="productLineEquipmentVO.type != null and productLineEquipmentVO.type != '' " >
+                and product_line_equipment.type = #{productLineEquipmentVO.type}
+            </if>
+            <!--  -->
+            <if test="productLineEquipmentVO.isDel != null and productLineEquipmentVO.isDel != '' " >
+                and product_line_equipment.is_del = #{productLineEquipmentVO.isDel}
+            </if>
+            </if>
+        /*product_line_equipment end*/
+        ORDER BY inside_factory.id desc
+        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
+        LIMIT #{startRecord},#{pageSize}
+        </if>
+    </select>
+
+
+    <!--查询记录数-->
+    <select id="getInsideFactoryCount" parameterType="com.common.vo.InsideFactoryVO" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM inside_factory as inside_factory
+        LEFT JOIN cutting_tool as cutting_tool ON cutting_tool.code = inside_factory.cutting_tool_code
+        LEFT JOIN product_line_equipment as product_line_equipment ON product_line_equipment.code = inside_factory.product_line_equipment_code
+        WHERE
+            1 = 1 AND  inside_factory.is_del = 0
+        /*inside_factory begin*/
+        <!-- 场内刃磨id -->
+        <if test="id != null and id != '' " >
+            and inside_factory.id = #{id}
+        </if>
+        <!-- 材料号 -->
+        <if test="materialNum != null and materialNum != '' " >
+            and inside_factory.material_num = #{materialNum}
+        </if>
+        <!-- 复磨数量 -->
+        <if test="numberGrinding != null and numberGrinding != '' " >
+            and inside_factory.number_grinding = #{numberGrinding}
+        </if>
+        <!-- 刀具类型（1钻头2.刀片） -->
+        <if test="toolType != null and toolType != '' " >
+            and inside_factory.tool_type = #{toolType}
+        </if>
+        <!-- 审批人 -->
+        <if test="approver != null and approver != '' " >
+            and inside_factory.approver = #{approver}
+        </if>
+        <!-- 修复状态(1 待刃磨 2已刃磨） -->
+        <if test="repairState != null and repairState != '' " >
+            and inside_factory.repair_state = #{repairState}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="isDel != null and isDel != '' " >
+            and inside_factory.is_del = #{isDel}
+        </if>
+        <!--  -->
+        <if test="cuttingToolCode != null and cuttingToolCode != '' " >
+            and inside_factory.cutting_tool_code = #{cuttingToolCode}
+        </if>
+        <!-- 刃磨设备 -->
+        <if test="productLineEquipmentCode != null and productLineEquipmentCode != '' " >
+            and inside_factory.product_line_equipment_code = #{productLineEquipmentCode}
+        </if>
+        <!-- 操作人 -->
+        <if test="oprator != null and oprator != '' " >
+            and inside_factory.oprator = #{oprator}
+        </if>
+        <!-- 操作人姓名 -->
+        <if test="opratorName != null and opratorName != '' " >
+            and inside_factory.oprator_name = #{opratorName}
+        </if>
+        <!-- 刃磨时间 -->
+        <if test="createTime != null and createTime != '' " >
+            and inside_factory.create_time &lt;= #{createTimeEnd}
+        </if>
+        <if test="createTime != null and createTime != '' " >
+            and inside_factory.create_time &gt;= #{createTimeBegin}
+        </if>
+        /*inside_factory end*/
+        /*cutting_tool begin*/
+        <if test="cuttingToolVO != null ">
+        <!-- 材料刀id -->
+        <if test="cuttingToolVO.id != null and cuttingToolVO.id != '' " >
+            and cutting_tool.id = #{cuttingToolVO.id}
+        </if>
+        <!-- 刀具编码 -->
+        <if test="cuttingToolVO.code != null and cuttingToolVO.code != '' " >
+            and cutting_tool.code = #{cuttingToolVO.code}
+        </if>
+        <!-- 库位码 -->
+        <if test="cuttingToolVO.libraryCode != null and cuttingToolVO.libraryCode != '' " >
+            and cutting_tool.library_code = #{cuttingToolVO.libraryCode}
+        </if>
+        <!-- 业务编码 -->
+        <if test="cuttingToolVO.businessCode != null and cuttingToolVO.businessCode != '' " >
+            and cutting_tool.business_code = #{cuttingToolVO.businessCode}
+        </if>
+        <!-- 名称 -->
+        <if test="cuttingToolVO.name != null and cuttingToolVO.name != '' " >
+            and cutting_tool.name = #{cuttingToolVO.name}
+        </if>
+        <!-- 刀具分类(1刀具2辅具3配套9其他） -->
+        <if test="cuttingToolVO.type != null and cuttingToolVO.type != '' " >
+            and cutting_tool.type = #{cuttingToolVO.type}
+        </if>
+        <!-- 消耗类别(1:可刃磨钻头2可刃磨刀片3一次性刀片9其他 -->
+        <if test="cuttingToolVO.consumeType != null and cuttingToolVO.consumeType != '' " >
+            and cutting_tool.consume_type = #{cuttingToolVO.consumeType}
+        </if>
+        <!-- 图纸 -->
+        <if test="cuttingToolVO.pic != null and cuttingToolVO.pic != '' " >
+            and cutting_tool.pic = #{cuttingToolVO.pic}
+        </if>
+        <!-- 规格型号 -->
+        <if test="cuttingToolVO.specifications != null and cuttingToolVO.specifications != '' " >
+            and cutting_tool.specifications = #{cuttingToolVO.specifications}
+        </if>
+        <!-- 刃口数 -->
+        <if test="cuttingToolVO.cutNumber != null and cuttingToolVO.cutNumber != '' " >
+            and cutting_tool.cut_number = #{cuttingToolVO.cutNumber}
+        </if>
+        <!-- 品牌 -->
+        <if test="cuttingToolVO.brand != null and cuttingToolVO.brand != '' " >
+            and cutting_tool.brand = #{cuttingToolVO.brand}
+        </if>
+        <!-- 修磨类别(0:厂内修磨，1厂外修磨，2厂外涂层 -->
+        <if test="cuttingToolVO.grinding != null and cuttingToolVO.grinding != '' " >
+            and cutting_tool.grinding = #{cuttingToolVO.grinding}
+        </if>
+        <!-- 可使用次数 -->
+        <if test="cuttingToolVO.sharpenNum != null and cuttingToolVO.sharpenNum != '' " >
+            and cutting_tool.sharpen_num = #{cuttingToolVO.sharpenNum}
+        </if>
+        <!-- 最大库存 -->
+        <if test="cuttingToolVO.materialMax != null and cuttingToolVO.materialMax != '' " >
+            and cutting_tool.material_max = #{cuttingToolVO.materialMax}
+        </if>
+        <!-- 最小库存 -->
+        <if test="cuttingToolVO.materialMin != null and cuttingToolVO.materialMin != '' " >
+            and cutting_tool.material_min = #{cuttingToolVO.materialMin}
+        </if>
+        <!-- 可刃磨次数 -->
+        <if test="cuttingToolVO.toolNumber != null and cuttingToolVO.toolNumber != '' " >
+            and cutting_tool.tool_number = #{cuttingToolVO.toolNumber}
+        </if>
+        <!-- 复磨标准 -->
+        <if test="cuttingToolVO.sharpenCriterion != null and cuttingToolVO.sharpenCriterion != '' " >
+            and cutting_tool.sharpen_criterion = #{cuttingToolVO.sharpenCriterion}
+        </if>
+        <!-- 刀具长度 -->
+        <if test="cuttingToolVO.materialLength != null and cuttingToolVO.materialLength != '' " >
+            and cutting_tool.material_length = #{cuttingToolVO.materialLength}
+        </if>
+        <!-- 可刃磨长度 -->
+        <if test="cuttingToolVO.sharpenLength != null and cuttingToolVO.sharpenLength != '' " >
+            and cutting_tool.sharpen_length = #{cuttingToolVO.sharpenLength}
+        </if>
+        <!--  -->
+        <if test="cuttingToolVO.isDel != null and cuttingToolVO.isDel != '' " >
+            and cutting_tool.is_del = #{cuttingToolVO.isDel}
+        </if>
+        <!--  -->
+        <if test="cuttingToolVO.beiMin != null and cuttingToolVO.beiMin != '' " >
+            and cutting_tool.bei_min = #{cuttingToolVO.beiMin}
+        </if>
+        <!--  -->
+        <if test="cuttingToolVO.beiMax != null and cuttingToolVO.beiMax != '' " >
+            and cutting_tool.bei_max = #{cuttingToolVO.beiMax}
+        </if>
+        <!--  -->
+        <if test="cuttingToolVO.toolPrice != null and cuttingToolVO.toolPrice != '' " >
+            and cutting_tool.tool_price = #{cuttingToolVO.toolPrice}
+        </if>
+        <!--  -->
+        <if test="cuttingToolVO.averagePrice != null and cuttingToolVO.averagePrice != '' " >
+            and cutting_tool.average_price = #{cuttingToolVO.averagePrice}
+        </if>
+        <!--  -->
+        <if test="cuttingToolVO.parametersType != null and cuttingToolVO.parametersType != '' " >
+            and cutting_tool.parameters_type = #{cuttingToolVO.parametersType}
+        </if>
+        <!-- 用途类型 1 刀片,钻头，合成刀，热套类 2 一体刀 3筒刀 4专机 9其他 -->
+        <if test="cuttingToolVO.userfulType != null and cuttingToolVO.userfulType != '' " >
+            and cutting_tool.userful_type = #{cuttingToolVO.userfulType}
+        </if>
+        <!-- 启明编码 -->
+        <if test="cuttingToolVO.qimingCode != null and cuttingToolVO.qimingCode != '' " >
+            and cutting_tool.qiming_code = #{cuttingToolVO.qimingCode}
+        </if>
+        <!-- 物料编码 -->
+        <if test="cuttingToolVO.wuliaoCode != null and cuttingToolVO.wuliaoCode != '' " >
+            and cutting_tool.wuliao_code = #{cuttingToolVO.wuliaoCode}
+        </if>
+        </if>
+        /*cutting_tool end*/
+        /*product_line_equipment begin*/
+        <if test="productLineEquipmentVO != null ">
+        <!-- 设备id -->
+        <if test="productLineEquipmentVO.id != null and productLineEquipmentVO.id != '' " >
+            and product_line_equipment.id = #{productLineEquipmentVO.id}
+        </if>
+        <!-- RFID载体 -->
+        <if test="productLineEquipmentVO.rfidContainerCode != null and productLineEquipmentVO.rfidContainerCode != '' " >
+            and product_line_equipment.rfid_container_code = #{productLineEquipmentVO.rfidContainerCode}
+        </if>
+        <!-- 当前是否使用(0是,1否) -->
+        <if test="productLineEquipmentVO.statues != null and productLineEquipmentVO.statues != '' " >
+            and product_line_equipment.statues = #{productLineEquipmentVO.statues}
+        </if>
+        <!-- 编码 -->
+        <if test="productLineEquipmentVO.code != null and productLineEquipmentVO.code != '' " >
+            and product_line_equipment.code = #{productLineEquipmentVO.code}
+        </if>
+        <!-- 名称 -->
+        <if test="productLineEquipmentVO.name != null and productLineEquipmentVO.name != '' " >
+            and product_line_equipment.name = #{productLineEquipmentVO.name}
+        </if>
+        <!-- 设备类型(0:加工设备1:对刀设备2:专机) -->
+        <if test="productLineEquipmentVO.type != null and productLineEquipmentVO.type != '' " >
+            and product_line_equipment.type = #{productLineEquipmentVO.type}
+        </if>
+        <!--  -->
+        <if test="productLineEquipmentVO.isDel != null and productLineEquipmentVO.isDel != '' " >
+            and product_line_equipment.is_del = #{productLineEquipmentVO.isDel}
+        </if>
+        </if>
+        /*product_line_equipment end*/
+    </select>
+
+    <!--根据vo查询 -->
+    <select id="getInsideFactory" parameterType="com.common.vo.InsideFactoryVO" resultMap="insideFactoryQueryMap">
+        SELECT
+        /*inside_factory begin*/
+        <!-- 场内刃磨id -->
+        inside_factory.id as 'inside_factory.id',
+        <!-- 材料号 -->
+        inside_factory.material_num as 'inside_factory.material_num',
+        <!-- 复磨数量 -->
+        inside_factory.number_grinding as 'inside_factory.number_grinding',
+        <!-- 刀具类型（1钻头2.刀片） -->
+        inside_factory.tool_type as 'inside_factory.tool_type',
+        <!-- 审批人 -->
+        inside_factory.approver as 'inside_factory.approver',
+        <!-- 修复状态(1 待刃磨 2已刃磨） -->
+        inside_factory.repair_state as 'inside_factory.repair_state',
+        <!-- 逻辑删除 -->
+        inside_factory.is_del as 'inside_factory.is_del',
+        <!--  -->
+        inside_factory.cutting_tool_code as 'inside_factory.cutting_tool_code',
+        <!-- 刃磨设备 -->
+        inside_factory.product_line_equipment_code as 'inside_factory.product_line_equipment_code',
+        <!-- 操作人 -->
+        inside_factory.oprator as 'inside_factory.oprator',
+        <!-- 操作人姓名 -->
+        inside_factory.oprator_name as 'inside_factory.oprator_name',
+        <!-- 刃磨时间 -->
+        inside_factory.create_time as 'inside_factory.create_time',
+        /*inside_factory end*/
+        /*cutting_tool begin*/
+        <!-- 材料刀id -->
+        cutting_tool.id as 'cutting_tool.id',
+        <!-- 刀具编码 -->
+        cutting_tool.code as 'cutting_tool.code',
+        <!-- 库位码 -->
+        cutting_tool.library_code as 'cutting_tool.library_code',
+        <!-- 业务编码 -->
+        cutting_tool.business_code as 'cutting_tool.business_code',
+        <!-- 名称 -->
+        cutting_tool.name as 'cutting_tool.name',
+        <!-- 刀具分类(1刀具2辅具3配套9其他） -->
+        cutting_tool.type as 'cutting_tool.type',
+        <!-- 消耗类别(1:可刃磨钻头2可刃磨刀片3一次性刀片9其他 -->
+        cutting_tool.consume_type as 'cutting_tool.consume_type',
+        <!-- 图纸 -->
+        cutting_tool.pic as 'cutting_tool.pic',
+        <!-- 规格型号 -->
+        cutting_tool.specifications as 'cutting_tool.specifications',
+        <!-- 刃口数 -->
+        cutting_tool.cut_number as 'cutting_tool.cut_number',
+        <!-- 品牌 -->
+        cutting_tool.brand as 'cutting_tool.brand',
+        <!-- 修磨类别(0:厂内修磨，1厂外修磨，2厂外涂层 -->
+        cutting_tool.grinding as 'cutting_tool.grinding',
+        <!-- 可使用次数 -->
+        cutting_tool.sharpen_num as 'cutting_tool.sharpen_num',
+        <!-- 最大库存 -->
+        cutting_tool.material_max as 'cutting_tool.material_max',
+        <!-- 最小库存 -->
+        cutting_tool.material_min as 'cutting_tool.material_min',
+        <!-- 可刃磨次数 -->
+        cutting_tool.tool_number as 'cutting_tool.tool_number',
+        <!-- 复磨标准 -->
+        cutting_tool.sharpen_criterion as 'cutting_tool.sharpen_criterion',
+        <!-- 刀具长度 -->
+        cutting_tool.material_length as 'cutting_tool.material_length',
+        <!-- 可刃磨长度 -->
+        cutting_tool.sharpen_length as 'cutting_tool.sharpen_length',
+        <!--  -->
+        cutting_tool.is_del as 'cutting_tool.is_del',
+        <!--  -->
+        cutting_tool.bei_min as 'cutting_tool.bei_min',
+        <!--  -->
+        cutting_tool.bei_max as 'cutting_tool.bei_max',
+        <!--  -->
+        cutting_tool.tool_price as 'cutting_tool.tool_price',
+        <!--  -->
+        cutting_tool.average_price as 'cutting_tool.average_price',
+        <!--  -->
+        cutting_tool.parameters_type as 'cutting_tool.parameters_type',
+        <!-- 用途类型 1 刀片,钻头，合成刀，热套类 2 一体刀 3筒刀 4专机 9其他 -->
+        cutting_tool.userful_type as 'cutting_tool.userful_type',
+        <!-- 启明编码 -->
+        cutting_tool.qiming_code as 'cutting_tool.qiming_code',
+        <!-- 物料编码 -->
+        cutting_tool.wuliao_code as 'cutting_tool.wuliao_code',
+        /*cutting_tool end*/
+        /*product_line_equipment begin*/
+        <!-- 设备id -->
+        product_line_equipment.id as 'product_line_equipment.id',
+        <!-- RFID载体 -->
+        product_line_equipment.rfid_container_code as 'product_line_equipment.rfid_container_code',
+        <!-- 当前是否使用(0是,1否) -->
+        product_line_equipment.statues as 'product_line_equipment.statues',
+        <!-- 编码 -->
+        product_line_equipment.code as 'product_line_equipment.code',
+        <!-- 名称 -->
+        product_line_equipment.name as 'product_line_equipment.name',
+        <!-- 设备类型(0:加工设备1:对刀设备2:专机) -->
+        product_line_equipment.type as 'product_line_equipment.type',
+        <!--  -->
+        product_line_equipment.is_del as 'product_line_equipment.is_del'
+        /*product_line_equipment end*/
+        FROM inside_factory as inside_factory
+        LEFT JOIN cutting_tool as cutting_tool ON cutting_tool.code = inside_factory.cutting_tool_code
+        LEFT JOIN product_line_equipment as product_line_equipment ON product_line_equipment.code = inside_factory.product_line_equipment_code
+        WHERE
+            1 = 1 AND  inside_factory.is_del = 0
+        /*inside_factory begin*/
+        <!-- 场内刃磨id -->
+        <if test="id != null and id != '' " >
+            and inside_factory.id = #{id}
+        </if>
+        <!-- 材料号 -->
+        <if test="materialNum != null and materialNum != '' " >
+            and inside_factory.material_num = #{materialNum}
+        </if>
+        <!-- 复磨数量 -->
+        <if test="numberGrinding != null and numberGrinding != '' " >
+            and inside_factory.number_grinding = #{numberGrinding}
+        </if>
+        <!-- 刀具类型（1钻头2.刀片） -->
+        <if test="toolType != null and toolType != '' " >
+            and inside_factory.tool_type = #{toolType}
+        </if>
+        <!-- 审批人 -->
+        <if test="approver != null and approver != '' " >
+            and inside_factory.approver = #{approver}
+        </if>
+        <!-- 修复状态(1 待刃磨 2已刃磨） -->
+        <if test="repairState != null and repairState != '' " >
+            and inside_factory.repair_state = #{repairState}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="isDel != null and isDel != '' " >
+            and inside_factory.is_del = #{isDel}
+        </if>
+        <!--  -->
+        <if test="cuttingToolCode != null and cuttingToolCode != '' " >
+            and inside_factory.cutting_tool_code = #{cuttingToolCode}
+        </if>
+        <!-- 刃磨设备 -->
+        <if test="productLineEquipmentCode != null and productLineEquipmentCode != '' " >
+            and inside_factory.product_line_equipment_code = #{productLineEquipmentCode}
+        </if>
+        <!-- 操作人 -->
+        <if test="oprator != null and oprator != '' " >
+            and inside_factory.oprator = #{oprator}
+        </if>
+        <!-- 操作人姓名 -->
+        <if test="opratorName != null and opratorName != '' " >
+            and inside_factory.oprator_name = #{opratorName}
+        </if>
+        <!-- 刃磨时间 -->
+        <if test="createTime != null and createTime != '' " >
+            and inside_factory.create_time &lt;= #{createTimeEnd}
+        </if>
+        <if test="createTime != null and createTime != '' " >
+            and inside_factory.create_time &gt;= #{createTimeBegin}
+        </if>
+        /*inside_factory end*/
+        /*cutting_tools begin*/
+        <if test="cuttingToolVO != null ">
+        <!-- 材料刀id -->
+        <if test="cuttingToolVO.id != null and cuttingToolVO.id != '' " >
+            and cutting_tools.id = #{cuttingToolVO.id}
+        </if>
+        <!-- 刀具编码 -->
+        <if test="cuttingToolVO.code != null and cuttingToolVO.code != '' " >
+            and cutting_tools.code = #{cuttingToolVO.code}
+        </if>
+        <!-- 库位码 -->
+        <if test="cuttingToolVO.libraryCode != null and cuttingToolVO.libraryCode != '' " >
+            and cutting_tools.library_code = #{cuttingToolVO.libraryCode}
+        </if>
+        <!-- 业务编码 -->
+        <if test="cuttingToolVO.businessCode != null and cuttingToolVO.businessCode != '' " >
+            and cutting_tools.business_code = #{cuttingToolVO.businessCode}
+        </if>
+        <!-- 名称 -->
+        <if test="cuttingToolVO.name != null and cuttingToolVO.name != '' " >
+            and cutting_tools.name = #{cuttingToolVO.name}
+        </if>
+        <!-- 刀具分类(1刀具2辅具3配套9其他） -->
+        <if test="cuttingToolVO.type != null and cuttingToolVO.type != '' " >
+            and cutting_tools.type = #{cuttingToolVO.type}
+        </if>
+        <!-- 消耗类别(1:可刃磨钻头2可刃磨刀片3一次性刀片9其他 -->
+        <if test="cuttingToolVO.consumeType != null and cuttingToolVO.consumeType != '' " >
+            and cutting_tools.consume_type = #{cuttingToolVO.consumeType}
+        </if>
+        <!-- 图纸 -->
+        <if test="cuttingToolVO.pic != null and cuttingToolVO.pic != '' " >
+            and cutting_tools.pic = #{cuttingToolVO.pic}
+        </if>
+        <!-- 规格型号 -->
+        <if test="cuttingToolVO.specifications != null and cuttingToolVO.specifications != '' " >
+            and cutting_tools.specifications = #{cuttingToolVO.specifications}
+        </if>
+        <!-- 刃口数 -->
+        <if test="cuttingToolVO.cutNumber != null and cuttingToolVO.cutNumber != '' " >
+            and cutting_tools.cut_number = #{cuttingToolVO.cutNumber}
+        </if>
+        <!-- 品牌 -->
+        <if test="cuttingToolVO.brand != null and cuttingToolVO.brand != '' " >
+            and cutting_tools.brand = #{cuttingToolVO.brand}
+        </if>
+        <!-- 修磨类别(0:厂内修磨，1厂外修磨，2厂外涂层 -->
+        <if test="cuttingToolVO.grinding != null and cuttingToolVO.grinding != '' " >
+            and cutting_tools.grinding = #{cuttingToolVO.grinding}
+        </if>
+        <!-- 可使用次数 -->
+        <if test="cuttingToolVO.sharpenNum != null and cuttingToolVO.sharpenNum != '' " >
+            and cutting_tools.sharpen_num = #{cuttingToolVO.sharpenNum}
+        </if>
+        <!-- 最大库存 -->
+        <if test="cuttingToolVO.materialMax != null and cuttingToolVO.materialMax != '' " >
+            and cutting_tools.material_max = #{cuttingToolVO.materialMax}
+        </if>
+        <!-- 最小库存 -->
+        <if test="cuttingToolVO.materialMin != null and cuttingToolVO.materialMin != '' " >
+            and cutting_tools.material_min = #{cuttingToolVO.materialMin}
+        </if>
+        <!-- 可刃磨次数 -->
+        <if test="cuttingToolVO.toolNumber != null and cuttingToolVO.toolNumber != '' " >
+            and cutting_tools.tool_number = #{cuttingToolVO.toolNumber}
+        </if>
+        <!-- 复磨标准 -->
+        <if test="cuttingToolVO.sharpenCriterion != null and cuttingToolVO.sharpenCriterion != '' " >
+            and cutting_tools.sharpen_criterion = #{cuttingToolVO.sharpenCriterion}
+        </if>
+        <!-- 刀具长度 -->
+        <if test="cuttingToolVO.materialLength != null and cuttingToolVO.materialLength != '' " >
+            and cutting_tools.material_length = #{cuttingToolVO.materialLength}
+        </if>
+        <!-- 可刃磨长度 -->
+        <if test="cuttingToolVO.sharpenLength != null and cuttingToolVO.sharpenLength != '' " >
+            and cutting_tools.sharpen_length = #{cuttingToolVO.sharpenLength}
+        </if>
+        <!--  -->
+        <if test="cuttingToolVO.isDel != null and cuttingToolVO.isDel != '' " >
+            and cutting_tools.is_del = #{cuttingToolVO.isDel}
+        </if>
+        <!--  -->
+        <if test="cuttingToolVO.beiMin != null and cuttingToolVO.beiMin != '' " >
+            and cutting_tools.bei_min = #{cuttingToolVO.beiMin}
+        </if>
+        <!--  -->
+        <if test="cuttingToolVO.beiMax != null and cuttingToolVO.beiMax != '' " >
+            and cutting_tools.bei_max = #{cuttingToolVO.beiMax}
+        </if>
+        <!--  -->
+        <if test="cuttingToolVO.toolPrice != null and cuttingToolVO.toolPrice != '' " >
+            and cutting_tools.tool_price = #{cuttingToolVO.toolPrice}
+        </if>
+        <!--  -->
+        <if test="cuttingToolVO.averagePrice != null and cuttingToolVO.averagePrice != '' " >
+            and cutting_tools.average_price = #{cuttingToolVO.averagePrice}
+        </if>
+        <!--  -->
+        <if test="cuttingToolVO.parametersType != null and cuttingToolVO.parametersType != '' " >
+            and cutting_tools.parameters_type = #{cuttingToolVO.parametersType}
+        </if>
+        <!-- 用途类型 1 刀片,钻头，合成刀，热套类 2 一体刀 3筒刀 4专机 9其他 -->
+        <if test="cuttingToolVO.userfulType != null and cuttingToolVO.userfulType != '' " >
+            and cutting_tools.userful_type = #{cuttingToolVO.userfulType}
+        </if>
+        <!-- 启明编码 -->
+        <if test="cuttingToolVO.qimingCode != null and cuttingToolVO.qimingCode != '' " >
+            and cutting_tools.qiming_code = #{cuttingToolVO.qimingCode}
+        </if>
+        <!-- 物料编码 -->
+        <if test="cuttingToolVO.wuliaoCode != null and cuttingToolVO.wuliaoCode != '' " >
+            and cutting_tools.wuliao_code = #{cuttingToolVO.wuliaoCode}
+        </if>
+        </if>
+        /*cutting_tool end*/
+        /*product_line_equipments begin*/
+        <if test="productLineEquipmentVO != null ">
+        <!-- 设备id -->
+        <if test="productLineEquipmentVO.id != null and productLineEquipmentVO.id != '' " >
+            and product_line_equipments.id = #{productLineEquipmentVO.id}
+        </if>
+        <!-- RFID载体 -->
+        <if test="productLineEquipmentVO.rfidContainerCode != null and productLineEquipmentVO.rfidContainerCode != '' " >
+            and product_line_equipments.rfid_container_code = #{productLineEquipmentVO.rfidContainerCode}
+        </if>
+        <!-- 当前是否使用(0是,1否) -->
+        <if test="productLineEquipmentVO.statues != null and productLineEquipmentVO.statues != '' " >
+            and product_line_equipments.statues = #{productLineEquipmentVO.statues}
+        </if>
+        <!-- 编码 -->
+        <if test="productLineEquipmentVO.code != null and productLineEquipmentVO.code != '' " >
+            and product_line_equipments.code = #{productLineEquipmentVO.code}
+        </if>
+        <!-- 名称 -->
+        <if test="productLineEquipmentVO.name != null and productLineEquipmentVO.name != '' " >
+            and product_line_equipments.name = #{productLineEquipmentVO.name}
+        </if>
+        <!-- 设备类型(0:加工设备1:对刀设备2:专机) -->
+        <if test="productLineEquipmentVO.type != null and productLineEquipmentVO.type != '' " >
+            and product_line_equipments.type = #{productLineEquipmentVO.type}
+        </if>
+        <!--  -->
+        <if test="productLineEquipmentVO.isDel != null and productLineEquipmentVO.isDel != '' " >
+            and product_line_equipments.is_del = #{productLineEquipmentVO.isDel}
+        </if>
+        </if>
+        /*product_line_equipment end*/
+    </select>
+</mapper>

@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.mapper.IProductLineEquipmentMapper">
+    <resultMap id="productLineEquipmentQueryMap" type="com.common.pojo.ProductLineEquipment">
+        <!-- 设备id -->
+        <id property="id" column="product_line_equipment.id"/>
+
+        <!-- RFID载体 -->
+        <result property="rfidContainerCode" column="product_line_equipment.rfid_container_code"/>
+        <!-- 当前是否使用(0是,1否) -->
+        <result property="statues" column="product_line_equipment.statues"/>
+        <!-- 编码 -->
+        <result property="code" column="product_line_equipment.code"/>
+        <!-- 名称 -->
+        <result property="name" column="product_line_equipment.name"/>
+        <!-- 设备类型(0:加工设备1:对刀设备2:专机) -->
+        <result property="type" column="product_line_equipment.type"/>
+        <!--  -->
+        <result property="isDel" column="product_line_equipment.is_del"/>
+        <!-- RFID载体 -->
+        <association property="rfidContainer"  column="rfid_container.code" resultMap="productLineEquipmentRfidContainerMap"/>
+    </resultMap>
+        <resultMap id="productLineEquipmentRfidContainerMap" type="com.common.pojo.RfidContainer">
+            <!-- RFID载体ID -->
+            <id property="id" column="rfid_container.id"/>
+
+            <!-- RFID标签 -->
+            <result property="code" column="rfid_container.code"/>
+            <!-- 使用次数 -->
+            <result property="useCount" column="rfid_container.use_count"/>
+            <!-- 激光识别码 -->
+            <result property="laserCode" column="rfid_container.laser_code"/>
+            <!-- 绑定类型(0RFID 1 激光码 2 工具盘 9 其他) -->
+            <result property="bindType" column="rfid_container.bind_type"/>
+            <!-- 标签类型（0库位标签，1单品刀，2合成刀具，3员工卡，4设备，5容器，6备刀库） -->
+            <result property="labelType" column="rfid_container.label_type"/>
+            <!-- 删除区分(0有效1删除) -->
+            <result property="isDel" column="rfid_container.is_del"/>
+            <!-- 操作人 -->
+            <result property="operatorCode" column="rfid_container.operator_code"/>
+        </resultMap>
+    <!--添加-->
+    <insert id="addProductLineEquipment" parameterType="com.common.pojo.ProductLineEquipment">
+        INSERT INTO product_line_equipment (
+            <!-- 设备id -->
+            id,
+            <!-- RFID载体 -->
+            rfid_container_code,
+            <!-- 当前是否使用(0是,1否) -->
+            statues,
+            <!-- 编码 -->
+            code,
+            <!-- 名称 -->
+            name,
+            <!-- 设备类型(0:加工设备1:对刀设备2:专机) -->
+            type,
+            <!--  -->
+            is_del
+        )
+        VALUES (
+            <!-- 设备id -->
+            #{id},
+            <!-- RFID载体 -->
+            #{rfidContainerCode},
+            <!-- 当前是否使用(0是,1否) -->
+            #{statues},
+            <!-- 编码 -->
+            #{code},
+            <!-- 名称 -->
+            #{name},
+            <!-- 设备类型(0:加工设备1:对刀设备2:专机) -->
+            #{type},
+            <!--  -->
+            #{isDel}
+        )
+    </insert>
+
+    <!--删除-->
+    <delete id="delProductLineEquipment" parameterType="com.common.pojo.ProductLineEquipment">
+        DELETE
+        FROM product_line_equipment
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--逻辑删除-->
+    <delete id="delProductLineEquipmentForLogic" parameterType="com.common.pojo.ProductLineEquipment">
+        UPDATE product_line_equipment SET
+        is_del = 1
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--根据VO删除-->
+    <delete id="delProductLineEquipmentByVo" parameterType="com.common.vo.ProductLineEquipmentVO">
+        UPDATE product_line_equipment SET is_del = 1
+        WHERE
+            1=1
+            <!-- 设备id -->
+            <if test="id != null and id != '' " >
+                and id =  #{id}
+            </if>
+            <!-- RFID载体 -->
+            <if test="rfidContainerCode != null and rfidContainerCode != '' " >
+                and rfid_container_code =  #{rfidContainerCode}
+            </if>
+            <!-- 当前是否使用(0是,1否) -->
+            <if test="statues != null and statues != '' " >
+                and statues =  #{statues}
+            </if>
+            <!-- 编码 -->
+            <if test="code != null and code != '' " >
+                and code =  #{code}
+            </if>
+            <!-- 名称 -->
+            <if test="name != null and name != '' " >
+                and name =  #{name}
+            </if>
+            <!-- 设备类型(0:加工设备1:对刀设备2:专机) -->
+            <if test="type != null and type != '' " >
+                and type =  #{type}
+            </if>
+            <!--  -->
+            <if test="isDel != null and isDel != '' " >
+                and is_del =  #{isDel}
+            </if>
+    </delete>
+
+    <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
+    <update id="updProductLineEquipment" parameterType="com.common.pojo.ProductLineEquipment">
+        UPDATE product_line_equipment
+        SET
+            <!-- RFID载体 -->
+            <if test="rfidContainerCode != null and rfidContainerCode != '' " >
+                rfid_container_code =  #{rfidContainerCode},
+            </if>
+            <!-- 当前是否使用(0是,1否) -->
+            <if test="statues != null and statues != '' " >
+                statues =  #{statues},
+            </if>
+            <!-- 编码 -->
+            <if test="code != null and code != '' " >
+                code =  #{code},
+            </if>
+            <!-- 名称 -->
+            <if test="name != null and name != '' " >
+                name =  #{name},
+            </if>
+            <!-- 设备类型(0:加工设备1:对刀设备2:专机) -->
+            <if test="type != null and type != '' " >
+                type =  #{type},
+            </if>
+            <!--  -->
+            <if test="isDel != null and isDel != '' " >
+                is_del =  #{isDel},
+            </if>
+            <!-- 设备id -->
+            id = #{id}
+        WHERE
+            1 = 1
+            and id = #{id}
+    </update>
+
+    <!--分页查询 -->
+    <select id="getProductLineEquipmentByPage" parameterType="com.common.vo.ProductLineEquipmentVO" resultMap="productLineEquipmentQueryMap">
+        SELECT
+        /*productLineEquipment begin*/
+            <!-- 设备id -->
+            product_line_equipment.id as 'product_line_equipment.id',
+            <!-- RFID载体 -->
+            product_line_equipment.rfid_container_code as 'product_line_equipment.rfid_container_code',
+            <!-- 当前是否使用(0是,1否) -->
+            product_line_equipment.statues as 'product_line_equipment.statues',
+            <!-- 编码 -->
+            product_line_equipment.code as 'product_line_equipment.code',
+            <!-- 名称 -->
+            product_line_equipment.name as 'product_line_equipment.name',
+            <!-- 设备类型(0:加工设备1:对刀设备2:专机) -->
+            product_line_equipment.type as 'product_line_equipment.type',
+            <!--  -->
+            product_line_equipment.is_del as 'product_line_equipment.is_del',
+        /*productLineEquipment end*/
+        /*rfid_container begin*/
+            <!-- RFID载体ID -->
+            rfid_container.id as 'rfid_container.id',
+            <!-- RFID标签 -->
+            rfid_container.code as 'rfid_container.code',
+            <!-- 使用次数 -->
+            rfid_container.use_count as 'rfid_container.use_count',
+            <!-- 激光识别码 -->
+            rfid_container.laser_code as 'rfid_container.laser_code',
+            <!-- 绑定类型(0RFID 1 激光码 2 工具盘 9 其他) -->
+            rfid_container.bind_type as 'rfid_container.bind_type',
+            <!-- 标签类型（0库位标签，1单品刀，2合成刀具，3员工卡，4设备，5容器，6备刀库） -->
+            rfid_container.label_type as 'rfid_container.label_type',
+            <!-- 删除区分(0有效1删除) -->
+            rfid_container.is_del as 'rfid_container.is_del',
+            <!-- 操作人 -->
+            rfid_container.operator_code as 'rfid_container.operator_code'
+        /*rfid_container end*/
+        FROM product_line_equipment as product_line_equipment
+        LEFT JOIN rfid_container as rfid_container ON rfid_container.code = product_line_equipment.rfid_container_code
+        WHERE
+            1 = 1 AND  product_line_equipment.is_del = 0
+        /*product_line_equipment begin*/
+            <!-- 设备id -->
+            <if test="id != null and id != '' " >
+                and product_line_equipment.id = #{id}
+            </if>
+            <!-- RFID载体 -->
+            <if test="rfidContainerCode != null and rfidContainerCode != '' " >
+                and product_line_equipment.rfid_container_code = #{rfidContainerCode}
+            </if>
+            <!-- 当前是否使用(0是,1否) -->
+            <if test="statues != null and statues != '' " >
+                and product_line_equipment.statues = #{statues}
+            </if>
+            <!-- 编码 -->
+            <if test="code != null and code != '' " >
+                and product_line_equipment.code = #{code}
+            </if>
+            <!-- 名称 -->
+            <if test="name != null and name != '' " >
+                and product_line_equipment.name = #{name}
+            </if>
+            <!-- 设备类型(0:加工设备1:对刀设备2:专机) -->
+            <if test="type != null and type != '' " >
+                and product_line_equipment.type = #{type}
+            </if>
+            <!--  -->
+            <if test="isDel != null and isDel != '' " >
+                and product_line_equipment.is_del = #{isDel}
+            </if>
+        /*product_line_equipment end*/
+        /*rfid_container begin*/
+            <if test="rfidContainerVO != null">
+            <!-- RFID载体ID -->
+            <if test="rfidContainerVO.id != null and rfidContainerVO.id != '' " >
+                and rfid_container.id = #{rfidContainerVO.id}
+            </if>
+            <!-- RFID标签 -->
+            <if test="rfidContainerVO.code != null and rfidContainerVO.code != '' " >
+                and rfid_container.code = #{rfidContainerVO.code}
+            </if>
+            <!-- 使用次数 -->
+            <if test="rfidContainerVO.useCount != null and rfidContainerVO.useCount != '' " >
+                and rfid_container.use_count = #{rfidContainerVO.useCount}
+            </if>
+            <!-- 激光识别码 -->
+            <if test="rfidContainerVO.laserCode != null and rfidContainerVO.laserCode != '' " >
+                and rfid_container.laser_code = #{rfidContainerVO.laserCode}
+            </if>
+            <!-- 绑定类型(0RFID 1 激光码 2 工具盘 9 其他) -->
+            <if test="rfidContainerVO.bindType != null and rfidContainerVO.bindType != '' " >
+                and rfid_container.bind_type = #{rfidContainerVO.bindType}
+            </if>
+            <!-- 标签类型（0库位标签，1单品刀，2合成刀具，3员工卡，4设备，5容器，6备刀库） -->
+            <if test="rfidContainerVO.labelType != null and rfidContainerVO.labelType != '' " >
+                and rfid_container.label_type = #{rfidContainerVO.labelType}
+            </if>
+            <!-- 删除区分(0有效1删除) -->
+            <if test="rfidContainerVO.isDel != null and rfidContainerVO.isDel != '' " >
+                and rfid_container.is_del = #{rfidContainerVO.isDel}
+            </if>
+            <!-- 操作人 -->
+            <if test="rfidContainerVO.operatorCode != null and rfidContainerVO.operatorCode != '' " >
+                and rfid_container.operator_code = #{rfidContainerVO.operatorCode}
+            </if>
+            </if>
+        /*rfid_container end*/
+        ORDER BY product_line_equipment.id desc
+        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
+        LIMIT #{startRecord},#{pageSize}
+        </if>
+    </select>
+
+
+    <!--查询记录数-->
+    <select id="getProductLineEquipmentCount" parameterType="com.common.vo.ProductLineEquipmentVO" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM product_line_equipment as product_line_equipment
+        LEFT JOIN rfid_container as rfid_container ON rfid_container.code = product_line_equipment.rfid_container_code
+        WHERE
+            1 = 1 AND  product_line_equipment.is_del = 0
+        /*product_line_equipment begin*/
+        <!-- 设备id -->
+        <if test="id != null and id != '' " >
+            and product_line_equipment.id = #{id}
+        </if>
+        <!-- RFID载体 -->
+        <if test="rfidContainerCode != null and rfidContainerCode != '' " >
+            and product_line_equipment.rfid_container_code = #{rfidContainerCode}
+        </if>
+        <!-- 当前是否使用(0是,1否) -->
+        <if test="statues != null and statues != '' " >
+            and product_line_equipment.statues = #{statues}
+        </if>
+        <!-- 编码 -->
+        <if test="code != null and code != '' " >
+            and product_line_equipment.code = #{code}
+        </if>
+        <!-- 名称 -->
+        <if test="name != null and name != '' " >
+            and product_line_equipment.name = #{name}
+        </if>
+        <!-- 设备类型(0:加工设备1:对刀设备2:专机) -->
+        <if test="type != null and type != '' " >
+            and product_line_equipment.type = #{type}
+        </if>
+        <!--  -->
+        <if test="isDel != null and isDel != '' " >
+            and product_line_equipment.is_del = #{isDel}
+        </if>
+        /*product_line_equipment end*/
+        /*rfid_container begin*/
+        <if test="rfidContainerVO != null">
+        <!-- RFID载体ID -->
+        <if test="rfidContainerVO.id != null and rfidContainerVO.id != '' " >
+            and rfid_container.id = #{rfidContainerVO.id}
+        </if>
+        <!-- RFID标签 -->
+        <if test="rfidContainerVO.code != null and rfidContainerVO.code != '' " >
+            and rfid_container.code = #{rfidContainerVO.code}
+        </if>
+        <!-- 使用次数 -->
+        <if test="rfidContainerVO.useCount != null and rfidContainerVO.useCount != '' " >
+            and rfid_container.use_count = #{rfidContainerVO.useCount}
+        </if>
+        <!-- 激光识别码 -->
+        <if test="rfidContainerVO.laserCode != null and rfidContainerVO.laserCode != '' " >
+            and rfid_container.laser_code = #{rfidContainerVO.laserCode}
+        </if>
+        <!-- 绑定类型(0RFID 1 激光码 2 工具盘 9 其他) -->
+        <if test="rfidContainerVO.bindType != null and rfidContainerVO.bindType != '' " >
+            and rfid_container.bind_type = #{rfidContainerVO.bindType}
+        </if>
+        <!-- 标签类型（0库位标签，1单品刀，2合成刀具，3员工卡，4设备，5容器，6备刀库） -->
+        <if test="rfidContainerVO.labelType != null and rfidContainerVO.labelType != '' " >
+            and rfid_container.label_type = #{rfidContainerVO.labelType}
+        </if>
+        <!-- 删除区分(0有效1删除) -->
+        <if test="rfidContainerVO.isDel != null and rfidContainerVO.isDel != '' " >
+            and rfid_container.is_del = #{rfidContainerVO.isDel}
+        </if>
+        <!-- 操作人 -->
+        <if test="rfidContainerVO.operatorCode != null and rfidContainerVO.operatorCode != '' " >
+            and rfid_container.operator_code = #{rfidContainerVO.operatorCode}
+        </if>
+        </if>
+        /*rfid_container end*/
+    </select>
+
+    <!--根据vo查询 -->
+    <select id="getProductLineEquipment" parameterType="com.common.vo.ProductLineEquipmentVO" resultMap="productLineEquipmentQueryMap">
+        SELECT
+        /*product_line_equipment begin*/
+        <!-- 设备id -->
+        product_line_equipment.id as 'product_line_equipment.id',
+        <!-- RFID载体 -->
+        product_line_equipment.rfid_container_code as 'product_line_equipment.rfid_container_code',
+        <!-- 当前是否使用(0是,1否) -->
+        product_line_equipment.statues as 'product_line_equipment.statues',
+        <!-- 编码 -->
+        product_line_equipment.code as 'product_line_equipment.code',
+        <!-- 名称 -->
+        product_line_equipment.name as 'product_line_equipment.name',
+        <!-- 设备类型(0:加工设备1:对刀设备2:专机) -->
+        product_line_equipment.type as 'product_line_equipment.type',
+        <!--  -->
+        product_line_equipment.is_del as 'product_line_equipment.is_del',
+        /*product_line_equipment end*/
+        /*rfid_container begin*/
+        <!-- RFID载体ID -->
+        rfid_container.id as 'rfid_container.id',
+        <!-- RFID标签 -->
+        rfid_container.code as 'rfid_container.code',
+        <!-- 使用次数 -->
+        rfid_container.use_count as 'rfid_container.use_count',
+        <!-- 激光识别码 -->
+        rfid_container.laser_code as 'rfid_container.laser_code',
+        <!-- 绑定类型(0RFID 1 激光码 2 工具盘 9 其他) -->
+        rfid_container.bind_type as 'rfid_container.bind_type',
+        <!-- 标签类型（0库位标签，1单品刀，2合成刀具，3员工卡，4设备，5容器，6备刀库） -->
+        rfid_container.label_type as 'rfid_container.label_type',
+        <!-- 删除区分(0有效1删除) -->
+        rfid_container.is_del as 'rfid_container.is_del',
+        <!-- 操作人 -->
+        rfid_container.operator_code as 'rfid_container.operator_code'
+        /*rfid_container end*/
+        FROM product_line_equipment as product_line_equipment
+        LEFT JOIN rfid_container as rfid_container ON rfid_container.code = product_line_equipment.rfid_container_code
+        WHERE
+            1 = 1 AND  product_line_equipment.is_del = 0
+        /*product_line_equipment begin*/
+        <!-- 设备id -->
+        <if test="id != null and id != '' " >
+            and product_line_equipment.id = #{id}
+        </if>
+        <!-- RFID载体 -->
+        <if test="rfidContainerCode != null and rfidContainerCode != '' " >
+            and product_line_equipment.rfid_container_code = #{rfidContainerCode}
+        </if>
+        <!-- 当前是否使用(0是,1否) -->
+        <if test="statues != null and statues != '' " >
+            and product_line_equipment.statues = #{statues}
+        </if>
+        <!-- 编码 -->
+        <if test="code != null and code != '' " >
+            and product_line_equipment.code = #{code}
+        </if>
+        <!-- 名称 -->
+        <if test="name != null and name != '' " >
+            and product_line_equipment.name = #{name}
+        </if>
+        <!-- 设备类型(0:加工设备1:对刀设备2:专机) -->
+        <if test="type != null and type != '' " >
+            and product_line_equipment.type = #{type}
+        </if>
+        <!--  -->
+        <if test="isDel != null and isDel != '' " >
+            and product_line_equipment.is_del = #{isDel}
+        </if>
+        /*product_line_equipment end*/
+        /*rfid_container begin*/
+        <if test="rfidContainerVO != null">
+        <!-- RFID载体ID -->
+        <if test="rfidContainerVO.id != null and rfidContainerVO.id != '' " >
+            and rfid_container.id = #{rfidContainerVO.id}
+        </if>
+        <!-- RFID标签 -->
+        <if test="rfidContainerVO.code != null and rfidContainerVO.code != '' " >
+            and rfid_container.code = #{rfidContainerVO.code}
+        </if>
+        <!-- 使用次数 -->
+        <if test="rfidContainerVO.useCount != null and rfidContainerVO.useCount != '' " >
+            and rfid_container.use_count = #{rfidContainerVO.useCount}
+        </if>
+        <!-- 激光识别码 -->
+        <if test="rfidContainerVO.laserCode != null and rfidContainerVO.laserCode != '' " >
+            and rfid_container.laser_code = #{rfidContainerVO.laserCode}
+        </if>
+        <!-- 绑定类型(0RFID 1 激光码 2 工具盘 9 其他) -->
+        <if test="rfidContainerVO.bindType != null and rfidContainerVO.bindType != '' " >
+            and rfid_container.bind_type = #{rfidContainerVO.bindType}
+        </if>
+        <!-- 标签类型（0库位标签，1单品刀，2合成刀具，3员工卡，4设备，5容器，6备刀库） -->
+        <if test="rfidContainerVO.labelType != null and rfidContainerVO.labelType != '' " >
+            and rfid_container.label_type = #{rfidContainerVO.labelType}
+        </if>
+        <!-- 删除区分(0有效1删除) -->
+        <if test="rfidContainerVO.isDel != null and rfidContainerVO.isDel != '' " >
+            and rfid_container.is_del = #{rfidContainerVO.isDel}
+        </if>
+        <!-- 操作人 -->
+        <if test="rfidContainerVO.operatorCode != null and rfidContainerVO.operatorCode != '' " >
+            and rfid_container.operator_code = #{rfidContainerVO.operatorCode}
+        </if>
+        </if>
+        /*rfid_container end*/
+    </select>
+</mapper>

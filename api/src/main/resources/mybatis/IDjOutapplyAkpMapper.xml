@@ -1,0 +1,925 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.mapper.IDjOutapplyAkpMapper">
+    <resultMap id="djOutapplyAkpQueryMap" type="com.common.pojo.DjOutapplyAkp">
+        <!-- 单号‘DJLY’用环境'800' -->
+        <id property="client" column="DJ_OUTAPPLY_AKP.CLIENT"/>
+
+        <!-- 单号‘DJLY’ -->
+        <result property="applyno" column="DJ_OUTAPPLY_AKP.APPLYNO"/>
+        <!-- 物料号 -->
+        <result property="mtlno" column="DJ_OUTAPPLY_AKP.MTLNO"/>
+        <!-- 存储地点(mtl_wh.PUTAWAYLOC) -->
+        <result property="storagelocation" column="DJ_OUTAPPLY_AKP.STORAGELOCATION"/>
+        <!-- 数量 -->
+        <result property="unitqty" column="DJ_OUTAPPLY_AKP.UNITQTY"/>
+        <!-- 收货者 -->
+        <result property="goodsrecipient" column="DJ_OUTAPPLY_AKP.GOODSRECIPIENT"/>
+        <!-- 审核标识 0-新建 1-已审核 2-已出库 3-已收货 4-已制签 6-审核失败 7-撤销 -->
+        <result property="auditid" column="DJ_OUTAPPLY_AKP.AUDITID"/>
+        <!-- 转预留标识 -->
+        <result property="changebefid" column="DJ_OUTAPPLY_AKP.CHANGEBEFID"/>
+        <!-- 物料凭证号 -->
+        <result property="mtldocno" column="DJ_OUTAPPLY_AKP.MTLDOCNO"/>
+        <!-- 物料凭证行项号 -->
+        <result property="mtldocitem" column="DJ_OUTAPPLY_AKP.MTLDOCITEM"/>
+        <!-- 读取时间 -->
+        <result property="outdate" column="DJ_OUTAPPLY_AKP.OUTDATE"/>
+        <!-- 消息 -->
+        <result property="message" column="DJ_OUTAPPLY_AKP.MESSAGE"/>
+        <!-- 转储标识'N' -->
+        <result property="dumplogo" column="DJ_OUTAPPLY_AKP.DUMPLOGO"/>
+        <!-- 收货存储地点 -->
+        <result property="externalpurstorage" column="DJ_OUTAPPLY_AKP.EXTERNALPURSTORAGE"/>
+        <!-- 工位 -->
+        <result property="location" column="DJ_OUTAPPLY_AKP.LOCATION"/>
+        <!-- 生产线 -->
+        <result property="productline" column="DJ_OUTAPPLY_AKP.PRODUCTLINE"/>
+        <!-- 工厂 -->
+        <result property="plant" column="DJ_OUTAPPLY_AKP.PLANT"/>
+        <!-- 仓库 -->
+        <result property="whCode" column="DJ_OUTAPPLY_AKP.WH_CODE"/>
+        <!-- 创建时间 -->
+        <result property="createDate" column="DJ_OUTAPPLY_AKP.CREATE_DATE"/>
+        <!--  -->
+        <result property="status" column="DJ_OUTAPPLY_AKP.STATUS"/>
+        <!-- 加工寿命 -->
+        <result property="djqty" column="DJ_OUTAPPLY_AKP.DJQTY"/>
+        <!-- 刀具号 -->
+        <result property="djcode" column="DJ_OUTAPPLY_AKP.DJCODE"/>
+        <!-- 规格型号 -->
+        <result property="ggxh" column="DJ_OUTAPPLY_AKP.GGXH"/>
+        <!-- 物料名称 -->
+        <result property="name" column="DJ_OUTAPPLY_AKP.NAME"/>
+        <!-- 领料条码号 -->
+        <result property="lltm" column="DJ_OUTAPPLY_AKP.LLTM"/>
+        <!-- 项目 -->
+        <result property="xiangm" column="DJ_OUTAPPLY_AKP.XIANGM"/>
+        <!-- 计划价 -->
+        <result property="jhj" column="DJ_OUTAPPLY_AKP.JHJ"/>
+        <!--  -->
+        <result property="lastModifyDate" column="DJ_OUTAPPLY_AKP.LAST_MODIFY_DATE"/>
+    </resultMap>
+    <!--添加-->
+    <insert id="addDjOutapplyAkp" parameterType="com.common.pojo.DjOutapplyAkp">
+        INSERT INTO DJ_OUTAPPLY_AKP (
+            <!-- 单号‘DJLY’用环境'800' -->
+            CLIENT,
+            <!-- 单号‘DJLY’ -->
+            APPLYNO,
+            <!-- 物料号 -->
+            MTLNO,
+            <!-- 存储地点(mtl_wh.PUTAWAYLOC) -->
+            STORAGELOCATION,
+            <!-- 数量 -->
+            UNITQTY,
+            <!-- 收货者 -->
+            GOODSRECIPIENT,
+            <!-- 审核标识 0-新建 1-已审核 2-已出库 3-已收货 4-已制签 6-审核失败 7-撤销 -->
+            AUDITID,
+            <!-- 转预留标识 -->
+            CHANGEBEFID,
+            <!-- 物料凭证号 -->
+            MTLDOCNO,
+            <!-- 物料凭证行项号 -->
+            MTLDOCITEM,
+            <!-- 读取时间 -->
+            OUTDATE,
+            <!-- 消息 -->
+            MESSAGE,
+            <!-- 转储标识'N' -->
+            DUMPLOGO
+            <!-- 收货存储地点 -->
+            EXTERNALPURSTORAGE,
+            <!-- 工位 -->
+            LOCATION,
+            <!-- 生产线 -->
+            PRODUCTLINE,
+            <!-- 工厂 -->
+            PLANT,
+            <!-- 仓库 -->
+            WH_CODE,
+            <!-- 创建时间 -->
+            CREATE_DATE,
+            <!--  -->
+            STATUS,
+            <!-- 加工寿命 -->
+            DJQTY,
+            <!-- 刀具号 -->
+            DJCODE,
+            <!-- 规格型号 -->
+            GGXH,
+            <!-- 物料名称 -->
+            NAME,
+            <!-- 领料条码号 -->
+            LLTM,
+            <!-- 项目 -->
+            XIANGM,
+            <!-- 计划价 -->
+            JHJ,
+            <!--  -->
+            LAST_MODIFY_DATE
+        )
+        VALUES (
+            <!-- 单号‘DJLY’用环境'800' -->
+            #{client},
+            <!-- 单号‘DJLY’ -->
+            #{applyno},
+            <!-- 物料号 -->
+            #{mtlno},
+            <!-- 存储地点(mtl_wh.PUTAWAYLOC) -->
+            #{storagelocation},
+            <!-- 数量 -->
+            #{unitqty},
+            <!-- 收货者 -->
+            #{goodsrecipient},
+            <!-- 审核标识 0-新建 1-已审核 2-已出库 3-已收货 4-已制签 6-审核失败 7-撤销 -->
+            #{auditid},
+            <!-- 转预留标识 -->
+            #{changebefid},
+            <!-- 物料凭证号 -->
+            #{mtldocno},
+            <!-- 物料凭证行项号 -->
+            #{mtldocitem},
+            <!-- 读取时间 -->
+            #{outdate},
+            <!-- 消息 -->
+            #{message},
+            <!-- 转储标识'N' -->
+            #{dumplogo},
+            <!-- 收货存储地点 -->
+            #{externalpurstorage},
+            <!-- 工位 -->
+            #{location},
+            <!-- 生产线 -->
+            #{productline},
+            <!-- 工厂 -->
+            #{plant},
+            <!-- 仓库 -->
+            #{whCode},
+            <!-- 创建时间 -->
+            #{createDate},
+            <!--  -->
+            #{status},
+            <!-- 加工寿命 -->
+            #{djqty},
+            <!-- 刀具号 -->
+            #{djcode},
+            <!-- 规格型号 -->
+            #{ggxh},
+            <!-- 物料名称 -->
+            #{name},
+            <!-- 领料条码号 -->
+            #{lltm},
+            <!-- 项目 -->
+            #{xiangm},
+            <!-- 计划价 -->
+            #{jhj},
+            <!--  -->
+            #{lastModifyDate}
+        )
+    </insert>
+
+    <!--删除-->
+    <delete id="delDjOutapplyAkp" parameterType="com.common.pojo.DjOutapplyAkp">
+        DELETE
+        FROM DJ_OUTAPPLY_AKP
+        WHERE
+            1 = 1
+            and CLIENT = #{client}
+    </delete>
+
+    <!--逻辑删除-->
+    <delete id="delDjOutapplyAkpForLogic" parameterType="com.common.pojo.DjOutapplyAkp">
+        DELETE FROM DJ_OUTAPPLY_AKP
+        WHERE
+            1 = 1
+            and CLIENT = #{client}
+    </delete>
+
+    <!--根据VO删除-->
+    <delete id="delDjOutapplyAkpByVo" parameterType="com.common.vo.DjOutapplyAkpVO">
+        DELETE FROM  DJ_OUTAPPLY_AKP
+        WHERE
+            1=1
+            <!-- 单号‘DJLY’用环境'800' -->
+            <if test="client != null and client != '' " >
+                and CLIENT =  #{client}
+            </if>
+            <!-- 单号‘DJLY’ -->
+            <if test="applyno != null and applyno != '' " >
+                and APPLYNO =  #{applyno}
+            </if>
+            <!-- 物料号 -->
+            <if test="mtlno != null and mtlno != '' " >
+                and MTLNO =  #{mtlno}
+            </if>
+            <!-- 存储地点(mtl_wh.PUTAWAYLOC) -->
+            <if test="storagelocation != null and storagelocation != '' " >
+                and STORAGELOCATION =  #{storagelocation}
+            </if>
+            <!-- 数量 -->
+            <if test="unitqty != null and unitqty != '' " >
+                and UNITQTY =  #{unitqty}
+            </if>
+            <!-- 收货者 -->
+            <if test="goodsrecipient != null and goodsrecipient != '' " >
+                and GOODSRECIPIENT =  #{goodsrecipient}
+            </if>
+            <!-- 审核标识 0-新建 1-已审核 2-已出库 3-已收货 4-已制签 6-审核失败 7-撤销 -->
+            <if test="auditid != null and auditid != '' " >
+                and AUDITID =  #{auditid}
+            </if>
+            <!-- 转预留标识 -->
+            <if test="changebefid != null and changebefid != '' " >
+                and CHANGEBEFID =  #{changebefid}
+            </if>
+            <!-- 物料凭证号 -->
+            <if test="mtldocno != null and mtldocno != '' " >
+                and MTLDOCNO =  #{mtldocno}
+            </if>
+            <!-- 物料凭证行项号 -->
+            <if test="mtldocitem != null and mtldocitem != '' " >
+                and MTLDOCITEM =  #{mtldocitem}
+            </if>
+            <!-- 读取时间 -->
+            <if test="outdate != null and outdate != '' " >
+                and OUTDATE =  #{outdate}
+            </if>
+            <!-- 消息 -->
+            <if test="message != null and message != '' " >
+                and MESSAGE =  #{message}
+            </if>
+            <!-- 转储标识'N' -->
+            <if test="dumplogo!= null and dumplogo!= '' " >
+                and DUMPLOGO = #{dumplogo}
+            </if>
+            <!-- 收货存储地点 -->
+            <if test="externalpurstorage != null and externalpurstorage != '' " >
+                and EXTERNALPURSTORAGE =  #{externalpurstorage}
+            </if>
+            <!-- 工位 -->
+            <if test="location != null and location != '' " >
+                and LOCATION =  #{location}
+            </if>
+            <!-- 生产线 -->
+            <if test="productline != null and productline != '' " >
+                and PRODUCTLINE =  #{productline}
+            </if>
+            <!-- 工厂 -->
+            <if test="plant != null and plant != '' " >
+                and PLANT =  #{plant}
+            </if>
+            <!-- 仓库 -->
+            <if test="whCode != null and whCode != '' " >
+                and WH_CODE =  #{whCode}
+            </if>
+            <!-- 创建时间 -->
+            <if test="createDate != null and createDate != '' " >
+                and CREATE_DATE =  #{createDate}
+            </if>
+            <!--  -->
+            <if test="status != null and status != '' " >
+                and STATUS =  #{status}
+            </if>
+            <!-- 加工寿命 -->
+            <if test="djqty != null and djqty != '' " >
+                and DJQTY =  #{djqty}
+            </if>
+            <!-- 刀具号 -->
+            <if test="djcode != null and djcode != '' " >
+                and DJCODE =  #{djcode}
+            </if>
+            <!-- 规格型号 -->
+            <if test="ggxh != null and ggxh != '' " >
+                and GGXH =  #{ggxh}
+            </if>
+            <!-- 物料名称 -->
+            <if test="name != null and name != '' " >
+                and NAME =  #{name}
+            </if>
+            <!-- 领料条码号 -->
+            <if test="lltm != null and lltm != '' " >
+                and LLTM =  #{lltm}
+            </if>
+            <!-- 项目 -->
+            <if test="xiangm != null and xiangm != '' " >
+                and XIANGM =  #{xiangm}
+            </if>
+            <!-- 计划价 -->
+            <if test="jhj != null and jhj != '' " >
+                and JHJ =  #{jhj}
+            </if>
+            <!--  -->
+            <if test="lastModifyDate != null and lastModifyDate != '' " >
+                and LAST_MODIFY_DATE =  #{lastModifyDate}
+            </if>
+    </delete>
+
+    <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
+    <update id="updDjOutapplyAkp" parameterType="com.common.pojo.DjOutapplyAkp">
+        UPDATE DJ_OUTAPPLY_AKP
+        SET
+            <!-- 单号‘DJLY’ -->
+            <if test="applyno != null and applyno != '' " >
+                APPLYNO =  #{applyno},
+            </if>
+            <!-- 物料号 -->
+            <if test="mtlno != null and mtlno != '' " >
+                MTLNO =  #{mtlno},
+            </if>
+            <!-- 存储地点(mtl_wh.PUTAWAYLOC) -->
+            <if test="storagelocation != null and storagelocation != '' " >
+                STORAGELOCATION =  #{storagelocation},
+            </if>
+            <!-- 数量 -->
+            <if test="unitqty != null and unitqty != '' " >
+                UNITQTY =  #{unitqty},
+            </if>
+            <!-- 收货者 -->
+            <if test="goodsrecipient != null and goodsrecipient != '' " >
+                GOODSRECIPIENT =  #{goodsrecipient},
+            </if>
+            <!-- 审核标识 0-新建 1-已审核 2-已出库 3-已收货 4-已制签 6-审核失败 7-撤销 -->
+            <if test="auditid != null and auditid != '' " >
+                AUDITID =  #{auditid},
+            </if>
+            <!-- 转预留标识 -->
+            <if test="changebefid != null and changebefid != '' " >
+                CHANGEBEFID =  #{changebefid},
+            </if>
+            <!-- 物料凭证号 -->
+            <if test="mtldocno != null and mtldocno != '' " >
+                MTLDOCNO =  #{mtldocno},
+            </if>
+            <!-- 物料凭证行项号 -->
+            <if test="mtldocitem != null and mtldocitem != '' " >
+                MTLDOCITEM =  #{mtldocitem},
+            </if>
+            <!-- 读取时间 -->
+            <if test="outdate != null and outdate != '' " >
+                OUTDATE =  #{outdate},
+            </if>
+            <!-- 消息 -->
+            <if test="message != null and message != '' " >
+                MESSAGE =  #{message},
+            </if>
+            <!-- 转储标识'N' -->
+            <if test="dumplogo != null and dumplogo != '' " >
+                DUMPLOGO =  #{dumplogo},
+            </if>
+            <!-- 收货存储地点 -->
+            <if test="externalpurstorage != null and externalpurstorage != '' " >
+                EXTERNALPURSTORAGE =  #{externalpurstorage},
+            </if>
+            <!-- 工位 -->
+            <if test="location != null and location != '' " >
+                LOCATION =  #{location},
+            </if>
+            <!-- 生产线 -->
+            <if test="productline != null and productline != '' " >
+                PRODUCTLINE =  #{productline},
+            </if>
+            <!-- 工厂 -->
+            <if test="plant != null and plant != '' " >
+                PLANT =  #{plant},
+            </if>
+            <!-- 仓库 -->
+            <if test="whCode != null and whCode != '' " >
+                WH_CODE =  #{whCode},
+            </if>
+            <!-- 创建时间 -->
+            <if test="createDate != null and createDate != '' " >
+                CREATE_DATE =  #{createDate},
+            </if>
+            <!--  -->
+            <if test="status != null and status != '' " >
+                STATUS =  #{status},
+            </if>
+            <!-- 加工寿命 -->
+            <if test="djqty != null and djqty != '' " >
+                DJQTY =  #{djqty},
+            </if>
+            <!-- 刀具号 -->
+            <if test="djcode != null and djcode != '' " >
+                DJCODE =  #{djcode},
+            </if>
+            <!-- 规格型号 -->
+            <if test="ggxh != null and ggxh != '' " >
+                GGXH =  #{ggxh},
+            </if>
+            <!-- 物料名称 -->
+            <if test="name != null and name != '' " >
+                NAME =  #{name},
+            </if>
+            <!-- 领料条码号 -->
+            <if test="lltm != null and lltm != '' " >
+                LLTM =  #{lltm},
+            </if>
+            <!-- 项目 -->
+            <if test="xiangm != null and xiangm != '' " >
+                XIANGM =  #{xiangm},
+            </if>
+            <!-- 计划价 -->
+            <if test="jhj != null and jhj != '' " >
+                JHJ =  #{jhj},
+            </if>
+            <!--  -->
+            <if test="lastModifyDate != null and lastModifyDate != '' " >
+                LAST_MODIFY_DATE =  #{lastModifyDate},
+            </if>
+            <!-- 单号‘DJLY’用环境'800' -->
+            CLIENT = #{client}
+        WHERE
+            1 = 1
+            and CLIENT = #{client}
+    </update>
+
+    <!--分页查询 -->
+    <select id="getDjOutapplyAkpByPage" parameterType="com.common.vo.DjOutapplyAkpVO" resultMap="djOutapplyAkpQueryMap">
+        SELECT
+        /*djOutapplyAkp begin*/
+            <!-- 单号‘DJLY’用环境'800' -->
+            DJ_OUTAPPLY_AKP.CLIENT as 'DJ_OUTAPPLY_AKP.CLIENT',
+            <!-- 单号‘DJLY’ -->
+            DJ_OUTAPPLY_AKP.APPLYNO as 'DJ_OUTAPPLY_AKP.APPLYNO',
+            <!-- 物料号 -->
+            DJ_OUTAPPLY_AKP.MTLNO as 'DJ_OUTAPPLY_AKP.MTLNO',
+            <!-- 存储地点(mtl_wh.PUTAWAYLOC) -->
+            DJ_OUTAPPLY_AKP.STORAGELOCATION as 'DJ_OUTAPPLY_AKP.STORAGELOCATION',
+            <!-- 数量 -->
+            DJ_OUTAPPLY_AKP.UNITQTY as 'DJ_OUTAPPLY_AKP.UNITQTY',
+            <!-- 收货者 -->
+            DJ_OUTAPPLY_AKP.GOODSRECIPIENT as 'DJ_OUTAPPLY_AKP.GOODSRECIPIENT',
+            <!-- 审核标识 0-新建 1-已审核 2-已出库 3-已收货 4-已制签 6-审核失败 7-撤销 -->
+            DJ_OUTAPPLY_AKP.AUDITID as 'DJ_OUTAPPLY_AKP.AUDITID',
+            <!-- 转预留标识 -->
+            DJ_OUTAPPLY_AKP.CHANGEBEFID as 'DJ_OUTAPPLY_AKP.CHANGEBEFID',
+            <!-- 物料凭证号 -->
+            DJ_OUTAPPLY_AKP.MTLDOCNO as 'DJ_OUTAPPLY_AKP.MTLDOCNO',
+            <!-- 物料凭证行项号 -->
+            DJ_OUTAPPLY_AKP.MTLDOCITEM as 'DJ_OUTAPPLY_AKP.MTLDOCITEM',
+            <!-- 读取时间 -->
+            DJ_OUTAPPLY_AKP.OUTDATE as 'DJ_OUTAPPLY_AKP.OUTDATE',
+            <!-- 消息 -->
+            DJ_OUTAPPLY_AKP.MESSAGE as 'DJ_OUTAPPLY_AKP.MESSAGE',
+            <!-- 转储标识'N' -->
+            DJ_OUTAPPLY_AKP.DUMPLOGO as 'DJ_OUTAPPLY_AKP.DUMPLOGO',
+            <!-- 收货存储地点 -->
+            DJ_OUTAPPLY_AKP.EXTERNALPURSTORAGE as 'DJ_OUTAPPLY_AKP.EXTERNALPURSTORAGE',
+            <!-- 工位 -->
+            DJ_OUTAPPLY_AKP.LOCATION as 'DJ_OUTAPPLY_AKP.LOCATION',
+            <!-- 生产线 -->
+            DJ_OUTAPPLY_AKP.PRODUCTLINE as 'DJ_OUTAPPLY_AKP.PRODUCTLINE',
+            <!-- 工厂 -->
+            DJ_OUTAPPLY_AKP.PLANT as 'DJ_OUTAPPLY_AKP.PLANT',
+            <!-- 仓库 -->
+            DJ_OUTAPPLY_AKP.WH_CODE as 'DJ_OUTAPPLY_AKP.WH_CODE',
+            <!-- 创建时间 -->
+            DJ_OUTAPPLY_AKP.CREATE_DATE as 'DJ_OUTAPPLY_AKP.CREATE_DATE',
+            <!--  -->
+            DJ_OUTAPPLY_AKP.STATUS as 'DJ_OUTAPPLY_AKP.STATUS',
+            <!-- 加工寿命 -->
+            DJ_OUTAPPLY_AKP.DJQTY as 'DJ_OUTAPPLY_AKP.DJQTY',
+            <!-- 刀具号 -->
+            DJ_OUTAPPLY_AKP.DJCODE as 'DJ_OUTAPPLY_AKP.DJCODE',
+            <!-- 规格型号 -->
+            DJ_OUTAPPLY_AKP.GGXH as 'DJ_OUTAPPLY_AKP.GGXH',
+            <!-- 物料名称 -->
+            DJ_OUTAPPLY_AKP.NAME as 'DJ_OUTAPPLY_AKP.NAME',
+            <!-- 领料条码号 -->
+            DJ_OUTAPPLY_AKP.LLTM as 'DJ_OUTAPPLY_AKP.LLTM',
+            <!-- 项目 -->
+            DJ_OUTAPPLY_AKP.XIANGM as 'DJ_OUTAPPLY_AKP.XIANGM',
+            <!-- 计划价 -->
+            DJ_OUTAPPLY_AKP.JHJ as 'DJ_OUTAPPLY_AKP.JHJ',
+            <!--  -->
+            DJ_OUTAPPLY_AKP.LAST_MODIFY_DATE as 'DJ_OUTAPPLY_AKP.LAST_MODIFY_DATE'
+        /*djOutapplyAkp end*/
+        FROM DJ_OUTAPPLY_AKP as DJ_OUTAPPLY_AKP
+        WHERE
+            1 = 1
+        /*DJ_OUTAPPLY_AKP begin*/
+            <!-- 单号‘DJLY’用环境'800' -->
+            <if test="client != null and client != '' " >
+                and DJ_OUTAPPLY_AKP.CLIENT = #{client}
+            </if>
+            <!-- 单号‘DJLY’ -->
+            <if test="applyno != null and applyno != '' " >
+                and DJ_OUTAPPLY_AKP.APPLYNO = #{applyno}
+            </if>
+            <!-- 物料号 -->
+            <if test="mtlno != null and mtlno != '' " >
+                and DJ_OUTAPPLY_AKP.MTLNO = #{mtlno}
+            </if>
+            <!-- 存储地点(mtl_wh.PUTAWAYLOC) -->
+            <if test="storagelocation != null and storagelocation != '' " >
+                and DJ_OUTAPPLY_AKP.STORAGELOCATION = #{storagelocation}
+            </if>
+            <!-- 数量 -->
+            <if test="unitqty != null and unitqty != '' " >
+                and DJ_OUTAPPLY_AKP.UNITQTY = #{unitqty}
+            </if>
+            <!-- 收货者 -->
+            <if test="goodsrecipient != null and goodsrecipient != '' " >
+                and DJ_OUTAPPLY_AKP.GOODSRECIPIENT = #{goodsrecipient}
+            </if>
+            <!-- 审核标识 0-新建 1-已审核 2-已出库 3-已收货 4-已制签 6-审核失败 7-撤销 -->
+            <if test="auditid != null and auditid != '' " >
+                and DJ_OUTAPPLY_AKP.AUDITID = #{auditid}
+            </if>
+            <!-- 转预留标识 -->
+            <if test="changebefid != null and changebefid != '' " >
+                and DJ_OUTAPPLY_AKP.CHANGEBEFID = #{changebefid}
+            </if>
+            <!-- 物料凭证号 -->
+            <if test="mtldocno != null and mtldocno != '' " >
+                and DJ_OUTAPPLY_AKP.MTLDOCNO = #{mtldocno}
+            </if>
+            <!-- 物料凭证行项号 -->
+            <if test="mtldocitem != null and mtldocitem != '' " >
+                and DJ_OUTAPPLY_AKP.MTLDOCITEM = #{mtldocitem}
+            </if>
+            <!-- 读取时间 -->
+            <if test="outdate != null and outdate != '' " >
+                and DJ_OUTAPPLY_AKP.OUTDATE = #{outdate}
+            </if>
+            <!-- 消息 -->
+            <if test="message != null and message != '' " >
+                and DJ_OUTAPPLY_AKP.MESSAGE = #{message}
+            </if>
+            <!-- 转储标识'N' -->
+            <if test="dumplogo != null and dumplogo != '' " >
+                and DJ_OUTAPPLY_AKP.DUMPLOGO = #{dumplogo}
+            </if>
+            <!-- 收货存储地点 -->
+            <if test="externalpurstorage != null and externalpurstorage != '' " >
+                and DJ_OUTAPPLY_AKP.EXTERNALPURSTORAGE = #{externalpurstorage}
+            </if>
+            <!-- 工位 -->
+            <if test="location != null and location != '' " >
+                and DJ_OUTAPPLY_AKP.LOCATION = #{location}
+            </if>
+            <!-- 生产线 -->
+            <if test="productline != null and productline != '' " >
+                and DJ_OUTAPPLY_AKP.PRODUCTLINE = #{productline}
+            </if>
+            <!-- 工厂 -->
+            <if test="plant != null and plant != '' " >
+                and DJ_OUTAPPLY_AKP.PLANT = #{plant}
+            </if>
+            <!-- 仓库 -->
+            <if test="whCode != null and whCode != '' " >
+                and DJ_OUTAPPLY_AKP.WH_CODE = #{whCode}
+            </if>
+            <!-- 创建时间 -->
+            <if test="createDate != null and createDate != '' " >
+                and DJ_OUTAPPLY_AKP.CREATE_DATE = #{createDate}
+            </if>
+            <!--  -->
+            <if test="status != null and status != '' " >
+                and DJ_OUTAPPLY_AKP.STATUS = #{status}
+            </if>
+            <!-- 加工寿命 -->
+            <if test="djqty != null and djqty != '' " >
+                and DJ_OUTAPPLY_AKP.DJQTY = #{djqty}
+            </if>
+            <!-- 刀具号 -->
+            <if test="djcode != null and djcode != '' " >
+                and DJ_OUTAPPLY_AKP.DJCODE = #{djcode}
+            </if>
+            <!-- 规格型号 -->
+            <if test="ggxh != null and ggxh != '' " >
+                and DJ_OUTAPPLY_AKP.GGXH = #{ggxh}
+            </if>
+            <!-- 物料名称 -->
+            <if test="name != null and name != '' " >
+                and DJ_OUTAPPLY_AKP.NAME = #{name}
+            </if>
+            <!-- 领料条码号 -->
+            <if test="lltm != null and lltm != '' " >
+                and DJ_OUTAPPLY_AKP.LLTM = #{lltm}
+            </if>
+            <!-- 项目 -->
+            <if test="xiangm != null and xiangm != '' " >
+                and DJ_OUTAPPLY_AKP.XIANGM = #{xiangm}
+            </if>
+            <!-- 计划价 -->
+            <if test="jhj != null and jhj != '' " >
+                and DJ_OUTAPPLY_AKP.JHJ = #{jhj}
+            </if>
+            <!--  -->
+            <if test="lastModifyDate != null and lastModifyDate != '' " >
+                and DJ_OUTAPPLY_AKP.LAST_MODIFY_DATE = #{lastModifyDate}
+            </if>
+        /*DJ_OUTAPPLY_AKP end*/
+        ORDER BY DJ_OUTAPPLY_AKP.CLIENT desc
+        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
+        LIMIT #{startRecord},#{pageSize}
+        </if>
+    </select>
+
+
+    <!--查询记录数-->
+    <select id="getDjOutapplyAkpCount" parameterType="com.common.vo.DjOutapplyAkpVO" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM DJ_OUTAPPLY_AKP as DJ_OUTAPPLY_AKP
+        WHERE
+            1 = 1
+        /*DJ_OUTAPPLY_AKP begin*/
+        <!-- 单号‘DJLY’用环境'800' -->
+        <if test="client != null and client != '' " >
+            and DJ_OUTAPPLY_AKP.CLIENT = #{client}
+        </if>
+        <!-- 单号‘DJLY’ -->
+        <if test="applyno != null and applyno != '' " >
+            and DJ_OUTAPPLY_AKP.APPLYNO = #{applyno}
+        </if>
+        <!-- 物料号 -->
+        <if test="mtlno != null and mtlno != '' " >
+            and DJ_OUTAPPLY_AKP.MTLNO = #{mtlno}
+        </if>
+        <!-- 存储地点(mtl_wh.PUTAWAYLOC) -->
+        <if test="storagelocation != null and storagelocation != '' " >
+            and DJ_OUTAPPLY_AKP.STORAGELOCATION = #{storagelocation}
+        </if>
+        <!-- 数量 -->
+        <if test="unitqty != null and unitqty != '' " >
+            and DJ_OUTAPPLY_AKP.UNITQTY = #{unitqty}
+        </if>
+        <!-- 收货者 -->
+        <if test="goodsrecipient != null and goodsrecipient != '' " >
+            and DJ_OUTAPPLY_AKP.GOODSRECIPIENT = #{goodsrecipient}
+        </if>
+        <!-- 审核标识 0-新建 1-已审核 2-已出库 3-已收货 4-已制签 6-审核失败 7-撤销 -->
+        <if test="auditid != null and auditid != '' " >
+            and DJ_OUTAPPLY_AKP.AUDITID = #{auditid}
+        </if>
+        <!-- 转预留标识 -->
+        <if test="changebefid != null and changebefid != '' " >
+            and DJ_OUTAPPLY_AKP.CHANGEBEFID = #{changebefid}
+        </if>
+        <!-- 物料凭证号 -->
+        <if test="mtldocno != null and mtldocno != '' " >
+            and DJ_OUTAPPLY_AKP.MTLDOCNO = #{mtldocno}
+        </if>
+        <!-- 物料凭证行项号 -->
+        <if test="mtldocitem != null and mtldocitem != '' " >
+            and DJ_OUTAPPLY_AKP.MTLDOCITEM = #{mtldocitem}
+        </if>
+        <!-- 读取时间 -->
+        <if test="outdate != null and outdate != '' " >
+            and DJ_OUTAPPLY_AKP.OUTDATE = #{outdate}
+        </if>
+        <!-- 消息 -->
+        <if test="message != null and message != '' " >
+            and DJ_OUTAPPLY_AKP.MESSAGE = #{message}
+        </if>
+        <!-- 转储标识'N' -->
+        <if test="dumplogo != null and dumplogo != '' " >
+            and DJ_OUTAPPLY_AKP.DUMPLOGO = #{dumplogo}
+        </if>
+        <!-- 收货存储地点 -->
+        <if test="externalpurstorage != null and externalpurstorage != '' " >
+            and DJ_OUTAPPLY_AKP.EXTERNALPURSTORAGE = #{externalpurstorage}
+        </if>
+        <!-- 工位 -->
+        <if test="location != null and location != '' " >
+            and DJ_OUTAPPLY_AKP.LOCATION = #{location}
+        </if>
+        <!-- 生产线 -->
+        <if test="productline != null and productline != '' " >
+            and DJ_OUTAPPLY_AKP.PRODUCTLINE = #{productline}
+        </if>
+        <!-- 工厂 -->
+        <if test="plant != null and plant != '' " >
+            and DJ_OUTAPPLY_AKP.PLANT = #{plant}
+        </if>
+        <!-- 仓库 -->
+        <if test="whCode != null and whCode != '' " >
+            and DJ_OUTAPPLY_AKP.WH_CODE = #{whCode}
+        </if>
+        <!-- 创建时间 -->
+        <if test="createDate != null and createDate != '' " >
+            and DJ_OUTAPPLY_AKP.CREATE_DATE = #{createDate}
+        </if>
+        <!--  -->
+        <if test="status != null and status != '' " >
+            and DJ_OUTAPPLY_AKP.STATUS = #{status}
+        </if>
+        <!-- 加工寿命 -->
+        <if test="djqty != null and djqty != '' " >
+            and DJ_OUTAPPLY_AKP.DJQTY = #{djqty}
+        </if>
+        <!-- 刀具号 -->
+        <if test="djcode != null and djcode != '' " >
+            and DJ_OUTAPPLY_AKP.DJCODE = #{djcode}
+        </if>
+        <!-- 规格型号 -->
+        <if test="ggxh != null and ggxh != '' " >
+            and DJ_OUTAPPLY_AKP.GGXH = #{ggxh}
+        </if>
+        <!-- 物料名称 -->
+        <if test="name != null and name != '' " >
+            and DJ_OUTAPPLY_AKP.NAME = #{name}
+        </if>
+        <!-- 领料条码号 -->
+        <if test="lltm != null and lltm != '' " >
+            and DJ_OUTAPPLY_AKP.LLTM = #{lltm}
+        </if>
+        <!-- 项目 -->
+        <if test="xiangm != null and xiangm != '' " >
+            and DJ_OUTAPPLY_AKP.XIANGM = #{xiangm}
+        </if>
+        <!-- 计划价 -->
+        <if test="jhj != null and jhj != '' " >
+            and DJ_OUTAPPLY_AKP.JHJ = #{jhj}
+        </if>
+        <!--  -->
+        <if test="lastModifyDate != null and lastModifyDate != '' " >
+            and DJ_OUTAPPLY_AKP.LAST_MODIFY_DATE = #{lastModifyDate}
+        </if>
+        /*DJ_OUTAPPLY_AKP end*/
+    </select>
+
+    <!--根据vo查询 -->
+    <select id="getDjOutapplyAkp" parameterType="com.common.vo.DjOutapplyAkpVO" resultMap="djOutapplyAkpQueryMap">
+        SELECT
+        /*DJ_OUTAPPLY_AKP begin*/
+        <!-- 单号‘DJLY’用环境'800' -->
+        DJ_OUTAPPLY_AKP.CLIENT as 'DJ_OUTAPPLY_AKP.CLIENT',
+        <!-- 单号‘DJLY’ -->
+        DJ_OUTAPPLY_AKP.APPLYNO as 'DJ_OUTAPPLY_AKP.APPLYNO',
+        <!-- 物料号 -->
+        DJ_OUTAPPLY_AKP.MTLNO as 'DJ_OUTAPPLY_AKP.MTLNO',
+        <!-- 存储地点(mtl_wh.PUTAWAYLOC) -->
+        DJ_OUTAPPLY_AKP.STORAGELOCATION as 'DJ_OUTAPPLY_AKP.STORAGELOCATION',
+        <!-- 数量 -->
+        DJ_OUTAPPLY_AKP.UNITQTY as 'DJ_OUTAPPLY_AKP.UNITQTY',
+        <!-- 收货者 -->
+        DJ_OUTAPPLY_AKP.GOODSRECIPIENT as 'DJ_OUTAPPLY_AKP.GOODSRECIPIENT',
+        <!-- 审核标识 0-新建 1-已审核 2-已出库 3-已收货 4-已制签 6-审核失败 7-撤销 -->
+        DJ_OUTAPPLY_AKP.AUDITID as 'DJ_OUTAPPLY_AKP.AUDITID',
+        <!-- 转预留标识 -->
+        DJ_OUTAPPLY_AKP.CHANGEBEFID as 'DJ_OUTAPPLY_AKP.CHANGEBEFID',
+        <!-- 物料凭证号 -->
+        DJ_OUTAPPLY_AKP.MTLDOCNO as 'DJ_OUTAPPLY_AKP.MTLDOCNO',
+        <!-- 物料凭证行项号 -->
+        DJ_OUTAPPLY_AKP.MTLDOCITEM as 'DJ_OUTAPPLY_AKP.MTLDOCITEM',
+        <!-- 读取时间 -->
+        DJ_OUTAPPLY_AKP.OUTDATE as 'DJ_OUTAPPLY_AKP.OUTDATE',
+        <!-- 消息 -->
+        DJ_OUTAPPLY_AKP.MESSAGE as 'DJ_OUTAPPLY_AKP.MESSAGE',
+        <!-- 转储标识'N' -->
+        DJ_OUTAPPLY_AKP.DUMPLOGO as 'DJ_OUTAPPLY_AKP.DUMPLOGO',
+        <!-- 收货存储地点 -->
+        DJ_OUTAPPLY_AKP.EXTERNALPURSTORAGE as 'DJ_OUTAPPLY_AKP.EXTERNALPURSTORAGE',
+        <!-- 工位 -->
+        DJ_OUTAPPLY_AKP.LOCATION as 'DJ_OUTAPPLY_AKP.LOCATION',
+        <!-- 生产线 -->
+        DJ_OUTAPPLY_AKP.PRODUCTLINE as 'DJ_OUTAPPLY_AKP.PRODUCTLINE',
+        <!-- 工厂 -->
+        DJ_OUTAPPLY_AKP.PLANT as 'DJ_OUTAPPLY_AKP.PLANT',
+        <!-- 仓库 -->
+        DJ_OUTAPPLY_AKP.WH_CODE as 'DJ_OUTAPPLY_AKP.WH_CODE',
+        <!-- 创建时间 -->
+        DJ_OUTAPPLY_AKP.CREATE_DATE as 'DJ_OUTAPPLY_AKP.CREATE_DATE',
+        <!--  -->
+        DJ_OUTAPPLY_AKP.STATUS as 'DJ_OUTAPPLY_AKP.STATUS',
+        <!-- 加工寿命 -->
+        DJ_OUTAPPLY_AKP.DJQTY as 'DJ_OUTAPPLY_AKP.DJQTY',
+        <!-- 刀具号 -->
+        DJ_OUTAPPLY_AKP.DJCODE as 'DJ_OUTAPPLY_AKP.DJCODE',
+        <!-- 规格型号 -->
+        DJ_OUTAPPLY_AKP.GGXH as 'DJ_OUTAPPLY_AKP.GGXH',
+        <!-- 物料名称 -->
+        DJ_OUTAPPLY_AKP.NAME as 'DJ_OUTAPPLY_AKP.NAME',
+        <!-- 领料条码号 -->
+        DJ_OUTAPPLY_AKP.LLTM as 'DJ_OUTAPPLY_AKP.LLTM',
+        <!-- 项目 -->
+        DJ_OUTAPPLY_AKP.XIANGM as 'DJ_OUTAPPLY_AKP.XIANGM',
+        <!-- 计划价 -->
+        DJ_OUTAPPLY_AKP.JHJ as 'DJ_OUTAPPLY_AKP.JHJ',
+        <!--  -->
+        DJ_OUTAPPLY_AKP.LAST_MODIFY_DATE as 'DJ_OUTAPPLY_AKP.LAST_MODIFY_DATE'
+        /*DJ_OUTAPPLY_AKP end*/
+        FROM DJ_OUTAPPLY_AKP as DJ_OUTAPPLY_AKP
+        WHERE
+            1 = 1
+        /*DJ_OUTAPPLY_AKP begin*/
+        <!-- 单号‘DJLY’用环境'800' -->
+        <if test="client != null and client != '' " >
+            and DJ_OUTAPPLY_AKP.CLIENT = #{client}
+        </if>
+        <!-- 单号‘DJLY’ -->
+        <if test="applyno != null and applyno != '' " >
+            and DJ_OUTAPPLY_AKP.APPLYNO = #{applyno}
+        </if>
+        <!-- 物料号 -->
+        <if test="mtlno != null and mtlno != '' " >
+            and DJ_OUTAPPLY_AKP.MTLNO = #{mtlno}
+        </if>
+        <!-- 存储地点(mtl_wh.PUTAWAYLOC) -->
+        <if test="storagelocation != null and storagelocation != '' " >
+            and DJ_OUTAPPLY_AKP.STORAGELOCATION = #{storagelocation}
+        </if>
+        <!-- 数量 -->
+        <if test="unitqty != null and unitqty != '' " >
+            and DJ_OUTAPPLY_AKP.UNITQTY = #{unitqty}
+        </if>
+        <!-- 收货者 -->
+        <if test="goodsrecipient != null and goodsrecipient != '' " >
+            and DJ_OUTAPPLY_AKP.GOODSRECIPIENT = #{goodsrecipient}
+        </if>
+        <!-- 审核标识 0-新建 1-已审核 2-已出库 3-已收货 4-已制签 6-审核失败 7-撤销 -->
+        <if test="auditid != null and auditid != '' " >
+            and DJ_OUTAPPLY_AKP.AUDITID = #{auditid}
+        </if>
+        <!-- 转预留标识 -->
+        <if test="changebefid != null and changebefid != '' " >
+            and DJ_OUTAPPLY_AKP.CHANGEBEFID = #{changebefid}
+        </if>
+        <!-- 物料凭证号 -->
+        <if test="mtldocno != null and mtldocno != '' " >
+            and DJ_OUTAPPLY_AKP.MTLDOCNO = #{mtldocno}
+        </if>
+        <!-- 物料凭证行项号 -->
+        <if test="mtldocitem != null and mtldocitem != '' " >
+            and DJ_OUTAPPLY_AKP.MTLDOCITEM = #{mtldocitem}
+        </if>
+        <!-- 读取时间 -->
+        <if test="outdate != null and outdate != '' " >
+            and DJ_OUTAPPLY_AKP.OUTDATE = #{outdate}
+        </if>
+        <!-- 消息 -->
+        <if test="message != null and message != '' " >
+            and DJ_OUTAPPLY_AKP.MESSAGE = #{message}
+        </if>
+        <!-- 转储标识'N' -->
+        <if test="dumplogo != null and dumplogo != '' " >
+            and DJ_OUTAPPLY_AKP.DUMPLOGO = #{dumplogo}
+        </if>
+        <!-- 收货存储地点 -->
+        <if test="externalpurstorage != null and externalpurstorage != '' " >
+            and DJ_OUTAPPLY_AKP.EXTERNALPURSTORAGE = #{externalpurstorage}
+        </if>
+        <!-- 工位 -->
+        <if test="location != null and location != '' " >
+            and DJ_OUTAPPLY_AKP.LOCATION = #{location}
+        </if>
+        <!-- 生产线 -->
+        <if test="productline != null and productline != '' " >
+            and DJ_OUTAPPLY_AKP.PRODUCTLINE = #{productline}
+        </if>
+        <!-- 工厂 -->
+        <if test="plant != null and plant != '' " >
+            and DJ_OUTAPPLY_AKP.PLANT = #{plant}
+        </if>
+        <!-- 仓库 -->
+        <if test="whCode != null and whCode != '' " >
+            and DJ_OUTAPPLY_AKP.WH_CODE = #{whCode}
+        </if>
+        <!-- 创建时间 -->
+        <if test="createDate != null and createDate != '' " >
+            and DJ_OUTAPPLY_AKP.CREATE_DATE = #{createDate}
+        </if>
+        <!--  -->
+        <if test="status != null and status != '' " >
+            and DJ_OUTAPPLY_AKP.STATUS = #{status}
+        </if>
+        <!-- 加工寿命 -->
+        <if test="djqty != null and djqty != '' " >
+            and DJ_OUTAPPLY_AKP.DJQTY = #{djqty}
+        </if>
+        <!-- 刀具号 -->
+        <if test="djcode != null and djcode != '' " >
+            and DJ_OUTAPPLY_AKP.DJCODE = #{djcode}
+        </if>
+        <!-- 规格型号 -->
+        <if test="ggxh != null and ggxh != '' " >
+            and DJ_OUTAPPLY_AKP.GGXH = #{ggxh}
+        </if>
+        <!-- 物料名称 -->
+        <if test="name != null and name != '' " >
+            and DJ_OUTAPPLY_AKP.NAME = #{name}
+        </if>
+        <!-- 领料条码号 -->
+        <if test="lltm != null and lltm != '' " >
+            and DJ_OUTAPPLY_AKP.LLTM = #{lltm}
+        </if>
+        <!-- 项目 -->
+        <if test="xiangm != null and xiangm != '' " >
+            and DJ_OUTAPPLY_AKP.XIANGM = #{xiangm}
+        </if>
+        <!-- 计划价 -->
+        <if test="jhj != null and jhj != '' " >
+            and DJ_OUTAPPLY_AKP.JHJ = #{jhj}
+        </if>
+        <!--  -->
+        <if test="lastModifyDate != null and lastModifyDate != '' " >
+            and DJ_OUTAPPLY_AKP.LAST_MODIFY_DATE = #{lastModifyDate}
+        </if>
+        /*DJ_OUTAPPLY_AKP end*/
+    </select>
+</mapper>

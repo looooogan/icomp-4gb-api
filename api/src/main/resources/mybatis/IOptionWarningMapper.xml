@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.mapper.IOptionWarningMapper">
+    <resultMap id="optionWarningQueryMap" type="com.common.pojo.OptionWarning">
+        <!-- id -->
+        <id property="id" column="option_warning.id"/>
+
+        <!-- 预警时间 -->
+        <result property="time" column="option_warning.time"/>
+        <!-- 操作人编码 -->
+        <result property="optionUserCode" column="option_warning.option_user_code"/>
+        <!-- 操作人姓名 -->
+        <result property="optionUserName" column="option_warning.option_user_name"/>
+        <!-- 操作 -->
+        <result property="option" column="option_warning.option"/>
+        <!-- 授权人编码 -->
+        <result property="authorizedUserCode" column="option_warning.authorized_user_code"/>
+        <!-- 授权人姓名 -->
+        <result property="authorizedUserName" column="option_warning.authorized_user_name"/>
+        <!-- 逻辑删除 -->
+        <result property="isDel" column="option_warning.is_del"/>
+    </resultMap>
+    <!--添加-->
+    <insert id="addOptionWarning" parameterType="com.common.pojo.OptionWarning">
+        INSERT INTO option_warning (
+            <!-- id -->
+            id,
+            <!-- 预警时间 -->
+            time,
+            <!-- 操作人编码 -->
+            option_user_code,
+            <!-- 操作人姓名 -->
+            option_user_name,
+            <!-- 操作 -->
+            option,
+            <!-- 授权人编码 -->
+            authorized_user_code,
+            <!-- 授权人姓名 -->
+            authorized_user_name,
+            <!-- 逻辑删除 -->
+            is_del
+        )
+        VALUES (
+            <!-- id -->
+            #{id},
+            <!-- 预警时间 -->
+            #{time},
+            <!-- 操作人编码 -->
+            #{optionUserCode},
+            <!-- 操作人姓名 -->
+            #{optionUserName},
+            <!-- 操作 -->
+            #{option},
+            <!-- 授权人编码 -->
+            #{authorizedUserCode},
+            <!-- 授权人姓名 -->
+            #{authorizedUserName},
+            <!-- 逻辑删除 -->
+            #{isDel}
+        )
+    </insert>
+
+    <!--删除-->
+    <delete id="delOptionWarning" parameterType="com.common.pojo.OptionWarning">
+        DELETE
+        FROM option_warning
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--逻辑删除-->
+    <delete id="delOptionWarningForLogic" parameterType="com.common.pojo.OptionWarning">
+        UPDATE option_warning SET
+        is_del = 1
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--根据VO删除-->
+    <delete id="delOptionWarningByVo" parameterType="com.common.vo.OptionWarningVO">
+        UPDATE option_warning SET is_del = 1
+        WHERE
+            1=1
+            <!-- id -->
+            <if test="id != null and id != '' " >
+                and id =  #{id}
+            </if>
+            <!-- 预警时间 -->
+            <if test="time != null and time != '' " >
+                and time =  #{time}
+            </if>
+            <!-- 操作人编码 -->
+            <if test="optionUserCode != null and optionUserCode != '' " >
+                and option_user_code =  #{optionUserCode}
+            </if>
+            <!-- 操作人姓名 -->
+            <if test="optionUserName != null and optionUserName != '' " >
+                and option_user_name =  #{optionUserName}
+            </if>
+            <!-- 操作 -->
+            <if test="option != null and option != '' " >
+                and option =  #{option}
+            </if>
+            <!-- 授权人编码 -->
+            <if test="authorizedUserCode != null and authorizedUserCode != '' " >
+                and authorized_user_code =  #{authorizedUserCode}
+            </if>
+            <!-- 授权人姓名 -->
+            <if test="authorizedUserName != null and authorizedUserName != '' " >
+                and authorized_user_name =  #{authorizedUserName}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                and is_del =  #{isDel}
+            </if>
+    </delete>
+
+    <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
+    <update id="updOptionWarning" parameterType="com.common.pojo.OptionWarning">
+        UPDATE option_warning
+        SET
+            <!-- 预警时间 -->
+            <if test="time != null and time != '' " >
+                time =  #{time},
+            </if>
+            <!-- 操作人编码 -->
+            <if test="optionUserCode != null and optionUserCode != '' " >
+                option_user_code =  #{optionUserCode},
+            </if>
+            <!-- 操作人姓名 -->
+            <if test="optionUserName != null and optionUserName != '' " >
+                option_user_name =  #{optionUserName},
+            </if>
+            <!-- 操作 -->
+            <if test="option != null and option != '' " >
+                option =  #{option},
+            </if>
+            <!-- 授权人编码 -->
+            <if test="authorizedUserCode != null and authorizedUserCode != '' " >
+                authorized_user_code =  #{authorizedUserCode},
+            </if>
+            <!-- 授权人姓名 -->
+            <if test="authorizedUserName != null and authorizedUserName != '' " >
+                authorized_user_name =  #{authorizedUserName},
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                is_del =  #{isDel},
+            </if>
+            <!-- id -->
+            id = #{id}
+        WHERE
+            1 = 1
+            and id = #{id}
+    </update>
+
+    <!--分页查询 -->
+    <select id="getOptionWarningByPage" parameterType="com.common.vo.OptionWarningVO" resultMap="optionWarningQueryMap">
+        SELECT
+        /*optionWarning begin*/
+            <!-- id -->
+            option_warning.id as 'option_warning.id',
+            <!-- 预警时间 -->
+            option_warning.time as 'option_warning.time',
+            <!-- 操作人编码 -->
+            option_warning.option_user_code as 'option_warning.option_user_code',
+            <!-- 操作人姓名 -->
+            option_warning.option_user_name as 'option_warning.option_user_name',
+            <!-- 操作 -->
+            option_warning.option as 'option_warning.option',
+            <!-- 授权人编码 -->
+            option_warning.authorized_user_code as 'option_warning.authorized_user_code',
+            <!-- 授权人姓名 -->
+            option_warning.authorized_user_name as 'option_warning.authorized_user_name',
+            <!-- 逻辑删除 -->
+            option_warning.is_del as 'option_warning.is_del'
+        /*optionWarning end*/
+        FROM option_warning as option_warning
+        WHERE
+            1 = 1 AND  option_warning.is_del = 0
+        /*option_warning begin*/
+            <!-- id -->
+            <if test="id != null and id != '' " >
+                and option_warning.id = #{id}
+            </if>
+            <!-- 预警时间 -->
+            <if test="time != null and time != '' " >
+                and option_warning.time &lt;= #{timeEnd}
+            </if>
+            <if test="time != null and time != '' " >
+                and option_warning.time &gt;= #{timeBegin}
+            </if>
+            <!-- 操作人编码 -->
+            <if test="optionUserCode != null and optionUserCode != '' " >
+                and option_warning.option_user_code = #{optionUserCode}
+            </if>
+            <!-- 操作人姓名 -->
+            <if test="optionUserName != null and optionUserName != '' " >
+                and option_warning.option_user_name = #{optionUserName}
+            </if>
+            <!-- 操作 -->
+            <if test="option != null and option != '' " >
+                and option_warning.option = #{option}
+            </if>
+            <!-- 授权人编码 -->
+            <if test="authorizedUserCode != null and authorizedUserCode != '' " >
+                and option_warning.authorized_user_code = #{authorizedUserCode}
+            </if>
+            <!-- 授权人姓名 -->
+            <if test="authorizedUserName != null and authorizedUserName != '' " >
+                and option_warning.authorized_user_name = #{authorizedUserName}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                and option_warning.is_del = #{isDel}
+            </if>
+        /*option_warning end*/
+        ORDER BY option_warning.id desc
+        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
+        LIMIT #{startRecord},#{pageSize}
+        </if>
+    </select>
+
+
+    <!--查询记录数-->
+    <select id="getOptionWarningCount" parameterType="com.common.vo.OptionWarningVO" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM option_warning as option_warning
+        WHERE
+            1 = 1 AND  option_warning.is_del = 0
+        /*option_warning begin*/
+        <!-- id -->
+        <if test="id != null and id != '' " >
+            and option_warning.id = #{id}
+        </if>
+        <!-- 预警时间 -->
+        <if test="time != null and time != '' " >
+            and option_warning.time &lt;= #{timeEnd}
+        </if>
+        <if test="time != null and time != '' " >
+            and option_warning.time &gt;= #{timeBegin}
+        </if>
+        <!-- 操作人编码 -->
+        <if test="optionUserCode != null and optionUserCode != '' " >
+            and option_warning.option_user_code = #{optionUserCode}
+        </if>
+        <!-- 操作人姓名 -->
+        <if test="optionUserName != null and optionUserName != '' " >
+            and option_warning.option_user_name = #{optionUserName}
+        </if>
+        <!-- 操作 -->
+        <if test="option != null and option != '' " >
+            and option_warning.option = #{option}
+        </if>
+        <!-- 授权人编码 -->
+        <if test="authorizedUserCode != null and authorizedUserCode != '' " >
+            and option_warning.authorized_user_code = #{authorizedUserCode}
+        </if>
+        <!-- 授权人姓名 -->
+        <if test="authorizedUserName != null and authorizedUserName != '' " >
+            and option_warning.authorized_user_name = #{authorizedUserName}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="isDel != null and isDel != '' " >
+            and option_warning.is_del = #{isDel}
+        </if>
+        /*option_warning end*/
+    </select>
+
+    <!--根据vo查询 -->
+    <select id="getOptionWarning" parameterType="com.common.vo.OptionWarningVO" resultMap="optionWarningQueryMap">
+        SELECT
+        /*option_warning begin*/
+        <!-- id -->
+        option_warning.id as 'option_warning.id',
+        <!-- 预警时间 -->
+        option_warning.time as 'option_warning.time',
+        <!-- 操作人编码 -->
+        option_warning.option_user_code as 'option_warning.option_user_code',
+        <!-- 操作人姓名 -->
+        option_warning.option_user_name as 'option_warning.option_user_name',
+        <!-- 操作 -->
+        option_warning.option as 'option_warning.option',
+        <!-- 授权人编码 -->
+        option_warning.authorized_user_code as 'option_warning.authorized_user_code',
+        <!-- 授权人姓名 -->
+        option_warning.authorized_user_name as 'option_warning.authorized_user_name',
+        <!-- 逻辑删除 -->
+        option_warning.is_del as 'option_warning.is_del'
+        /*option_warning end*/
+        FROM option_warning as option_warning
+        WHERE
+            1 = 1 AND  option_warning.is_del = 0
+        /*option_warning begin*/
+        <!-- id -->
+        <if test="id != null and id != '' " >
+            and option_warning.id = #{id}
+        </if>
+        <!-- 预警时间 -->
+        <if test="time != null and time != '' " >
+            and option_warning.time &lt;= #{timeEnd}
+        </if>
+        <if test="time != null and time != '' " >
+            and option_warning.time &gt;= #{timeBegin}
+        </if>
+        <!-- 操作人编码 -->
+        <if test="optionUserCode != null and optionUserCode != '' " >
+            and option_warning.option_user_code = #{optionUserCode}
+        </if>
+        <!-- 操作人姓名 -->
+        <if test="optionUserName != null and optionUserName != '' " >
+            and option_warning.option_user_name = #{optionUserName}
+        </if>
+        <!-- 操作 -->
+        <if test="option != null and option != '' " >
+            and option_warning.option = #{option}
+        </if>
+        <!-- 授权人编码 -->
+        <if test="authorizedUserCode != null and authorizedUserCode != '' " >
+            and option_warning.authorized_user_code = #{authorizedUserCode}
+        </if>
+        <!-- 授权人姓名 -->
+        <if test="authorizedUserName != null and authorizedUserName != '' " >
+            and option_warning.authorized_user_name = #{authorizedUserName}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="isDel != null and isDel != '' " >
+            and option_warning.is_del = #{isDel}
+        </if>
+        /*option_warning end*/
+    </select>
+</mapper>

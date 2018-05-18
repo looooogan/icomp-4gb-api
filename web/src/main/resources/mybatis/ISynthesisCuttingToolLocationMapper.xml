@@ -1,0 +1,1193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.mapper.ISynthesisCuttingToolLocationMapper">
+    <resultMap id="synthesisCuttingToolLocationQueryMap" type="com.common.pojo.SynthesisCuttingToolLocation">
+        <!-- id -->
+        <id property="id" column="synthesis_cutting_tool_location.id"/>
+
+        <!-- 合成刀编码 -->
+        <result property="synthesisCuttingToolCode" column="synthesis_cutting_tool_location.synthesis_cutting_tool_code"/>
+        <!-- 位置号 -->
+        <result property="location" column="synthesis_cutting_tool_location.location"/>
+        <!-- 数量 -->
+        <result property="count" column="synthesis_cutting_tool_location.count"/>
+        <!-- 逻辑删除 -->
+        <result property="isDel" column="synthesis_cutting_tool_location.is_del"/>
+        <!-- 材料刀编码 -->
+        <result property="cuttingToolCode" column="synthesis_cutting_tool_location.cutting_tool_code"/>
+        <!-- 绑定合成刀编码 -->
+        <result property="synthesisCuttingToolBindCode" column="synthesis_cutting_tool_location.synthesis_cutting_tool_bind_code"/>
+        <!-- 绑定合成刀rfid编码 -->
+        <result property="synthesisCuttingToolBindRfid" column="synthesis_cutting_tool_location.synthesis_cutting_tool_bind_rfid"/>
+        <!--  -->
+        <result property="cuttingToolBladeCode" column="synthesis_cutting_tool_location.cutting_tool_blade_code"/>
+        <!-- 材料刀编码 -->
+        <association property="cuttingTool"  column="cutting_tool.code" resultMap="synthesisCuttingToolLocationCuttingToolMap"/>
+        <!-- 合成刀编码 -->
+        <association property="synthesisCuttingTool"  column="synthesis_cutting_tool.code" resultMap="synthesisCuttingToolLocationSynthesisCuttingToolMap"/>
+        <!-- 绑定合成刀编码 -->
+        <association property="synthesisCuttingToolBind"  column="synthesis_cutting_tool_bind.code" resultMap="synthesisCuttingToolLocationSynthesisCuttingToolBindMap"/>
+    </resultMap>
+        <resultMap id="synthesisCuttingToolLocationSynthesisCuttingToolMap" type="com.common.pojo.SynthesisCuttingTool">
+            <!-- id -->
+            <id property="id" column="synthesis_cutting_tool.id"/>
+
+            <!-- 编码 -->
+            <result property="code" column="synthesis_cutting_tool.code"/>
+            <!-- 合成刀业务编码 -->
+            <result property="synthesisCode" column="synthesis_cutting_tool.synthesis_code"/>
+            <!-- 图纸url -->
+            <result property="picUrl" column="synthesis_cutting_tool.pic_url"/>
+            <!-- 逻辑删除 -->
+            <result property="isDel" column="synthesis_cutting_tool.is_del"/>
+            <!-- 合成刀类型  -->
+            <result property="synthesisCuttingToolTypeId" column="synthesis_cutting_tool.synthesis_cutting_tool_type_id"/>
+            <!--  -->
+            <result property="abc" column="synthesis_cutting_tool.abc"/>
+        </resultMap>
+        <resultMap id="synthesisCuttingToolLocationSynthesisCuttingToolBindMap" type="com.common.pojo.SynthesisCuttingToolBind">
+            <!-- id -->
+            <id property="id" column="synthesis_cutting_tool_bind.id"/>
+
+            <!-- 绑定编码 -->
+            <result property="code" column="synthesis_cutting_tool_bind.code"/>
+            <!-- 逻辑删除 -->
+            <result property="isDel" column="synthesis_cutting_tool_bind.is_del"/>
+            <!-- 创建时间 -->
+            <result property="createTime" column="synthesis_cutting_tool_bind.create_time"/>
+            <!-- 合成刀编码 -->
+            <result property="synthesisCuttingToolCode" column="synthesis_cutting_tool_bind.synthesis_cutting_tool_code"/>
+            <!-- RFID标签 -->
+            <result property="rfidContainerCode" column="synthesis_cutting_tool_bind.rfid_container_code"/>
+            <!-- 合成刀业务编码 -->
+            <result property="synthesisCode" column="synthesis_cutting_tool_bind.synthesis_code"/>
+        </resultMap>
+        <resultMap id="synthesisCuttingToolLocationCuttingToolMap" type="com.common.pojo.CuttingTool">
+            <!-- 材料刀id -->
+            <id property="id" column="cutting_tool.id"/>
+
+            <!-- 刀具编码 -->
+            <result property="code" column="cutting_tool.code"/>
+            <!-- 库位码 -->
+            <result property="libraryCode" column="cutting_tool.library_code"/>
+            <!-- 业务编码 -->
+            <result property="businessCode" column="cutting_tool.business_code"/>
+            <!-- 名称 -->
+            <result property="name" column="cutting_tool.name"/>
+            <!-- 刀具分类(1刀具2辅具3配套9其他） -->
+            <result property="type" column="cutting_tool.type"/>
+            <!-- 消耗类别(1:可刃磨钻头2可刃磨刀片3一次性刀片9其他 -->
+            <result property="consumeType" column="cutting_tool.consume_type"/>
+            <!-- 图纸 -->
+            <result property="pic" column="cutting_tool.pic"/>
+            <!-- 规格型号 -->
+            <result property="specifications" column="cutting_tool.specifications"/>
+            <!-- 刃口数 -->
+            <result property="cutNumber" column="cutting_tool.cut_number"/>
+            <!-- 品牌 -->
+            <result property="brand" column="cutting_tool.brand"/>
+            <!-- 修磨类别(0:厂内修磨，1厂外修磨，2厂外涂层 -->
+            <result property="grinding" column="cutting_tool.grinding"/>
+            <!-- 可使用次数 -->
+            <result property="sharpenNum" column="cutting_tool.sharpen_num"/>
+            <!-- 最大库存 -->
+            <result property="materialMax" column="cutting_tool.material_max"/>
+            <!-- 最小库存 -->
+            <result property="materialMin" column="cutting_tool.material_min"/>
+            <!-- 可刃磨次数 -->
+            <result property="toolNumber" column="cutting_tool.tool_number"/>
+            <!-- 复磨标准 -->
+            <result property="sharpenCriterion" column="cutting_tool.sharpen_criterion"/>
+            <!-- 刀具长度 -->
+            <result property="materialLength" column="cutting_tool.material_length"/>
+            <!-- 可刃磨长度 -->
+            <result property="sharpenLength" column="cutting_tool.sharpen_length"/>
+            <!--  -->
+            <result property="isDel" column="cutting_tool.is_del"/>
+            <!--  -->
+            <result property="beiMin" column="cutting_tool.bei_min"/>
+            <!--  -->
+            <result property="beiMax" column="cutting_tool.bei_max"/>
+            <!--  -->
+            <result property="toolPrice" column="cutting_tool.tool_price"/>
+            <!--  -->
+            <result property="averagePrice" column="cutting_tool.average_price"/>
+            <!--  -->
+            <result property="parametersType" column="cutting_tool.parameters_type"/>
+            <!-- 用途类型 1 刀片,钻头，合成刀，热套类 2 一体刀 3筒刀 4专机 9其他 -->
+            <result property="userfulType" column="cutting_tool.userful_type"/>
+            <!-- 启明编码 -->
+            <result property="qimingCode" column="cutting_tool.qiming_code"/>
+            <!-- 物料编码 -->
+            <result property="wuliaoCode" column="cutting_tool.wuliao_code"/>
+        </resultMap>
+    <!--添加-->
+    <insert id="addSynthesisCuttingToolLocation" parameterType="com.common.pojo.SynthesisCuttingToolLocation">
+        INSERT INTO synthesis_cutting_tool_location (
+            <!-- id -->
+            id,
+            <!-- 合成刀编码 -->
+            synthesis_cutting_tool_code,
+            <!-- 位置号 -->
+            location,
+            <!-- 数量 -->
+            count,
+            <!-- 逻辑删除 -->
+            is_del,
+            <!-- 材料刀编码 -->
+            cutting_tool_code,
+            <!-- 绑定合成刀编码 -->
+            synthesis_cutting_tool_bind_code,
+            <!-- 绑定合成刀rfid编码 -->
+            synthesis_cutting_tool_bind_rfid,
+            <!--  -->
+            cutting_tool_blade_code
+        )
+        VALUES (
+            <!-- id -->
+            #{id},
+            <!-- 合成刀编码 -->
+            #{synthesisCuttingToolCode},
+            <!-- 位置号 -->
+            #{location},
+            <!-- 数量 -->
+            #{count},
+            <!-- 逻辑删除 -->
+            #{isDel},
+            <!-- 材料刀编码 -->
+            #{cuttingToolCode},
+            <!-- 绑定合成刀编码 -->
+            #{synthesisCuttingToolBindCode},
+            <!-- 绑定合成刀rfid编码 -->
+            #{synthesisCuttingToolBindRfid},
+            <!--  -->
+            #{cuttingToolBladeCode}
+        )
+    </insert>
+
+    <!--删除-->
+    <delete id="delSynthesisCuttingToolLocation" parameterType="com.common.pojo.SynthesisCuttingToolLocation">
+        DELETE
+        FROM synthesis_cutting_tool_location
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--逻辑删除-->
+    <delete id="delSynthesisCuttingToolLocationForLogic" parameterType="com.common.pojo.SynthesisCuttingToolLocation">
+        UPDATE synthesis_cutting_tool_location SET
+        is_del = 1
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--根据VO删除-->
+    <delete id="delSynthesisCuttingToolLocationByVo" parameterType="com.common.vo.SynthesisCuttingToolLocationVO">
+        UPDATE synthesis_cutting_tool_location SET is_del = 1
+        WHERE
+            1=1
+            <!-- id -->
+            <if test="id != null and id != '' " >
+                and id =  #{id}
+            </if>
+            <!-- 合成刀编码 -->
+            <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+                and synthesis_cutting_tool_code =  #{synthesisCuttingToolCode}
+            </if>
+            <!-- 位置号 -->
+            <if test="location != null and location != '' " >
+                and location =  #{location}
+            </if>
+            <!-- 数量 -->
+            <if test="count != null and count != '' " >
+                and count =  #{count}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                and is_del =  #{isDel}
+            </if>
+            <!-- 材料刀编码 -->
+            <if test="cuttingToolCode != null and cuttingToolCode != '' " >
+                and cutting_tool_code =  #{cuttingToolCode}
+            </if>
+            <!-- 绑定合成刀编码 -->
+            <if test="synthesisCuttingToolBindCode != null and synthesisCuttingToolBindCode != '' " >
+                and synthesis_cutting_tool_bind_code =  #{synthesisCuttingToolBindCode}
+            </if>
+            <!-- 绑定合成刀rfid编码 -->
+            <if test="synthesisCuttingToolBindRfid != null and synthesisCuttingToolBindRfid != '' " >
+                and synthesis_cutting_tool_bind_rfid =  #{synthesisCuttingToolBindRfid}
+            </if>
+            <!--  -->
+            <if test="cuttingToolBladeCode != null and cuttingToolBladeCode != '' " >
+                and cutting_tool_blade_code =  #{cuttingToolBladeCode}
+            </if>
+    </delete>
+
+    <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
+    <update id="updSynthesisCuttingToolLocation" parameterType="com.common.pojo.SynthesisCuttingToolLocation">
+        UPDATE synthesis_cutting_tool_location
+        SET
+            <!-- 合成刀编码 -->
+            <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+                synthesis_cutting_tool_code =  #{synthesisCuttingToolCode},
+            </if>
+            <!-- 位置号 -->
+            <if test="location != null and location != '' " >
+                location =  #{location},
+            </if>
+            <!-- 数量 -->
+            <if test="count != null and count != '' " >
+                count =  #{count},
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                is_del =  #{isDel},
+            </if>
+            <!-- 材料刀编码 -->
+            <if test="cuttingToolCode != null and cuttingToolCode != '' " >
+                cutting_tool_code =  #{cuttingToolCode},
+            </if>
+            <!-- 绑定合成刀编码 -->
+            <if test="synthesisCuttingToolBindCode != null and synthesisCuttingToolBindCode != '' " >
+                synthesis_cutting_tool_bind_code =  #{synthesisCuttingToolBindCode},
+            </if>
+            <!-- 绑定合成刀rfid编码 -->
+            <if test="synthesisCuttingToolBindRfid != null and synthesisCuttingToolBindRfid != '' " >
+                synthesis_cutting_tool_bind_rfid =  #{synthesisCuttingToolBindRfid},
+            </if>
+            <!--  -->
+            <if test="cuttingToolBladeCode != null and cuttingToolBladeCode != '' " >
+                cutting_tool_blade_code =  #{cuttingToolBladeCode},
+            </if>
+            <!-- id -->
+            id = #{id}
+        WHERE
+            1 = 1
+            and id = #{id}
+    </update>
+
+    <!--分页查询 -->
+    <select id="getSynthesisCuttingToolLocationByPage" parameterType="com.common.vo.SynthesisCuttingToolLocationVO" resultMap="synthesisCuttingToolLocationQueryMap">
+        SELECT
+        /*synthesisCuttingToolLocation begin*/
+            <!-- id -->
+            synthesis_cutting_tool_location.id as 'synthesis_cutting_tool_location.id',
+            <!-- 合成刀编码 -->
+            synthesis_cutting_tool_location.synthesis_cutting_tool_code as 'synthesis_cutting_tool_location.synthesis_cutting_tool_code',
+            <!-- 位置号 -->
+            synthesis_cutting_tool_location.location as 'synthesis_cutting_tool_location.location',
+            <!-- 数量 -->
+            synthesis_cutting_tool_location.count as 'synthesis_cutting_tool_location.count',
+            <!-- 逻辑删除 -->
+            synthesis_cutting_tool_location.is_del as 'synthesis_cutting_tool_location.is_del',
+            <!-- 材料刀编码 -->
+            synthesis_cutting_tool_location.cutting_tool_code as 'synthesis_cutting_tool_location.cutting_tool_code',
+            <!-- 绑定合成刀编码 -->
+            synthesis_cutting_tool_location.synthesis_cutting_tool_bind_code as 'synthesis_cutting_tool_location.synthesis_cutting_tool_bind_code',
+            <!-- 绑定合成刀rfid编码 -->
+            synthesis_cutting_tool_location.synthesis_cutting_tool_bind_rfid as 'synthesis_cutting_tool_location.synthesis_cutting_tool_bind_rfid',
+            <!--  -->
+            synthesis_cutting_tool_location.cutting_tool_blade_code as 'synthesis_cutting_tool_location.cutting_tool_blade_code',
+        /*synthesisCuttingToolLocation end*/
+        /*synthesis_cutting_tool begin*/
+            <!-- id -->
+            synthesis_cutting_tool.id as 'synthesis_cutting_tool.id',
+            <!-- 编码 -->
+            synthesis_cutting_tool.code as 'synthesis_cutting_tool.code',
+            <!-- 合成刀业务编码 -->
+            synthesis_cutting_tool.synthesis_code as 'synthesis_cutting_tool.synthesis_code',
+            <!-- 图纸url -->
+            synthesis_cutting_tool.pic_url as 'synthesis_cutting_tool.pic_url',
+            <!-- 逻辑删除 -->
+            synthesis_cutting_tool.is_del as 'synthesis_cutting_tool.is_del',
+            <!-- 合成刀类型  -->
+            synthesis_cutting_tool.synthesis_cutting_tool_type_id as 'synthesis_cutting_tool.synthesis_cutting_tool_type_id',
+            <!--  -->
+            synthesis_cutting_tool.abc as 'synthesis_cutting_tool.abc',
+        /*synthesis_cutting_tool end*/
+        /*synthesis_cutting_tool_bind begin*/
+            <!-- id -->
+            synthesis_cutting_tool_bind.id as 'synthesis_cutting_tool_bind.id',
+            <!-- 绑定编码 -->
+            synthesis_cutting_tool_bind.code as 'synthesis_cutting_tool_bind.code',
+            <!-- 逻辑删除 -->
+            synthesis_cutting_tool_bind.is_del as 'synthesis_cutting_tool_bind.is_del',
+            <!-- 创建时间 -->
+            synthesis_cutting_tool_bind.create_time as 'synthesis_cutting_tool_bind.create_time',
+            <!-- 合成刀编码 -->
+            synthesis_cutting_tool_bind.synthesis_cutting_tool_code as 'synthesis_cutting_tool_bind.synthesis_cutting_tool_code',
+            <!-- RFID标签 -->
+            synthesis_cutting_tool_bind.rfid_container_code as 'synthesis_cutting_tool_bind.rfid_container_code',
+            <!-- 合成刀业务编码 -->
+            synthesis_cutting_tool_bind.synthesis_code as 'synthesis_cutting_tool_bind.synthesis_code',
+        /*synthesis_cutting_tool_bind end*/
+        /*cutting_tool begin*/
+            <!-- 材料刀id -->
+            cutting_tool.id as 'cutting_tool.id',
+            <!-- 刀具编码 -->
+            cutting_tool.code as 'cutting_tool.code',
+            <!-- 库位码 -->
+            cutting_tool.library_code as 'cutting_tool.library_code',
+            <!-- 业务编码 -->
+            cutting_tool.business_code as 'cutting_tool.business_code',
+            <!-- 名称 -->
+            cutting_tool.name as 'cutting_tool.name',
+            <!-- 刀具分类(1刀具2辅具3配套9其他） -->
+            cutting_tool.type as 'cutting_tool.type',
+            <!-- 消耗类别(1:可刃磨钻头2可刃磨刀片3一次性刀片9其他 -->
+            cutting_tool.consume_type as 'cutting_tool.consume_type',
+            <!-- 图纸 -->
+            cutting_tool.pic as 'cutting_tool.pic',
+            <!-- 规格型号 -->
+            cutting_tool.specifications as 'cutting_tool.specifications',
+            <!-- 刃口数 -->
+            cutting_tool.cut_number as 'cutting_tool.cut_number',
+            <!-- 品牌 -->
+            cutting_tool.brand as 'cutting_tool.brand',
+            <!-- 修磨类别(0:厂内修磨，1厂外修磨，2厂外涂层 -->
+            cutting_tool.grinding as 'cutting_tool.grinding',
+            <!-- 可使用次数 -->
+            cutting_tool.sharpen_num as 'cutting_tool.sharpen_num',
+            <!-- 最大库存 -->
+            cutting_tool.material_max as 'cutting_tool.material_max',
+            <!-- 最小库存 -->
+            cutting_tool.material_min as 'cutting_tool.material_min',
+            <!-- 可刃磨次数 -->
+            cutting_tool.tool_number as 'cutting_tool.tool_number',
+            <!-- 复磨标准 -->
+            cutting_tool.sharpen_criterion as 'cutting_tool.sharpen_criterion',
+            <!-- 刀具长度 -->
+            cutting_tool.material_length as 'cutting_tool.material_length',
+            <!-- 可刃磨长度 -->
+            cutting_tool.sharpen_length as 'cutting_tool.sharpen_length',
+            <!--  -->
+            cutting_tool.is_del as 'cutting_tool.is_del',
+            <!--  -->
+            cutting_tool.bei_min as 'cutting_tool.bei_min',
+            <!--  -->
+            cutting_tool.bei_max as 'cutting_tool.bei_max',
+            <!--  -->
+            cutting_tool.tool_price as 'cutting_tool.tool_price',
+            <!--  -->
+            cutting_tool.average_price as 'cutting_tool.average_price',
+            <!--  -->
+            cutting_tool.parameters_type as 'cutting_tool.parameters_type',
+            <!-- 用途类型 1 刀片,钻头，合成刀，热套类 2 一体刀 3筒刀 4专机 9其他 -->
+            cutting_tool.userful_type as 'cutting_tool.userful_type',
+            <!-- 启明编码 -->
+            cutting_tool.qiming_code as 'cutting_tool.qiming_code',
+            <!-- 物料编码 -->
+            cutting_tool.wuliao_code as 'cutting_tool.wuliao_code'
+        /*cutting_tool end*/
+        FROM synthesis_cutting_tool_location as synthesis_cutting_tool_location
+        LEFT JOIN cutting_tool as cutting_tool ON cutting_tool.code = synthesis_cutting_tool_location.cutting_tool_code
+        LEFT JOIN synthesis_cutting_tool as synthesis_cutting_tool ON synthesis_cutting_tool.code = synthesis_cutting_tool_location.synthesis_cutting_tool_code
+        LEFT JOIN synthesis_cutting_tool_bind as synthesis_cutting_tool_bind ON synthesis_cutting_tool_bind.code = synthesis_cutting_tool_location.synthesis_cutting_tool_bind_code
+        WHERE
+            1 = 1 AND  synthesis_cutting_tool_location.is_del = 0
+        /*synthesis_cutting_tool_location begin*/
+            <!-- id -->
+            <if test="id != null and id != '' " >
+                and synthesis_cutting_tool_location.id = #{id}
+            </if>
+            <!-- 合成刀编码 -->
+            <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+                and synthesis_cutting_tool_location.synthesis_cutting_tool_code = #{synthesisCuttingToolCode}
+            </if>
+            <!-- 位置号 -->
+            <if test="location != null and location != '' " >
+                and synthesis_cutting_tool_location.location = #{location}
+            </if>
+            <!-- 数量 -->
+            <if test="count != null and count != '' " >
+                and synthesis_cutting_tool_location.count = #{count}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                and synthesis_cutting_tool_location.is_del = #{isDel}
+            </if>
+            <!-- 材料刀编码 -->
+            <if test="cuttingToolCode != null and cuttingToolCode != '' " >
+                and synthesis_cutting_tool_location.cutting_tool_code = #{cuttingToolCode}
+            </if>
+            <!-- 绑定合成刀编码 -->
+            <if test="synthesisCuttingToolBindCode != null and synthesisCuttingToolBindCode != '' " >
+                and synthesis_cutting_tool_location.synthesis_cutting_tool_bind_code = #{synthesisCuttingToolBindCode}
+            </if>
+            <!-- 绑定合成刀rfid编码 -->
+            <if test="synthesisCuttingToolBindRfid != null and synthesisCuttingToolBindRfid != '' " >
+                and synthesis_cutting_tool_location.synthesis_cutting_tool_bind_rfid = #{synthesisCuttingToolBindRfid}
+            </if>
+            <!--  -->
+            <if test="cuttingToolBladeCode != null and cuttingToolBladeCode != '' " >
+                and synthesis_cutting_tool_location.cutting_tool_blade_code = #{cuttingToolBladeCode}
+            </if>
+        /*synthesis_cutting_tool_location end*/
+        /*synthesis_cutting_tool begin*/
+            <if test="synthesisCuttingToolVO != null ">
+            <!-- id -->
+            <if test="synthesisCuttingToolVO.id != null and synthesisCuttingToolVO.id != '' " >
+                and synthesis_cutting_tool.id = #{synthesisCuttingToolVO.id}
+            </if>
+            <!-- 编码 -->
+            <if test="synthesisCuttingToolVO.code != null and synthesisCuttingToolVO.code != '' " >
+                and synthesis_cutting_tool.code = #{synthesisCuttingToolVO.code}
+            </if>
+            <!-- 合成刀业务编码 -->
+            <if test="synthesisCuttingToolVO.synthesisCode != null and synthesisCuttingToolVO.synthesisCode != '' " >
+                and synthesis_cutting_tool.synthesis_code = #{synthesisCuttingToolVO.synthesisCode}
+            </if>
+            <!-- 图纸url -->
+            <if test="synthesisCuttingToolVO.picUrl != null and synthesisCuttingToolVO.picUrl != '' " >
+                and synthesis_cutting_tool.pic_url = #{synthesisCuttingToolVO.picUrl}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="synthesisCuttingToolVO.isDel != null and synthesisCuttingToolVO.isDel != '' " >
+                and synthesis_cutting_tool.is_del = #{synthesisCuttingToolVO.isDel}
+            </if>
+            <!-- 合成刀类型  -->
+            <if test="synthesisCuttingToolVO.synthesisCuttingToolTypeId != null and synthesisCuttingToolVO.synthesisCuttingToolTypeId != '' " >
+                and synthesis_cutting_tool.synthesis_cutting_tool_type_id = #{synthesisCuttingToolVO.synthesisCuttingToolTypeId}
+            </if>
+            <!--  -->
+            <if test="synthesisCuttingToolVO.abc != null and synthesisCuttingToolVO.abc != '' " >
+                and synthesis_cutting_tool.abc = #{synthesisCuttingToolVO.abc}
+            </if>
+            </if>
+        /*synthesis_cutting_tool end*/
+        /*synthesis_cutting_tool_bind begin*/
+            <if test="synthesisCuttingToolBindVO != null ">
+            <!-- id -->
+            <if test="synthesisCuttingToolBindVO.id != null and synthesisCuttingToolBindVO.id != '' " >
+                and synthesis_cutting_tool_bind.id = #{synthesisCuttingToolBindVO.id}
+            </if>
+            <!-- 绑定编码 -->
+            <if test="synthesisCuttingToolBindVO.code != null and synthesisCuttingToolBindVO.code != '' " >
+                and synthesis_cutting_tool_bind.code = #{synthesisCuttingToolBindVO.code}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="synthesisCuttingToolBindVO.isDel != null and synthesisCuttingToolBindVO.isDel != '' " >
+                and synthesis_cutting_tool_bind.is_del = #{synthesisCuttingToolBindVO.isDel}
+            </if>
+            <!-- 创建时间 -->
+            <if test="synthesisCuttingToolBindVO.createTime != null and synthesisCuttingToolBindVO.createTime != '' " >
+                and synthesis_cutting_tool_bind.create_time &lt;=  #{synthesisCuttingToolBindVO.createTimeEnd}
+            </if>
+            <if test="synthesisCuttingToolBindVO.createTime != null and synthesisCuttingToolBindVO.createTime != '' " >
+                and synthesis_cutting_tool_bind.create_time &gt;= #{synthesisCuttingToolBindVO.createTimeBegin}
+            </if>
+            <!-- 合成刀编码 -->
+            <if test="synthesisCuttingToolBindVO.synthesisCuttingToolCode != null and synthesisCuttingToolBindVO.synthesisCuttingToolCode != '' " >
+                and synthesis_cutting_tool_bind.synthesis_cutting_tool_code = #{synthesisCuttingToolBindVO.synthesisCuttingToolCode}
+            </if>
+            <!-- RFID标签 -->
+            <if test="synthesisCuttingToolBindVO.rfidContainerCode != null and synthesisCuttingToolBindVO.rfidContainerCode != '' " >
+                and synthesis_cutting_tool_bind.rfid_container_code = #{synthesisCuttingToolBindVO.rfidContainerCode}
+            </if>
+            <!-- 合成刀业务编码 -->
+            <if test="synthesisCuttingToolBindVO.synthesisCode != null and synthesisCuttingToolBindVO.synthesisCode != '' " >
+                and synthesis_cutting_tool_bind.synthesis_code = #{synthesisCuttingToolBindVO.synthesisCode}
+            </if>
+            </if>
+        /*synthesis_cutting_tool_bind end*/
+        /*cutting_tool begin*/
+            <if test="cuttingToolVO != null ">
+            <!-- 材料刀id -->
+            <if test="cuttingToolVO.id != null and cuttingToolVO.id != '' " >
+                and cutting_tool.id = #{cuttingToolVO.id}
+            </if>
+            <!-- 刀具编码 -->
+            <if test="cuttingToolVO.code != null and cuttingToolVO.code != '' " >
+                and cutting_tool.code = #{cuttingToolVO.code}
+            </if>
+            <!-- 库位码 -->
+            <if test="cuttingToolVO.libraryCode != null and cuttingToolVO.libraryCode != '' " >
+                and cutting_tool.library_code = #{cuttingToolVO.libraryCode}
+            </if>
+            <!-- 业务编码 -->
+            <if test="cuttingToolVO.businessCode != null and cuttingToolVO.businessCode != '' " >
+                and cutting_tool.business_code = #{cuttingToolVO.businessCode}
+            </if>
+            <!-- 名称 -->
+            <if test="cuttingToolVO.name != null and cuttingToolVO.name != '' " >
+                and cutting_tool.name = #{cuttingToolVO.name}
+            </if>
+            <!-- 刀具分类(1刀具2辅具3配套9其他） -->
+            <if test="cuttingToolVO.type != null and cuttingToolVO.type != '' " >
+                and cutting_tool.type = #{cuttingToolVO.type}
+            </if>
+            <!-- 消耗类别(1:可刃磨钻头2可刃磨刀片3一次性刀片9其他 -->
+            <if test="cuttingToolVO.consumeType != null and cuttingToolVO.consumeType != '' " >
+                and cutting_tool.consume_type = #{cuttingToolVO.consumeType}
+            </if>
+            <!-- 图纸 -->
+            <if test="cuttingToolVO.pic != null and cuttingToolVO.pic != '' " >
+                and cutting_tool.pic = #{cuttingToolVO.pic}
+            </if>
+            <!-- 规格型号 -->
+            <if test="cuttingToolVO.specifications != null and cuttingToolVO.specifications != '' " >
+                and cutting_tool.specifications = #{cuttingToolVO.specifications}
+            </if>
+            <!-- 刃口数 -->
+            <if test="cuttingToolVO.cutNumber != null and cuttingToolVO.cutNumber != '' " >
+                and cutting_tool.cut_number = #{cuttingToolVO.cutNumber}
+            </if>
+            <!-- 品牌 -->
+            <if test="cuttingToolVO.brand != null and cuttingToolVO.brand != '' " >
+                and cutting_tool.brand = #{cuttingToolVO.brand}
+            </if>
+            <!-- 修磨类别(0:厂内修磨，1厂外修磨，2厂外涂层 -->
+            <if test="cuttingToolVO.grinding != null and cuttingToolVO.grinding != '' " >
+                and cutting_tool.grinding = #{cuttingToolVO.grinding}
+            </if>
+            <!-- 可使用次数 -->
+            <if test="cuttingToolVO.sharpenNum != null and cuttingToolVO.sharpenNum != '' " >
+                and cutting_tool.sharpen_num = #{cuttingToolVO.sharpenNum}
+            </if>
+            <!-- 最大库存 -->
+            <if test="cuttingToolVO.materialMax != null and cuttingToolVO.materialMax != '' " >
+                and cutting_tool.material_max = #{cuttingToolVO.materialMax}
+            </if>
+            <!-- 最小库存 -->
+            <if test="cuttingToolVO.materialMin != null and cuttingToolVO.materialMin != '' " >
+                and cutting_tool.material_min = #{cuttingToolVO.materialMin}
+            </if>
+            <!-- 可刃磨次数 -->
+            <if test="cuttingToolVO.toolNumber != null and cuttingToolVO.toolNumber != '' " >
+                and cutting_tool.tool_number = #{cuttingToolVO.toolNumber}
+            </if>
+            <!-- 复磨标准 -->
+            <if test="cuttingToolVO.sharpenCriterion != null and cuttingToolVO.sharpenCriterion != '' " >
+                and cutting_tool.sharpen_criterion = #{cuttingToolVO.sharpenCriterion}
+            </if>
+            <!-- 刀具长度 -->
+            <if test="cuttingToolVO.materialLength != null and cuttingToolVO.materialLength != '' " >
+                and cutting_tool.material_length = #{cuttingToolVO.materialLength}
+            </if>
+            <!-- 可刃磨长度 -->
+            <if test="cuttingToolVO.sharpenLength != null and cuttingToolVO.sharpenLength != '' " >
+                and cutting_tool.sharpen_length = #{cuttingToolVO.sharpenLength}
+            </if>
+            <!--  -->
+            <if test="cuttingToolVO.isDel != null and cuttingToolVO.isDel != '' " >
+                and cutting_tool.is_del = #{cuttingToolVO.isDel}
+            </if>
+            <!--  -->
+            <if test="cuttingToolVO.beiMin != null and cuttingToolVO.beiMin != '' " >
+                and cutting_tool.bei_min = #{cuttingToolVO.beiMin}
+            </if>
+            <!--  -->
+            <if test="cuttingToolVO.beiMax != null and cuttingToolVO.beiMax != '' " >
+                and cutting_tool.bei_max = #{cuttingToolVO.beiMax}
+            </if>
+            <!--  -->
+            <if test="cuttingToolVO.toolPrice != null and cuttingToolVO.toolPrice != '' " >
+                and cutting_tool.tool_price = #{cuttingToolVO.toolPrice}
+            </if>
+            <!--  -->
+            <if test="cuttingToolVO.averagePrice != null and cuttingToolVO.averagePrice != '' " >
+                and cutting_tool.average_price = #{cuttingToolVO.averagePrice}
+            </if>
+            <!--  -->
+            <if test="cuttingToolVO.parametersType != null and cuttingToolVO.parametersType != '' " >
+                and cutting_tool.parameters_type = #{cuttingToolVO.parametersType}
+            </if>
+            <!-- 用途类型 1 刀片,钻头，合成刀，热套类 2 一体刀 3筒刀 4专机 9其他 -->
+            <if test="cuttingToolVO.userfulType != null and cuttingToolVO.userfulType != '' " >
+                and cutting_tool.userful_type = #{cuttingToolVO.userfulType}
+            </if>
+            <!-- 启明编码 -->
+            <if test="cuttingToolVO.qimingCode != null and cuttingToolVO.qimingCode != '' " >
+                and cutting_tool.qiming_code = #{cuttingToolVO.qimingCode}
+            </if>
+            <!-- 物料编码 -->
+            <if test="cuttingToolVO.wuliaoCode != null and cuttingToolVO.wuliaoCode != '' " >
+                and cutting_tool.wuliao_code = #{cuttingToolVO.wuliaoCode}
+            </if>
+            </if>
+        /*cutting_tool end*/
+        ORDER BY synthesis_cutting_tool_location.id desc
+        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
+        LIMIT #{startRecord},#{pageSize}
+        </if>
+    </select>
+
+
+    <!--查询记录数-->
+    <select id="getSynthesisCuttingToolLocationCount" parameterType="com.common.vo.SynthesisCuttingToolLocationVO" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM synthesis_cutting_tool_location as synthesis_cutting_tool_location
+        LEFT JOIN cutting_tool as cutting_tool ON cutting_tool.code = synthesis_cutting_tool_location.cutting_tool_code
+        LEFT JOIN synthesis_cutting_tool as synthesis_cutting_tool ON synthesis_cutting_tool.code = synthesis_cutting_tool_location.synthesis_cutting_tool_code
+        LEFT JOIN synthesis_cutting_tool_bind as synthesis_cutting_tool_bind ON synthesis_cutting_tool_bind.code = synthesis_cutting_tool_location.synthesis_cutting_tool_bind_code
+        WHERE
+            1 = 1 AND  synthesis_cutting_tool_location.is_del = 0
+        /*synthesis_cutting_tool_location begin*/
+        <!-- id -->
+        <if test="id != null and id != '' " >
+            and synthesis_cutting_tool_location.id = #{id}
+        </if>
+        <!-- 合成刀编码 -->
+        <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+            and synthesis_cutting_tool_location.synthesis_cutting_tool_code = #{synthesisCuttingToolCode}
+        </if>
+        <!-- 位置号 -->
+        <if test="location != null and location != '' " >
+            and synthesis_cutting_tool_location.location = #{location}
+        </if>
+        <!-- 数量 -->
+        <if test="count != null and count != '' " >
+            and synthesis_cutting_tool_location.count = #{count}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="isDel != null and isDel != '' " >
+            and synthesis_cutting_tool_location.is_del = #{isDel}
+        </if>
+        <!-- 材料刀编码 -->
+        <if test="cuttingToolCode != null and cuttingToolCode != '' " >
+            and synthesis_cutting_tool_location.cutting_tool_code = #{cuttingToolCode}
+        </if>
+        <!-- 绑定合成刀编码 -->
+        <if test="synthesisCuttingToolBindCode != null and synthesisCuttingToolBindCode != '' " >
+            and synthesis_cutting_tool_location.synthesis_cutting_tool_bind_code = #{synthesisCuttingToolBindCode}
+        </if>
+        <!-- 绑定合成刀rfid编码 -->
+        <if test="synthesisCuttingToolBindRfid != null and synthesisCuttingToolBindRfid != '' " >
+            and synthesis_cutting_tool_location.synthesis_cutting_tool_bind_rfid = #{synthesisCuttingToolBindRfid}
+        </if>
+        <!--  -->
+        <if test="cuttingToolBladeCode != null and cuttingToolBladeCode != '' " >
+            and synthesis_cutting_tool_location.cutting_tool_blade_code = #{cuttingToolBladeCode}
+        </if>
+        /*synthesis_cutting_tool_location end*/
+        /*synthesis_cutting_tool begin*/
+        <if test="synthesisCuttingToolVO != null ">
+        <!-- id -->
+        <if test="synthesisCuttingToolVO.id != null and synthesisCuttingToolVO.id != '' " >
+            and synthesis_cutting_tool.id = #{synthesisCuttingToolVO.id}
+        </if>
+        <!-- 编码 -->
+        <if test="synthesisCuttingToolVO.code != null and synthesisCuttingToolVO.code != '' " >
+            and synthesis_cutting_tool.code = #{synthesisCuttingToolVO.code}
+        </if>
+        <!-- 合成刀业务编码 -->
+        <if test="synthesisCuttingToolVO.synthesisCode != null and synthesisCuttingToolVO.synthesisCode != '' " >
+            and synthesis_cutting_tool.synthesis_code = #{synthesisCuttingToolVO.synthesisCode}
+        </if>
+        <!-- 图纸url -->
+        <if test="synthesisCuttingToolVO.picUrl != null and synthesisCuttingToolVO.picUrl != '' " >
+            and synthesis_cutting_tool.pic_url = #{synthesisCuttingToolVO.picUrl}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="synthesisCuttingToolVO.isDel != null and synthesisCuttingToolVO.isDel != '' " >
+            and synthesis_cutting_tool.is_del = #{synthesisCuttingToolVO.isDel}
+        </if>
+        <!-- 合成刀类型  -->
+        <if test="synthesisCuttingToolVO.synthesisCuttingToolTypeId != null and synthesisCuttingToolVO.synthesisCuttingToolTypeId != '' " >
+            and synthesis_cutting_tool.synthesis_cutting_tool_type_id = #{synthesisCuttingToolVO.synthesisCuttingToolTypeId}
+        </if>
+        <!--  -->
+        <if test="synthesisCuttingToolVO.abc != null and synthesisCuttingToolVO.abc != '' " >
+            and synthesis_cutting_tool.abc = #{synthesisCuttingToolVO.abc}
+        </if>
+        </if>
+        /*synthesis_cutting_tool end*/
+        /*synthesis_cutting_tool_bind begin*/
+        <if test="synthesisCuttingToolBindVO != null ">
+        <!-- id -->
+        <if test="synthesisCuttingToolBindVO.id != null and synthesisCuttingToolBindVO.id != '' " >
+            and synthesis_cutting_tool_bind.id = #{synthesisCuttingToolBindVO.id}
+        </if>
+        <!-- 绑定编码 -->
+        <if test="synthesisCuttingToolBindVO.code != null and synthesisCuttingToolBindVO.code != '' " >
+            and synthesis_cutting_tool_bind.code = #{synthesisCuttingToolBindVO.code}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="synthesisCuttingToolBindVO.isDel != null and synthesisCuttingToolBindVO.isDel != '' " >
+            and synthesis_cutting_tool_bind.is_del = #{synthesisCuttingToolBindVO.isDel}
+        </if>
+        <!-- 创建时间 -->
+        <if test="synthesisCuttingToolBindVO.createTime != null and synthesisCuttingToolBindVO.createTime != '' " >
+            and synthesis_cutting_tool_bind.create_time &lt;=  #{synthesisCuttingToolBindVO.createTimeEnd}
+        </if>
+        <if test="synthesisCuttingToolBindVO.createTime != null and synthesisCuttingToolBindVO.createTime != '' " >
+            and synthesis_cutting_tool_bind.create_time &gt;= #{synthesisCuttingToolBindVO.createTimeBegin}
+        </if>
+        <!-- 合成刀编码 -->
+        <if test="synthesisCuttingToolBindVO.synthesisCuttingToolCode != null and synthesisCuttingToolBindVO.synthesisCuttingToolCode != '' " >
+            and synthesis_cutting_tool_bind.synthesis_cutting_tool_code = #{synthesisCuttingToolBindVO.synthesisCuttingToolCode}
+        </if>
+        <!-- RFID标签 -->
+        <if test="synthesisCuttingToolBindVO.rfidContainerCode != null and synthesisCuttingToolBindVO.rfidContainerCode != '' " >
+            and synthesis_cutting_tool_bind.rfid_container_code = #{synthesisCuttingToolBindVO.rfidContainerCode}
+        </if>
+        <!-- 合成刀业务编码 -->
+        <if test="synthesisCuttingToolBindVO.synthesisCode != null and synthesisCuttingToolBindVO.synthesisCode != '' " >
+            and synthesis_cutting_tool_bind.synthesis_code = #{synthesisCuttingToolBindVO.synthesisCode}
+        </if>
+        </if>
+        /*synthesis_cutting_tool_bind end*/
+        /*cutting_tool begin*/
+        <if test="cuttingToolVO != null ">
+        <!-- 材料刀id -->
+        <if test="cuttingToolVO.id != null and cuttingToolVO.id != '' " >
+            and cutting_tool.id = #{cuttingToolVO.id}
+        </if>
+        <!-- 刀具编码 -->
+        <if test="cuttingToolVO.code != null and cuttingToolVO.code != '' " >
+            and cutting_tool.code = #{cuttingToolVO.code}
+        </if>
+        <!-- 库位码 -->
+        <if test="cuttingToolVO.libraryCode != null and cuttingToolVO.libraryCode != '' " >
+            and cutting_tool.library_code = #{cuttingToolVO.libraryCode}
+        </if>
+        <!-- 业务编码 -->
+        <if test="cuttingToolVO.businessCode != null and cuttingToolVO.businessCode != '' " >
+            and cutting_tool.business_code = #{cuttingToolVO.businessCode}
+        </if>
+        <!-- 名称 -->
+        <if test="cuttingToolVO.name != null and cuttingToolVO.name != '' " >
+            and cutting_tool.name = #{cuttingToolVO.name}
+        </if>
+        <!-- 刀具分类(1刀具2辅具3配套9其他） -->
+        <if test="cuttingToolVO.type != null and cuttingToolVO.type != '' " >
+            and cutting_tool.type = #{cuttingToolVO.type}
+        </if>
+        <!-- 消耗类别(1:可刃磨钻头2可刃磨刀片3一次性刀片9其他 -->
+        <if test="cuttingToolVO.consumeType != null and cuttingToolVO.consumeType != '' " >
+            and cutting_tool.consume_type = #{cuttingToolVO.consumeType}
+        </if>
+        <!-- 图纸 -->
+        <if test="cuttingToolVO.pic != null and cuttingToolVO.pic != '' " >
+            and cutting_tool.pic = #{cuttingToolVO.pic}
+        </if>
+        <!-- 规格型号 -->
+        <if test="cuttingToolVO.specifications != null and cuttingToolVO.specifications != '' " >
+            and cutting_tool.specifications = #{cuttingToolVO.specifications}
+        </if>
+        <!-- 刃口数 -->
+        <if test="cuttingToolVO.cutNumber != null and cuttingToolVO.cutNumber != '' " >
+            and cutting_tool.cut_number = #{cuttingToolVO.cutNumber}
+        </if>
+        <!-- 品牌 -->
+        <if test="cuttingToolVO.brand != null and cuttingToolVO.brand != '' " >
+            and cutting_tool.brand = #{cuttingToolVO.brand}
+        </if>
+        <!-- 修磨类别(0:厂内修磨，1厂外修磨，2厂外涂层 -->
+        <if test="cuttingToolVO.grinding != null and cuttingToolVO.grinding != '' " >
+            and cutting_tool.grinding = #{cuttingToolVO.grinding}
+        </if>
+        <!-- 可使用次数 -->
+        <if test="cuttingToolVO.sharpenNum != null and cuttingToolVO.sharpenNum != '' " >
+            and cutting_tool.sharpen_num = #{cuttingToolVO.sharpenNum}
+        </if>
+        <!-- 最大库存 -->
+        <if test="cuttingToolVO.materialMax != null and cuttingToolVO.materialMax != '' " >
+            and cutting_tool.material_max = #{cuttingToolVO.materialMax}
+        </if>
+        <!-- 最小库存 -->
+        <if test="cuttingToolVO.materialMin != null and cuttingToolVO.materialMin != '' " >
+            and cutting_tool.material_min = #{cuttingToolVO.materialMin}
+        </if>
+        <!-- 可刃磨次数 -->
+        <if test="cuttingToolVO.toolNumber != null and cuttingToolVO.toolNumber != '' " >
+            and cutting_tool.tool_number = #{cuttingToolVO.toolNumber}
+        </if>
+        <!-- 复磨标准 -->
+        <if test="cuttingToolVO.sharpenCriterion != null and cuttingToolVO.sharpenCriterion != '' " >
+            and cutting_tool.sharpen_criterion = #{cuttingToolVO.sharpenCriterion}
+        </if>
+        <!-- 刀具长度 -->
+        <if test="cuttingToolVO.materialLength != null and cuttingToolVO.materialLength != '' " >
+            and cutting_tool.material_length = #{cuttingToolVO.materialLength}
+        </if>
+        <!-- 可刃磨长度 -->
+        <if test="cuttingToolVO.sharpenLength != null and cuttingToolVO.sharpenLength != '' " >
+            and cutting_tool.sharpen_length = #{cuttingToolVO.sharpenLength}
+        </if>
+        <!--  -->
+        <if test="cuttingToolVO.isDel != null and cuttingToolVO.isDel != '' " >
+            and cutting_tool.is_del = #{cuttingToolVO.isDel}
+        </if>
+        <!--  -->
+        <if test="cuttingToolVO.beiMin != null and cuttingToolVO.beiMin != '' " >
+            and cutting_tool.bei_min = #{cuttingToolVO.beiMin}
+        </if>
+        <!--  -->
+        <if test="cuttingToolVO.beiMax != null and cuttingToolVO.beiMax != '' " >
+            and cutting_tool.bei_max = #{cuttingToolVO.beiMax}
+        </if>
+        <!--  -->
+        <if test="cuttingToolVO.toolPrice != null and cuttingToolVO.toolPrice != '' " >
+            and cutting_tool.tool_price = #{cuttingToolVO.toolPrice}
+        </if>
+        <!--  -->
+        <if test="cuttingToolVO.averagePrice != null and cuttingToolVO.averagePrice != '' " >
+            and cutting_tool.average_price = #{cuttingToolVO.averagePrice}
+        </if>
+        <!--  -->
+        <if test="cuttingToolVO.parametersType != null and cuttingToolVO.parametersType != '' " >
+            and cutting_tool.parameters_type = #{cuttingToolVO.parametersType}
+        </if>
+        <!-- 用途类型 1 刀片,钻头，合成刀，热套类 2 一体刀 3筒刀 4专机 9其他 -->
+        <if test="cuttingToolVO.userfulType != null and cuttingToolVO.userfulType != '' " >
+            and cutting_tool.userful_type = #{cuttingToolVO.userfulType}
+        </if>
+        <!-- 启明编码 -->
+        <if test="cuttingToolVO.qimingCode != null and cuttingToolVO.qimingCode != '' " >
+            and cutting_tool.qiming_code = #{cuttingToolVO.qimingCode}
+        </if>
+        <!-- 物料编码 -->
+        <if test="cuttingToolVO.wuliaoCode != null and cuttingToolVO.wuliaoCode != '' " >
+            and cutting_tool.wuliao_code = #{cuttingToolVO.wuliaoCode}
+        </if>
+        </if>
+        /*cutting_tool end*/
+    </select>
+
+    <!--根据vo查询 -->
+    <select id="getSynthesisCuttingToolLocation" parameterType="com.common.vo.SynthesisCuttingToolLocationVO" resultMap="synthesisCuttingToolLocationQueryMap">
+        SELECT
+        /*synthesis_cutting_tool_location begin*/
+        <!-- id -->
+        synthesis_cutting_tool_location.id as 'synthesis_cutting_tool_location.id',
+        <!-- 合成刀编码 -->
+        synthesis_cutting_tool_location.synthesis_cutting_tool_code as 'synthesis_cutting_tool_location.synthesis_cutting_tool_code',
+        <!-- 位置号 -->
+        synthesis_cutting_tool_location.location as 'synthesis_cutting_tool_location.location',
+        <!-- 数量 -->
+        synthesis_cutting_tool_location.count as 'synthesis_cutting_tool_location.count',
+        <!-- 逻辑删除 -->
+        synthesis_cutting_tool_location.is_del as 'synthesis_cutting_tool_location.is_del',
+        <!-- 材料刀编码 -->
+        synthesis_cutting_tool_location.cutting_tool_code as 'synthesis_cutting_tool_location.cutting_tool_code',
+        <!-- 绑定合成刀编码 -->
+        synthesis_cutting_tool_location.synthesis_cutting_tool_bind_code as 'synthesis_cutting_tool_location.synthesis_cutting_tool_bind_code',
+        <!-- 绑定合成刀rfid编码 -->
+        synthesis_cutting_tool_location.synthesis_cutting_tool_bind_rfid as 'synthesis_cutting_tool_location.synthesis_cutting_tool_bind_rfid',
+        <!--  -->
+        synthesis_cutting_tool_location.cutting_tool_blade_code as 'synthesis_cutting_tool_location.cutting_tool_blade_code',
+        /*synthesis_cutting_tool_location end*/
+        /*synthesis_cutting_tool begin*/
+        <!-- id -->
+        synthesis_cutting_tool.id as 'synthesis_cutting_tool.id',
+        <!-- 编码 -->
+        synthesis_cutting_tool.code as 'synthesis_cutting_tool.code',
+        <!-- 合成刀业务编码 -->
+        synthesis_cutting_tool.synthesis_code as 'synthesis_cutting_tool.synthesis_code',
+        <!-- 图纸url -->
+        synthesis_cutting_tool.pic_url as 'synthesis_cutting_tool.pic_url',
+        <!-- 逻辑删除 -->
+        synthesis_cutting_tool.is_del as 'synthesis_cutting_tool.is_del',
+        <!-- 合成刀类型  -->
+        synthesis_cutting_tool.synthesis_cutting_tool_type_id as 'synthesis_cutting_tool.synthesis_cutting_tool_type_id',
+        <!--  -->
+        synthesis_cutting_tool.abc as 'synthesis_cutting_tool.abc',
+        /*synthesis_cutting_tool end*/
+        /*synthesis_cutting_tool_bind begin*/
+        <!-- id -->
+        synthesis_cutting_tool_bind.id as 'synthesis_cutting_tool_bind.id',
+        <!-- 绑定编码 -->
+        synthesis_cutting_tool_bind.code as 'synthesis_cutting_tool_bind.code',
+        <!-- 逻辑删除 -->
+        synthesis_cutting_tool_bind.is_del as 'synthesis_cutting_tool_bind.is_del',
+        <!-- 创建时间 -->
+        synthesis_cutting_tool_bind.create_time as 'synthesis_cutting_tool_bind.create_time',
+        <!-- 合成刀编码 -->
+        synthesis_cutting_tool_bind.synthesis_cutting_tool_code as 'synthesis_cutting_tool_bind.synthesis_cutting_tool_code',
+        <!-- RFID标签 -->
+        synthesis_cutting_tool_bind.rfid_container_code as 'synthesis_cutting_tool_bind.rfid_container_code',
+        <!-- 合成刀业务编码 -->
+        synthesis_cutting_tool_bind.synthesis_code as 'synthesis_cutting_tool_bind.synthesis_code',
+        /*synthesis_cutting_tool_bind end*/
+        /*cutting_tool begin*/
+        <!-- 材料刀id -->
+        cutting_tool.id as 'cutting_tool.id',
+        <!-- 刀具编码 -->
+        cutting_tool.code as 'cutting_tool.code',
+        <!-- 库位码 -->
+        cutting_tool.library_code as 'cutting_tool.library_code',
+        <!-- 业务编码 -->
+        cutting_tool.business_code as 'cutting_tool.business_code',
+        <!-- 名称 -->
+        cutting_tool.name as 'cutting_tool.name',
+        <!-- 刀具分类(1刀具2辅具3配套9其他） -->
+        cutting_tool.type as 'cutting_tool.type',
+        <!-- 消耗类别(1:可刃磨钻头2可刃磨刀片3一次性刀片9其他 -->
+        cutting_tool.consume_type as 'cutting_tool.consume_type',
+        <!-- 图纸 -->
+        cutting_tool.pic as 'cutting_tool.pic',
+        <!-- 规格型号 -->
+        cutting_tool.specifications as 'cutting_tool.specifications',
+        <!-- 刃口数 -->
+        cutting_tool.cut_number as 'cutting_tool.cut_number',
+        <!-- 品牌 -->
+        cutting_tool.brand as 'cutting_tool.brand',
+        <!-- 修磨类别(0:厂内修磨，1厂外修磨，2厂外涂层 -->
+        cutting_tool.grinding as 'cutting_tool.grinding',
+        <!-- 可使用次数 -->
+        cutting_tool.sharpen_num as 'cutting_tool.sharpen_num',
+        <!-- 最大库存 -->
+        cutting_tool.material_max as 'cutting_tool.material_max',
+        <!-- 最小库存 -->
+        cutting_tool.material_min as 'cutting_tool.material_min',
+        <!-- 可刃磨次数 -->
+        cutting_tool.tool_number as 'cutting_tool.tool_number',
+        <!-- 复磨标准 -->
+        cutting_tool.sharpen_criterion as 'cutting_tool.sharpen_criterion',
+        <!-- 刀具长度 -->
+        cutting_tool.material_length as 'cutting_tool.material_length',
+        <!-- 可刃磨长度 -->
+        cutting_tool.sharpen_length as 'cutting_tool.sharpen_length',
+        <!--  -->
+        cutting_tool.is_del as 'cutting_tool.is_del',
+        <!--  -->
+        cutting_tool.bei_min as 'cutting_tool.bei_min',
+        <!--  -->
+        cutting_tool.bei_max as 'cutting_tool.bei_max',
+        <!--  -->
+        cutting_tool.tool_price as 'cutting_tool.tool_price',
+        <!--  -->
+        cutting_tool.average_price as 'cutting_tool.average_price',
+        <!--  -->
+        cutting_tool.parameters_type as 'cutting_tool.parameters_type',
+        <!-- 用途类型 1 刀片,钻头，合成刀，热套类 2 一体刀 3筒刀 4专机 9其他 -->
+        cutting_tool.userful_type as 'cutting_tool.userful_type',
+        <!-- 启明编码 -->
+        cutting_tool.qiming_code as 'cutting_tool.qiming_code',
+        <!-- 物料编码 -->
+        cutting_tool.wuliao_code as 'cutting_tool.wuliao_code'
+        /*cutting_tool end*/
+        FROM synthesis_cutting_tool_location as synthesis_cutting_tool_location
+        LEFT JOIN cutting_tool as cutting_tool ON cutting_tool.code = synthesis_cutting_tool_location.cutting_tool_code
+        LEFT JOIN synthesis_cutting_tool as synthesis_cutting_tool ON synthesis_cutting_tool.code = synthesis_cutting_tool_location.synthesis_cutting_tool_code
+        LEFT JOIN synthesis_cutting_tool_bind as synthesis_cutting_tool_bind ON synthesis_cutting_tool_bind.code = synthesis_cutting_tool_location.synthesis_cutting_tool_bind_code
+        WHERE
+            1 = 1 AND  synthesis_cutting_tool_location.is_del = 0
+        /*synthesis_cutting_tool_location begin*/
+        <!-- id -->
+        <if test="id != null and id != '' " >
+            and synthesis_cutting_tool_location.id = #{id}
+        </if>
+        <!-- 合成刀编码 -->
+        <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+            and synthesis_cutting_tool_location.synthesis_cutting_tool_code = #{synthesisCuttingToolCode}
+        </if>
+        <!-- 位置号 -->
+        <if test="location != null and location != '' " >
+            and synthesis_cutting_tool_location.location = #{location}
+        </if>
+        <!-- 数量 -->
+        <if test="count != null and count != '' " >
+            and synthesis_cutting_tool_location.count = #{count}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="isDel != null and isDel != '' " >
+            and synthesis_cutting_tool_location.is_del = #{isDel}
+        </if>
+        <!-- 材料刀编码 -->
+        <if test="cuttingToolCode != null and cuttingToolCode != '' " >
+            and synthesis_cutting_tool_location.cutting_tool_code = #{cuttingToolCode}
+        </if>
+        <!-- 绑定合成刀编码 -->
+        <if test="synthesisCuttingToolBindCode != null and synthesisCuttingToolBindCode != '' " >
+            and synthesis_cutting_tool_location.synthesis_cutting_tool_bind_code = #{synthesisCuttingToolBindCode}
+        </if>
+        <!-- 绑定合成刀rfid编码 -->
+        <if test="synthesisCuttingToolBindRfid != null and synthesisCuttingToolBindRfid != '' " >
+            and synthesis_cutting_tool_location.synthesis_cutting_tool_bind_rfid = #{synthesisCuttingToolBindRfid}
+        </if>
+        <!--  -->
+        <if test="cuttingToolBladeCode != null and cuttingToolBladeCode != '' " >
+            and synthesis_cutting_tool_location.cutting_tool_blade_code = #{cuttingToolBladeCode}
+        </if>
+        /*synthesis_cutting_tool_location end*/
+        /*synthesis_cutting_tools begin*/
+        <if test="synthesisCuttingToolVO != null ">
+        <!-- id -->
+        <if test="synthesisCuttingToolVO.id != null and synthesisCuttingToolVO.id != '' " >
+            and synthesis_cutting_tools.id = #{synthesisCuttingToolVO.id}
+        </if>
+        <!-- 编码 -->
+        <if test="synthesisCuttingToolVO.code != null and synthesisCuttingToolVO.code != '' " >
+            and synthesis_cutting_tools.code = #{synthesisCuttingToolVO.code}
+        </if>
+        <!-- 合成刀业务编码 -->
+        <if test="synthesisCuttingToolVO.synthesisCode != null and synthesisCuttingToolVO.synthesisCode != '' " >
+            and synthesis_cutting_tools.synthesis_code = #{synthesisCuttingToolVO.synthesisCode}
+        </if>
+        <!-- 图纸url -->
+        <if test="synthesisCuttingToolVO.picUrl != null and synthesisCuttingToolVO.picUrl != '' " >
+            and synthesis_cutting_tools.pic_url = #{synthesisCuttingToolVO.picUrl}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="synthesisCuttingToolVO.isDel != null and synthesisCuttingToolVO.isDel != '' " >
+            and synthesis_cutting_tools.is_del = #{synthesisCuttingToolVO.isDel}
+        </if>
+        <!-- 合成刀类型  -->
+        <if test="synthesisCuttingToolVO.synthesisCuttingToolTypeId != null and synthesisCuttingToolVO.synthesisCuttingToolTypeId != '' " >
+            and synthesis_cutting_tools.synthesis_cutting_tool_type_id = #{synthesisCuttingToolVO.synthesisCuttingToolTypeId}
+        </if>
+        <!--  -->
+        <if test="synthesisCuttingToolVO.abc != null and synthesisCuttingToolVO.abc != '' " >
+            and synthesis_cutting_tools.abc = #{synthesisCuttingToolVO.abc}
+        </if>
+        </if>
+        /*synthesis_cutting_tool end*/
+        /*synthesis_cutting_tool_binds begin*/
+        <if test="synthesisCuttingToolBindVO != null ">
+        <!-- id -->
+        <if test="synthesisCuttingToolBindVO.id != null and synthesisCuttingToolBindVO.id != '' " >
+            and synthesis_cutting_tool_binds.id = #{synthesisCuttingToolBindVO.id}
+        </if>
+        <!-- 绑定编码 -->
+        <if test="synthesisCuttingToolBindVO.code != null and synthesisCuttingToolBindVO.code != '' " >
+            and synthesis_cutting_tool_binds.code = #{synthesisCuttingToolBindVO.code}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="synthesisCuttingToolBindVO.isDel != null and synthesisCuttingToolBindVO.isDel != '' " >
+            and synthesis_cutting_tool_binds.is_del = #{synthesisCuttingToolBindVO.isDel}
+        </if>
+        <!-- 创建时间 -->
+        <if test="synthesisCuttingToolBindVO.createTime != null and synthesisCuttingToolBindVO.createTime != '' " >
+            and synthesis_cutting_tool_bind.create_time &lt;=  #{synthesisCuttingToolBindVO.createTimeEnd}
+        </if>
+        <if test="synthesisCuttingToolBindVO.createTime != null and synthesisCuttingToolBindVO.createTime != '' " >
+            and synthesis_cutting_tool_bind.create_time &gt;= #{synthesisCuttingToolBindVO.createTimeBegin}
+        </if>
+        <!-- 合成刀编码 -->
+        <if test="synthesisCuttingToolBindVO.synthesisCuttingToolCode != null and synthesisCuttingToolBindVO.synthesisCuttingToolCode != '' " >
+            and synthesis_cutting_tool_binds.synthesis_cutting_tool_code = #{synthesisCuttingToolBindVO.synthesisCuttingToolCode}
+        </if>
+        <!-- RFID标签 -->
+        <if test="synthesisCuttingToolBindVO.rfidContainerCode != null and synthesisCuttingToolBindVO.rfidContainerCode != '' " >
+            and synthesis_cutting_tool_binds.rfid_container_code = #{synthesisCuttingToolBindVO.rfidContainerCode}
+        </if>
+        <!-- 合成刀业务编码 -->
+        <if test="synthesisCuttingToolBindVO.synthesisCode != null and synthesisCuttingToolBindVO.synthesisCode != '' " >
+            and synthesis_cutting_tool_binds.synthesis_code = #{synthesisCuttingToolBindVO.synthesisCode}
+        </if>
+        </if>
+        /*synthesis_cutting_tool_bind end*/
+        /*cutting_tools begin*/
+        <if test="cuttingToolVO != null ">
+        <!-- 材料刀id -->
+        <if test="cuttingToolVO.id != null and cuttingToolVO.id != '' " >
+            and cutting_tools.id = #{cuttingToolVO.id}
+        </if>
+        <!-- 刀具编码 -->
+        <if test="cuttingToolVO.code != null and cuttingToolVO.code != '' " >
+            and cutting_tools.code = #{cuttingToolVO.code}
+        </if>
+        <!-- 库位码 -->
+        <if test="cuttingToolVO.libraryCode != null and cuttingToolVO.libraryCode != '' " >
+            and cutting_tools.library_code = #{cuttingToolVO.libraryCode}
+        </if>
+        <!-- 业务编码 -->
+        <if test="cuttingToolVO.businessCode != null and cuttingToolVO.businessCode != '' " >
+            and cutting_tools.business_code = #{cuttingToolVO.businessCode}
+        </if>
+        <!-- 名称 -->
+        <if test="cuttingToolVO.name != null and cuttingToolVO.name != '' " >
+            and cutting_tools.name = #{cuttingToolVO.name}
+        </if>
+        <!-- 刀具分类(1刀具2辅具3配套9其他） -->
+        <if test="cuttingToolVO.type != null and cuttingToolVO.type != '' " >
+            and cutting_tools.type = #{cuttingToolVO.type}
+        </if>
+        <!-- 消耗类别(1:可刃磨钻头2可刃磨刀片3一次性刀片9其他 -->
+        <if test="cuttingToolVO.consumeType != null and cuttingToolVO.consumeType != '' " >
+            and cutting_tools.consume_type = #{cuttingToolVO.consumeType}
+        </if>
+        <!-- 图纸 -->
+        <if test="cuttingToolVO.pic != null and cuttingToolVO.pic != '' " >
+            and cutting_tools.pic = #{cuttingToolVO.pic}
+        </if>
+        <!-- 规格型号 -->
+        <if test="cuttingToolVO.specifications != null and cuttingToolVO.specifications != '' " >
+            and cutting_tools.specifications = #{cuttingToolVO.specifications}
+        </if>
+        <!-- 刃口数 -->
+        <if test="cuttingToolVO.cutNumber != null and cuttingToolVO.cutNumber != '' " >
+            and cutting_tools.cut_number = #{cuttingToolVO.cutNumber}
+        </if>
+        <!-- 品牌 -->
+        <if test="cuttingToolVO.brand != null and cuttingToolVO.brand != '' " >
+            and cutting_tools.brand = #{cuttingToolVO.brand}
+        </if>
+        <!-- 修磨类别(0:厂内修磨，1厂外修磨，2厂外涂层 -->
+        <if test="cuttingToolVO.grinding != null and cuttingToolVO.grinding != '' " >
+            and cutting_tools.grinding = #{cuttingToolVO.grinding}
+        </if>
+        <!-- 可使用次数 -->
+        <if test="cuttingToolVO.sharpenNum != null and cuttingToolVO.sharpenNum != '' " >
+            and cutting_tools.sharpen_num = #{cuttingToolVO.sharpenNum}
+        </if>
+        <!-- 最大库存 -->
+        <if test="cuttingToolVO.materialMax != null and cuttingToolVO.materialMax != '' " >
+            and cutting_tools.material_max = #{cuttingToolVO.materialMax}
+        </if>
+        <!-- 最小库存 -->
+        <if test="cuttingToolVO.materialMin != null and cuttingToolVO.materialMin != '' " >
+            and cutting_tools.material_min = #{cuttingToolVO.materialMin}
+        </if>
+        <!-- 可刃磨次数 -->
+        <if test="cuttingToolVO.toolNumber != null and cuttingToolVO.toolNumber != '' " >
+            and cutting_tools.tool_number = #{cuttingToolVO.toolNumber}
+        </if>
+        <!-- 复磨标准 -->
+        <if test="cuttingToolVO.sharpenCriterion != null and cuttingToolVO.sharpenCriterion != '' " >
+            and cutting_tools.sharpen_criterion = #{cuttingToolVO.sharpenCriterion}
+        </if>
+        <!-- 刀具长度 -->
+        <if test="cuttingToolVO.materialLength != null and cuttingToolVO.materialLength != '' " >
+            and cutting_tools.material_length = #{cuttingToolVO.materialLength}
+        </if>
+        <!-- 可刃磨长度 -->
+        <if test="cuttingToolVO.sharpenLength != null and cuttingToolVO.sharpenLength != '' " >
+            and cutting_tools.sharpen_length = #{cuttingToolVO.sharpenLength}
+        </if>
+        <!--  -->
+        <if test="cuttingToolVO.isDel != null and cuttingToolVO.isDel != '' " >
+            and cutting_tools.is_del = #{cuttingToolVO.isDel}
+        </if>
+        <!--  -->
+        <if test="cuttingToolVO.beiMin != null and cuttingToolVO.beiMin != '' " >
+            and cutting_tools.bei_min = #{cuttingToolVO.beiMin}
+        </if>
+        <!--  -->
+        <if test="cuttingToolVO.beiMax != null and cuttingToolVO.beiMax != '' " >
+            and cutting_tools.bei_max = #{cuttingToolVO.beiMax}
+        </if>
+        <!--  -->
+        <if test="cuttingToolVO.toolPrice != null and cuttingToolVO.toolPrice != '' " >
+            and cutting_tools.tool_price = #{cuttingToolVO.toolPrice}
+        </if>
+        <!--  -->
+        <if test="cuttingToolVO.averagePrice != null and cuttingToolVO.averagePrice != '' " >
+            and cutting_tools.average_price = #{cuttingToolVO.averagePrice}
+        </if>
+        <!--  -->
+        <if test="cuttingToolVO.parametersType != null and cuttingToolVO.parametersType != '' " >
+            and cutting_tools.parameters_type = #{cuttingToolVO.parametersType}
+        </if>
+        <!-- 用途类型 1 刀片,钻头，合成刀，热套类 2 一体刀 3筒刀 4专机 9其他 -->
+        <if test="cuttingToolVO.userfulType != null and cuttingToolVO.userfulType != '' " >
+            and cutting_tools.userful_type = #{cuttingToolVO.userfulType}
+        </if>
+        <!-- 启明编码 -->
+        <if test="cuttingToolVO.qimingCode != null and cuttingToolVO.qimingCode != '' " >
+            and cutting_tools.qiming_code = #{cuttingToolVO.qimingCode}
+        </if>
+        <!-- 物料编码 -->
+        <if test="cuttingToolVO.wuliaoCode != null and cuttingToolVO.wuliaoCode != '' " >
+            and cutting_tools.wuliao_code = #{cuttingToolVO.wuliaoCode}
+        </if>
+        </if>
+        /*cutting_tool end*/
+    </select>
+</mapper>

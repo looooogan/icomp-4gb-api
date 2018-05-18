@@ -1,0 +1,17 @@
+.clearBoth{clear:both;}
+.ui-grid-frame #list tr td,
+#list td{
+    height:80px;
+}
+#list th{
+    text-align: center;
+
+}
+ul.u-option{
+    display:inline-block;
+    margin:0 auto;
+}
+td>span,
+.u-option>li>a{
+    font-size:30px;
+}

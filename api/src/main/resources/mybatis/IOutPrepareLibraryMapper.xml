@@ -1,0 +1,1133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.mapper.IOutPrepareLibraryMapper">
+    <resultMap id="outPrepareLibraryQueryMap" type="com.common.pojo.OutPrepareLibrary">
+        <!-- 出库id -->
+        <id property="id" column="out_prepare_library.id"/>
+
+        <!-- 启明出库单号 -->
+        <result property="applyNo" column="out_prepare_library.apply_no"/>
+        <!-- 出库数量 -->
+        <result property="unitqty" column="out_prepare_library.unitqty"/>
+        <!-- 物料号 -->
+        <result property="mtlCode" column="out_prepare_library.mtl_code"/>
+        <!-- 刀具号 -->
+        <result property="loc" column="out_prepare_library.loc"/>
+        <!-- 逻辑删除 -->
+        <result property="isDel" column="out_prepare_library.is_del"/>
+        <!--  -->
+        <result property="cuttingToolCode" column="out_prepare_library.cutting_tool_code"/>
+        <!-- 工序 -->
+        <result property="productlineProcess" column="out_prepare_library.productline_process"/>
+        <!-- 流水线 -->
+        <result property="productlineAssemblyline" column="out_prepare_library.productline_assemblyline"/>
+        <!-- 工厂 -->
+        <result property="plant" column="out_prepare_library.plant"/>
+        <!-- 库管员code -->
+        <result property="kuguanOperatorCode" column="out_prepare_library.kuguan_operator_code"/>
+        <!-- 库管员姓名 -->
+        <result property="kuguanOperatorName" column="out_prepare_library.kuguan_operator_name"/>
+        <!-- 领料员code -->
+        <result property="linglOperatorCode" column="out_prepare_library.lingl_operator_code"/>
+        <!-- 领料员姓名 -->
+        <result property="linglOperatorName" column="out_prepare_library.lingl_operator_name"/>
+        <!-- 科长code -->
+        <result property="kezhangCode" column="out_prepare_library.kezhang_code"/>
+        <!-- 科长姓名 -->
+        <result property="kezhangName" column="out_prepare_library.kezhang_name"/>
+        <!-- 出库时间 -->
+        <result property="createTime" column="out_prepare_library.create_time"/>
+        <!--  -->
+        <association property="cuttingTool"  column="cutting_tool.code" resultMap="outPrepareLibraryCuttingToolMap"/>
+    </resultMap>
+        <resultMap id="outPrepareLibraryCuttingToolMap" type="com.common.pojo.CuttingTool">
+            <!-- 材料刀id -->
+            <id property="id" column="cutting_tool.id"/>
+
+            <!-- 刀具编码 -->
+            <result property="code" column="cutting_tool.code"/>
+            <!-- 库位码 -->
+            <result property="libraryCode" column="cutting_tool.library_code"/>
+            <!-- 业务编码 -->
+            <result property="businessCode" column="cutting_tool.business_code"/>
+            <!-- 名称 -->
+            <result property="name" column="cutting_tool.name"/>
+            <!-- 刀具分类(1刀具2辅具3配套9其他） -->
+            <result property="type" column="cutting_tool.type"/>
+            <!-- 消耗类别(1:可刃磨钻头2可刃磨刀片3一次性刀片9其他 -->
+            <result property="consumeType" column="cutting_tool.consume_type"/>
+            <!-- 图纸 -->
+            <result property="pic" column="cutting_tool.pic"/>
+            <!-- 规格型号 -->
+            <result property="specifications" column="cutting_tool.specifications"/>
+            <!-- 刃口数 -->
+            <result property="cutNumber" column="cutting_tool.cut_number"/>
+            <!-- 品牌 -->
+            <result property="brand" column="cutting_tool.brand"/>
+            <!-- 修磨类别(0:厂内修磨，1厂外修磨，2厂外涂层 -->
+            <result property="grinding" column="cutting_tool.grinding"/>
+            <!-- 可使用次数 -->
+            <result property="sharpenNum" column="cutting_tool.sharpen_num"/>
+            <!-- 最大库存 -->
+            <result property="materialMax" column="cutting_tool.material_max"/>
+            <!-- 最小库存 -->
+            <result property="materialMin" column="cutting_tool.material_min"/>
+            <!-- 可刃磨次数 -->
+            <result property="toolNumber" column="cutting_tool.tool_number"/>
+            <!-- 复磨标准 -->
+            <result property="sharpenCriterion" column="cutting_tool.sharpen_criterion"/>
+            <!-- 刀具长度 -->
+            <result property="materialLength" column="cutting_tool.material_length"/>
+            <!-- 可刃磨长度 -->
+            <result property="sharpenLength" column="cutting_tool.sharpen_length"/>
+            <!--  -->
+            <result property="isDel" column="cutting_tool.is_del"/>
+            <!--  -->
+            <result property="beiMin" column="cutting_tool.bei_min"/>
+            <!--  -->
+            <result property="beiMax" column="cutting_tool.bei_max"/>
+            <!--  -->
+            <result property="toolPrice" column="cutting_tool.tool_price"/>
+            <!--  -->
+            <result property="averagePrice" column="cutting_tool.average_price"/>
+            <!--  -->
+            <result property="parametersType" column="cutting_tool.parameters_type"/>
+            <!-- 用途类型 1 刀片,钻头，合成刀，热套类 2 一体刀 3筒刀 4专机 9其他 -->
+            <result property="userfulType" column="cutting_tool.userful_type"/>
+            <!-- 启明编码 -->
+            <result property="qimingCode" column="cutting_tool.qiming_code"/>
+            <!-- 物料编码 -->
+            <result property="wuliaoCode" column="cutting_tool.wuliao_code"/>
+        </resultMap>
+    <!--添加-->
+    <insert id="addOutPrepareLibrary" parameterType="com.common.pojo.OutPrepareLibrary">
+        INSERT INTO out_prepare_library (
+            <!-- 出库id -->
+            id,
+            <!-- 启明出库单号 -->
+            apply_no,
+            <!-- 出库数量 -->
+            unitqty,
+            <!-- 物料号 -->
+            mtl_code,
+            <!-- 刀具号 -->
+            loc,
+            <!-- 逻辑删除 -->
+            is_del,
+            <!--  -->
+            cutting_tool_code,
+            <!-- 工序 -->
+            productline_process,
+            <!-- 流水线 -->
+            productline_assemblyline,
+            <!-- 工厂 -->
+            plant,
+            <!-- 库管员code -->
+            kuguan_operator_code,
+            <!-- 库管员姓名 -->
+            kuguan_operator_name,
+            <!-- 领料员code -->
+            lingl_operator_code,
+            <!-- 领料员姓名 -->
+            lingl_operator_name,
+            <!-- 科长code -->
+            kezhang_code,
+            <!-- 科长姓名 -->
+            kezhang_name,
+            <!-- 出库时间 -->
+            create_time
+        )
+        VALUES (
+            <!-- 出库id -->
+            #{id},
+            <!-- 启明出库单号 -->
+            #{applyNo},
+            <!-- 出库数量 -->
+            #{unitqty},
+            <!-- 物料号 -->
+            #{mtlCode},
+            <!-- 刀具号 -->
+            #{loc},
+            <!-- 逻辑删除 -->
+            #{isDel},
+            <!--  -->
+            #{cuttingToolCode},
+            <!-- 工序 -->
+            #{productlineProcess},
+            <!-- 流水线 -->
+            #{productlineAssemblyline},
+            <!-- 工厂 -->
+            #{plant},
+            <!-- 库管员code -->
+            #{kuguanOperatorCode},
+            <!-- 库管员姓名 -->
+            #{kuguanOperatorName},
+            <!-- 领料员code -->
+            #{linglOperatorCode},
+            <!-- 领料员姓名 -->
+            #{linglOperatorName},
+            <!-- 科长code -->
+            #{kezhangCode},
+            <!-- 科长姓名 -->
+            #{kezhangName},
+            <!-- 出库时间 -->
+            #{createTime}
+        )
+    </insert>
+
+    <!--删除-->
+    <delete id="delOutPrepareLibrary" parameterType="com.common.pojo.OutPrepareLibrary">
+        DELETE
+        FROM out_prepare_library
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--逻辑删除-->
+    <delete id="delOutPrepareLibraryForLogic" parameterType="com.common.pojo.OutPrepareLibrary">
+        UPDATE out_prepare_library SET
+        is_del = 1
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--根据VO删除-->
+    <delete id="delOutPrepareLibraryByVo" parameterType="com.common.vo.OutPrepareLibraryVO">
+        UPDATE out_prepare_library SET is_del = 1
+        WHERE
+            1=1
+            <!-- 出库id -->
+            <if test="id != null and id != '' " >
+                and id =  #{id}
+            </if>
+            <!-- 启明出库单号 -->
+            <if test="applyNo != null and applyNo != '' " >
+                and apply_no =  #{applyNo}
+            </if>
+            <!-- 出库数量 -->
+            <if test="unitqty != null and unitqty != '' " >
+                and unitqty =  #{unitqty}
+            </if>
+            <!-- 物料号 -->
+            <if test="mtlCode != null and mtlCode != '' " >
+                and mtl_code =  #{mtlCode}
+            </if>
+            <!-- 刀具号 -->
+            <if test="loc != null and loc != '' " >
+                and loc =  #{loc}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                and is_del =  #{isDel}
+            </if>
+            <!--  -->
+            <if test="cuttingToolCode != null and cuttingToolCode != '' " >
+                and cutting_tool_code =  #{cuttingToolCode}
+            </if>
+            <!-- 工序 -->
+            <if test="productlineProcess != null and productlineProcess != '' " >
+                and productline_process =  #{productlineProcess}
+            </if>
+            <!-- 流水线 -->
+            <if test="productlineAssemblyline != null and productlineAssemblyline != '' " >
+                and productline_assemblyline =  #{productlineAssemblyline}
+            </if>
+            <!-- 工厂 -->
+            <if test="plant != null and plant != '' " >
+                and plant =  #{plant}
+            </if>
+            <!-- 库管员code -->
+            <if test="kuguanOperatorCode != null and kuguanOperatorCode != '' " >
+                and kuguan_operator_code =  #{kuguanOperatorCode}
+            </if>
+            <!-- 库管员姓名 -->
+            <if test="kuguanOperatorName != null and kuguanOperatorName != '' " >
+                and kuguan_operator_name =  #{kuguanOperatorName}
+            </if>
+            <!-- 领料员code -->
+            <if test="linglOperatorCode != null and linglOperatorCode != '' " >
+                and lingl_operator_code =  #{linglOperatorCode}
+            </if>
+            <!-- 领料员姓名 -->
+            <if test="linglOperatorName != null and linglOperatorName != '' " >
+                and lingl_operator_name =  #{linglOperatorName}
+            </if>
+            <!-- 科长code -->
+            <if test="kezhangCode != null and kezhangCode != '' " >
+                and kezhang_code =  #{kezhangCode}
+            </if>
+            <!-- 科长姓名 -->
+            <if test="kezhangName != null and kezhangName != '' " >
+                and kezhang_name =  #{kezhangName}
+            </if>
+            <!-- 出库时间 -->
+            <if test="createTime != null and createTime != '' " >
+                and create_time =  #{createTime}
+            </if>
+    </delete>
+
+    <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
+    <update id="updOutPrepareLibrary" parameterType="com.common.pojo.OutPrepareLibrary">
+        UPDATE out_prepare_library
+        SET
+            <!-- 启明出库单号 -->
+            <if test="applyNo != null and applyNo != '' " >
+                apply_no =  #{applyNo},
+            </if>
+            <!-- 出库数量 -->
+            <if test="unitqty != null and unitqty != '' " >
+                unitqty =  #{unitqty},
+            </if>
+            <!-- 物料号 -->
+            <if test="mtlCode != null and mtlCode != '' " >
+                mtl_code =  #{mtlCode},
+            </if>
+            <!-- 刀具号 -->
+            <if test="loc != null and loc != '' " >
+                loc =  #{loc},
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                is_del =  #{isDel},
+            </if>
+            <!--  -->
+            <if test="cuttingToolCode != null and cuttingToolCode != '' " >
+                cutting_tool_code =  #{cuttingToolCode},
+            </if>
+            <!-- 工序 -->
+            <if test="productlineProcess != null and productlineProcess != '' " >
+                productline_process =  #{productlineProcess},
+            </if>
+            <!-- 流水线 -->
+            <if test="productlineAssemblyline != null and productlineAssemblyline != '' " >
+                productline_assemblyline =  #{productlineAssemblyline},
+            </if>
+            <!-- 工厂 -->
+            <if test="plant != null and plant != '' " >
+                plant =  #{plant},
+            </if>
+            <!-- 库管员code -->
+            <if test="kuguanOperatorCode != null and kuguanOperatorCode != '' " >
+                kuguan_operator_code =  #{kuguanOperatorCode},
+            </if>
+            <!-- 库管员姓名 -->
+            <if test="kuguanOperatorName != null and kuguanOperatorName != '' " >
+                kuguan_operator_name =  #{kuguanOperatorName},
+            </if>
+            <!-- 领料员code -->
+            <if test="linglOperatorCode != null and linglOperatorCode != '' " >
+                lingl_operator_code =  #{linglOperatorCode},
+            </if>
+            <!-- 领料员姓名 -->
+            <if test="linglOperatorName != null and linglOperatorName != '' " >
+                lingl_operator_name =  #{linglOperatorName},
+            </if>
+            <!-- 科长code -->
+            <if test="kezhangCode != null and kezhangCode != '' " >
+                kezhang_code =  #{kezhangCode},
+            </if>
+            <!-- 科长姓名 -->
+            <if test="kezhangName != null and kezhangName != '' " >
+                kezhang_name =  #{kezhangName},
+            </if>
+            <!-- 出库时间 -->
+            <if test="createTime != null and createTime != '' " >
+                create_time =  #{createTime},
+            </if>
+            <!-- 出库id -->
+            id = #{id}
+        WHERE
+            1 = 1
+            and id = #{id}
+    </update>
+
+    <!--分页查询 -->
+    <select id="getOutPrepareLibraryByPage" parameterType="com.common.vo.OutPrepareLibraryVO" resultMap="outPrepareLibraryQueryMap">
+        SELECT
+        /*outPrepareLibrary begin*/
+            <!-- 出库id -->
+            out_prepare_library.id as 'out_prepare_library.id',
+            <!-- 启明出库单号 -->
+            out_prepare_library.apply_no as 'out_prepare_library.apply_no',
+            <!-- 出库数量 -->
+            out_prepare_library.unitqty as 'out_prepare_library.unitqty',
+            <!-- 物料号 -->
+            out_prepare_library.mtl_code as 'out_prepare_library.mtl_code',
+            <!-- 刀具号 -->
+            out_prepare_library.loc as 'out_prepare_library.loc',
+            <!-- 逻辑删除 -->
+            out_prepare_library.is_del as 'out_prepare_library.is_del',
+            <!--  -->
+            out_prepare_library.cutting_tool_code as 'out_prepare_library.cutting_tool_code',
+            <!-- 工序 -->
+            out_prepare_library.productline_process as 'out_prepare_library.productline_process',
+            <!-- 流水线 -->
+            out_prepare_library.productline_assemblyline as 'out_prepare_library.productline_assemblyline',
+            <!-- 工厂 -->
+            out_prepare_library.plant as 'out_prepare_library.plant',
+            <!-- 库管员code -->
+            out_prepare_library.kuguan_operator_code as 'out_prepare_library.kuguan_operator_code',
+            <!-- 库管员姓名 -->
+            out_prepare_library.kuguan_operator_name as 'out_prepare_library.kuguan_operator_name',
+            <!-- 领料员code -->
+            out_prepare_library.lingl_operator_code as 'out_prepare_library.lingl_operator_code',
+            <!-- 领料员姓名 -->
+            out_prepare_library.lingl_operator_name as 'out_prepare_library.lingl_operator_name',
+            <!-- 科长code -->
+            out_prepare_library.kezhang_code as 'out_prepare_library.kezhang_code',
+            <!-- 科长姓名 -->
+            out_prepare_library.kezhang_name as 'out_prepare_library.kezhang_name',
+            <!-- 出库时间 -->
+            out_prepare_library.create_time as 'out_prepare_library.create_time',
+        /*outPrepareLibrary end*/
+        /*cutting_tool begin*/
+            <!-- 材料刀id -->
+            cutting_tool.id as 'cutting_tool.id',
+            <!-- 刀具编码 -->
+            cutting_tool.code as 'cutting_tool.code',
+            <!-- 库位码 -->
+            cutting_tool.library_code as 'cutting_tool.library_code',
+            <!-- 业务编码 -->
+            cutting_tool.business_code as 'cutting_tool.business_code',
+            <!-- 名称 -->
+            cutting_tool.name as 'cutting_tool.name',
+            <!-- 刀具分类(1刀具2辅具3配套9其他） -->
+            cutting_tool.type as 'cutting_tool.type',
+            <!-- 消耗类别(1:可刃磨钻头2可刃磨刀片3一次性刀片9其他 -->
+            cutting_tool.consume_type as 'cutting_tool.consume_type',
+            <!-- 图纸 -->
+            cutting_tool.pic as 'cutting_tool.pic',
+            <!-- 规格型号 -->
+            cutting_tool.specifications as 'cutting_tool.specifications',
+            <!-- 刃口数 -->
+            cutting_tool.cut_number as 'cutting_tool.cut_number',
+            <!-- 品牌 -->
+            cutting_tool.brand as 'cutting_tool.brand',
+            <!-- 修磨类别(0:厂内修磨，1厂外修磨，2厂外涂层 -->
+            cutting_tool.grinding as 'cutting_tool.grinding',
+            <!-- 可使用次数 -->
+            cutting_tool.sharpen_num as 'cutting_tool.sharpen_num',
+            <!-- 最大库存 -->
+            cutting_tool.material_max as 'cutting_tool.material_max',
+            <!-- 最小库存 -->
+            cutting_tool.material_min as 'cutting_tool.material_min',
+            <!-- 可刃磨次数 -->
+            cutting_tool.tool_number as 'cutting_tool.tool_number',
+            <!-- 复磨标准 -->
+            cutting_tool.sharpen_criterion as 'cutting_tool.sharpen_criterion',
+            <!-- 刀具长度 -->
+            cutting_tool.material_length as 'cutting_tool.material_length',
+            <!-- 可刃磨长度 -->
+            cutting_tool.sharpen_length as 'cutting_tool.sharpen_length',
+            <!--  -->
+            cutting_tool.is_del as 'cutting_tool.is_del',
+            <!--  -->
+            cutting_tool.bei_min as 'cutting_tool.bei_min',
+            <!--  -->
+            cutting_tool.bei_max as 'cutting_tool.bei_max',
+            <!--  -->
+            cutting_tool.tool_price as 'cutting_tool.tool_price',
+            <!--  -->
+            cutting_tool.average_price as 'cutting_tool.average_price',
+            <!--  -->
+            cutting_tool.parameters_type as 'cutting_tool.parameters_type',
+            <!-- 用途类型 1 刀片,钻头，合成刀，热套类 2 一体刀 3筒刀 4专机 9其他 -->
+            cutting_tool.userful_type as 'cutting_tool.userful_type',
+            <!-- 启明编码 -->
+            cutting_tool.qiming_code as 'cutting_tool.qiming_code',
+            <!-- 物料编码 -->
+            cutting_tool.wuliao_code as 'cutting_tool.wuliao_code'
+        /*cutting_tool end*/
+        FROM out_prepare_library as out_prepare_library
+        LEFT JOIN cutting_tool as cutting_tool ON cutting_tool.code = out_prepare_library.cutting_tool_code
+        WHERE
+            1 = 1 AND  out_prepare_library.is_del = 0
+        /*out_prepare_library begin*/
+            <!-- 出库id -->
+            <if test="id != null and id != '' " >
+                and out_prepare_library.id = #{id}
+            </if>
+            <!-- 启明出库单号 -->
+            <if test="applyNo != null and applyNo != '' " >
+                and out_prepare_library.apply_no = #{applyNo}
+            </if>
+            <!-- 出库数量 -->
+            <if test="unitqty != null and unitqty != '' " >
+                and out_prepare_library.unitqty = #{unitqty}
+            </if>
+            <!-- 物料号 -->
+            <if test="mtlCode != null and mtlCode != '' " >
+                and out_prepare_library.mtl_code = #{mtlCode}
+            </if>
+            <!-- 刀具号 -->
+            <if test="loc != null and loc != '' " >
+                and out_prepare_library.loc = #{loc}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                and out_prepare_library.is_del = #{isDel}
+            </if>
+            <!--  -->
+            <if test="cuttingToolCode != null and cuttingToolCode != '' " >
+                and out_prepare_library.cutting_tool_code = #{cuttingToolCode}
+            </if>
+            <!-- 工序 -->
+            <if test="productlineProcess != null and productlineProcess != '' " >
+                and out_prepare_library.productline_process = #{productlineProcess}
+            </if>
+            <!-- 流水线 -->
+            <if test="productlineAssemblyline != null and productlineAssemblyline != '' " >
+                and out_prepare_library.productline_assemblyline = #{productlineAssemblyline}
+            </if>
+            <!-- 工厂 -->
+            <if test="plant != null and plant != '' " >
+                and out_prepare_library.plant = #{plant}
+            </if>
+            <!-- 库管员code -->
+            <if test="kuguanOperatorCode != null and kuguanOperatorCode != '' " >
+                and out_prepare_library.kuguan_operator_code = #{kuguanOperatorCode}
+            </if>
+            <!-- 库管员姓名 -->
+            <if test="kuguanOperatorName != null and kuguanOperatorName != '' " >
+                and out_prepare_library.kuguan_operator_name = #{kuguanOperatorName}
+            </if>
+            <!-- 领料员code -->
+            <if test="linglOperatorCode != null and linglOperatorCode != '' " >
+                and out_prepare_library.lingl_operator_code = #{linglOperatorCode}
+            </if>
+            <!-- 领料员姓名 -->
+            <if test="linglOperatorName != null and linglOperatorName != '' " >
+                and out_prepare_library.lingl_operator_name = #{linglOperatorName}
+            </if>
+            <!-- 科长code -->
+            <if test="kezhangCode != null and kezhangCode != '' " >
+                and out_prepare_library.kezhang_code = #{kezhangCode}
+            </if>
+            <!-- 科长姓名 -->
+            <if test="kezhangName != null and kezhangName != '' " >
+                and out_prepare_library.kezhang_name = #{kezhangName}
+            </if>
+            <!-- 出库时间 -->
+            <if test="createTime != null and createTime != '' " >
+                and out_prepare_library.create_time &lt;= #{createTimeEnd}
+            </if>
+            <if test="createTime != null and createTime != '' " >
+                and out_prepare_library.create_time &gt;= #{createTimeBegin}
+            </if>
+        /*out_prepare_library end*/
+        /*cutting_tool begin*/
+            <if test="cuttingToolVO != null ">
+            <!-- 材料刀id -->
+            <if test="cuttingToolVO.id != null and cuttingToolVO.id != '' " >
+                and cutting_tool.id = #{cuttingToolVO.id}
+            </if>
+            <!-- 刀具编码 -->
+            <if test="cuttingToolVO.code != null and cuttingToolVO.code != '' " >
+                and cutting_tool.code = #{cuttingToolVO.code}
+            </if>
+            <!-- 库位码 -->
+            <if test="cuttingToolVO.libraryCode != null and cuttingToolVO.libraryCode != '' " >
+                and cutting_tool.library_code = #{cuttingToolVO.libraryCode}
+            </if>
+            <!-- 业务编码 -->
+            <if test="cuttingToolVO.businessCode != null and cuttingToolVO.businessCode != '' " >
+                and cutting_tool.business_code = #{cuttingToolVO.businessCode}
+            </if>
+            <!-- 名称 -->
+            <if test="cuttingToolVO.name != null and cuttingToolVO.name != '' " >
+                and cutting_tool.name = #{cuttingToolVO.name}
+            </if>
+            <!-- 刀具分类(1刀具2辅具3配套9其他） -->
+            <if test="cuttingToolVO.type != null and cuttingToolVO.type != '' " >
+                and cutting_tool.type = #{cuttingToolVO.type}
+            </if>
+            <!-- 消耗类别(1:可刃磨钻头2可刃磨刀片3一次性刀片9其他 -->
+            <if test="cuttingToolVO.consumeType != null and cuttingToolVO.consumeType != '' " >
+                and cutting_tool.consume_type = #{cuttingToolVO.consumeType}
+            </if>
+            <!-- 图纸 -->
+            <if test="cuttingToolVO.pic != null and cuttingToolVO.pic != '' " >
+                and cutting_tool.pic = #{cuttingToolVO.pic}
+            </if>
+            <!-- 规格型号 -->
+            <if test="cuttingToolVO.specifications != null and cuttingToolVO.specifications != '' " >
+                and cutting_tool.specifications = #{cuttingToolVO.specifications}
+            </if>
+            <!-- 刃口数 -->
+            <if test="cuttingToolVO.cutNumber != null and cuttingToolVO.cutNumber != '' " >
+                and cutting_tool.cut_number = #{cuttingToolVO.cutNumber}
+            </if>
+            <!-- 品牌 -->
+            <if test="cuttingToolVO.brand != null and cuttingToolVO.brand != '' " >
+                and cutting_tool.brand = #{cuttingToolVO.brand}
+            </if>
+            <!-- 修磨类别(0:厂内修磨，1厂外修磨，2厂外涂层 -->
+            <if test="cuttingToolVO.grinding != null and cuttingToolVO.grinding != '' " >
+                and cutting_tool.grinding = #{cuttingToolVO.grinding}
+            </if>
+            <!-- 可使用次数 -->
+            <if test="cuttingToolVO.sharpenNum != null and cuttingToolVO.sharpenNum != '' " >
+                and cutting_tool.sharpen_num = #{cuttingToolVO.sharpenNum}
+            </if>
+            <!-- 最大库存 -->
+            <if test="cuttingToolVO.materialMax != null and cuttingToolVO.materialMax != '' " >
+                and cutting_tool.material_max = #{cuttingToolVO.materialMax}
+            </if>
+            <!-- 最小库存 -->
+            <if test="cuttingToolVO.materialMin != null and cuttingToolVO.materialMin != '' " >
+                and cutting_tool.material_min = #{cuttingToolVO.materialMin}
+            </if>
+            <!-- 可刃磨次数 -->
+            <if test="cuttingToolVO.toolNumber != null and cuttingToolVO.toolNumber != '' " >
+                and cutting_tool.tool_number = #{cuttingToolVO.toolNumber}
+            </if>
+            <!-- 复磨标准 -->
+            <if test="cuttingToolVO.sharpenCriterion != null and cuttingToolVO.sharpenCriterion != '' " >
+                and cutting_tool.sharpen_criterion = #{cuttingToolVO.sharpenCriterion}
+            </if>
+            <!-- 刀具长度 -->
+            <if test="cuttingToolVO.materialLength != null and cuttingToolVO.materialLength != '' " >
+                and cutting_tool.material_length = #{cuttingToolVO.materialLength}
+            </if>
+            <!-- 可刃磨长度 -->
+            <if test="cuttingToolVO.sharpenLength != null and cuttingToolVO.sharpenLength != '' " >
+                and cutting_tool.sharpen_length = #{cuttingToolVO.sharpenLength}
+            </if>
+            <!--  -->
+            <if test="cuttingToolVO.isDel != null and cuttingToolVO.isDel != '' " >
+                and cutting_tool.is_del = #{cuttingToolVO.isDel}
+            </if>
+            <!--  -->
+            <if test="cuttingToolVO.beiMin != null and cuttingToolVO.beiMin != '' " >
+                and cutting_tool.bei_min = #{cuttingToolVO.beiMin}
+            </if>
+            <!--  -->
+            <if test="cuttingToolVO.beiMax != null and cuttingToolVO.beiMax != '' " >
+                and cutting_tool.bei_max = #{cuttingToolVO.beiMax}
+            </if>
+            <!--  -->
+            <if test="cuttingToolVO.toolPrice != null and cuttingToolVO.toolPrice != '' " >
+                and cutting_tool.tool_price = #{cuttingToolVO.toolPrice}
+            </if>
+            <!--  -->
+            <if test="cuttingToolVO.averagePrice != null and cuttingToolVO.averagePrice != '' " >
+                and cutting_tool.average_price = #{cuttingToolVO.averagePrice}
+            </if>
+            <!--  -->
+            <if test="cuttingToolVO.parametersType != null and cuttingToolVO.parametersType != '' " >
+                and cutting_tool.parameters_type = #{cuttingToolVO.parametersType}
+            </if>
+            <!-- 用途类型 1 刀片,钻头，合成刀，热套类 2 一体刀 3筒刀 4专机 9其他 -->
+            <if test="cuttingToolVO.userfulType != null and cuttingToolVO.userfulType != '' " >
+                and cutting_tool.userful_type = #{cuttingToolVO.userfulType}
+            </if>
+            <!-- 启明编码 -->
+            <if test="cuttingToolVO.qimingCode != null and cuttingToolVO.qimingCode != '' " >
+                and cutting_tool.qiming_code = #{cuttingToolVO.qimingCode}
+            </if>
+            <!-- 物料编码 -->
+            <if test="cuttingToolVO.wuliaoCode != null and cuttingToolVO.wuliaoCode != '' " >
+                and cutting_tool.wuliao_code = #{cuttingToolVO.wuliaoCode}
+            </if>
+            </if>
+        /*cutting_tool end*/
+        ORDER BY out_prepare_library.id desc
+        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
+        LIMIT #{startRecord},#{pageSize}
+        </if>
+    </select>
+
+
+    <!--查询记录数-->
+    <select id="getOutPrepareLibraryCount" parameterType="com.common.vo.OutPrepareLibraryVO" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM out_prepare_library as out_prepare_library
+        LEFT JOIN cutting_tool as cutting_tool ON cutting_tool.code = out_prepare_library.cutting_tool_code
+        WHERE
+            1 = 1 AND  out_prepare_library.is_del = 0
+        /*out_prepare_library begin*/
+        <!-- 出库id -->
+        <if test="id != null and id != '' " >
+            and out_prepare_library.id = #{id}
+        </if>
+        <!-- 启明出库单号 -->
+        <if test="applyNo != null and applyNo != '' " >
+            and out_prepare_library.apply_no = #{applyNo}
+        </if>
+        <!-- 出库数量 -->
+        <if test="unitqty != null and unitqty != '' " >
+            and out_prepare_library.unitqty = #{unitqty}
+        </if>
+        <!-- 物料号 -->
+        <if test="mtlCode != null and mtlCode != '' " >
+            and out_prepare_library.mtl_code = #{mtlCode}
+        </if>
+        <!-- 刀具号 -->
+        <if test="loc != null and loc != '' " >
+            and out_prepare_library.loc = #{loc}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="isDel != null and isDel != '' " >
+            and out_prepare_library.is_del = #{isDel}
+        </if>
+        <!--  -->
+        <if test="cuttingToolCode != null and cuttingToolCode != '' " >
+            and out_prepare_library.cutting_tool_code = #{cuttingToolCode}
+        </if>
+        <!-- 工序 -->
+        <if test="productlineProcess != null and productlineProcess != '' " >
+            and out_prepare_library.productline_process = #{productlineProcess}
+        </if>
+        <!-- 流水线 -->
+        <if test="productlineAssemblyline != null and productlineAssemblyline != '' " >
+            and out_prepare_library.productline_assemblyline = #{productlineAssemblyline}
+        </if>
+        <!-- 工厂 -->
+        <if test="plant != null and plant != '' " >
+            and out_prepare_library.plant = #{plant}
+        </if>
+        <!-- 库管员code -->
+        <if test="kuguanOperatorCode != null and kuguanOperatorCode != '' " >
+            and out_prepare_library.kuguan_operator_code = #{kuguanOperatorCode}
+        </if>
+        <!-- 库管员姓名 -->
+        <if test="kuguanOperatorName != null and kuguanOperatorName != '' " >
+            and out_prepare_library.kuguan_operator_name = #{kuguanOperatorName}
+        </if>
+        <!-- 领料员code -->
+        <if test="linglOperatorCode != null and linglOperatorCode != '' " >
+            and out_prepare_library.lingl_operator_code = #{linglOperatorCode}
+        </if>
+        <!-- 领料员姓名 -->
+        <if test="linglOperatorName != null and linglOperatorName != '' " >
+            and out_prepare_library.lingl_operator_name = #{linglOperatorName}
+        </if>
+        <!-- 科长code -->
+        <if test="kezhangCode != null and kezhangCode != '' " >
+            and out_prepare_library.kezhang_code = #{kezhangCode}
+        </if>
+        <!-- 科长姓名 -->
+        <if test="kezhangName != null and kezhangName != '' " >
+            and out_prepare_library.kezhang_name = #{kezhangName}
+        </if>
+        <!-- 出库时间 -->
+        <if test="createTime != null and createTime != '' " >
+            and out_prepare_library.create_time &lt;= #{createTimeEnd}
+        </if>
+        <if test="createTime != null and createTime != '' " >
+            and out_prepare_library.create_time &gt;= #{createTimeBegin}
+        </if>
+        /*out_prepare_library end*/
+        /*cutting_tool begin*/
+        <if test="cuttingToolVO != null ">
+        <!-- 材料刀id -->
+        <if test="cuttingToolVO.id != null and cuttingToolVO.id != '' " >
+            and cutting_tool.id = #{cuttingToolVO.id}
+        </if>
+        <!-- 刀具编码 -->
+        <if test="cuttingToolVO.code != null and cuttingToolVO.code != '' " >
+            and cutting_tool.code = #{cuttingToolVO.code}
+        </if>
+        <!-- 库位码 -->
+        <if test="cuttingToolVO.libraryCode != null and cuttingToolVO.libraryCode != '' " >
+            and cutting_tool.library_code = #{cuttingToolVO.libraryCode}
+        </if>
+        <!-- 业务编码 -->
+        <if test="cuttingToolVO.businessCode != null and cuttingToolVO.businessCode != '' " >
+            and cutting_tool.business_code = #{cuttingToolVO.businessCode}
+        </if>
+        <!-- 名称 -->
+        <if test="cuttingToolVO.name != null and cuttingToolVO.name != '' " >
+            and cutting_tool.name = #{cuttingToolVO.name}
+        </if>
+        <!-- 刀具分类(1刀具2辅具3配套9其他） -->
+        <if test="cuttingToolVO.type != null and cuttingToolVO.type != '' " >
+            and cutting_tool.type = #{cuttingToolVO.type}
+        </if>
+        <!-- 消耗类别(1:可刃磨钻头2可刃磨刀片3一次性刀片9其他 -->
+        <if test="cuttingToolVO.consumeType != null and cuttingToolVO.consumeType != '' " >
+            and cutting_tool.consume_type = #{cuttingToolVO.consumeType}
+        </if>
+        <!-- 图纸 -->
+        <if test="cuttingToolVO.pic != null and cuttingToolVO.pic != '' " >
+            and cutting_tool.pic = #{cuttingToolVO.pic}
+        </if>
+        <!-- 规格型号 -->
+        <if test="cuttingToolVO.specifications != null and cuttingToolVO.specifications != '' " >
+            and cutting_tool.specifications = #{cuttingToolVO.specifications}
+        </if>
+        <!-- 刃口数 -->
+        <if test="cuttingToolVO.cutNumber != null and cuttingToolVO.cutNumber != '' " >
+            and cutting_tool.cut_number = #{cuttingToolVO.cutNumber}
+        </if>
+        <!-- 品牌 -->
+        <if test="cuttingToolVO.brand != null and cuttingToolVO.brand != '' " >
+            and cutting_tool.brand = #{cuttingToolVO.brand}
+        </if>
+        <!-- 修磨类别(0:厂内修磨，1厂外修磨，2厂外涂层 -->
+        <if test="cuttingToolVO.grinding != null and cuttingToolVO.grinding != '' " >
+            and cutting_tool.grinding = #{cuttingToolVO.grinding}
+        </if>
+        <!-- 可使用次数 -->
+        <if test="cuttingToolVO.sharpenNum != null and cuttingToolVO.sharpenNum != '' " >
+            and cutting_tool.sharpen_num = #{cuttingToolVO.sharpenNum}
+        </if>
+        <!-- 最大库存 -->
+        <if test="cuttingToolVO.materialMax != null and cuttingToolVO.materialMax != '' " >
+            and cutting_tool.material_max = #{cuttingToolVO.materialMax}
+        </if>
+        <!-- 最小库存 -->
+        <if test="cuttingToolVO.materialMin != null and cuttingToolVO.materialMin != '' " >
+            and cutting_tool.material_min = #{cuttingToolVO.materialMin}
+        </if>
+        <!-- 可刃磨次数 -->
+        <if test="cuttingToolVO.toolNumber != null and cuttingToolVO.toolNumber != '' " >
+            and cutting_tool.tool_number = #{cuttingToolVO.toolNumber}
+        </if>
+        <!-- 复磨标准 -->
+        <if test="cuttingToolVO.sharpenCriterion != null and cuttingToolVO.sharpenCriterion != '' " >
+            and cutting_tool.sharpen_criterion = #{cuttingToolVO.sharpenCriterion}
+        </if>
+        <!-- 刀具长度 -->
+        <if test="cuttingToolVO.materialLength != null and cuttingToolVO.materialLength != '' " >
+            and cutting_tool.material_length = #{cuttingToolVO.materialLength}
+        </if>
+        <!-- 可刃磨长度 -->
+        <if test="cuttingToolVO.sharpenLength != null and cuttingToolVO.sharpenLength != '' " >
+            and cutting_tool.sharpen_length = #{cuttingToolVO.sharpenLength}
+        </if>
+        <!--  -->
+        <if test="cuttingToolVO.isDel != null and cuttingToolVO.isDel != '' " >
+            and cutting_tool.is_del = #{cuttingToolVO.isDel}
+        </if>
+        <!--  -->
+        <if test="cuttingToolVO.beiMin != null and cuttingToolVO.beiMin != '' " >
+            and cutting_tool.bei_min = #{cuttingToolVO.beiMin}
+        </if>
+        <!--  -->
+        <if test="cuttingToolVO.beiMax != null and cuttingToolVO.beiMax != '' " >
+            and cutting_tool.bei_max = #{cuttingToolVO.beiMax}
+        </if>
+        <!--  -->
+        <if test="cuttingToolVO.toolPrice != null and cuttingToolVO.toolPrice != '' " >
+            and cutting_tool.tool_price = #{cuttingToolVO.toolPrice}
+        </if>
+        <!--  -->
+        <if test="cuttingToolVO.averagePrice != null and cuttingToolVO.averagePrice != '' " >
+            and cutting_tool.average_price = #{cuttingToolVO.averagePrice}
+        </if>
+        <!--  -->
+        <if test="cuttingToolVO.parametersType != null and cuttingToolVO.parametersType != '' " >
+            and cutting_tool.parameters_type = #{cuttingToolVO.parametersType}
+        </if>
+        <!-- 用途类型 1 刀片,钻头，合成刀，热套类 2 一体刀 3筒刀 4专机 9其他 -->
+        <if test="cuttingToolVO.userfulType != null and cuttingToolVO.userfulType != '' " >
+            and cutting_tool.userful_type = #{cuttingToolVO.userfulType}
+        </if>
+        <!-- 启明编码 -->
+        <if test="cuttingToolVO.qimingCode != null and cuttingToolVO.qimingCode != '' " >
+            and cutting_tool.qiming_code = #{cuttingToolVO.qimingCode}
+        </if>
+        <!-- 物料编码 -->
+        <if test="cuttingToolVO.wuliaoCode != null and cuttingToolVO.wuliaoCode != '' " >
+            and cutting_tool.wuliao_code = #{cuttingToolVO.wuliaoCode}
+        </if>
+        </if>
+        /*cutting_tool end*/
+    </select>
+
+    <!--根据vo查询 -->
+    <select id="getOutPrepareLibrary" parameterType="com.common.vo.OutPrepareLibraryVO" resultMap="outPrepareLibraryQueryMap">
+        SELECT
+        /*out_prepare_library begin*/
+        <!-- 出库id -->
+        out_prepare_library.id as 'out_prepare_library.id',
+        <!-- 启明出库单号 -->
+        out_prepare_library.apply_no as 'out_prepare_library.apply_no',
+        <!-- 出库数量 -->
+        out_prepare_library.unitqty as 'out_prepare_library.unitqty',
+        <!-- 物料号 -->
+        out_prepare_library.mtl_code as 'out_prepare_library.mtl_code',
+        <!-- 刀具号 -->
+        out_prepare_library.loc as 'out_prepare_library.loc',
+        <!-- 逻辑删除 -->
+        out_prepare_library.is_del as 'out_prepare_library.is_del',
+        <!--  -->
+        out_prepare_library.cutting_tool_code as 'out_prepare_library.cutting_tool_code',
+        <!-- 工序 -->
+        out_prepare_library.productline_process as 'out_prepare_library.productline_process',
+        <!-- 流水线 -->
+        out_prepare_library.productline_assemblyline as 'out_prepare_library.productline_assemblyline',
+        <!-- 工厂 -->
+        out_prepare_library.plant as 'out_prepare_library.plant',
+        <!-- 库管员code -->
+        out_prepare_library.kuguan_operator_code as 'out_prepare_library.kuguan_operator_code',
+        <!-- 库管员姓名 -->
+        out_prepare_library.kuguan_operator_name as 'out_prepare_library.kuguan_operator_name',
+        <!-- 领料员code -->
+        out_prepare_library.lingl_operator_code as 'out_prepare_library.lingl_operator_code',
+        <!-- 领料员姓名 -->
+        out_prepare_library.lingl_operator_name as 'out_prepare_library.lingl_operator_name',
+        <!-- 科长code -->
+        out_prepare_library.kezhang_code as 'out_prepare_library.kezhang_code',
+        <!-- 科长姓名 -->
+        out_prepare_library.kezhang_name as 'out_prepare_library.kezhang_name',
+        <!-- 出库时间 -->
+        out_prepare_library.create_time as 'out_prepare_library.create_time',
+        /*out_prepare_library end*/
+        /*cutting_tool begin*/
+        <!-- 材料刀id -->
+        cutting_tool.id as 'cutting_tool.id',
+        <!-- 刀具编码 -->
+        cutting_tool.code as 'cutting_tool.code',
+        <!-- 库位码 -->
+        cutting_tool.library_code as 'cutting_tool.library_code',
+        <!-- 业务编码 -->
+        cutting_tool.business_code as 'cutting_tool.business_code',
+        <!-- 名称 -->
+        cutting_tool.name as 'cutting_tool.name',
+        <!-- 刀具分类(1刀具2辅具3配套9其他） -->
+        cutting_tool.type as 'cutting_tool.type',
+        <!-- 消耗类别(1:可刃磨钻头2可刃磨刀片3一次性刀片9其他 -->
+        cutting_tool.consume_type as 'cutting_tool.consume_type',
+        <!-- 图纸 -->
+        cutting_tool.pic as 'cutting_tool.pic',
+        <!-- 规格型号 -->
+        cutting_tool.specifications as 'cutting_tool.specifications',
+        <!-- 刃口数 -->
+        cutting_tool.cut_number as 'cutting_tool.cut_number',
+        <!-- 品牌 -->
+        cutting_tool.brand as 'cutting_tool.brand',
+        <!-- 修磨类别(0:厂内修磨，1厂外修磨，2厂外涂层 -->
+        cutting_tool.grinding as 'cutting_tool.grinding',
+        <!-- 可使用次数 -->
+        cutting_tool.sharpen_num as 'cutting_tool.sharpen_num',
+        <!-- 最大库存 -->
+        cutting_tool.material_max as 'cutting_tool.material_max',
+        <!-- 最小库存 -->
+        cutting_tool.material_min as 'cutting_tool.material_min',
+        <!-- 可刃磨次数 -->
+        cutting_tool.tool_number as 'cutting_tool.tool_number',
+        <!-- 复磨标准 -->
+        cutting_tool.sharpen_criterion as 'cutting_tool.sharpen_criterion',
+        <!-- 刀具长度 -->
+        cutting_tool.material_length as 'cutting_tool.material_length',
+        <!-- 可刃磨长度 -->
+        cutting_tool.sharpen_length as 'cutting_tool.sharpen_length',
+        <!--  -->
+        cutting_tool.is_del as 'cutting_tool.is_del',
+        <!--  -->
+        cutting_tool.bei_min as 'cutting_tool.bei_min',
+        <!--  -->
+        cutting_tool.bei_max as 'cutting_tool.bei_max',
+        <!--  -->
+        cutting_tool.tool_price as 'cutting_tool.tool_price',
+        <!--  -->
+        cutting_tool.average_price as 'cutting_tool.average_price',
+        <!--  -->
+        cutting_tool.parameters_type as 'cutting_tool.parameters_type',
+        <!-- 用途类型 1 刀片,钻头，合成刀，热套类 2 一体刀 3筒刀 4专机 9其他 -->
+        cutting_tool.userful_type as 'cutting_tool.userful_type',
+        <!-- 启明编码 -->
+        cutting_tool.qiming_code as 'cutting_tool.qiming_code',
+        <!-- 物料编码 -->
+        cutting_tool.wuliao_code as 'cutting_tool.wuliao_code'
+        /*cutting_tool end*/
+        FROM out_prepare_library as out_prepare_library
+        LEFT JOIN cutting_tool as cutting_tool ON cutting_tool.code = out_prepare_library.cutting_tool_code
+        WHERE
+            1 = 1 AND  out_prepare_library.is_del = 0
+        /*out_prepare_library begin*/
+        <!-- 出库id -->
+        <if test="id != null and id != '' " >
+            and out_prepare_library.id = #{id}
+        </if>
+        <!-- 启明出库单号 -->
+        <if test="applyNo != null and applyNo != '' " >
+            and out_prepare_library.apply_no = #{applyNo}
+        </if>
+        <!-- 出库数量 -->
+        <if test="unitqty != null and unitqty != '' " >
+            and out_prepare_library.unitqty = #{unitqty}
+        </if>
+        <!-- 物料号 -->
+        <if test="mtlCode != null and mtlCode != '' " >
+            and out_prepare_library.mtl_code = #{mtlCode}
+        </if>
+        <!-- 刀具号 -->
+        <if test="loc != null and loc != '' " >
+            and out_prepare_library.loc = #{loc}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="isDel != null and isDel != '' " >
+            and out_prepare_library.is_del = #{isDel}
+        </if>
+        <!--  -->
+        <if test="cuttingToolCode != null and cuttingToolCode != '' " >
+            and out_prepare_library.cutting_tool_code = #{cuttingToolCode}
+        </if>
+        <!-- 工序 -->
+        <if test="productlineProcess != null and productlineProcess != '' " >
+            and out_prepare_library.productline_process = #{productlineProcess}
+        </if>
+        <!-- 流水线 -->
+        <if test="productlineAssemblyline != null and productlineAssemblyline != '' " >
+            and out_prepare_library.productline_assemblyline = #{productlineAssemblyline}
+        </if>
+        <!-- 工厂 -->
+        <if test="plant != null and plant != '' " >
+            and out_prepare_library.plant = #{plant}
+        </if>
+        <!-- 库管员code -->
+        <if test="kuguanOperatorCode != null and kuguanOperatorCode != '' " >
+            and out_prepare_library.kuguan_operator_code = #{kuguanOperatorCode}
+        </if>
+        <!-- 库管员姓名 -->
+        <if test="kuguanOperatorName != null and kuguanOperatorName != '' " >
+            and out_prepare_library.kuguan_operator_name = #{kuguanOperatorName}
+        </if>
+        <!-- 领料员code -->
+        <if test="linglOperatorCode != null and linglOperatorCode != '' " >
+            and out_prepare_library.lingl_operator_code = #{linglOperatorCode}
+        </if>
+        <!-- 领料员姓名 -->
+        <if test="linglOperatorName != null and linglOperatorName != '' " >
+            and out_prepare_library.lingl_operator_name = #{linglOperatorName}
+        </if>
+        <!-- 科长code -->
+        <if test="kezhangCode != null and kezhangCode != '' " >
+            and out_prepare_library.kezhang_code = #{kezhangCode}
+        </if>
+        <!-- 科长姓名 -->
+        <if test="kezhangName != null and kezhangName != '' " >
+            and out_prepare_library.kezhang_name = #{kezhangName}
+        </if>
+        <!-- 出库时间 -->
+        <if test="createTime != null and createTime != '' " >
+            and out_prepare_library.create_time &lt;= #{createTimeEnd}
+        </if>
+        <if test="createTime != null and createTime != '' " >
+            and out_prepare_library.create_time &gt;= #{createTimeBegin}
+        </if>
+        /*out_prepare_library end*/
+        /*cutting_tools begin*/
+        <if test="cuttingToolVO != null ">
+        <!-- 材料刀id -->
+        <if test="cuttingToolVO.id != null and cuttingToolVO.id != '' " >
+            and cutting_tools.id = #{cuttingToolVO.id}
+        </if>
+        <!-- 刀具编码 -->
+        <if test="cuttingToolVO.code != null and cuttingToolVO.code != '' " >
+            and cutting_tools.code = #{cuttingToolVO.code}
+        </if>
+        <!-- 库位码 -->
+        <if test="cuttingToolVO.libraryCode != null and cuttingToolVO.libraryCode != '' " >
+            and cutting_tools.library_code = #{cuttingToolVO.libraryCode}
+        </if>
+        <!-- 业务编码 -->
+        <if test="cuttingToolVO.businessCode != null and cuttingToolVO.businessCode != '' " >
+            and cutting_tools.business_code = #{cuttingToolVO.businessCode}
+        </if>
+        <!-- 名称 -->
+        <if test="cuttingToolVO.name != null and cuttingToolVO.name != '' " >
+            and cutting_tools.name = #{cuttingToolVO.name}
+        </if>
+        <!-- 刀具分类(1刀具2辅具3配套9其他） -->
+        <if test="cuttingToolVO.type != null and cuttingToolVO.type != '' " >
+            and cutting_tools.type = #{cuttingToolVO.type}
+        </if>
+        <!-- 消耗类别(1:可刃磨钻头2可刃磨刀片3一次性刀片9其他 -->
+        <if test="cuttingToolVO.consumeType != null and cuttingToolVO.consumeType != '' " >
+            and cutting_tools.consume_type = #{cuttingToolVO.consumeType}
+        </if>
+        <!-- 图纸 -->
+        <if test="cuttingToolVO.pic != null and cuttingToolVO.pic != '' " >
+            and cutting_tools.pic = #{cuttingToolVO.pic}
+        </if>
+        <!-- 规格型号 -->
+        <if test="cuttingToolVO.specifications != null and cuttingToolVO.specifications != '' " >
+            and cutting_tools.specifications = #{cuttingToolVO.specifications}
+        </if>
+        <!-- 刃口数 -->
+        <if test="cuttingToolVO.cutNumber != null and cuttingToolVO.cutNumber != '' " >
+            and cutting_tools.cut_number = #{cuttingToolVO.cutNumber}
+        </if>
+        <!-- 品牌 -->
+        <if test="cuttingToolVO.brand != null and cuttingToolVO.brand != '' " >
+            and cutting_tools.brand = #{cuttingToolVO.brand}
+        </if>
+        <!-- 修磨类别(0:厂内修磨，1厂外修磨，2厂外涂层 -->
+        <if test="cuttingToolVO.grinding != null and cuttingToolVO.grinding != '' " >
+            and cutting_tools.grinding = #{cuttingToolVO.grinding}
+        </if>
+        <!-- 可使用次数 -->
+        <if test="cuttingToolVO.sharpenNum != null and cuttingToolVO.sharpenNum != '' " >
+            and cutting_tools.sharpen_num = #{cuttingToolVO.sharpenNum}
+        </if>
+        <!-- 最大库存 -->
+        <if test="cuttingToolVO.materialMax != null and cuttingToolVO.materialMax != '' " >
+            and cutting_tools.material_max = #{cuttingToolVO.materialMax}
+        </if>
+        <!-- 最小库存 -->
+        <if test="cuttingToolVO.materialMin != null and cuttingToolVO.materialMin != '' " >
+            and cutting_tools.material_min = #{cuttingToolVO.materialMin}
+        </if>
+        <!-- 可刃磨次数 -->
+        <if test="cuttingToolVO.toolNumber != null and cuttingToolVO.toolNumber != '' " >
+            and cutting_tools.tool_number = #{cuttingToolVO.toolNumber}
+        </if>
+        <!-- 复磨标准 -->
+        <if test="cuttingToolVO.sharpenCriterion != null and cuttingToolVO.sharpenCriterion != '' " >
+            and cutting_tools.sharpen_criterion = #{cuttingToolVO.sharpenCriterion}
+        </if>
+        <!-- 刀具长度 -->
+        <if test="cuttingToolVO.materialLength != null and cuttingToolVO.materialLength != '' " >
+            and cutting_tools.material_length = #{cuttingToolVO.materialLength}
+        </if>
+        <!-- 可刃磨长度 -->
+        <if test="cuttingToolVO.sharpenLength != null and cuttingToolVO.sharpenLength != '' " >
+            and cutting_tools.sharpen_length = #{cuttingToolVO.sharpenLength}
+        </if>
+        <!--  -->
+        <if test="cuttingToolVO.isDel != null and cuttingToolVO.isDel != '' " >
+            and cutting_tools.is_del = #{cuttingToolVO.isDel}
+        </if>
+        <!--  -->
+        <if test="cuttingToolVO.beiMin != null and cuttingToolVO.beiMin != '' " >
+            and cutting_tools.bei_min = #{cuttingToolVO.beiMin}
+        </if>
+        <!--  -->
+        <if test="cuttingToolVO.beiMax != null and cuttingToolVO.beiMax != '' " >
+            and cutting_tools.bei_max = #{cuttingToolVO.beiMax}
+        </if>
+        <!--  -->
+        <if test="cuttingToolVO.toolPrice != null and cuttingToolVO.toolPrice != '' " >
+            and cutting_tools.tool_price = #{cuttingToolVO.toolPrice}
+        </if>
+        <!--  -->
+        <if test="cuttingToolVO.averagePrice != null and cuttingToolVO.averagePrice != '' " >
+            and cutting_tools.average_price = #{cuttingToolVO.averagePrice}
+        </if>
+        <!--  -->
+        <if test="cuttingToolVO.parametersType != null and cuttingToolVO.parametersType != '' " >
+            and cutting_tools.parameters_type = #{cuttingToolVO.parametersType}
+        </if>
+        <!-- 用途类型 1 刀片,钻头，合成刀，热套类 2 一体刀 3筒刀 4专机 9其他 -->
+        <if test="cuttingToolVO.userfulType != null and cuttingToolVO.userfulType != '' " >
+            and cutting_tools.userful_type = #{cuttingToolVO.userfulType}
+        </if>
+        <!-- 启明编码 -->
+        <if test="cuttingToolVO.qimingCode != null and cuttingToolVO.qimingCode != '' " >
+            and cutting_tools.qiming_code = #{cuttingToolVO.qimingCode}
+        </if>
+        <!-- 物料编码 -->
+        <if test="cuttingToolVO.wuliaoCode != null and cuttingToolVO.wuliaoCode != '' " >
+            and cutting_tools.wuliao_code = #{cuttingToolVO.wuliaoCode}
+        </if>
+        </if>
+        /*cutting_tool end*/
+    </select>
+</mapper>

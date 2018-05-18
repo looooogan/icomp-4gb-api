@@ -1,0 +1,699 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.mapper.IQimingRecordsMapper">
+    <resultMap id="qimingRecordsQueryMap" type="com.common.pojo.QimingRecords">
+        <!-- id -->
+        <id property="id" column="qiming_records.id"/>
+
+        <!-- 启明出库单号 -->
+        <result property="applyNo" column="qiming_records.apply_no"/>
+        <!-- 出库数量 -->
+        <result property="unitqty" column="qiming_records.unitqty"/>
+        <!-- 物料号 -->
+        <result property="mtlCode" column="qiming_records.mtl_code"/>
+        <!-- 刀具号 -->
+        <result property="loc" column="qiming_records.loc"/>
+        <!-- 批次 -->
+        <result property="batchNo" column="qiming_records.batch_no"/>
+        <!-- 材料刀号 -->
+        <result property="cuttingToolCode" column="qiming_records.cutting_tool_code"/>
+        <!-- 材料刀绑定 -->
+        <result property="cuttingToolBindCode" column="qiming_records.cutting_tool_bind_code"/>
+        <!-- 刀身码 -->
+        <result property="bladeCode" column="qiming_records.blade_code"/>
+        <!-- 逻辑删除 -->
+        <result property="isDel" column="qiming_records.is_del"/>
+        <!--  -->
+        <result property="productlineProcess" column="qiming_records.productline_process"/>
+        <!--  -->
+        <result property="productlineAssemblyline" column="qiming_records.productline_assemblyline"/>
+        <!--  -->
+        <result property="plant" column="qiming_records.plant"/>
+        <!--  -->
+        <result property="kuguanOperatorCode" column="qiming_records.kuguan_operator_code"/>
+        <!--  -->
+        <result property="linglOperatorCode" column="qiming_records.lingl_operator_code"/>
+        <!--  -->
+        <result property="kezhangCode" column="qiming_records.kezhang_code"/>
+        <!--  -->
+        <result property="createTime" column="qiming_records.create_time"/>
+        <!--  -->
+        <result property="kuguanOperatorName" column="qiming_records.kuguan_operator_name"/>
+        <!--  -->
+        <result property="linglOperatorName" column="qiming_records.lingl_operator_name"/>
+        <!--  -->
+        <result property="kezhangName" column="qiming_records.kezhang_name"/>
+    </resultMap>
+    <!--添加-->
+    <insert id="addQimingRecords" parameterType="com.common.pojo.QimingRecords">
+        INSERT INTO qiming_records (
+            <!-- id -->
+            id,
+            <!-- 启明出库单号 -->
+            apply_no,
+            <!-- 出库数量 -->
+            unitqty,
+            <!-- 物料号 -->
+            mtl_code,
+            <!-- 刀具号 -->
+            loc,
+            <!-- 批次 -->
+            batch_no,
+            <!-- 材料刀号 -->
+            cutting_tool_code,
+            <!-- 材料刀绑定 -->
+            cutting_tool_bind_code,
+            <!-- 刀身码 -->
+            blade_code,
+            <!-- 逻辑删除 -->
+            is_del,
+            <!--  -->
+            productline_process,
+            <!--  -->
+            productline_assemblyline,
+            <!--  -->
+            plant,
+            <!--  -->
+            kuguan_operator_code,
+            <!--  -->
+            lingl_operator_code,
+            <!--  -->
+            kezhang_code,
+            <!--  -->
+            create_time,
+            <!--  -->
+            kuguan_operator_name,
+            <!--  -->
+            lingl_operator_name,
+            <!--  -->
+            kezhang_name
+        )
+        VALUES (
+            <!-- id -->
+            #{id},
+            <!-- 启明出库单号 -->
+            #{applyNo},
+            <!-- 出库数量 -->
+            #{unitqty},
+            <!-- 物料号 -->
+            #{mtlCode},
+            <!-- 刀具号 -->
+            #{loc},
+            <!-- 批次 -->
+            #{batchNo},
+            <!-- 材料刀号 -->
+            #{cuttingToolCode},
+            <!-- 材料刀绑定 -->
+            #{cuttingToolBindCode},
+            <!-- 刀身码 -->
+            #{bladeCode},
+            <!-- 逻辑删除 -->
+            #{isDel},
+            <!--  -->
+            #{productlineProcess},
+            <!--  -->
+            #{productlineAssemblyline},
+            <!--  -->
+            #{plant},
+            <!--  -->
+            #{kuguanOperatorCode},
+            <!--  -->
+            #{linglOperatorCode},
+            <!--  -->
+            #{kezhangCode},
+            <!--  -->
+            #{createTime},
+            <!--  -->
+            #{kuguanOperatorName},
+            <!--  -->
+            #{linglOperatorName},
+            <!--  -->
+            #{kezhangName}
+        )
+    </insert>
+
+    <!--删除-->
+    <delete id="delQimingRecords" parameterType="com.common.pojo.QimingRecords">
+        DELETE
+        FROM qiming_records
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--逻辑删除-->
+    <delete id="delQimingRecordsForLogic" parameterType="com.common.pojo.QimingRecords">
+        UPDATE qiming_records SET
+        is_del = 1
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--根据VO删除-->
+    <delete id="delQimingRecordsByVo" parameterType="com.common.vo.QimingRecordsVO">
+        UPDATE qiming_records SET is_del = 1
+        WHERE
+            1=1
+            <!-- id -->
+            <if test="id != null and id != '' " >
+                and id =  #{id}
+            </if>
+            <!-- 启明出库单号 -->
+            <if test="applyNo != null and applyNo != '' " >
+                and apply_no =  #{applyNo}
+            </if>
+            <!-- 出库数量 -->
+            <if test="unitqty != null and unitqty != '' " >
+                and unitqty =  #{unitqty}
+            </if>
+            <!-- 物料号 -->
+            <if test="mtlCode != null and mtlCode != '' " >
+                and mtl_code =  #{mtlCode}
+            </if>
+            <!-- 刀具号 -->
+            <if test="loc != null and loc != '' " >
+                and loc =  #{loc}
+            </if>
+            <!-- 批次 -->
+            <if test="batchNo != null and batchNo != '' " >
+                and batch_no =  #{batchNo}
+            </if>
+            <!-- 材料刀号 -->
+            <if test="cuttingToolCode != null and cuttingToolCode != '' " >
+                and cutting_tool_code =  #{cuttingToolCode}
+            </if>
+            <!-- 材料刀绑定 -->
+            <if test="cuttingToolBindCode != null and cuttingToolBindCode != '' " >
+                and cutting_tool_bind_code =  #{cuttingToolBindCode}
+            </if>
+            <!-- 刀身码 -->
+            <if test="bladeCode != null and bladeCode != '' " >
+                and blade_code =  #{bladeCode}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                and is_del =  #{isDel}
+            </if>
+            <!--  -->
+            <if test="productlineProcess != null and productlineProcess != '' " >
+                and productline_process =  #{productlineProcess}
+            </if>
+            <!--  -->
+            <if test="productlineAssemblyline != null and productlineAssemblyline != '' " >
+                and productline_assemblyline =  #{productlineAssemblyline}
+            </if>
+            <!--  -->
+            <if test="plant != null and plant != '' " >
+                and plant =  #{plant}
+            </if>
+            <!--  -->
+            <if test="kuguanOperatorCode != null and kuguanOperatorCode != '' " >
+                and kuguan_operator_code =  #{kuguanOperatorCode}
+            </if>
+            <!--  -->
+            <if test="linglOperatorCode != null and linglOperatorCode != '' " >
+                and lingl_operator_code =  #{linglOperatorCode}
+            </if>
+            <!--  -->
+            <if test="kezhangCode != null and kezhangCode != '' " >
+                and kezhang_code =  #{kezhangCode}
+            </if>
+            <!--  -->
+            <if test="createTime != null and createTime != '' " >
+                and create_time =  #{createTime}
+            </if>
+            <!--  -->
+            <if test="kuguanOperatorName != null and kuguanOperatorName != '' " >
+                and kuguan_operator_name =  #{kuguanOperatorName}
+            </if>
+            <!--  -->
+            <if test="linglOperatorName != null and linglOperatorName != '' " >
+                and lingl_operator_name =  #{linglOperatorName}
+            </if>
+            <!--  -->
+            <if test="kezhangName != null and kezhangName != '' " >
+                and kezhang_name =  #{kezhangName}
+            </if>
+    </delete>
+
+    <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
+    <update id="updQimingRecords" parameterType="com.common.pojo.QimingRecords">
+        UPDATE qiming_records
+        SET
+            <!-- 启明出库单号 -->
+            <if test="applyNo != null and applyNo != '' " >
+                apply_no =  #{applyNo},
+            </if>
+            <!-- 出库数量 -->
+            <if test="unitqty != null and unitqty != '' " >
+                unitqty =  #{unitqty},
+            </if>
+            <!-- 物料号 -->
+            <if test="mtlCode != null and mtlCode != '' " >
+                mtl_code =  #{mtlCode},
+            </if>
+            <!-- 刀具号 -->
+            <if test="loc != null and loc != '' " >
+                loc =  #{loc},
+            </if>
+            <!-- 批次 -->
+            <if test="batchNo != null and batchNo != '' " >
+                batch_no =  #{batchNo},
+            </if>
+            <!-- 材料刀号 -->
+            <if test="cuttingToolCode != null and cuttingToolCode != '' " >
+                cutting_tool_code =  #{cuttingToolCode},
+            </if>
+            <!-- 材料刀绑定 -->
+            <if test="cuttingToolBindCode != null and cuttingToolBindCode != '' " >
+                cutting_tool_bind_code =  #{cuttingToolBindCode},
+            </if>
+            <!-- 刀身码 -->
+            <if test="bladeCode != null and bladeCode != '' " >
+                blade_code =  #{bladeCode},
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                is_del =  #{isDel},
+            </if>
+            <!--  -->
+            <if test="productlineProcess != null and productlineProcess != '' " >
+                productline_process =  #{productlineProcess},
+            </if>
+            <!--  -->
+            <if test="productlineAssemblyline != null and productlineAssemblyline != '' " >
+                productline_assemblyline =  #{productlineAssemblyline},
+            </if>
+            <!--  -->
+            <if test="plant != null and plant != '' " >
+                plant =  #{plant},
+            </if>
+            <!--  -->
+            <if test="kuguanOperatorCode != null and kuguanOperatorCode != '' " >
+                kuguan_operator_code =  #{kuguanOperatorCode},
+            </if>
+            <!--  -->
+            <if test="linglOperatorCode != null and linglOperatorCode != '' " >
+                lingl_operator_code =  #{linglOperatorCode},
+            </if>
+            <!--  -->
+            <if test="kezhangCode != null and kezhangCode != '' " >
+                kezhang_code =  #{kezhangCode},
+            </if>
+            <!--  -->
+            <if test="createTime != null and createTime != '' " >
+                create_time =  #{createTime},
+            </if>
+            <!--  -->
+            <if test="kuguanOperatorName != null and kuguanOperatorName != '' " >
+                kuguan_operator_name =  #{kuguanOperatorName},
+            </if>
+            <!--  -->
+            <if test="linglOperatorName != null and linglOperatorName != '' " >
+                lingl_operator_name =  #{linglOperatorName},
+            </if>
+            <!--  -->
+            <if test="kezhangName != null and kezhangName != '' " >
+                kezhang_name =  #{kezhangName},
+            </if>
+            <!-- id -->
+            id = #{id}
+        WHERE
+            1 = 1
+            and id = #{id}
+    </update>
+
+    <!--分页查询 -->
+    <select id="getQimingRecordsByPage" parameterType="com.common.vo.QimingRecordsVO" resultMap="qimingRecordsQueryMap">
+        SELECT
+        /*qimingRecords begin*/
+            <!-- id -->
+            qiming_records.id as 'qiming_records.id',
+            <!-- 启明出库单号 -->
+            qiming_records.apply_no as 'qiming_records.apply_no',
+            <!-- 出库数量 -->
+            qiming_records.unitqty as 'qiming_records.unitqty',
+            <!-- 物料号 -->
+            qiming_records.mtl_code as 'qiming_records.mtl_code',
+            <!-- 刀具号 -->
+            qiming_records.loc as 'qiming_records.loc',
+            <!-- 批次 -->
+            qiming_records.batch_no as 'qiming_records.batch_no',
+            <!-- 材料刀号 -->
+            qiming_records.cutting_tool_code as 'qiming_records.cutting_tool_code',
+            <!-- 材料刀绑定 -->
+            qiming_records.cutting_tool_bind_code as 'qiming_records.cutting_tool_bind_code',
+            <!-- 刀身码 -->
+            qiming_records.blade_code as 'qiming_records.blade_code',
+            <!-- 逻辑删除 -->
+            qiming_records.is_del as 'qiming_records.is_del',
+            <!--  -->
+            qiming_records.productline_process as 'qiming_records.productline_process',
+            <!--  -->
+            qiming_records.productline_assemblyline as 'qiming_records.productline_assemblyline',
+            <!--  -->
+            qiming_records.plant as 'qiming_records.plant',
+            <!--  -->
+            qiming_records.kuguan_operator_code as 'qiming_records.kuguan_operator_code',
+            <!--  -->
+            qiming_records.lingl_operator_code as 'qiming_records.lingl_operator_code',
+            <!--  -->
+            qiming_records.kezhang_code as 'qiming_records.kezhang_code',
+            <!--  -->
+            qiming_records.create_time as 'qiming_records.create_time',
+            <!--  -->
+            qiming_records.kuguan_operator_name as 'qiming_records.kuguan_operator_name',
+            <!--  -->
+            qiming_records.lingl_operator_name as 'qiming_records.lingl_operator_name',
+            <!--  -->
+            qiming_records.kezhang_name as 'qiming_records.kezhang_name'
+        /*qimingRecords end*/
+        FROM qiming_records as qiming_records
+        WHERE
+            1 = 1 AND  qiming_records.is_del = 0
+        /*qiming_records begin*/
+            <!-- id -->
+            <if test="id != null and id != '' " >
+                and qiming_records.id = #{id}
+            </if>
+            <!-- 启明出库单号 -->
+            <if test="applyNo != null and applyNo != '' " >
+                and qiming_records.apply_no = #{applyNo}
+            </if>
+            <!-- 出库数量 -->
+            <if test="unitqty != null and unitqty != '' " >
+                and qiming_records.unitqty = #{unitqty}
+            </if>
+            <!-- 物料号 -->
+            <if test="mtlCode != null and mtlCode != '' " >
+                and qiming_records.mtl_code = #{mtlCode}
+            </if>
+            <!-- 刀具号 -->
+            <if test="loc != null and loc != '' " >
+                and qiming_records.loc = #{loc}
+            </if>
+            <!-- 批次 -->
+            <if test="batchNo != null and batchNo != '' " >
+                and qiming_records.batch_no = #{batchNo}
+            </if>
+            <!-- 材料刀号 -->
+            <if test="cuttingToolCode != null and cuttingToolCode != '' " >
+                and qiming_records.cutting_tool_code = #{cuttingToolCode}
+            </if>
+            <!-- 材料刀绑定 -->
+            <if test="cuttingToolBindCode != null and cuttingToolBindCode != '' " >
+                and qiming_records.cutting_tool_bind_code = #{cuttingToolBindCode}
+            </if>
+            <!-- 刀身码 -->
+            <if test="bladeCode != null and bladeCode != '' " >
+                and qiming_records.blade_code = #{bladeCode}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                and qiming_records.is_del = #{isDel}
+            </if>
+            <!--  -->
+            <if test="productlineProcess != null and productlineProcess != '' " >
+                and qiming_records.productline_process = #{productlineProcess}
+            </if>
+            <!--  -->
+            <if test="productlineAssemblyline != null and productlineAssemblyline != '' " >
+                and qiming_records.productline_assemblyline = #{productlineAssemblyline}
+            </if>
+            <!--  -->
+            <if test="plant != null and plant != '' " >
+                and qiming_records.plant = #{plant}
+            </if>
+            <!--  -->
+            <if test="kuguanOperatorCode != null and kuguanOperatorCode != '' " >
+                and qiming_records.kuguan_operator_code = #{kuguanOperatorCode}
+            </if>
+            <!--  -->
+            <if test="linglOperatorCode != null and linglOperatorCode != '' " >
+                and qiming_records.lingl_operator_code = #{linglOperatorCode}
+            </if>
+            <!--  -->
+            <if test="kezhangCode != null and kezhangCode != '' " >
+                and qiming_records.kezhang_code = #{kezhangCode}
+            </if>
+            <!--  -->
+            <if test="createTime != null and createTime != '' " >
+                and qiming_records.create_time &lt;= #{createTimeEnd}
+            </if>
+            <if test="createTime != null and createTime != '' " >
+                and qiming_records.create_time &gt;= #{createTimeBegin}
+            </if>
+            <!--  -->
+            <if test="kuguanOperatorName != null and kuguanOperatorName != '' " >
+                and qiming_records.kuguan_operator_name = #{kuguanOperatorName}
+            </if>
+            <!--  -->
+            <if test="linglOperatorName != null and linglOperatorName != '' " >
+                and qiming_records.lingl_operator_name = #{linglOperatorName}
+            </if>
+            <!--  -->
+            <if test="kezhangName != null and kezhangName != '' " >
+                and qiming_records.kezhang_name = #{kezhangName}
+            </if>
+        /*qiming_records end*/
+        ORDER BY qiming_records.id desc
+        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
+        LIMIT #{startRecord},#{pageSize}
+        </if>
+    </select>
+
+
+    <!--查询记录数-->
+    <select id="getQimingRecordsCount" parameterType="com.common.vo.QimingRecordsVO" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM qiming_records as qiming_records
+        WHERE
+            1 = 1 AND  qiming_records.is_del = 0
+        /*qiming_records begin*/
+        <!-- id -->
+        <if test="id != null and id != '' " >
+            and qiming_records.id = #{id}
+        </if>
+        <!-- 启明出库单号 -->
+        <if test="applyNo != null and applyNo != '' " >
+            and qiming_records.apply_no = #{applyNo}
+        </if>
+        <!-- 出库数量 -->
+        <if test="unitqty != null and unitqty != '' " >
+            and qiming_records.unitqty = #{unitqty}
+        </if>
+        <!-- 物料号 -->
+        <if test="mtlCode != null and mtlCode != '' " >
+            and qiming_records.mtl_code = #{mtlCode}
+        </if>
+        <!-- 刀具号 -->
+        <if test="loc != null and loc != '' " >
+            and qiming_records.loc = #{loc}
+        </if>
+        <!-- 批次 -->
+        <if test="batchNo != null and batchNo != '' " >
+            and qiming_records.batch_no = #{batchNo}
+        </if>
+        <!-- 材料刀号 -->
+        <if test="cuttingToolCode != null and cuttingToolCode != '' " >
+            and qiming_records.cutting_tool_code = #{cuttingToolCode}
+        </if>
+        <!-- 材料刀绑定 -->
+        <if test="cuttingToolBindCode != null and cuttingToolBindCode != '' " >
+            and qiming_records.cutting_tool_bind_code = #{cuttingToolBindCode}
+        </if>
+        <!-- 刀身码 -->
+        <if test="bladeCode != null and bladeCode != '' " >
+            and qiming_records.blade_code = #{bladeCode}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="isDel != null and isDel != '' " >
+            and qiming_records.is_del = #{isDel}
+        </if>
+        <!--  -->
+        <if test="productlineProcess != null and productlineProcess != '' " >
+            and qiming_records.productline_process = #{productlineProcess}
+        </if>
+        <!--  -->
+        <if test="productlineAssemblyline != null and productlineAssemblyline != '' " >
+            and qiming_records.productline_assemblyline = #{productlineAssemblyline}
+        </if>
+        <!--  -->
+        <if test="plant != null and plant != '' " >
+            and qiming_records.plant = #{plant}
+        </if>
+        <!--  -->
+        <if test="kuguanOperatorCode != null and kuguanOperatorCode != '' " >
+            and qiming_records.kuguan_operator_code = #{kuguanOperatorCode}
+        </if>
+        <!--  -->
+        <if test="linglOperatorCode != null and linglOperatorCode != '' " >
+            and qiming_records.lingl_operator_code = #{linglOperatorCode}
+        </if>
+        <!--  -->
+        <if test="kezhangCode != null and kezhangCode != '' " >
+            and qiming_records.kezhang_code = #{kezhangCode}
+        </if>
+        <!--  -->
+        <if test="createTime != null and createTime != '' " >
+            and qiming_records.create_time &lt;= #{createTimeEnd}
+        </if>
+        <if test="createTime != null and createTime != '' " >
+            and qiming_records.create_time &gt;= #{createTimeBegin}
+        </if>
+        <!--  -->
+        <if test="kuguanOperatorName != null and kuguanOperatorName != '' " >
+            and qiming_records.kuguan_operator_name = #{kuguanOperatorName}
+        </if>
+        <!--  -->
+        <if test="linglOperatorName != null and linglOperatorName != '' " >
+            and qiming_records.lingl_operator_name = #{linglOperatorName}
+        </if>
+        <!--  -->
+        <if test="kezhangName != null and kezhangName != '' " >
+            and qiming_records.kezhang_name = #{kezhangName}
+        </if>
+        /*qiming_records end*/
+    </select>
+
+    <!--根据vo查询 -->
+    <select id="getQimingRecords" parameterType="com.common.vo.QimingRecordsVO" resultMap="qimingRecordsQueryMap">
+        SELECT
+        /*qiming_records begin*/
+        <!-- id -->
+        qiming_records.id as 'qiming_records.id',
+        <!-- 启明出库单号 -->
+        qiming_records.apply_no as 'qiming_records.apply_no',
+        <!-- 出库数量 -->
+        qiming_records.unitqty as 'qiming_records.unitqty',
+        <!-- 物料号 -->
+        qiming_records.mtl_code as 'qiming_records.mtl_code',
+        <!-- 刀具号 -->
+        qiming_records.loc as 'qiming_records.loc',
+        <!-- 批次 -->
+        qiming_records.batch_no as 'qiming_records.batch_no',
+        <!-- 材料刀号 -->
+        qiming_records.cutting_tool_code as 'qiming_records.cutting_tool_code',
+        <!-- 材料刀绑定 -->
+        qiming_records.cutting_tool_bind_code as 'qiming_records.cutting_tool_bind_code',
+        <!-- 刀身码 -->
+        qiming_records.blade_code as 'qiming_records.blade_code',
+        <!-- 逻辑删除 -->
+        qiming_records.is_del as 'qiming_records.is_del',
+        <!--  -->
+        qiming_records.productline_process as 'qiming_records.productline_process',
+        <!--  -->
+        qiming_records.productline_assemblyline as 'qiming_records.productline_assemblyline',
+        <!--  -->
+        qiming_records.plant as 'qiming_records.plant',
+        <!--  -->
+        qiming_records.kuguan_operator_code as 'qiming_records.kuguan_operator_code',
+        <!--  -->
+        qiming_records.lingl_operator_code as 'qiming_records.lingl_operator_code',
+        <!--  -->
+        qiming_records.kezhang_code as 'qiming_records.kezhang_code',
+        <!--  -->
+        qiming_records.create_time as 'qiming_records.create_time',
+        <!--  -->
+        qiming_records.kuguan_operator_name as 'qiming_records.kuguan_operator_name',
+        <!--  -->
+        qiming_records.lingl_operator_name as 'qiming_records.lingl_operator_name',
+        <!--  -->
+        qiming_records.kezhang_name as 'qiming_records.kezhang_name'
+        /*qiming_records end*/
+        FROM qiming_records as qiming_records
+        WHERE
+            1 = 1 AND  qiming_records.is_del = 0
+        /*qiming_records begin*/
+        <!-- id -->
+        <if test="id != null and id != '' " >
+            and qiming_records.id = #{id}
+        </if>
+        <!-- 启明出库单号 -->
+        <if test="applyNo != null and applyNo != '' " >
+            and qiming_records.apply_no = #{applyNo}
+        </if>
+        <!-- 出库数量 -->
+        <if test="unitqty != null and unitqty != '' " >
+            and qiming_records.unitqty = #{unitqty}
+        </if>
+        <!-- 物料号 -->
+        <if test="mtlCode != null and mtlCode != '' " >
+            and qiming_records.mtl_code = #{mtlCode}
+        </if>
+        <!-- 刀具号 -->
+        <if test="loc != null and loc != '' " >
+            and qiming_records.loc = #{loc}
+        </if>
+        <!-- 批次 -->
+        <if test="batchNo != null and batchNo != '' " >
+            and qiming_records.batch_no = #{batchNo}
+        </if>
+        <!-- 材料刀号 -->
+        <if test="cuttingToolCode != null and cuttingToolCode != '' " >
+            and qiming_records.cutting_tool_code = #{cuttingToolCode}
+        </if>
+        <!-- 材料刀绑定 -->
+        <if test="cuttingToolBindCode != null and cuttingToolBindCode != '' " >
+            and qiming_records.cutting_tool_bind_code = #{cuttingToolBindCode}
+        </if>
+        <!-- 刀身码 -->
+        <if test="bladeCode != null and bladeCode != '' " >
+            and qiming_records.blade_code = #{bladeCode}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="isDel != null and isDel != '' " >
+            and qiming_records.is_del = #{isDel}
+        </if>
+        <!--  -->
+        <if test="productlineProcess != null and productlineProcess != '' " >
+            and qiming_records.productline_process = #{productlineProcess}
+        </if>
+        <!--  -->
+        <if test="productlineAssemblyline != null and productlineAssemblyline != '' " >
+            and qiming_records.productline_assemblyline = #{productlineAssemblyline}
+        </if>
+        <!--  -->
+        <if test="plant != null and plant != '' " >
+            and qiming_records.plant = #{plant}
+        </if>
+        <!--  -->
+        <if test="kuguanOperatorCode != null and kuguanOperatorCode != '' " >
+            and qiming_records.kuguan_operator_code = #{kuguanOperatorCode}
+        </if>
+        <!--  -->
+        <if test="linglOperatorCode != null and linglOperatorCode != '' " >
+            and qiming_records.lingl_operator_code = #{linglOperatorCode}
+        </if>
+        <!--  -->
+        <if test="kezhangCode != null and kezhangCode != '' " >
+            and qiming_records.kezhang_code = #{kezhangCode}
+        </if>
+        <!--  -->
+        <if test="createTime != null and createTime != '' " >
+            and qiming_records.create_time &lt;= #{createTimeEnd}
+        </if>
+        <if test="createTime != null and createTime != '' " >
+            and qiming_records.create_time &gt;= #{createTimeBegin}
+        </if>
+        <!--  -->
+        <if test="kuguanOperatorName != null and kuguanOperatorName != '' " >
+            and qiming_records.kuguan_operator_name = #{kuguanOperatorName}
+        </if>
+        <!--  -->
+        <if test="linglOperatorName != null and linglOperatorName != '' " >
+            and qiming_records.lingl_operator_name = #{linglOperatorName}
+        </if>
+        <!--  -->
+        <if test="kezhangName != null and kezhangName != '' " >
+            and qiming_records.kezhang_name = #{kezhangName}
+        </if>
+        /*qiming_records end*/
+    </select>
+
+    <select id="getMaxBatchNo" resultType="java.lang.Integer">
+        SELECT max(batch_no) FROM qiming_records
+    </select>
+</mapper>

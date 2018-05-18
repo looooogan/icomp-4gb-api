@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.mapper.IProductLineAssemblylineMapper">
+    <resultMap id="productLineAssemblylineQueryMap" type="com.common.pojo.ProductLineAssemblyline">
+        <!-- 流水线ID -->
+        <id property="id" column="product_line_assemblyline.id"/>
+
+        <!-- 流水线名称 -->
+        <result property="name" column="product_line_assemblyline.name"/>
+        <!-- 流水线编码 -->
+        <result property="code" column="product_line_assemblyline.code"/>
+        <!-- 删除区分(0有效1删除) -->
+        <result property="isDel" column="product_line_assemblyline.is_del"/>
+    </resultMap>
+    <!--添加-->
+    <insert id="addProductLineAssemblyline" parameterType="com.common.pojo.ProductLineAssemblyline">
+        INSERT INTO product_line_assemblyline (
+            <!-- 流水线ID -->
+            id,
+            <!-- 流水线名称 -->
+            name,
+            <!-- 流水线编码 -->
+            code,
+            <!-- 删除区分(0有效1删除) -->
+            is_del
+        )
+        VALUES (
+            <!-- 流水线ID -->
+            #{id},
+            <!-- 流水线名称 -->
+            #{name},
+            <!-- 流水线编码 -->
+            #{code},
+            <!-- 删除区分(0有效1删除) -->
+            #{isDel}
+        )
+    </insert>
+
+    <!--删除-->
+    <delete id="delProductLineAssemblyline" parameterType="com.common.pojo.ProductLineAssemblyline">
+        DELETE
+        FROM product_line_assemblyline
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--逻辑删除-->
+    <delete id="delProductLineAssemblylineForLogic" parameterType="com.common.pojo.ProductLineAssemblyline">
+        UPDATE product_line_assemblyline SET
+        is_del = 1
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--根据VO删除-->
+    <delete id="delProductLineAssemblylineByVo" parameterType="com.common.vo.ProductLineAssemblylineVO">
+        UPDATE product_line_assemblyline SET is_del = 1
+        WHERE
+            1=1
+            <!-- 流水线ID -->
+            <if test="id != null and id != '' " >
+                and id =  #{id}
+            </if>
+            <!-- 流水线名称 -->
+            <if test="name != null and name != '' " >
+                and name =  #{name}
+            </if>
+            <!-- 流水线编码 -->
+            <if test="code != null and code != '' " >
+                and code =  #{code}
+            </if>
+            <!-- 删除区分(0有效1删除) -->
+            <if test="isDel != null and isDel != '' " >
+                and is_del =  #{isDel}
+            </if>
+    </delete>
+
+    <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
+    <update id="updProductLineAssemblyline" parameterType="com.common.pojo.ProductLineAssemblyline">
+        UPDATE product_line_assemblyline
+        SET
+            <!-- 流水线名称 -->
+            <if test="name != null and name != '' " >
+                name =  #{name},
+            </if>
+            <!-- 流水线编码 -->
+            <if test="code != null and code != '' " >
+                code =  #{code},
+            </if>
+            <!-- 删除区分(0有效1删除) -->
+            <if test="isDel != null and isDel != '' " >
+                is_del =  #{isDel},
+            </if>
+            <!-- 流水线ID -->
+            id = #{id}
+        WHERE
+            1 = 1
+            and id = #{id}
+    </update>
+
+    <!--分页查询 -->
+    <select id="getProductLineAssemblylineByPage" parameterType="com.common.vo.ProductLineAssemblylineVO" resultMap="productLineAssemblylineQueryMap">
+        SELECT
+        /*productLineAssemblyline begin*/
+            <!-- 流水线ID -->
+            product_line_assemblyline.id as 'product_line_assemblyline.id',
+            <!-- 流水线名称 -->
+            product_line_assemblyline.name as 'product_line_assemblyline.name',
+            <!-- 流水线编码 -->
+            product_line_assemblyline.code as 'product_line_assemblyline.code',
+            <!-- 删除区分(0有效1删除) -->
+            product_line_assemblyline.is_del as 'product_line_assemblyline.is_del'
+        /*productLineAssemblyline end*/
+        FROM product_line_assemblyline as product_line_assemblyline
+        WHERE
+            1 = 1 AND  product_line_assemblyline.is_del = 0
+        /*product_line_assemblyline begin*/
+            <!-- 流水线ID -->
+            <if test="id != null and id != '' " >
+                and product_line_assemblyline.id = #{id}
+            </if>
+            <!-- 流水线名称 -->
+            <if test="name != null and name != '' " >
+                and product_line_assemblyline.name = #{name}
+            </if>
+            <!-- 流水线编码 -->
+            <if test="code != null and code != '' " >
+                and product_line_assemblyline.code = #{code}
+            </if>
+            <!-- 删除区分(0有效1删除) -->
+            <if test="isDel != null and isDel != '' " >
+                and product_line_assemblyline.is_del = #{isDel}
+            </if>
+        /*product_line_assemblyline end*/
+        ORDER BY product_line_assemblyline.id desc
+        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
+        LIMIT #{startRecord},#{pageSize}
+        </if>
+    </select>
+
+
+    <!--查询记录数-->
+    <select id="getProductLineAssemblylineCount" parameterType="com.common.vo.ProductLineAssemblylineVO" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM product_line_assemblyline as product_line_assemblyline
+        WHERE
+            1 = 1 AND  product_line_assemblyline.is_del = 0
+        /*product_line_assemblyline begin*/
+        <!-- 流水线ID -->
+        <if test="id != null and id != '' " >
+            and product_line_assemblyline.id = #{id}
+        </if>
+        <!-- 流水线名称 -->
+        <if test="name != null and name != '' " >
+            and product_line_assemblyline.name = #{name}
+        </if>
+        <!-- 流水线编码 -->
+        <if test="code != null and code != '' " >
+            and product_line_assemblyline.code = #{code}
+        </if>
+        <!-- 删除区分(0有效1删除) -->
+        <if test="isDel != null and isDel != '' " >
+            and product_line_assemblyline.is_del = #{isDel}
+        </if>
+        /*product_line_assemblyline end*/
+    </select>
+
+    <!--根据vo查询 -->
+    <select id="getProductLineAssemblyline" parameterType="com.common.vo.ProductLineAssemblylineVO" resultMap="productLineAssemblylineQueryMap">
+        SELECT
+        /*product_line_assemblyline begin*/
+        <!-- 流水线ID -->
+        product_line_assemblyline.id as 'product_line_assemblyline.id',
+        <!-- 流水线名称 -->
+        product_line_assemblyline.name as 'product_line_assemblyline.name',
+        <!-- 流水线编码 -->
+        product_line_assemblyline.code as 'product_line_assemblyline.code',
+        <!-- 删除区分(0有效1删除) -->
+        product_line_assemblyline.is_del as 'product_line_assemblyline.is_del'
+        /*product_line_assemblyline end*/
+        FROM product_line_assemblyline as product_line_assemblyline
+        WHERE
+            1 = 1 AND  product_line_assemblyline.is_del = 0
+        /*product_line_assemblyline begin*/
+        <!-- 流水线ID -->
+        <if test="id != null and id != '' " >
+            and product_line_assemblyline.id = #{id}
+        </if>
+        <!-- 流水线名称 -->
+        <if test="name != null and name != '' " >
+            and product_line_assemblyline.name = #{name}
+        </if>
+        <!-- 流水线编码 -->
+        <if test="code != null and code != '' " >
+            and product_line_assemblyline.code = #{code}
+        </if>
+        <!-- 删除区分(0有效1删除) -->
+        <if test="isDel != null and isDel != '' " >
+            and product_line_assemblyline.is_del = #{isDel}
+        </if>
+        /*product_line_assemblyline end*/
+    </select>
+</mapper>

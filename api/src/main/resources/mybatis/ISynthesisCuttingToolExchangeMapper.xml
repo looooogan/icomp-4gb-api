@@ -1,0 +1,665 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.mapper.ISynthesisCuttingToolExchangeMapper">
+    <resultMap id="synthesisCuttingToolExchangeQueryMap" type="com.common.pojo.SynthesisCuttingToolExchange">
+        <!-- 换装id -->
+        <id property="id" column="synthesis_cutting_tool_exchange.id"/>
+
+        <!-- 合成刀业务编码 -->
+        <result property="synthesisCode" column="synthesis_cutting_tool_exchange.synthesis_code"/>
+        <!-- rfid编码 -->
+        <result property="rfidCode" column="synthesis_cutting_tool_exchange.rfid_code"/>
+        <!-- 刀具装上时间 -->
+        <result property="toolUpTime" column="synthesis_cutting_tool_exchange.tool_up_time"/>
+        <!-- 刀具安装人 -->
+        <result property="toolUpCustomerCode" column="synthesis_cutting_tool_exchange.tool_up_customer_code"/>
+        <!-- 刀具安装人姓名 -->
+        <result property="tollUpCustomerName" column="synthesis_cutting_tool_exchange.toll_up_customer_name"/>
+        <!-- 刀具卸下时间 -->
+        <result property="toolDownTime" column="synthesis_cutting_tool_exchange.tool_down_time"/>
+        <!-- 刀具卸下人 -->
+        <result property="toolDownCustomerCode" column="synthesis_cutting_tool_exchange.tool_down_customer_code"/>
+        <!-- 刀具卸下人姓名 -->
+        <result property="tollDownCustomerName" column="synthesis_cutting_tool_exchange.toll_down_customer_name"/>
+        <!-- 轴编码 -->
+        <result property="axleCode" column="synthesis_cutting_tool_exchange.axle_code"/>
+        <!-- 轴名称 -->
+        <result property="axleName" column="synthesis_cutting_tool_exchange.axle_name"/>
+        <!-- 设备编码 -->
+        <result property="equipmentCode" column="synthesis_cutting_tool_exchange.equipment_code"/>
+        <!-- 设备名称 -->
+        <result property="equipmentName" column="synthesis_cutting_tool_exchange.equipment_name"/>
+        <!-- 零部件编码 -->
+        <result property="partsCode" column="synthesis_cutting_tool_exchange.parts_code"/>
+        <!-- 零部件名称 -->
+        <result property="partsName" column="synthesis_cutting_tool_exchange.parts_name"/>
+        <!-- 额定数量 -->
+        <result property="fixedNumber" column="synthesis_cutting_tool_exchange.fixed_number"/>
+        <!-- 实际数量 -->
+        <result property="realQuantity" column="synthesis_cutting_tool_exchange.real_quantity"/>
+        <!-- 工序名称 -->
+        <result property="processName" column="synthesis_cutting_tool_exchange.process_name"/>
+        <!-- 工序编码 -->
+        <result property="processCode" column="synthesis_cutting_tool_exchange.process_code"/>
+    </resultMap>
+    <!--添加-->
+    <insert id="addSynthesisCuttingToolExchange" parameterType="com.common.pojo.SynthesisCuttingToolExchange">
+        INSERT INTO synthesis_cutting_tool_exchange (
+            <!-- 换装id -->
+            id,
+            <!-- 合成刀业务编码 -->
+            synthesis_code,
+            <!-- rfid编码 -->
+            rfid_code,
+            <!-- 刀具装上时间 -->
+            tool_up_time,
+            <!-- 刀具安装人 -->
+            tool_up_customer_code,
+            <!-- 刀具安装人姓名 -->
+            toll_up_customer_name,
+            <!-- 刀具卸下时间 -->
+            tool_down_time,
+            <!-- 刀具卸下人 -->
+            tool_down_customer_code,
+            <!-- 刀具卸下人姓名 -->
+            toll_down_customer_name,
+            <!-- 轴编码 -->
+            axle_code,
+            <!-- 轴名称 -->
+            axle_name,
+            <!-- 设备编码 -->
+            equipment_code,
+            <!-- 设备名称 -->
+            equipment_name,
+            <!-- 零部件编码 -->
+            parts_code,
+            <!-- 零部件名称 -->
+            parts_name,
+            <!-- 额定数量 -->
+            fixed_number,
+            <!-- 实际数量 -->
+            real_quantity,
+            <!-- 工序名称 -->
+            process_name,
+            <!-- 工序编码 -->
+            process_code
+        )
+        VALUES (
+            <!-- 换装id -->
+            #{id},
+            <!-- 合成刀业务编码 -->
+            #{synthesisCode},
+            <!-- rfid编码 -->
+            #{rfidCode},
+            <!-- 刀具装上时间 -->
+            #{toolUpTime},
+            <!-- 刀具安装人 -->
+            #{toolUpCustomerCode},
+            <!-- 刀具安装人姓名 -->
+            #{tollUpCustomerName},
+            <!-- 刀具卸下时间 -->
+            #{toolDownTime},
+            <!-- 刀具卸下人 -->
+            #{toolDownCustomerCode},
+            <!-- 刀具卸下人姓名 -->
+            #{tollDownCustomerName},
+            <!-- 轴编码 -->
+            #{axleCode},
+            <!-- 轴名称 -->
+            #{axleName},
+            <!-- 设备编码 -->
+            #{equipmentCode},
+            <!-- 设备名称 -->
+            #{equipmentName},
+            <!-- 零部件编码 -->
+            #{partsCode},
+            <!-- 零部件名称 -->
+            #{partsName},
+            <!-- 额定数量 -->
+            #{fixedNumber},
+            <!-- 实际数量 -->
+            #{realQuantity},
+            <!-- 工序名称 -->
+            #{processName},
+            <!-- 工序编码 -->
+            #{processCode}
+        )
+    </insert>
+
+    <!--删除-->
+    <delete id="delSynthesisCuttingToolExchange" parameterType="com.common.pojo.SynthesisCuttingToolExchange">
+        DELETE
+        FROM synthesis_cutting_tool_exchange
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--逻辑删除-->
+    <delete id="delSynthesisCuttingToolExchangeForLogic" parameterType="com.common.pojo.SynthesisCuttingToolExchange">
+        UPDATE synthesis_cutting_tool_exchange SET
+        is_del = 1
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--根据VO删除-->
+    <delete id="delSynthesisCuttingToolExchangeByVo" parameterType="com.common.vo.SynthesisCuttingToolExchangeVO">
+        UPDATE synthesis_cutting_tool_exchange SET is_del = 1
+        WHERE
+            1=1
+            <!-- 换装id -->
+            <if test="id != null and id != '' " >
+                and id =  #{id}
+            </if>
+            <!-- 合成刀业务编码 -->
+            <if test="synthesisCode != null and synthesisCode != '' " >
+                and synthesis_code =  #{synthesisCode}
+            </if>
+            <!-- rfid编码 -->
+            <if test="rfidCode != null and rfidCode != '' " >
+                and rfid_code =  #{rfidCode}
+            </if>
+            <!-- 刀具装上时间 -->
+            <if test="toolUpTime != null and toolUpTime != '' " >
+                and tool_up_time =  #{toolUpTime}
+            </if>
+            <!-- 刀具安装人 -->
+            <if test="toolUpCustomerCode != null and toolUpCustomerCode != '' " >
+                and tool_up_customer_code =  #{toolUpCustomerCode}
+            </if>
+            <!-- 刀具安装人姓名 -->
+            <if test="tollUpCustomerName != null and tollUpCustomerName != '' " >
+                and toll_up_customer_name =  #{tollUpCustomerName}
+            </if>
+            <!-- 刀具卸下时间 -->
+            <if test="toolDownTime != null and toolDownTime != '' " >
+                and tool_down_time =  #{toolDownTime}
+            </if>
+            <!-- 刀具卸下人 -->
+            <if test="toolDownCustomerCode != null and toolDownCustomerCode != '' " >
+                and tool_down_customer_code =  #{toolDownCustomerCode}
+            </if>
+            <!-- 刀具卸下人姓名 -->
+            <if test="tollDownCustomerName != null and tollDownCustomerName != '' " >
+                and toll_down_customer_name =  #{tollDownCustomerName}
+            </if>
+            <!-- 轴编码 -->
+            <if test="axleCode != null and axleCode != '' " >
+                and axle_code =  #{axleCode}
+            </if>
+            <!-- 轴名称 -->
+            <if test="axleName != null and axleName != '' " >
+                and axle_name =  #{axleName}
+            </if>
+            <!-- 设备编码 -->
+            <if test="equipmentCode != null and equipmentCode != '' " >
+                and equipment_code =  #{equipmentCode}
+            </if>
+            <!-- 设备名称 -->
+            <if test="equipmentName != null and equipmentName != '' " >
+                and equipment_name =  #{equipmentName}
+            </if>
+            <!-- 零部件编码 -->
+            <if test="partsCode != null and partsCode != '' " >
+                and parts_code =  #{partsCode}
+            </if>
+            <!-- 零部件名称 -->
+            <if test="partsName != null and partsName != '' " >
+                and parts_name =  #{partsName}
+            </if>
+            <!-- 额定数量 -->
+            <if test="fixedNumber != null and fixedNumber != '' " >
+                and fixed_number =  #{fixedNumber}
+            </if>
+            <!-- 实际数量 -->
+            <if test="realQuantity != null and realQuantity != '' " >
+                and real_quantity =  #{realQuantity}
+            </if>
+            <!-- 工序名称 -->
+            <if test="processName != null and processName != '' " >
+                and process_name =  #{processName}
+            </if>
+            <!-- 工序编码 -->
+            <if test="processCode != null and processCode != '' " >
+                and process_code =  #{processCode}
+            </if>
+    </delete>
+
+    <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
+    <update id="updSynthesisCuttingToolExchange" parameterType="com.common.pojo.SynthesisCuttingToolExchange">
+        UPDATE synthesis_cutting_tool_exchange
+        SET
+            <!-- 合成刀业务编码 -->
+            <if test="synthesisCode != null and synthesisCode != '' " >
+                synthesis_code =  #{synthesisCode},
+            </if>
+            <!-- rfid编码 -->
+            <if test="rfidCode != null and rfidCode != '' " >
+                rfid_code =  #{rfidCode},
+            </if>
+            <!-- 刀具装上时间 -->
+            <if test="toolUpTime != null and toolUpTime != '' " >
+                tool_up_time =  #{toolUpTime},
+            </if>
+            <!-- 刀具安装人 -->
+            <if test="toolUpCustomerCode != null and toolUpCustomerCode != '' " >
+                tool_up_customer_code =  #{toolUpCustomerCode},
+            </if>
+            <!-- 刀具安装人姓名 -->
+            <if test="tollUpCustomerName != null and tollUpCustomerName != '' " >
+                toll_up_customer_name =  #{tollUpCustomerName},
+            </if>
+            <!-- 刀具卸下时间 -->
+            <if test="toolDownTime != null and toolDownTime != '' " >
+                tool_down_time =  #{toolDownTime},
+            </if>
+            <!-- 刀具卸下人 -->
+            <if test="toolDownCustomerCode != null and toolDownCustomerCode != '' " >
+                tool_down_customer_code =  #{toolDownCustomerCode},
+            </if>
+            <!-- 刀具卸下人姓名 -->
+            <if test="tollDownCustomerName != null and tollDownCustomerName != '' " >
+                toll_down_customer_name =  #{tollDownCustomerName},
+            </if>
+            <!-- 轴编码 -->
+            <if test="axleCode != null and axleCode != '' " >
+                axle_code =  #{axleCode},
+            </if>
+            <!-- 轴名称 -->
+            <if test="axleName != null and axleName != '' " >
+                axle_name =  #{axleName},
+            </if>
+            <!-- 设备编码 -->
+            <if test="equipmentCode != null and equipmentCode != '' " >
+                equipment_code =  #{equipmentCode},
+            </if>
+            <!-- 设备名称 -->
+            <if test="equipmentName != null and equipmentName != '' " >
+                equipment_name =  #{equipmentName},
+            </if>
+            <!-- 零部件编码 -->
+            <if test="partsCode != null and partsCode != '' " >
+                parts_code =  #{partsCode},
+            </if>
+            <!-- 零部件名称 -->
+            <if test="partsName != null and partsName != '' " >
+                parts_name =  #{partsName},
+            </if>
+            <!-- 额定数量 -->
+            <if test="fixedNumber != null and fixedNumber != '' " >
+                fixed_number =  #{fixedNumber},
+            </if>
+            <!-- 实际数量 -->
+            <if test="realQuantity != null and realQuantity != '' " >
+                real_quantity =  #{realQuantity},
+            </if>
+            <!-- 工序名称 -->
+            <if test="processName != null and processName != '' " >
+                process_name =  #{processName},
+            </if>
+            <!-- 工序编码 -->
+            <if test="processCode != null and processCode != '' " >
+                process_code =  #{processCode},
+            </if>
+            <!-- 换装id -->
+            id = #{id}
+        WHERE
+            1 = 1
+            and id = #{id}
+    </update>
+
+    <!--分页查询 -->
+    <select id="getSynthesisCuttingToolExchangeByPage" parameterType="com.common.vo.SynthesisCuttingToolExchangeVO" resultMap="synthesisCuttingToolExchangeQueryMap">
+        SELECT
+        /*synthesisCuttingToolExchange begin*/
+            <!-- 换装id -->
+            synthesis_cutting_tool_exchange.id as 'synthesis_cutting_tool_exchange.id',
+            <!-- 合成刀业务编码 -->
+            synthesis_cutting_tool_exchange.synthesis_code as 'synthesis_cutting_tool_exchange.synthesis_code',
+            <!-- rfid编码 -->
+            synthesis_cutting_tool_exchange.rfid_code as 'synthesis_cutting_tool_exchange.rfid_code',
+            <!-- 刀具装上时间 -->
+            synthesis_cutting_tool_exchange.tool_up_time as 'synthesis_cutting_tool_exchange.tool_up_time',
+            <!-- 刀具安装人 -->
+            synthesis_cutting_tool_exchange.tool_up_customer_code as 'synthesis_cutting_tool_exchange.tool_up_customer_code',
+            <!-- 刀具安装人姓名 -->
+            synthesis_cutting_tool_exchange.toll_up_customer_name as 'synthesis_cutting_tool_exchange.toll_up_customer_name',
+            <!-- 刀具卸下时间 -->
+            synthesis_cutting_tool_exchange.tool_down_time as 'synthesis_cutting_tool_exchange.tool_down_time',
+            <!-- 刀具卸下人 -->
+            synthesis_cutting_tool_exchange.tool_down_customer_code as 'synthesis_cutting_tool_exchange.tool_down_customer_code',
+            <!-- 刀具卸下人姓名 -->
+            synthesis_cutting_tool_exchange.toll_down_customer_name as 'synthesis_cutting_tool_exchange.toll_down_customer_name',
+            <!-- 轴编码 -->
+            synthesis_cutting_tool_exchange.axle_code as 'synthesis_cutting_tool_exchange.axle_code',
+            <!-- 轴名称 -->
+            synthesis_cutting_tool_exchange.axle_name as 'synthesis_cutting_tool_exchange.axle_name',
+            <!-- 设备编码 -->
+            synthesis_cutting_tool_exchange.equipment_code as 'synthesis_cutting_tool_exchange.equipment_code',
+            <!-- 设备名称 -->
+            synthesis_cutting_tool_exchange.equipment_name as 'synthesis_cutting_tool_exchange.equipment_name',
+            <!-- 零部件编码 -->
+            synthesis_cutting_tool_exchange.parts_code as 'synthesis_cutting_tool_exchange.parts_code',
+            <!-- 零部件名称 -->
+            synthesis_cutting_tool_exchange.parts_name as 'synthesis_cutting_tool_exchange.parts_name',
+            <!-- 额定数量 -->
+            synthesis_cutting_tool_exchange.fixed_number as 'synthesis_cutting_tool_exchange.fixed_number',
+            <!-- 实际数量 -->
+            synthesis_cutting_tool_exchange.real_quantity as 'synthesis_cutting_tool_exchange.real_quantity',
+            <!-- 工序名称 -->
+            synthesis_cutting_tool_exchange.process_name as 'synthesis_cutting_tool_exchange.process_name',
+            <!-- 工序编码 -->
+            synthesis_cutting_tool_exchange.process_code as 'synthesis_cutting_tool_exchange.process_code'
+        /*synthesisCuttingToolExchange end*/
+        FROM synthesis_cutting_tool_exchange as synthesis_cutting_tool_exchange
+        WHERE
+            1 = 1 AND  synthesis_cutting_tool_exchange.is_del = 0
+        /*synthesis_cutting_tool_exchange begin*/
+            <!-- 换装id -->
+            <if test="id != null and id != '' " >
+                and synthesis_cutting_tool_exchange.id = #{id}
+            </if>
+            <!-- 合成刀业务编码 -->
+            <if test="synthesisCode != null and synthesisCode != '' " >
+                and synthesis_cutting_tool_exchange.synthesis_code = #{synthesisCode}
+            </if>
+            <!-- rfid编码 -->
+            <if test="rfidCode != null and rfidCode != '' " >
+                and synthesis_cutting_tool_exchange.rfid_code = #{rfidCode}
+            </if>
+            <!-- 刀具装上时间 -->
+            <if test="toolUpTime != null and toolUpTime != '' " >
+                and synthesis_cutting_tool_exchange.tool_up_time &lt;= #{toolUpTimeEnd}
+            </if>
+            <if test="toolUpTime != null and toolUpTime != '' " >
+                and synthesis_cutting_tool_exchange.tool_up_time &gt;= #{toolUpTimeBegin}
+            </if>
+            <!-- 刀具安装人 -->
+            <if test="toolUpCustomerCode != null and toolUpCustomerCode != '' " >
+                and synthesis_cutting_tool_exchange.tool_up_customer_code = #{toolUpCustomerCode}
+            </if>
+            <!-- 刀具安装人姓名 -->
+            <if test="tollUpCustomerName != null and tollUpCustomerName != '' " >
+                and synthesis_cutting_tool_exchange.toll_up_customer_name = #{tollUpCustomerName}
+            </if>
+            <!-- 刀具卸下时间 -->
+            <if test="toolDownTime != null and toolDownTime != '' " >
+                and synthesis_cutting_tool_exchange.tool_down_time = #{toolDownTime}
+            </if>
+            <!-- 刀具卸下人 -->
+            <if test="toolDownCustomerCode != null and toolDownCustomerCode != '' " >
+                and synthesis_cutting_tool_exchange.tool_down_customer_code = #{toolDownCustomerCode}
+            </if>
+            <!-- 刀具卸下人姓名 -->
+            <if test="tollDownCustomerName != null and tollDownCustomerName != '' " >
+                and synthesis_cutting_tool_exchange.toll_down_customer_name = #{tollDownCustomerName}
+            </if>
+            <!-- 轴编码 -->
+            <if test="axleCode != null and axleCode != '' " >
+                and synthesis_cutting_tool_exchange.axle_code = #{axleCode}
+            </if>
+            <!-- 轴名称 -->
+            <if test="axleName != null and axleName != '' " >
+                and synthesis_cutting_tool_exchange.axle_name = #{axleName}
+            </if>
+            <!-- 设备编码 -->
+            <if test="equipmentCode != null and equipmentCode != '' " >
+                and synthesis_cutting_tool_exchange.equipment_code = #{equipmentCode}
+            </if>
+            <!-- 设备名称 -->
+            <if test="equipmentName != null and equipmentName != '' " >
+                and synthesis_cutting_tool_exchange.equipment_name = #{equipmentName}
+            </if>
+            <!-- 零部件编码 -->
+            <if test="partsCode != null and partsCode != '' " >
+                and synthesis_cutting_tool_exchange.parts_code = #{partsCode}
+            </if>
+            <!-- 零部件名称 -->
+            <if test="partsName != null and partsName != '' " >
+                and synthesis_cutting_tool_exchange.parts_name = #{partsName}
+            </if>
+            <!-- 额定数量 -->
+            <if test="fixedNumber != null and fixedNumber != '' " >
+                and synthesis_cutting_tool_exchange.fixed_number = #{fixedNumber}
+            </if>
+            <!-- 实际数量 -->
+            <if test="realQuantity != null and realQuantity != '' " >
+                and synthesis_cutting_tool_exchange.real_quantity = #{realQuantity}
+            </if>
+            <!-- 工序名称 -->
+            <if test="processName != null and processName != '' " >
+                and synthesis_cutting_tool_exchange.process_name = #{processName}
+            </if>
+            <!-- 工序编码 -->
+            <if test="processCode != null and processCode != '' " >
+                and synthesis_cutting_tool_exchange.process_code = #{processCode}
+            </if>
+        /*synthesis_cutting_tool_exchange end*/
+        ORDER BY synthesis_cutting_tool_exchange.id desc
+        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
+        LIMIT #{startRecord},#{pageSize}
+        </if>
+    </select>
+
+
+    <!--查询记录数-->
+    <select id="getSynthesisCuttingToolExchangeCount" parameterType="com.common.vo.SynthesisCuttingToolExchangeVO" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM synthesis_cutting_tool_exchange as synthesis_cutting_tool_exchange
+        WHERE
+            1 = 1 AND  synthesis_cutting_tool_exchange.is_del = 0
+        /*synthesis_cutting_tool_exchange begin*/
+        <!-- 换装id -->
+        <if test="id != null and id != '' " >
+            and synthesis_cutting_tool_exchange.id = #{id}
+        </if>
+        <!-- 合成刀业务编码 -->
+        <if test="synthesisCode != null and synthesisCode != '' " >
+            and synthesis_cutting_tool_exchange.synthesis_code = #{synthesisCode}
+        </if>
+        <!-- rfid编码 -->
+        <if test="rfidCode != null and rfidCode != '' " >
+            and synthesis_cutting_tool_exchange.rfid_code = #{rfidCode}
+        </if>
+        <!-- 刀具装上时间 -->
+        <if test="toolUpTime != null and toolUpTime != '' " >
+            and synthesis_cutting_tool_exchange.tool_up_time &lt;= #{toolUpTimeEnd}
+        </if>
+        <if test="toolUpTime != null and toolUpTime != '' " >
+            and synthesis_cutting_tool_exchange.tool_up_time &gt;= #{toolUpTimeBegin}
+        </if>
+        <!-- 刀具安装人 -->
+        <if test="toolUpCustomerCode != null and toolUpCustomerCode != '' " >
+            and synthesis_cutting_tool_exchange.tool_up_customer_code = #{toolUpCustomerCode}
+        </if>
+        <!-- 刀具安装人姓名 -->
+        <if test="tollUpCustomerName != null and tollUpCustomerName != '' " >
+            and synthesis_cutting_tool_exchange.toll_up_customer_name = #{tollUpCustomerName}
+        </if>
+        <!-- 刀具卸下时间 -->
+        <if test="toolDownTime != null and toolDownTime != '' " >
+            and synthesis_cutting_tool_exchange.tool_down_time = #{toolDownTime}
+        </if>
+        <!-- 刀具卸下人 -->
+        <if test="toolDownCustomerCode != null and toolDownCustomerCode != '' " >
+            and synthesis_cutting_tool_exchange.tool_down_customer_code = #{toolDownCustomerCode}
+        </if>
+        <!-- 刀具卸下人姓名 -->
+        <if test="tollDownCustomerName != null and tollDownCustomerName != '' " >
+            and synthesis_cutting_tool_exchange.toll_down_customer_name = #{tollDownCustomerName}
+        </if>
+        <!-- 轴编码 -->
+        <if test="axleCode != null and axleCode != '' " >
+            and synthesis_cutting_tool_exchange.axle_code = #{axleCode}
+        </if>
+        <!-- 轴名称 -->
+        <if test="axleName != null and axleName != '' " >
+            and synthesis_cutting_tool_exchange.axle_name = #{axleName}
+        </if>
+        <!-- 设备编码 -->
+        <if test="equipmentCode != null and equipmentCode != '' " >
+            and synthesis_cutting_tool_exchange.equipment_code = #{equipmentCode}
+        </if>
+        <!-- 设备名称 -->
+        <if test="equipmentName != null and equipmentName != '' " >
+            and synthesis_cutting_tool_exchange.equipment_name = #{equipmentName}
+        </if>
+        <!-- 零部件编码 -->
+        <if test="partsCode != null and partsCode != '' " >
+            and synthesis_cutting_tool_exchange.parts_code = #{partsCode}
+        </if>
+        <!-- 零部件名称 -->
+        <if test="partsName != null and partsName != '' " >
+            and synthesis_cutting_tool_exchange.parts_name = #{partsName}
+        </if>
+        <!-- 额定数量 -->
+        <if test="fixedNumber != null and fixedNumber != '' " >
+            and synthesis_cutting_tool_exchange.fixed_number = #{fixedNumber}
+        </if>
+        <!-- 实际数量 -->
+        <if test="realQuantity != null and realQuantity != '' " >
+            and synthesis_cutting_tool_exchange.real_quantity = #{realQuantity}
+        </if>
+        <!-- 工序名称 -->
+        <if test="processName != null and processName != '' " >
+            and synthesis_cutting_tool_exchange.process_name = #{processName}
+        </if>
+        <!-- 工序编码 -->
+        <if test="processCode != null and processCode != '' " >
+            and synthesis_cutting_tool_exchange.process_code = #{processCode}
+        </if>
+        /*synthesis_cutting_tool_exchange end*/
+    </select>
+
+    <!--根据vo查询 -->
+    <select id="getSynthesisCuttingToolExchange" parameterType="com.common.vo.SynthesisCuttingToolExchangeVO" resultMap="synthesisCuttingToolExchangeQueryMap">
+        SELECT
+        /*synthesis_cutting_tool_exchange begin*/
+        <!-- 换装id -->
+        synthesis_cutting_tool_exchange.id as 'synthesis_cutting_tool_exchange.id',
+        <!-- 合成刀业务编码 -->
+        synthesis_cutting_tool_exchange.synthesis_code as 'synthesis_cutting_tool_exchange.synthesis_code',
+        <!-- rfid编码 -->
+        synthesis_cutting_tool_exchange.rfid_code as 'synthesis_cutting_tool_exchange.rfid_code',
+        <!-- 刀具装上时间 -->
+        synthesis_cutting_tool_exchange.tool_up_time as 'synthesis_cutting_tool_exchange.tool_up_time',
+        <!-- 刀具安装人 -->
+        synthesis_cutting_tool_exchange.tool_up_customer_code as 'synthesis_cutting_tool_exchange.tool_up_customer_code',
+        <!-- 刀具安装人姓名 -->
+        synthesis_cutting_tool_exchange.toll_up_customer_name as 'synthesis_cutting_tool_exchange.toll_up_customer_name',
+        <!-- 刀具卸下时间 -->
+        synthesis_cutting_tool_exchange.tool_down_time as 'synthesis_cutting_tool_exchange.tool_down_time',
+        <!-- 刀具卸下人 -->
+        synthesis_cutting_tool_exchange.tool_down_customer_code as 'synthesis_cutting_tool_exchange.tool_down_customer_code',
+        <!-- 刀具卸下人姓名 -->
+        synthesis_cutting_tool_exchange.toll_down_customer_name as 'synthesis_cutting_tool_exchange.toll_down_customer_name',
+        <!-- 轴编码 -->
+        synthesis_cutting_tool_exchange.axle_code as 'synthesis_cutting_tool_exchange.axle_code',
+        <!-- 轴名称 -->
+        synthesis_cutting_tool_exchange.axle_name as 'synthesis_cutting_tool_exchange.axle_name',
+        <!-- 设备编码 -->
+        synthesis_cutting_tool_exchange.equipment_code as 'synthesis_cutting_tool_exchange.equipment_code',
+        <!-- 设备名称 -->
+        synthesis_cutting_tool_exchange.equipment_name as 'synthesis_cutting_tool_exchange.equipment_name',
+        <!-- 零部件编码 -->
+        synthesis_cutting_tool_exchange.parts_code as 'synthesis_cutting_tool_exchange.parts_code',
+        <!-- 零部件名称 -->
+        synthesis_cutting_tool_exchange.parts_name as 'synthesis_cutting_tool_exchange.parts_name',
+        <!-- 额定数量 -->
+        synthesis_cutting_tool_exchange.fixed_number as 'synthesis_cutting_tool_exchange.fixed_number',
+        <!-- 实际数量 -->
+        synthesis_cutting_tool_exchange.real_quantity as 'synthesis_cutting_tool_exchange.real_quantity',
+        <!-- 工序名称 -->
+        synthesis_cutting_tool_exchange.process_name as 'synthesis_cutting_tool_exchange.process_name',
+        <!-- 工序编码 -->
+        synthesis_cutting_tool_exchange.process_code as 'synthesis_cutting_tool_exchange.process_code'
+        /*synthesis_cutting_tool_exchange end*/
+        FROM synthesis_cutting_tool_exchange as synthesis_cutting_tool_exchange
+        WHERE
+            1 = 1 AND  synthesis_cutting_tool_exchange.is_del = 0
+        /*synthesis_cutting_tool_exchange begin*/
+        <!-- 换装id -->
+        <if test="id != null and id != '' " >
+            and synthesis_cutting_tool_exchange.id = #{id}
+        </if>
+        <!-- 合成刀业务编码 -->
+        <if test="synthesisCode != null and synthesisCode != '' " >
+            and synthesis_cutting_tool_exchange.synthesis_code = #{synthesisCode}
+        </if>
+        <!-- rfid编码 -->
+        <if test="rfidCode != null and rfidCode != '' " >
+            and synthesis_cutting_tool_exchange.rfid_code = #{rfidCode}
+        </if>
+        <!-- 刀具装上时间 -->
+        <if test="toolUpTime != null and toolUpTime != '' " >
+            and synthesis_cutting_tool_exchange.tool_up_time &lt;= #{toolUpTimeEnd}
+        </if>
+        <if test="toolUpTime != null and toolUpTime != '' " >
+            and synthesis_cutting_tool_exchange.tool_up_time &gt;= #{toolUpTimeBegin}
+        </if>
+        <!-- 刀具安装人 -->
+        <if test="toolUpCustomerCode != null and toolUpCustomerCode != '' " >
+            and synthesis_cutting_tool_exchange.tool_up_customer_code = #{toolUpCustomerCode}
+        </if>
+        <!-- 刀具安装人姓名 -->
+        <if test="tollUpCustomerName != null and tollUpCustomerName != '' " >
+            and synthesis_cutting_tool_exchange.toll_up_customer_name = #{tollUpCustomerName}
+        </if>
+        <!-- 刀具卸下时间 -->
+        <if test="toolDownTime != null and toolDownTime != '' " >
+            and synthesis_cutting_tool_exchange.tool_down_time = #{toolDownTime}
+        </if>
+        <!-- 刀具卸下人 -->
+        <if test="toolDownCustomerCode != null and toolDownCustomerCode != '' " >
+            and synthesis_cutting_tool_exchange.tool_down_customer_code = #{toolDownCustomerCode}
+        </if>
+        <!-- 刀具卸下人姓名 -->
+        <if test="tollDownCustomerName != null and tollDownCustomerName != '' " >
+            and synthesis_cutting_tool_exchange.toll_down_customer_name = #{tollDownCustomerName}
+        </if>
+        <!-- 轴编码 -->
+        <if test="axleCode != null and axleCode != '' " >
+            and synthesis_cutting_tool_exchange.axle_code = #{axleCode}
+        </if>
+        <!-- 轴名称 -->
+        <if test="axleName != null and axleName != '' " >
+            and synthesis_cutting_tool_exchange.axle_name = #{axleName}
+        </if>
+        <!-- 设备编码 -->
+        <if test="equipmentCode != null and equipmentCode != '' " >
+            and synthesis_cutting_tool_exchange.equipment_code = #{equipmentCode}
+        </if>
+        <!-- 设备名称 -->
+        <if test="equipmentName != null and equipmentName != '' " >
+            and synthesis_cutting_tool_exchange.equipment_name = #{equipmentName}
+        </if>
+        <!-- 零部件编码 -->
+        <if test="partsCode != null and partsCode != '' " >
+            and synthesis_cutting_tool_exchange.parts_code = #{partsCode}
+        </if>
+        <!-- 零部件名称 -->
+        <if test="partsName != null and partsName != '' " >
+            and synthesis_cutting_tool_exchange.parts_name = #{partsName}
+        </if>
+        <!-- 额定数量 -->
+        <if test="fixedNumber != null and fixedNumber != '' " >
+            and synthesis_cutting_tool_exchange.fixed_number = #{fixedNumber}
+        </if>
+        <!-- 实际数量 -->
+        <if test="realQuantity != null and realQuantity != '' " >
+            and synthesis_cutting_tool_exchange.real_quantity = #{realQuantity}
+        </if>
+        <!-- 工序名称 -->
+        <if test="processName != null and processName != '' " >
+            and synthesis_cutting_tool_exchange.process_name = #{processName}
+        </if>
+        <!-- 工序编码 -->
+        <if test="processCode != null and processCode != '' " >
+            and synthesis_cutting_tool_exchange.process_code = #{processCode}
+        </if>
+        /*synthesis_cutting_tool_exchange end*/
+    </select>
+</mapper>

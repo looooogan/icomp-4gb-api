@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.mapper.IProductLinePartsMapper">
+    <resultMap id="productLinePartsQueryMap" type="com.common.pojo.ProductLineParts">
+        <!-- 零部件id -->
+        <id property="id" column="product_line_parts.id"/>
+
+        <!-- 编码 -->
+        <result property="code" column="product_line_parts.code"/>
+        <!-- 零部件型号（0:1.6L,1:1.4T） -->
+        <result property="type" column="product_line_parts.type"/>
+        <!-- 名称 -->
+        <result property="name" column="product_line_parts.name"/>
+        <!--  -->
+        <result property="isDel" column="product_line_parts.is_del"/>
+    </resultMap>
+    <!--添加-->
+    <insert id="addProductLineParts" parameterType="com.common.pojo.ProductLineParts">
+        INSERT INTO product_line_parts (
+            <!-- 零部件id -->
+            id,
+            <!-- 编码 -->
+            code,
+            <!-- 零部件型号（0:1.6L,1:1.4T） -->
+            type,
+            <!-- 名称 -->
+            name,
+            <!--  -->
+            is_del
+        )
+        VALUES (
+            <!-- 零部件id -->
+            #{id},
+            <!-- 编码 -->
+            #{code},
+            <!-- 零部件型号（0:1.6L,1:1.4T） -->
+            #{type},
+            <!-- 名称 -->
+            #{name},
+            <!--  -->
+            #{isDel}
+        )
+    </insert>
+
+    <!--删除-->
+    <delete id="delProductLineParts" parameterType="com.common.pojo.ProductLineParts">
+        DELETE
+        FROM product_line_parts
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--逻辑删除-->
+    <delete id="delProductLinePartsForLogic" parameterType="com.common.pojo.ProductLineParts">
+        UPDATE product_line_parts SET
+        is_del = 1
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--根据VO删除-->
+    <delete id="delProductLinePartsByVo" parameterType="com.common.vo.ProductLinePartsVO">
+        UPDATE product_line_parts SET is_del = 1
+        WHERE
+            1=1
+            <!-- 零部件id -->
+            <if test="id != null and id != '' " >
+                and id =  #{id}
+            </if>
+            <!-- 编码 -->
+            <if test="code != null and code != '' " >
+                and code =  #{code}
+            </if>
+            <!-- 零部件型号（0:1.6L,1:1.4T） -->
+            <if test="type != null and type != '' " >
+                and type =  #{type}
+            </if>
+            <!-- 名称 -->
+            <if test="name != null and name != '' " >
+                and name =  #{name}
+            </if>
+            <!--  -->
+            <if test="isDel != null and isDel != '' " >
+                and is_del =  #{isDel}
+            </if>
+    </delete>
+
+    <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
+    <update id="updProductLineParts" parameterType="com.common.pojo.ProductLineParts">
+        UPDATE product_line_parts
+        SET
+            <!-- 编码 -->
+            <if test="code != null and code != '' " >
+                code =  #{code},
+            </if>
+            <!-- 零部件型号（0:1.6L,1:1.4T） -->
+            <if test="type != null and type != '' " >
+                type =  #{type},
+            </if>
+            <!-- 名称 -->
+            <if test="name != null and name != '' " >
+                name =  #{name},
+            </if>
+            <!--  -->
+            <if test="isDel != null and isDel != '' " >
+                is_del =  #{isDel},
+            </if>
+            <!-- 零部件id -->
+            id = #{id}
+        WHERE
+            1 = 1
+            and id = #{id}
+    </update>
+
+    <!--分页查询 -->
+    <select id="getProductLinePartsByPage" parameterType="com.common.vo.ProductLinePartsVO" resultMap="productLinePartsQueryMap">
+        SELECT
+        /*productLineParts begin*/
+            <!-- 零部件id -->
+            product_line_parts.id as 'product_line_parts.id',
+            <!-- 编码 -->
+            product_line_parts.code as 'product_line_parts.code',
+            <!-- 零部件型号（0:1.6L,1:1.4T） -->
+            product_line_parts.type as 'product_line_parts.type',
+            <!-- 名称 -->
+            product_line_parts.name as 'product_line_parts.name',
+            <!--  -->
+            product_line_parts.is_del as 'product_line_parts.is_del'
+        /*productLineParts end*/
+        FROM product_line_parts as product_line_parts
+        WHERE
+            1 = 1 AND  product_line_parts.is_del = 0
+        /*product_line_parts begin*/
+            <!-- 零部件id -->
+            <if test="id != null and id != '' " >
+                and product_line_parts.id = #{id}
+            </if>
+            <!-- 编码 -->
+            <if test="code != null and code != '' " >
+                and product_line_parts.code = #{code}
+            </if>
+            <!-- 零部件型号（0:1.6L,1:1.4T） -->
+            <if test="type != null and type != '' " >
+                and product_line_parts.type = #{type}
+            </if>
+            <!-- 名称 -->
+            <if test="name != null and name != '' " >
+                and product_line_parts.name = #{name}
+            </if>
+            <!--  -->
+            <if test="isDel != null and isDel != '' " >
+                and product_line_parts.is_del = #{isDel}
+            </if>
+        /*product_line_parts end*/
+        ORDER BY product_line_parts.id desc
+        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
+        LIMIT #{startRecord},#{pageSize}
+        </if>
+    </select>
+
+
+    <!--查询记录数-->
+    <select id="getProductLinePartsCount" parameterType="com.common.vo.ProductLinePartsVO" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM product_line_parts as product_line_parts
+        WHERE
+            1 = 1 AND  product_line_parts.is_del = 0
+        /*product_line_parts begin*/
+        <!-- 零部件id -->
+        <if test="id != null and id != '' " >
+            and product_line_parts.id = #{id}
+        </if>
+        <!-- 编码 -->
+        <if test="code != null and code != '' " >
+            and product_line_parts.code = #{code}
+        </if>
+        <!-- 零部件型号（0:1.6L,1:1.4T） -->
+        <if test="type != null and type != '' " >
+            and product_line_parts.type = #{type}
+        </if>
+        <!-- 名称 -->
+        <if test="name != null and name != '' " >
+            and product_line_parts.name = #{name}
+        </if>
+        <!--  -->
+        <if test="isDel != null and isDel != '' " >
+            and product_line_parts.is_del = #{isDel}
+        </if>
+        /*product_line_parts end*/
+    </select>
+
+    <!--根据vo查询 -->
+    <select id="getProductLineParts" parameterType="com.common.vo.ProductLinePartsVO" resultMap="productLinePartsQueryMap">
+        SELECT
+        /*product_line_parts begin*/
+        <!-- 零部件id -->
+        product_line_parts.id as 'product_line_parts.id',
+        <!-- 编码 -->
+        product_line_parts.code as 'product_line_parts.code',
+        <!-- 零部件型号（0:1.6L,1:1.4T） -->
+        product_line_parts.type as 'product_line_parts.type',
+        <!-- 名称 -->
+        product_line_parts.name as 'product_line_parts.name',
+        <!--  -->
+        product_line_parts.is_del as 'product_line_parts.is_del'
+        /*product_line_parts end*/
+        FROM product_line_parts as product_line_parts
+        WHERE
+            1 = 1 AND  product_line_parts.is_del = 0
+        /*product_line_parts begin*/
+        <!-- 零部件id -->
+        <if test="id != null and id != '' " >
+            and product_line_parts.id = #{id}
+        </if>
+        <!-- 编码 -->
+        <if test="code != null and code != '' " >
+            and product_line_parts.code = #{code}
+        </if>
+        <!-- 零部件型号（0:1.6L,1:1.4T） -->
+        <if test="type != null and type != '' " >
+            and product_line_parts.type = #{type}
+        </if>
+        <!-- 名称 -->
+        <if test="name != null and name != '' " >
+            and product_line_parts.name = #{name}
+        </if>
+        <!--  -->
+        <if test="isDel != null and isDel != '' " >
+            and product_line_parts.is_del = #{isDel}
+        </if>
+        /*product_line_parts end*/
+    </select>
+</mapper>

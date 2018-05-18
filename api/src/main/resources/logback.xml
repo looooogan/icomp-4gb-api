@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
+    <!--日志路径定义-->
+<!--     <property name="logDir" value="D:/mypro_logs" /> -->
+    <property name="logDir" value="/data/log/myProLogs" />
+    <!--文件日志-->
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logDir}/logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss:SSS}%-4relative [%thread] %-5level %logger{35} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+    <!--service文件-->
+    <appender name="service_file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logDir}/serviceLog/service_logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss:SSS}%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+     <!--短信Log文件-->
+    <appender name="message_file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logDir}/messageLog/message_logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss:SSS}%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <!--错误文件-->
+    <appender name="error_file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logDir}/errorLong/error_logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss:SSS}%-4relative [%thread] %-5level %logger{35} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+    <!-- appender 控制台 -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <!-- <pattern>%d{yyyy-MM-dd HH:mm:ss:SSS}[%p]: %m%n</pattern> -->
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+            </pattern>
+        </layout>
+    </appender>
+    <!-- log 通过 LoggerFactory.getLogger(name)取得 -->
+    <logger name="consoleLog" additivity="true" level="info">
+        <appender-ref ref="console" />
+    </logger>
+
+    <logger name="service_file_log" additivity="true" level="info">
+        <appender-ref ref="service_file" />
+    </logger>
+
+    <logger name="error_file_log" additivity="true" level="error">
+        <appender-ref ref="error_file" />
+    </logger>
+    
+    <logger name="message_file_log" additivity="true" level="error">
+        <appender-ref ref="message_file" />
+    </logger>
+    <!-- root 默认日志配置 -->
+    <root level="info">
+        <appender-ref ref="console" />
+<!--         <appender-ref ref="file" /> -->
+    </root>
+</configuration> 

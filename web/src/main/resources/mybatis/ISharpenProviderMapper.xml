@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.mapper.ISharpenProviderMapper">
+    <resultMap id="sharpenProviderQueryMap" type="com.common.pojo.SharpenProvider">
+        <!-- 供应商id -->
+        <id property="id" column="sharpen_provider.id"/>
+
+        <!-- 编码 -->
+        <result property="code" column="sharpen_provider.code"/>
+        <!-- 名称 -->
+        <result property="name" column="sharpen_provider.name"/>
+        <!-- 类型 -->
+        <result property="type" column="sharpen_provider.type"/>
+        <!-- 地址 -->
+        <result property="address" column="sharpen_provider.address"/>
+        <!--  -->
+        <result property="contact" column="sharpen_provider.contact"/>
+        <!-- 联系人电话 -->
+        <result property="tell" column="sharpen_provider.tell"/>
+        <!--  -->
+        <result property="isDel" column="sharpen_provider.is_del"/>
+    </resultMap>
+    <!--添加-->
+    <insert id="addSharpenProvider" parameterType="com.common.pojo.SharpenProvider">
+        INSERT INTO sharpen_provider (
+            <!-- 供应商id -->
+            id,
+            <!-- 编码 -->
+            code,
+            <!-- 名称 -->
+            name,
+            <!-- 类型 -->
+            type,
+            <!-- 地址 -->
+            address,
+            <!--  -->
+            contact,
+            <!-- 联系人电话 -->
+            tell,
+            <!--  -->
+            is_del
+        )
+        VALUES (
+            <!-- 供应商id -->
+            #{id},
+            <!-- 编码 -->
+            #{code},
+            <!-- 名称 -->
+            #{name},
+            <!-- 类型 -->
+            #{type},
+            <!-- 地址 -->
+            #{address},
+            <!--  -->
+            #{contact},
+            <!-- 联系人电话 -->
+            #{tell},
+            <!--  -->
+            #{isDel}
+        )
+    </insert>
+
+    <!--删除-->
+    <delete id="delSharpenProvider" parameterType="com.common.pojo.SharpenProvider">
+        DELETE
+        FROM sharpen_provider
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--逻辑删除-->
+    <delete id="delSharpenProviderForLogic" parameterType="com.common.pojo.SharpenProvider">
+        UPDATE sharpen_provider SET
+        is_del = 1
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--根据VO删除-->
+    <delete id="delSharpenProviderByVo" parameterType="com.common.vo.SharpenProviderVO">
+        UPDATE sharpen_provider SET is_del = 1
+        WHERE
+            1=1
+            <!-- 供应商id -->
+            <if test="id != null and id != '' " >
+                and id =  #{id}
+            </if>
+            <!-- 编码 -->
+            <if test="code != null and code != '' " >
+                and code =  #{code}
+            </if>
+            <!-- 名称 -->
+            <if test="name != null and name != '' " >
+                and name =  #{name}
+            </if>
+            <!-- 类型 -->
+            <if test="type != null and type != '' " >
+                and type =  #{type}
+            </if>
+            <!-- 地址 -->
+            <if test="address != null and address != '' " >
+                and address =  #{address}
+            </if>
+            <!--  -->
+            <if test="contact != null and contact != '' " >
+                and contact =  #{contact}
+            </if>
+            <!-- 联系人电话 -->
+            <if test="tell != null and tell != '' " >
+                and tell =  #{tell}
+            </if>
+            <!--  -->
+            <if test="isDel != null and isDel != '' " >
+                and is_del =  #{isDel}
+            </if>
+    </delete>
+
+    <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
+    <update id="updSharpenProvider" parameterType="com.common.pojo.SharpenProvider">
+        UPDATE sharpen_provider
+        SET
+            <!-- 编码 -->
+            <if test="code != null and code != '' " >
+                code =  #{code},
+            </if>
+            <!-- 名称 -->
+            <if test="name != null and name != '' " >
+                name =  #{name},
+            </if>
+            <!-- 类型 -->
+            <if test="type != null and type != '' " >
+                type =  #{type},
+            </if>
+            <!-- 地址 -->
+            <if test="address != null and address != '' " >
+                address =  #{address},
+            </if>
+            <!--  -->
+            <if test="contact != null and contact != '' " >
+                contact =  #{contact},
+            </if>
+            <!-- 联系人电话 -->
+            <if test="tell != null and tell != '' " >
+                tell =  #{tell},
+            </if>
+            <!--  -->
+            <if test="isDel != null and isDel != '' " >
+                is_del =  #{isDel},
+            </if>
+            <!-- 供应商id -->
+            id = #{id}
+        WHERE
+            1 = 1
+            and id = #{id}
+    </update>
+
+    <!--分页查询 -->
+    <select id="getSharpenProviderByPage" parameterType="com.common.vo.SharpenProviderVO" resultMap="sharpenProviderQueryMap">
+        SELECT
+        /*sharpenProvider begin*/
+            <!-- 供应商id -->
+            sharpen_provider.id as 'sharpen_provider.id',
+            <!-- 编码 -->
+            sharpen_provider.code as 'sharpen_provider.code',
+            <!-- 名称 -->
+            sharpen_provider.name as 'sharpen_provider.name',
+            <!-- 类型 -->
+            sharpen_provider.type as 'sharpen_provider.type',
+            <!-- 地址 -->
+            sharpen_provider.address as 'sharpen_provider.address',
+            <!--  -->
+            sharpen_provider.contact as 'sharpen_provider.contact',
+            <!-- 联系人电话 -->
+            sharpen_provider.tell as 'sharpen_provider.tell',
+            <!--  -->
+            sharpen_provider.is_del as 'sharpen_provider.is_del'
+        /*sharpenProvider end*/
+        FROM sharpen_provider as sharpen_provider
+        WHERE
+            1 = 1 AND  sharpen_provider.is_del = 0
+        /*sharpen_provider begin*/
+            <!-- 供应商id -->
+            <if test="id != null and id != '' " >
+                and sharpen_provider.id = #{id}
+            </if>
+            <!-- 编码 -->
+            <if test="code != null and code != '' " >
+                and sharpen_provider.code = #{code}
+            </if>
+            <!-- 名称 -->
+            <if test="name != null and name != '' " >
+                and sharpen_provider.name = #{name}
+            </if>
+            <!-- 类型 -->
+            <if test="type != null and type != '' " >
+                and sharpen_provider.type = #{type}
+            </if>
+            <!-- 地址 -->
+            <if test="address != null and address != '' " >
+                and sharpen_provider.address = #{address}
+            </if>
+            <!--  -->
+            <if test="contact != null and contact != '' " >
+                and sharpen_provider.contact = #{contact}
+            </if>
+            <!-- 联系人电话 -->
+            <if test="tell != null and tell != '' " >
+                and sharpen_provider.tell = #{tell}
+            </if>
+            <!--  -->
+            <if test="isDel != null and isDel != '' " >
+                and sharpen_provider.is_del = #{isDel}
+            </if>
+        /*sharpen_provider end*/
+        ORDER BY sharpen_provider.id desc
+        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
+        LIMIT #{startRecord},#{pageSize}
+        </if>
+    </select>
+
+
+    <!--查询记录数-->
+    <select id="getSharpenProviderCount" parameterType="com.common.vo.SharpenProviderVO" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM sharpen_provider as sharpen_provider
+        WHERE
+            1 = 1 AND  sharpen_provider.is_del = 0
+        /*sharpen_provider begin*/
+        <!-- 供应商id -->
+        <if test="id != null and id != '' " >
+            and sharpen_provider.id = #{id}
+        </if>
+        <!-- 编码 -->
+        <if test="code != null and code != '' " >
+            and sharpen_provider.code = #{code}
+        </if>
+        <!-- 名称 -->
+        <if test="name != null and name != '' " >
+            and sharpen_provider.name = #{name}
+        </if>
+        <!-- 类型 -->
+        <if test="type != null and type != '' " >
+            and sharpen_provider.type = #{type}
+        </if>
+        <!-- 地址 -->
+        <if test="address != null and address != '' " >
+            and sharpen_provider.address = #{address}
+        </if>
+        <!--  -->
+        <if test="contact != null and contact != '' " >
+            and sharpen_provider.contact = #{contact}
+        </if>
+        <!-- 联系人电话 -->
+        <if test="tell != null and tell != '' " >
+            and sharpen_provider.tell = #{tell}
+        </if>
+        <!--  -->
+        <if test="isDel != null and isDel != '' " >
+            and sharpen_provider.is_del = #{isDel}
+        </if>
+        /*sharpen_provider end*/
+    </select>
+
+    <!--根据vo查询 -->
+    <select id="getSharpenProvider" parameterType="com.common.vo.SharpenProviderVO" resultMap="sharpenProviderQueryMap">
+        SELECT
+        /*sharpen_provider begin*/
+        <!-- 供应商id -->
+        sharpen_provider.id as 'sharpen_provider.id',
+        <!-- 编码 -->
+        sharpen_provider.code as 'sharpen_provider.code',
+        <!-- 名称 -->
+        sharpen_provider.name as 'sharpen_provider.name',
+        <!-- 类型 -->
+        sharpen_provider.type as 'sharpen_provider.type',
+        <!-- 地址 -->
+        sharpen_provider.address as 'sharpen_provider.address',
+        <!--  -->
+        sharpen_provider.contact as 'sharpen_provider.contact',
+        <!-- 联系人电话 -->
+        sharpen_provider.tell as 'sharpen_provider.tell',
+        <!--  -->
+        sharpen_provider.is_del as 'sharpen_provider.is_del'
+        /*sharpen_provider end*/
+        FROM sharpen_provider as sharpen_provider
+        WHERE
+            1 = 1 AND  sharpen_provider.is_del = 0
+        /*sharpen_provider begin*/
+        <!-- 供应商id -->
+        <if test="id != null and id != '' " >
+            and sharpen_provider.id = #{id}
+        </if>
+        <!-- 编码 -->
+        <if test="code != null and code != '' " >
+            and sharpen_provider.code = #{code}
+        </if>
+        <!-- 名称 -->
+        <if test="name != null and name != '' " >
+            and sharpen_provider.name = #{name}
+        </if>
+        <!-- 类型 -->
+        <if test="type != null and type != '' " >
+            and sharpen_provider.type = #{type}
+        </if>
+        <!-- 地址 -->
+        <if test="address != null and address != '' " >
+            and sharpen_provider.address = #{address}
+        </if>
+        <!--  -->
+        <if test="contact != null and contact != '' " >
+            and sharpen_provider.contact = #{contact}
+        </if>
+        <!-- 联系人电话 -->
+        <if test="tell != null and tell != '' " >
+            and sharpen_provider.tell = #{tell}
+        </if>
+        <!--  -->
+        <if test="isDel != null and isDel != '' " >
+            and sharpen_provider.is_del = #{isDel}
+        </if>
+        /*sharpen_provider end*/
+    </select>
+</mapper>

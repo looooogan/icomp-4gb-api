@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.mapper.IDjLineAkpMapper">
+    <resultMap id="djLineAkpQueryMap" type="com.common.pojo.DjLineAkp">
+        <!-- 生产线代码 -->
+        <id property="lineCode" column="DJ_LINE_AKP.LINE_CODE"/>
+
+        <!-- 生产线名称 -->
+        <result property="lineName" column="DJ_LINE_AKP.LINE_NAME"/>
+    </resultMap>
+    <!--添加-->
+    <insert id="addDjLineAkp" parameterType="com.common.pojo.DjLineAkp">
+        INSERT INTO DJ_LINE_AKP (
+            <!-- 生产线代码 -->
+            LINE_CODE,
+            <!-- 生产线名称 -->
+            LINE_NAME
+        )
+        VALUES (
+            <!-- 生产线代码 -->
+            #{lineCode},
+            <!-- 生产线名称 -->
+            #{lineName}
+        )
+    </insert>
+
+    <!--删除-->
+    <delete id="delDjLineAkp" parameterType="com.common.pojo.DjLineAkp">
+        DELETE
+        FROM DJ_LINE_AKP
+        WHERE
+            1 = 1
+            and LINE_CODE = #{lineCode}
+    </delete>
+
+    <!--逻辑删除-->
+    <delete id="delDjLineAkpForLogic" parameterType="com.common.pojo.DjLineAkp">
+        UPDATE DJ_LINE_AKP SET
+        is_del = 1
+        WHERE
+            1 = 1
+            and LINE_CODE = #{lineCode}
+    </delete>
+
+    <!--根据VO删除-->
+    <delete id="delDjLineAkpByVo" parameterType="com.common.vo.DjLineAkpVO">
+        UPDATE DJ_LINE_AKP SET is_del = 1
+        WHERE
+            1=1
+            <!-- 生产线代码 -->
+            <if test="lineCode != null and lineCode != '' " >
+                and LINE_CODE =  #{lineCode}
+            </if>
+            <!-- 生产线名称 -->
+            <if test="lineName != null and lineName != '' " >
+                and LINE_NAME =  #{lineName}
+            </if>
+    </delete>
+
+    <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
+    <update id="updDjLineAkp" parameterType="com.common.pojo.DjLineAkp">
+        UPDATE DJ_LINE_AKP
+        SET
+            <!-- 生产线名称 -->
+            <if test="lineName != null and lineName != '' " >
+                LINE_NAME =  #{lineName},
+            </if>
+            <!-- 生产线代码 -->
+            LINE_CODE = #{lineCode}
+        WHERE
+            1 = 1
+            and LINE_CODE = #{lineCode}
+    </update>
+
+    <!--分页查询 -->
+    <select id="getDjLineAkpByPage" parameterType="com.common.vo.DjLineAkpVO" resultMap="djLineAkpQueryMap">
+        SELECT
+        /*djLineAkp begin*/
+            <!-- 生产线代码 -->
+            DJ_LINE_AKP.LINE_CODE as 'DJ_LINE_AKP.LINE_CODE',
+            <!-- 生产线名称 -->
+            DJ_LINE_AKP.LINE_NAME as 'DJ_LINE_AKP.LINE_NAME'
+        /*djLineAkp end*/
+        FROM DJ_LINE_AKP as DJ_LINE_AKP
+        WHERE
+            1 = 1 AND  DJ_LINE_AKP.is_del = 0
+        /*DJ_LINE_AKP begin*/
+            <!-- 生产线代码 -->
+            <if test="lineCode != null and lineCode != '' " >
+                and DJ_LINE_AKP.LINE_CODE = #{lineCode}
+            </if>
+            <!-- 生产线名称 -->
+            <if test="lineName != null and lineName != '' " >
+                and DJ_LINE_AKP.LINE_NAME = #{lineName}
+            </if>
+        /*DJ_LINE_AKP end*/
+        ORDER BY DJ_LINE_AKP.LINE_CODE desc
+        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
+        LIMIT #{startRecord},#{pageSize}
+        </if>
+    </select>
+
+
+    <!--查询记录数-->
+    <select id="getDjLineAkpCount" parameterType="com.common.vo.DjLineAkpVO" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM DJ_LINE_AKP as DJ_LINE_AKP
+        WHERE
+            1 = 1 AND  DJ_LINE_AKP.is_del = 0
+        /*DJ_LINE_AKP begin*/
+        <!-- 生产线代码 -->
+        <if test="lineCode != null and lineCode != '' " >
+            and DJ_LINE_AKP.LINE_CODE = #{lineCode}
+        </if>
+        <!-- 生产线名称 -->
+        <if test="lineName != null and lineName != '' " >
+            and DJ_LINE_AKP.LINE_NAME = #{lineName}
+        </if>
+        /*DJ_LINE_AKP end*/
+    </select>
+
+    <!--根据vo查询 -->
+    <select id="getDjLineAkp" parameterType="com.common.vo.DjLineAkpVO" resultMap="djLineAkpQueryMap">
+        SELECT
+        /*DJ_LINE_AKP begin*/
+        <!-- 生产线代码 -->
+        DJ_LINE_AKP.LINE_CODE as 'DJ_LINE_AKP.LINE_CODE',
+        <!-- 生产线名称 -->
+        DJ_LINE_AKP.LINE_NAME as 'DJ_LINE_AKP.LINE_NAME'
+        /*DJ_LINE_AKP end*/
+        FROM DJ_LINE_AKP as DJ_LINE_AKP
+        WHERE
+            1 = 1 AND  DJ_LINE_AKP.is_del = 0
+        /*DJ_LINE_AKP begin*/
+        <!-- 生产线代码 -->
+        <if test="lineCode != null and lineCode != '' " >
+            and DJ_LINE_AKP.LINE_CODE = #{lineCode}
+        </if>
+        <!-- 生产线名称 -->
+        <if test="lineName != null and lineName != '' " >
+            and DJ_LINE_AKP.LINE_NAME = #{lineName}
+        </if>
+        /*DJ_LINE_AKP end*/
+    </select>
+</mapper>

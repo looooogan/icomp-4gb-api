@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans   
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd   
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd 
+        http://www.springframework.org/schema/aop 
+    	http://www.springframework.org/schema/aop/spring-aop.xsd">
+	<!-- 自动扫描的包名 -->
+	<context:component-scan base-package="com" >
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+		<!--<context:exclude-filter type="annotation" expression="org.springframework.web.servlet.HandlerInterceptor" />-->
+	</context:component-scan>
+	<bean id="aopLog" class="com.api.utils.AopLog"></bean>
+	<!-- 定义文件上传解析器 -->
+
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 设定默认编码 -->
+		<property name="defaultEncoding" value="UTF-8"></property>
+		<!-- 设定文件上传的最大值5MB，5*1024*1024 -->
+		<property name="maxUploadSize" value="5242880"></property>
+	</bean>
+	<!-- aop log -->
+	<aop:config>
+		<aop:aspect ref="aopLog">
+<!-- 		调用日志类 -->
+			<aop:pointcut id="pointcutAop" expression="execution(* com.service.*.*.*.*(..))" />
+<!-- 				在service包下面所有的类的所有方法被调用之前和之后都调用aopLog中的before和after方法 -->
+			<aop:before pointcut-ref="pointcutAop" method="before" />
+			<aop:after pointcut-ref="pointcutAop" method="after" />
+			<aop:after-throwing  method="doThrowing" pointcut-ref="pointcutAop" throwing="ex"/>
+		</aop:aspect> 
+	</aop:config>
+	    <!-- 异常处理 -->
+<!--    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"> -->
+<!--         <property name="defaultErrorView" value="error"></property> -->
+<!--         <property name="exceptionAttribute" value="ex"></property> -->
+<!--         <property name="exceptionMappings"> -->
+<!--             <props> -->
+<!--                 <prop key="cn.basttg.core.exception.BusinessException">error-business</prop> -->
+<!--                 <prop key="cn.basttg.core.exception.ParameterException">error-parameter</prop> -->
+<!--             </props> -->
+<!--         </property> -->
+<!--     </bean> -->
+	<!-- 资源文件读取 -->
+	<bean id="propertiesHandler"   class="org.springframework.context.support.ReloadableResourceBundleMessageSource">  
+		<property name="basenames">  
+			<list>  
+				<!-- 发送短信 -->
+				<value>classpath:propertiesConfig/message</value>  
+				<!-- 系统设置 -->
+				<value>classpath:propertiesConfig/system</value>
+			</list>  
+		</property>  
+		<!--① 刷新资源文件的周期，以秒为单位-->  
+		<property name="cacheSeconds" value="3"/>
+		<!-- 找不到key则不会抛出异常，会返回key -->
+		<property name="fallbackToSystemLocale" value="true"/>
+	</bean>  
+     <!-- 引入mybatis配置文件 -->
+    <import resource="spring-mybatis.xml" /> 
+	<!--redis配置文件 -->
+    <!--<import resource="spring-redis.xml" />    -->
+    
+</beans>  

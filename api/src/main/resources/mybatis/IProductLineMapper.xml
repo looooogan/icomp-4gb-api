@@ -1,0 +1,1416 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.mapper.IProductLineMapper">
+    <resultMap id="productLineQueryMap" type="com.common.pojo.ProductLine">
+        <!-- 关联关系id -->
+        <id property="id" column="product_line.id"/>
+
+        <!-- 生产线编码 -->
+        <result property="productLineCode" column="product_line.product_line_code"/>
+        <!-- 轴ID -->
+        <result property="axleCode" column="product_line.axle_code"/>
+        <!-- 流水线ID -->
+        <result property="assemblylineCode" column="product_line.assemblyline_code"/>
+        <!-- 设备ID -->
+        <result property="equipmentCode" column="product_line.equipment_code"/>
+        <!--  -->
+        <result property="processCode" column="product_line.process_code"/>
+        <!--  -->
+        <result property="toolDurable" column="product_line.tool_durable"/>
+        <!--  -->
+        <result property="isDel" column="product_line.is_del"/>
+        <!-- 零件 -->
+        <result property="partsCode" column="product_line.parts_code"/>
+        <!-- 合成刀编码 -->
+        <result property="synthesisCuttingToolCode" column="product_line.synthesis_cutting_tool_code"/>
+        <!-- 轴ID -->
+        <association property="productLineAxle"  column="product_line_axle.code" resultMap="productLineProductLineAxleMap"/>
+        <!-- 流水线ID -->
+        <association property="productLineAssemblyline"  column="product_line_assemblyline.code" resultMap="productLineProductLineAssemblylineMap"/>
+        <!-- 设备ID -->
+        <association property="productLineEquipment"  column="product_line_equipment.code" resultMap="productLineProductLineEquipmentMap"/>
+        <!--  -->
+        <association property="productLineProcess"  column="product_line_process.code" resultMap="productLineProductLineProcessMap"/>
+        <!-- 零件 -->
+        <association property="productLineParts"  column="product_line_parts.code" resultMap="productLineProductLinePartsMap"/>
+        <!-- 合成刀编码 -->
+        <association property="synthesisCuttingTool"  column="synthesis_cutting_tool.code" resultMap="productLineSynthesisCuttingToolMap"/>
+    </resultMap>
+        <resultMap id="productLineProductLineAxleMap" type="com.common.pojo.ProductLineAxle">
+            <!-- 轴ID -->
+            <id property="id" column="product_line_axle.id"/>
+
+            <!-- 轴编码 -->
+            <result property="code" column="product_line_axle.code"/>
+            <!-- 轴名称 -->
+            <result property="name" column="product_line_axle.name"/>
+            <!--  -->
+            <result property="isDel" column="product_line_axle.is_del"/>
+        </resultMap>
+        <resultMap id="productLineSynthesisCuttingToolMap" type="com.common.pojo.SynthesisCuttingTool">
+            <!-- id -->
+            <id property="id" column="synthesis_cutting_tool.id"/>
+
+            <!-- 编码 -->
+            <result property="code" column="synthesis_cutting_tool.code"/>
+            <!-- 合成刀业务编码 -->
+            <result property="synthesisCode" column="synthesis_cutting_tool.synthesis_code"/>
+            <!-- 图纸url -->
+            <result property="picUrl" column="synthesis_cutting_tool.pic_url"/>
+            <!-- 逻辑删除 -->
+            <result property="isDel" column="synthesis_cutting_tool.is_del"/>
+            <!-- 合成刀类型  -->
+            <result property="synthesisCuttingToolTypeId" column="synthesis_cutting_tool.synthesis_cutting_tool_type_id"/>
+            <!--  -->
+            <result property="abc" column="synthesis_cutting_tool.abc"/>
+        </resultMap>
+        <resultMap id="productLineProductLineEquipmentMap" type="com.common.pojo.ProductLineEquipment">
+            <!-- 设备id -->
+            <id property="id" column="product_line_equipment.id"/>
+
+            <!-- RFID载体 -->
+            <result property="rfidContainerCode" column="product_line_equipment.rfid_container_code"/>
+            <!-- 当前是否使用(0是,1否) -->
+            <result property="statues" column="product_line_equipment.statues"/>
+            <!-- 编码 -->
+            <result property="code" column="product_line_equipment.code"/>
+            <!-- 名称 -->
+            <result property="name" column="product_line_equipment.name"/>
+            <!-- 设备类型(0:加工设备1:对刀设备2:专机) -->
+            <result property="type" column="product_line_equipment.type"/>
+            <!--  -->
+            <result property="isDel" column="product_line_equipment.is_del"/>
+        </resultMap>
+        <resultMap id="productLineProductLinePartsMap" type="com.common.pojo.ProductLineParts">
+            <!-- 零部件id -->
+            <id property="id" column="product_line_parts.id"/>
+
+            <!-- 编码 -->
+            <result property="code" column="product_line_parts.code"/>
+            <!-- 零部件型号（0:1.6L,1:1.4T） -->
+            <result property="type" column="product_line_parts.type"/>
+            <!-- 名称 -->
+            <result property="name" column="product_line_parts.name"/>
+            <!--  -->
+            <result property="isDel" column="product_line_parts.is_del"/>
+        </resultMap>
+        <resultMap id="productLineProductLineProcessMap" type="com.common.pojo.ProductLineProcess">
+            <!-- 工序id -->
+            <id property="id" column="product_line_process.id"/>
+
+            <!-- 编码 -->
+            <result property="code" column="product_line_process.code"/>
+            <!-- 流水线 -->
+            <result property="assemblylineCode" column="product_line_process.assemblyline_code"/>
+            <!-- 名称 -->
+            <result property="name" column="product_line_process.name"/>
+            <!--  -->
+            <result property="isDel" column="product_line_process.is_del"/>
+        </resultMap>
+        <resultMap id="productLineProductLineAssemblylineMap" type="com.common.pojo.ProductLineAssemblyline">
+            <!-- 流水线ID -->
+            <id property="id" column="product_line_assemblyline.id"/>
+
+            <!-- 流水线名称 -->
+            <result property="name" column="product_line_assemblyline.name"/>
+            <!-- 流水线编码 -->
+            <result property="code" column="product_line_assemblyline.code"/>
+            <!-- 删除区分(0有效1删除) -->
+            <result property="isDel" column="product_line_assemblyline.is_del"/>
+        </resultMap>
+    <!--添加-->
+    <insert id="addProductLine" parameterType="com.common.pojo.ProductLine">
+        INSERT INTO product_line (
+            <!-- 关联关系id -->
+            id,
+            <!-- 生产线编码 -->
+            product_line_code,
+            <!-- 轴ID -->
+            axle_code,
+            <!-- 流水线ID -->
+            assemblyline_code,
+            <!-- 设备ID -->
+            equipment_code,
+            <!--  -->
+            process_code,
+            <!--  -->
+            tool_durable,
+            <!--  -->
+            is_del,
+            <!-- 零件 -->
+            parts_code,
+            <!-- 合成刀编码 -->
+            synthesis_cutting_tool_code
+        )
+        VALUES (
+            <!-- 关联关系id -->
+            #{id},
+            <!-- 生产线编码 -->
+            #{productLineCode},
+            <!-- 轴ID -->
+            #{axleCode},
+            <!-- 流水线ID -->
+            #{assemblylineCode},
+            <!-- 设备ID -->
+            #{equipmentCode},
+            <!--  -->
+            #{processCode},
+            <!--  -->
+            #{toolDurable},
+            <!--  -->
+            #{isDel},
+            <!-- 零件 -->
+            #{partsCode},
+            <!-- 合成刀编码 -->
+            #{synthesisCuttingToolCode}
+        )
+    </insert>
+
+    <!--删除-->
+    <delete id="delProductLine" parameterType="com.common.pojo.ProductLine">
+        DELETE
+        FROM product_line
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--逻辑删除-->
+    <delete id="delProductLineForLogic" parameterType="com.common.pojo.ProductLine">
+        UPDATE product_line SET
+        is_del = 1
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--根据VO删除-->
+    <delete id="delProductLineByVo" parameterType="com.common.vo.ProductLineVO">
+        UPDATE product_line SET is_del = 1
+        WHERE
+            1=1
+            <!-- 关联关系id -->
+            <if test="id != null and id != '' " >
+                and id =  #{id}
+            </if>
+            <!-- 生产线编码 -->
+            <if test="productLineCode != null and productLineCode != '' " >
+                and product_line_code =  #{productLineCode}
+            </if>
+            <!-- 轴ID -->
+            <if test="axleCode != null and axleCode != '' " >
+                and axle_code =  #{axleCode}
+            </if>
+            <!-- 流水线ID -->
+            <if test="assemblylineCode != null and assemblylineCode != '' " >
+                and assemblyline_code =  #{assemblylineCode}
+            </if>
+            <!-- 设备ID -->
+            <if test="equipmentCode != null and equipmentCode != '' " >
+                and equipment_code =  #{equipmentCode}
+            </if>
+            <!--  -->
+            <if test="processCode != null and processCode != '' " >
+                and process_code =  #{processCode}
+            </if>
+            <!--  -->
+            <if test="toolDurable != null and toolDurable != '' " >
+                and tool_durable =  #{toolDurable}
+            </if>
+            <!--  -->
+            <if test="isDel != null and isDel != '' " >
+                and is_del =  #{isDel}
+            </if>
+            <!-- 零件 -->
+            <if test="partsCode != null and partsCode != '' " >
+                and parts_code =  #{partsCode}
+            </if>
+            <!-- 合成刀编码 -->
+            <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+                and synthesis_cutting_tool_code =  #{synthesisCuttingToolCode}
+            </if>
+    </delete>
+
+    <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
+    <update id="updProductLine" parameterType="com.common.pojo.ProductLine">
+        UPDATE product_line
+        SET
+            <!-- 生产线编码 -->
+            <if test="productLineCode != null and productLineCode != '' " >
+                product_line_code =  #{productLineCode},
+            </if>
+            <!-- 轴ID -->
+            <if test="axleCode != null and axleCode != '' " >
+                axle_code =  #{axleCode},
+            </if>
+            <!-- 流水线ID -->
+            <if test="assemblylineCode != null and assemblylineCode != '' " >
+                assemblyline_code =  #{assemblylineCode},
+            </if>
+            <!-- 设备ID -->
+            <if test="equipmentCode != null and equipmentCode != '' " >
+                equipment_code =  #{equipmentCode},
+            </if>
+            <!--  -->
+            <if test="processCode != null and processCode != '' " >
+                process_code =  #{processCode},
+            </if>
+            <!--  -->
+            <if test="toolDurable != null and toolDurable != '' " >
+                tool_durable =  #{toolDurable},
+            </if>
+            <!--  -->
+            <if test="isDel != null and isDel != '' " >
+                is_del =  #{isDel},
+            </if>
+            <!-- 零件 -->
+            <if test="partsCode != null and partsCode != '' " >
+                parts_code =  #{partsCode},
+            </if>
+            <!-- 合成刀编码 -->
+            <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+                synthesis_cutting_tool_code =  #{synthesisCuttingToolCode},
+            </if>
+            <!-- 关联关系id -->
+            id = #{id}
+        WHERE
+            1 = 1
+            and id = #{id}
+    </update>
+
+    <!--分页查询 -->
+    <select id="getProductLineByPage" parameterType="com.common.vo.ProductLineVO" resultMap="productLineQueryMap">
+        SELECT
+        /*productLine begin*/
+            <!-- 关联关系id -->
+            product_line.id as 'product_line.id',
+            <!-- 生产线编码 -->
+            product_line.product_line_code as 'product_line.product_line_code',
+            <!-- 轴ID -->
+            product_line.axle_code as 'product_line.axle_code',
+            <!-- 流水线ID -->
+            product_line.assemblyline_code as 'product_line.assemblyline_code',
+            <!-- 设备ID -->
+            product_line.equipment_code as 'product_line.equipment_code',
+            <!--  -->
+            product_line.process_code as 'product_line.process_code',
+            <!--  -->
+            product_line.tool_durable as 'product_line.tool_durable',
+            <!--  -->
+            product_line.is_del as 'product_line.is_del',
+            <!-- 零件 -->
+            product_line.parts_code as 'product_line.parts_code',
+            <!-- 合成刀编码 -->
+            product_line.synthesis_cutting_tool_code as 'product_line.synthesis_cutting_tool_code',
+        /*productLine end*/
+        /*product_line_axle begin*/
+            <!-- 轴ID -->
+            product_line_axle.id as 'product_line_axle.id',
+            <!-- 轴编码 -->
+            product_line_axle.code as 'product_line_axle.code',
+            <!-- 轴名称 -->
+            product_line_axle.name as 'product_line_axle.name',
+            <!--  -->
+            product_line_axle.is_del as 'product_line_axle.is_del',
+        /*product_line_axle end*/
+        /*synthesis_cutting_tool begin*/
+            <!-- id -->
+            synthesis_cutting_tool.id as 'synthesis_cutting_tool.id',
+            <!-- 编码 -->
+            synthesis_cutting_tool.code as 'synthesis_cutting_tool.code',
+            <!-- 合成刀业务编码 -->
+            synthesis_cutting_tool.synthesis_code as 'synthesis_cutting_tool.synthesis_code',
+            <!-- 图纸url -->
+            synthesis_cutting_tool.pic_url as 'synthesis_cutting_tool.pic_url',
+            <!-- 逻辑删除 -->
+            synthesis_cutting_tool.is_del as 'synthesis_cutting_tool.is_del',
+            <!-- 合成刀类型  -->
+            synthesis_cutting_tool.synthesis_cutting_tool_type_id as 'synthesis_cutting_tool.synthesis_cutting_tool_type_id',
+            <!--  -->
+            synthesis_cutting_tool.abc as 'synthesis_cutting_tool.abc',
+        /*synthesis_cutting_tool end*/
+        /*product_line_equipment begin*/
+            <!-- 设备id -->
+            product_line_equipment.id as 'product_line_equipment.id',
+            <!-- RFID载体 -->
+            product_line_equipment.rfid_container_code as 'product_line_equipment.rfid_container_code',
+            <!-- 当前是否使用(0是,1否) -->
+            product_line_equipment.statues as 'product_line_equipment.statues',
+            <!-- 编码 -->
+            product_line_equipment.code as 'product_line_equipment.code',
+            <!-- 名称 -->
+            product_line_equipment.name as 'product_line_equipment.name',
+            <!-- 设备类型(0:加工设备1:对刀设备2:专机) -->
+            product_line_equipment.type as 'product_line_equipment.type',
+            <!--  -->
+            product_line_equipment.is_del as 'product_line_equipment.is_del',
+        /*product_line_equipment end*/
+        /*product_line_parts begin*/
+            <!-- 零部件id -->
+            product_line_parts.id as 'product_line_parts.id',
+            <!-- 编码 -->
+            product_line_parts.code as 'product_line_parts.code',
+            <!-- 零部件型号（0:1.6L,1:1.4T） -->
+            product_line_parts.type as 'product_line_parts.type',
+            <!-- 名称 -->
+            product_line_parts.name as 'product_line_parts.name',
+            <!--  -->
+            product_line_parts.is_del as 'product_line_parts.is_del',
+        /*product_line_parts end*/
+        /*product_line_process begin*/
+            <!-- 工序id -->
+            product_line_process.id as 'product_line_process.id',
+            <!-- 编码 -->
+            product_line_process.code as 'product_line_process.code',
+            <!-- 流水线 -->
+            product_line_process.assemblyline_code as 'product_line_process.assemblyline_code',
+            <!-- 名称 -->
+            product_line_process.name as 'product_line_process.name',
+            <!--  -->
+            product_line_process.is_del as 'product_line_process.is_del',
+        /*product_line_process end*/
+        /*product_line_assemblyline begin*/
+            <!-- 流水线ID -->
+            product_line_assemblyline.id as 'product_line_assemblyline.id',
+            <!-- 流水线名称 -->
+            product_line_assemblyline.name as 'product_line_assemblyline.name',
+            <!-- 流水线编码 -->
+            product_line_assemblyline.code as 'product_line_assemblyline.code',
+            <!-- 删除区分(0有效1删除) -->
+            product_line_assemblyline.is_del as 'product_line_assemblyline.is_del'
+        /*product_line_assemblyline end*/
+        FROM product_line as product_line
+        LEFT JOIN product_line_axle as product_line_axle ON product_line_axle.code = product_line.axle_code
+        LEFT JOIN product_line_assemblyline as product_line_assemblyline ON product_line_assemblyline.code = product_line.assemblyline_code
+        LEFT JOIN product_line_equipment as product_line_equipment ON product_line_equipment.code = product_line.equipment_code
+        LEFT JOIN product_line_process as product_line_process ON product_line_process.code = product_line.process_code
+        LEFT JOIN product_line_parts as product_line_parts ON product_line_parts.code = product_line.parts_code
+        LEFT JOIN synthesis_cutting_tool as synthesis_cutting_tool ON synthesis_cutting_tool.code = product_line.synthesis_cutting_tool_code
+        WHERE
+            1 = 1 AND  product_line.is_del = 0
+        /*product_line begin*/
+            <!-- 关联关系id -->
+            <if test="id != null and id != '' " >
+                and product_line.id = #{id}
+            </if>
+            <!-- 生产线编码 -->
+            <if test="productLineCode != null and productLineCode != '' " >
+                and product_line.product_line_code = #{productLineCode}
+            </if>
+            <!-- 轴ID -->
+            <if test="axleCode != null and axleCode != '' " >
+                and product_line.axle_code = #{axleCode}
+            </if>
+            <!-- 流水线ID -->
+            <if test="assemblylineCode != null and assemblylineCode != '' " >
+                and product_line.assemblyline_code = #{assemblylineCode}
+            </if>
+            <!-- 设备ID -->
+            <if test="equipmentCode != null and equipmentCode != '' " >
+                and product_line.equipment_code = #{equipmentCode}
+            </if>
+            <!--  -->
+            <if test="processCode != null and processCode != '' " >
+                and product_line.process_code = #{processCode}
+            </if>
+            <!--  -->
+            <if test="toolDurable != null and toolDurable != '' " >
+                and product_line.tool_durable = #{toolDurable}
+            </if>
+            <!--  -->
+            <if test="isDel != null and isDel != '' " >
+                and product_line.is_del = #{isDel}
+            </if>
+            <!-- 零件 -->
+            <if test="partsCode != null and partsCode != '' " >
+                and product_line.parts_code = #{partsCode}
+            </if>
+            <!-- 合成刀编码 -->
+            <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+                and product_line.synthesis_cutting_tool_code = #{synthesisCuttingToolCode}
+            </if>
+        /*product_line end*/
+        /*product_line_axle begin*/
+            <if test="productLineAxleVO != null">
+            <!-- 轴ID -->
+            <if test="productLineAxleVO.id != null and productLineAxleVO.id != '' " >
+                and product_line_axle.id = #{productLineAxleVO.id}
+            </if>
+            <!-- 轴编码 -->
+            <if test="productLineAxleVO.code != null and productLineAxleVO.code != '' " >
+                and product_line_axle.code = #{productLineAxleVO.code}
+            </if>
+            <!-- 轴名称 -->
+            <if test="productLineAxleVO.name != null and productLineAxleVO.name != '' " >
+                and product_line_axle.name = #{productLineAxleVO.name}
+            </if>
+            <!--  -->
+            <if test="productLineAxleVO.isDel != null and productLineAxleVO.isDel != '' " >
+                and product_line_axle.is_del = #{productLineAxleVO.isDel}
+            </if>
+            </if>
+        /*product_line_axle end*/
+        /*synthesis_cutting_tool begin*/
+            <if test="synthesisCuttingToolVO != null">
+            <!-- id -->
+            <if test="synthesisCuttingToolVO.id != null and synthesisCuttingToolVO.id != '' " >
+                and synthesis_cutting_tool.id = #{synthesisCuttingToolVO.id}
+            </if>
+            <!-- 编码 -->
+            <if test="synthesisCuttingToolVO.code != null and synthesisCuttingToolVO.code != '' " >
+                and synthesis_cutting_tool.code = #{synthesisCuttingToolVO.code}
+            </if>
+            <!-- 合成刀业务编码 -->
+            <if test="synthesisCuttingToolVO.synthesisCode != null and synthesisCuttingToolVO.synthesisCode != '' " >
+                and synthesis_cutting_tool.synthesis_code = #{synthesisCuttingToolVO.synthesisCode}
+            </if>
+            <!-- 图纸url -->
+            <if test="synthesisCuttingToolVO.picUrl != null and synthesisCuttingToolVO.picUrl != '' " >
+                and synthesis_cutting_tool.pic_url = #{synthesisCuttingToolVO.picUrl}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="synthesisCuttingToolVO.isDel != null and synthesisCuttingToolVO.isDel != '' " >
+                and synthesis_cutting_tool.is_del = #{synthesisCuttingToolVO.isDel}
+            </if>
+            <!-- 合成刀类型  -->
+            <if test="synthesisCuttingToolVO.synthesisCuttingToolTypeId != null and synthesisCuttingToolVO.synthesisCuttingToolTypeId != '' " >
+                and synthesis_cutting_tool.synthesis_cutting_tool_type_id = #{synthesisCuttingToolVO.synthesisCuttingToolTypeId}
+            </if>
+            <!--  -->
+            <if test="synthesisCuttingToolVO.abc != null and synthesisCuttingToolVO.abc != '' " >
+                and synthesis_cutting_tool.abc = #{synthesisCuttingToolVO.abc}
+            </if>
+            </if>
+        /*synthesis_cutting_tool end*/
+        /*product_line_equipment begin*/
+            <if test="productLineEquipmentVO != null">
+            <!-- 设备id -->
+            <if test="productLineEquipmentVO.id != null and productLineEquipmentVO.id != '' " >
+                and product_line_equipment.id = #{productLineEquipmentVO.id}
+            </if>
+            <!-- RFID载体 -->
+            <if test="productLineEquipmentVO.rfidContainerCode != null and productLineEquipmentVO.rfidContainerCode != '' " >
+                and product_line_equipment.rfid_container_code = #{productLineEquipmentVO.rfidContainerCode}
+            </if>
+            <!-- 当前是否使用(0是,1否) -->
+            <if test="productLineEquipmentVO.statues != null and productLineEquipmentVO.statues != '' " >
+                and product_line_equipment.statues = #{productLineEquipmentVO.statues}
+            </if>
+            <!-- 编码 -->
+            <if test="productLineEquipmentVO.code != null and productLineEquipmentVO.code != '' " >
+                and product_line_equipment.code = #{productLineEquipmentVO.code}
+            </if>
+            <!-- 名称 -->
+            <if test="productLineEquipmentVO.name != null and productLineEquipmentVO.name != '' " >
+                and product_line_equipment.name = #{productLineEquipmentVO.name}
+            </if>
+            <!-- 设备类型(0:加工设备1:对刀设备2:专机) -->
+            <if test="productLineEquipmentVO.type != null and productLineEquipmentVO.type != '' " >
+                and product_line_equipment.type = #{productLineEquipmentVO.type}
+            </if>
+            <!--  -->
+            <if test="productLineEquipmentVO.isDel != null and productLineEquipmentVO.isDel != '' " >
+                and product_line_equipment.is_del = #{productLineEquipmentVO.isDel}
+            </if>
+            </if>
+        /*product_line_equipment end*/
+        /*product_line_parts begin*/
+            <if test="productLinePartsVO != null">
+            <!-- 零部件id -->
+            <if test="productLinePartsVO.id != null and productLinePartsVO.id != '' " >
+                and product_line_parts.id = #{productLinePartsVO.id}
+            </if>
+            <!-- 编码 -->
+            <if test="productLinePartsVO.code != null and productLinePartsVO.code != '' " >
+                and product_line_parts.code = #{productLinePartsVO.code}
+            </if>
+            <!-- 零部件型号（0:1.6L,1:1.4T） -->
+            <if test="productLinePartsVO.type != null and productLinePartsVO.type != '' " >
+                and product_line_parts.type = #{productLinePartsVO.type}
+            </if>
+            <!-- 名称 -->
+            <if test="productLinePartsVO.name != null and productLinePartsVO.name != '' " >
+                and product_line_parts.name = #{productLinePartsVO.name}
+            </if>
+            <!--  -->
+            <if test="productLinePartsVO.isDel != null and productLinePartsVO.isDel != '' " >
+                and product_line_parts.is_del = #{productLinePartsVO.isDel}
+            </if>
+            </if>
+        /*product_line_parts end*/
+        /*product_line_process begin*/
+            <if test="productLineProcessVO != null">
+            <!-- 工序id -->
+            <if test="productLineProcessVO.id != null and productLineProcessVO.id != '' " >
+                and product_line_process.id = #{productLineProcessVO.id}
+            </if>
+            <!-- 编码 -->
+            <if test="productLineProcessVO.code != null and productLineProcessVO.code != '' " >
+                and product_line_process.code = #{productLineProcessVO.code}
+            </if>
+            <!-- 流水线 -->
+            <if test="productLineProcessVO.assemblylineCode != null and productLineProcessVO.assemblylineCode != '' " >
+                and product_line_process.assemblyline_code = #{productLineProcessVO.assemblylineCode}
+            </if>
+            <!-- 名称 -->
+            <if test="productLineProcessVO.name != null and productLineProcessVO.name != '' " >
+                and product_line_process.name = #{productLineProcessVO.name}
+            </if>
+            <!--  -->
+            <if test="productLineProcessVO.isDel != null and productLineProcessVO.isDel != '' " >
+                and product_line_process.is_del = #{productLineProcessVO.isDel}
+            </if>
+            </if>
+        /*product_line_process end*/
+        /*product_line_assemblyline begin*/
+            <if test="productLineAssemblylineVO != null">
+            <!-- 流水线ID -->
+            <if test="productLineAssemblylineVO.id != null and productLineAssemblylineVO.id != '' " >
+                and product_line_assemblyline.id = #{productLineAssemblylineVO.id}
+            </if>
+            <!-- 流水线名称 -->
+            <if test="productLineAssemblylineVO.name != null and productLineAssemblylineVO.name != '' " >
+                and product_line_assemblyline.name = #{productLineAssemblylineVO.name}
+            </if>
+            <!-- 流水线编码 -->
+            <if test="productLineAssemblylineVO.code != null and productLineAssemblylineVO.code != '' " >
+                and product_line_assemblyline.code = #{productLineAssemblylineVO.code}
+            </if>
+            <!-- 删除区分(0有效1删除) -->
+            <if test="productLineAssemblylineVO.isDel != null and productLineAssemblylineVO.isDel != '' " >
+                and product_line_assemblyline.is_del = #{productLineAssemblylineVO.isDel}
+            </if>
+            </if>
+        /*product_line_assemblyline end*/
+        ORDER BY product_line.id desc
+        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
+        LIMIT #{startRecord},#{pageSize}
+        </if>
+    </select>
+
+
+    <!--查询记录数-->
+    <select id="getProductLineCount" parameterType="com.common.vo.ProductLineVO" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM product_line as product_line
+        LEFT JOIN product_line_axle as product_line_axle ON product_line_axle.code = product_line.axle_code
+        LEFT JOIN product_line_assemblyline as product_line_assemblyline ON product_line_assemblyline.code = product_line.assemblyline_code
+        LEFT JOIN product_line_equipment as product_line_equipment ON product_line_equipment.code = product_line.equipment_code
+        LEFT JOIN product_line_process as product_line_process ON product_line_process.code = product_line.process_code
+        LEFT JOIN product_line_parts as product_line_parts ON product_line_parts.code = product_line.parts_code
+        LEFT JOIN synthesis_cutting_tool as synthesis_cutting_tool ON synthesis_cutting_tool.code = product_line.synthesis_cutting_tool_code
+        WHERE
+            1 = 1 AND  product_line.is_del = 0
+        /*product_line begin*/
+        <!-- 关联关系id -->
+        <if test="id != null and id != '' " >
+            and product_line.id = #{id}
+        </if>
+        <!-- 生产线编码 -->
+        <if test="productLineCode != null and productLineCode != '' " >
+            and product_line.product_line_code = #{productLineCode}
+        </if>
+        <!-- 轴ID -->
+        <if test="axleCode != null and axleCode != '' " >
+            and product_line.axle_code = #{axleCode}
+        </if>
+        <!-- 流水线ID -->
+        <if test="assemblylineCode != null and assemblylineCode != '' " >
+            and product_line.assemblyline_code = #{assemblylineCode}
+        </if>
+        <!-- 设备ID -->
+        <if test="equipmentCode != null and equipmentCode != '' " >
+            and product_line.equipment_code = #{equipmentCode}
+        </if>
+        <!--  -->
+        <if test="processCode != null and processCode != '' " >
+            and product_line.process_code = #{processCode}
+        </if>
+        <!--  -->
+        <if test="toolDurable != null and toolDurable != '' " >
+            and product_line.tool_durable = #{toolDurable}
+        </if>
+        <!--  -->
+        <if test="isDel != null and isDel != '' " >
+            and product_line.is_del = #{isDel}
+        </if>
+        <!-- 零件 -->
+        <if test="partsCode != null and partsCode != '' " >
+            and product_line.parts_code = #{partsCode}
+        </if>
+        <!-- 合成刀编码 -->
+        <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+            and product_line.synthesis_cutting_tool_code = #{synthesisCuttingToolCode}
+        </if>
+        /*product_line end*/
+        /*product_line_axle begin*/
+        <if test="productLineAxleVO != null">
+        <!-- 轴ID -->
+        <if test="productLineAxleVO.id != null and productLineAxleVO.id != '' " >
+            and product_line_axle.id = #{productLineAxleVO.id}
+        </if>
+        <!-- 轴编码 -->
+        <if test="productLineAxleVO.code != null and productLineAxleVO.code != '' " >
+            and product_line_axle.code = #{productLineAxleVO.code}
+        </if>
+        <!-- 轴名称 -->
+        <if test="productLineAxleVO.name != null and productLineAxleVO.name != '' " >
+            and product_line_axle.name = #{productLineAxleVO.name}
+        </if>
+        <!--  -->
+        <if test="productLineAxleVO.isDel != null and productLineAxleVO.isDel != '' " >
+            and product_line_axle.is_del = #{productLineAxleVO.isDel}
+        </if>
+        </if>
+        /*product_line_axle end*/
+        /*synthesis_cutting_tool begin*/
+        <if test="synthesisCuttingToolVO != null">
+        <!-- id -->
+        <if test="synthesisCuttingToolVO.id != null and synthesisCuttingToolVO.id != '' " >
+            and synthesis_cutting_tool.id = #{synthesisCuttingToolVO.id}
+        </if>
+        <!-- 编码 -->
+        <if test="synthesisCuttingToolVO.code != null and synthesisCuttingToolVO.code != '' " >
+            and synthesis_cutting_tool.code = #{synthesisCuttingToolVO.code}
+        </if>
+        <!-- 合成刀业务编码 -->
+        <if test="synthesisCuttingToolVO.synthesisCode != null and synthesisCuttingToolVO.synthesisCode != '' " >
+            and synthesis_cutting_tool.synthesis_code = #{synthesisCuttingToolVO.synthesisCode}
+        </if>
+        <!-- 图纸url -->
+        <if test="synthesisCuttingToolVO.picUrl != null and synthesisCuttingToolVO.picUrl != '' " >
+            and synthesis_cutting_tool.pic_url = #{synthesisCuttingToolVO.picUrl}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="synthesisCuttingToolVO.isDel != null and synthesisCuttingToolVO.isDel != '' " >
+            and synthesis_cutting_tool.is_del = #{synthesisCuttingToolVO.isDel}
+        </if>
+        <!-- 合成刀类型  -->
+        <if test="synthesisCuttingToolVO.synthesisCuttingToolTypeId != null and synthesisCuttingToolVO.synthesisCuttingToolTypeId != '' " >
+            and synthesis_cutting_tool.synthesis_cutting_tool_type_id = #{synthesisCuttingToolVO.synthesisCuttingToolTypeId}
+        </if>
+        <!--  -->
+        <if test="synthesisCuttingToolVO.abc != null and synthesisCuttingToolVO.abc != '' " >
+            and synthesis_cutting_tool.abc = #{synthesisCuttingToolVO.abc}
+        </if>
+        </if>
+        /*synthesis_cutting_tool end*/
+        /*product_line_equipment begin*/
+        <if test="productLineEquipmentVO != null">
+        <!-- 设备id -->
+        <if test="productLineEquipmentVO.id != null and productLineEquipmentVO.id != '' " >
+            and product_line_equipment.id = #{productLineEquipmentVO.id}
+        </if>
+        <!-- RFID载体 -->
+        <if test="productLineEquipmentVO.rfidContainerCode != null and productLineEquipmentVO.rfidContainerCode != '' " >
+            and product_line_equipment.rfid_container_code = #{productLineEquipmentVO.rfidContainerCode}
+        </if>
+        <!-- 当前是否使用(0是,1否) -->
+        <if test="productLineEquipmentVO.statues != null and productLineEquipmentVO.statues != '' " >
+            and product_line_equipment.statues = #{productLineEquipmentVO.statues}
+        </if>
+        <!-- 编码 -->
+        <if test="productLineEquipmentVO.code != null and productLineEquipmentVO.code != '' " >
+            and product_line_equipment.code = #{productLineEquipmentVO.code}
+        </if>
+        <!-- 名称 -->
+        <if test="productLineEquipmentVO.name != null and productLineEquipmentVO.name != '' " >
+            and product_line_equipment.name = #{productLineEquipmentVO.name}
+        </if>
+        <!-- 设备类型(0:加工设备1:对刀设备2:专机) -->
+        <if test="productLineEquipmentVO.type != null and productLineEquipmentVO.type != '' " >
+            and product_line_equipment.type = #{productLineEquipmentVO.type}
+        </if>
+        <!--  -->
+        <if test="productLineEquipmentVO.isDel != null and productLineEquipmentVO.isDel != '' " >
+            and product_line_equipment.is_del = #{productLineEquipmentVO.isDel}
+        </if>
+        </if>
+        /*product_line_equipment end*/
+        /*product_line_parts begin*/
+        <if test="productLinePartsVO != null">
+        <!-- 零部件id -->
+        <if test="productLinePartsVO.id != null and productLinePartsVO.id != '' " >
+            and product_line_parts.id = #{productLinePartsVO.id}
+        </if>
+        <!-- 编码 -->
+        <if test="productLinePartsVO.code != null and productLinePartsVO.code != '' " >
+            and product_line_parts.code = #{productLinePartsVO.code}
+        </if>
+        <!-- 零部件型号（0:1.6L,1:1.4T） -->
+        <if test="productLinePartsVO.type != null and productLinePartsVO.type != '' " >
+            and product_line_parts.type = #{productLinePartsVO.type}
+        </if>
+        <!-- 名称 -->
+        <if test="productLinePartsVO.name != null and productLinePartsVO.name != '' " >
+            and product_line_parts.name = #{productLinePartsVO.name}
+        </if>
+        <!--  -->
+        <if test="productLinePartsVO.isDel != null and productLinePartsVO.isDel != '' " >
+            and product_line_parts.is_del = #{productLinePartsVO.isDel}
+        </if>
+        </if>
+        /*product_line_parts end*/
+        /*product_line_process begin*/
+        <if test="productLineProcessVO != null">
+        <!-- 工序id -->
+        <if test="productLineProcessVO.id != null and productLineProcessVO.id != '' " >
+            and product_line_process.id = #{productLineProcessVO.id}
+        </if>
+        <!-- 编码 -->
+        <if test="productLineProcessVO.code != null and productLineProcessVO.code != '' " >
+            and product_line_process.code = #{productLineProcessVO.code}
+        </if>
+        <!-- 流水线 -->
+        <if test="productLineProcessVO.assemblylineCode != null and productLineProcessVO.assemblylineCode != '' " >
+            and product_line_process.assemblyline_code = #{productLineProcessVO.assemblylineCode}
+        </if>
+        <!-- 名称 -->
+        <if test="productLineProcessVO.name != null and productLineProcessVO.name != '' " >
+            and product_line_process.name = #{productLineProcessVO.name}
+        </if>
+        <!--  -->
+        <if test="productLineProcessVO.isDel != null and productLineProcessVO.isDel != '' " >
+            and product_line_process.is_del = #{productLineProcessVO.isDel}
+        </if>
+        </if>
+        /*product_line_process end*/
+        /*product_line_assemblyline begin*/
+        <if test="productLineAssemblylineVO != null">
+        <!-- 流水线ID -->
+        <if test="productLineAssemblylineVO.id != null and productLineAssemblylineVO.id != '' " >
+            and product_line_assemblyline.id = #{productLineAssemblylineVO.id}
+        </if>
+        <!-- 流水线名称 -->
+        <if test="productLineAssemblylineVO.name != null and productLineAssemblylineVO.name != '' " >
+            and product_line_assemblyline.name = #{productLineAssemblylineVO.name}
+        </if>
+        <!-- 流水线编码 -->
+        <if test="productLineAssemblylineVO.code != null and productLineAssemblylineVO.code != '' " >
+            and product_line_assemblyline.code = #{productLineAssemblylineVO.code}
+        </if>
+        <!-- 删除区分(0有效1删除) -->
+        <if test="productLineAssemblylineVO.isDel != null and productLineAssemblylineVO.isDel != '' " >
+            and product_line_assemblyline.is_del = #{productLineAssemblylineVO.isDel}
+        </if>
+        </if>
+        /*product_line_assemblyline end*/
+    </select>
+
+    <!--根据vo查询 -->
+    <select id="getProductLine" parameterType="com.common.vo.ProductLineVO" resultMap="productLineQueryMap">
+        SELECT
+        /*product_line begin*/
+        <!-- 关联关系id -->
+        product_line.id as 'product_line.id',
+        <!-- 生产线编码 -->
+        product_line.product_line_code as 'product_line.product_line_code',
+        <!-- 轴ID -->
+        product_line.axle_code as 'product_line.axle_code',
+        <!-- 流水线ID -->
+        product_line.assemblyline_code as 'product_line.assemblyline_code',
+        <!-- 设备ID -->
+        product_line.equipment_code as 'product_line.equipment_code',
+        <!--  -->
+        product_line.process_code as 'product_line.process_code',
+        <!--  -->
+        product_line.tool_durable as 'product_line.tool_durable',
+        <!--  -->
+        product_line.is_del as 'product_line.is_del',
+        <!-- 零件 -->
+        product_line.parts_code as 'product_line.parts_code',
+        <!-- 合成刀编码 -->
+        product_line.synthesis_cutting_tool_code as 'product_line.synthesis_cutting_tool_code',
+        /*product_line end*/
+        /*product_line_axle begin*/
+        <!-- 轴ID -->
+        product_line_axle.id as 'product_line_axle.id',
+        <!-- 轴编码 -->
+        product_line_axle.code as 'product_line_axle.code',
+        <!-- 轴名称 -->
+        product_line_axle.name as 'product_line_axle.name',
+        <!--  -->
+        product_line_axle.is_del as 'product_line_axle.is_del',
+        /*product_line_axle end*/
+        /*synthesis_cutting_tool begin*/
+        <!-- id -->
+        synthesis_cutting_tool.id as 'synthesis_cutting_tool.id',
+        <!-- 编码 -->
+        synthesis_cutting_tool.code as 'synthesis_cutting_tool.code',
+        <!-- 合成刀业务编码 -->
+        synthesis_cutting_tool.synthesis_code as 'synthesis_cutting_tool.synthesis_code',
+        <!-- 图纸url -->
+        synthesis_cutting_tool.pic_url as 'synthesis_cutting_tool.pic_url',
+        <!-- 逻辑删除 -->
+        synthesis_cutting_tool.is_del as 'synthesis_cutting_tool.is_del',
+        <!-- 合成刀类型  -->
+        synthesis_cutting_tool.synthesis_cutting_tool_type_id as 'synthesis_cutting_tool.synthesis_cutting_tool_type_id',
+        <!--  -->
+        synthesis_cutting_tool.abc as 'synthesis_cutting_tool.abc',
+        /*synthesis_cutting_tool end*/
+        /*product_line_equipment begin*/
+        <!-- 设备id -->
+        product_line_equipment.id as 'product_line_equipment.id',
+        <!-- RFID载体 -->
+        product_line_equipment.rfid_container_code as 'product_line_equipment.rfid_container_code',
+        <!-- 当前是否使用(0是,1否) -->
+        product_line_equipment.statues as 'product_line_equipment.statues',
+        <!-- 编码 -->
+        product_line_equipment.code as 'product_line_equipment.code',
+        <!-- 名称 -->
+        product_line_equipment.name as 'product_line_equipment.name',
+        <!-- 设备类型(0:加工设备1:对刀设备2:专机) -->
+        product_line_equipment.type as 'product_line_equipment.type',
+        <!--  -->
+        product_line_equipment.is_del as 'product_line_equipment.is_del',
+        /*product_line_equipment end*/
+        /*product_line_parts begin*/
+        <!-- 零部件id -->
+        product_line_parts.id as 'product_line_parts.id',
+        <!-- 编码 -->
+        product_line_parts.code as 'product_line_parts.code',
+        <!-- 零部件型号（0:1.6L,1:1.4T） -->
+        product_line_parts.type as 'product_line_parts.type',
+        <!-- 名称 -->
+        product_line_parts.name as 'product_line_parts.name',
+        <!--  -->
+        product_line_parts.is_del as 'product_line_parts.is_del',
+        /*product_line_parts end*/
+        /*product_line_process begin*/
+        <!-- 工序id -->
+        product_line_process.id as 'product_line_process.id',
+        <!-- 编码 -->
+        product_line_process.code as 'product_line_process.code',
+        <!-- 流水线 -->
+        product_line_process.assemblyline_code as 'product_line_process.assemblyline_code',
+        <!-- 名称 -->
+        product_line_process.name as 'product_line_process.name',
+        <!--  -->
+        product_line_process.is_del as 'product_line_process.is_del',
+        /*product_line_process end*/
+        /*product_line_assemblyline begin*/
+        <!-- 流水线ID -->
+        product_line_assemblyline.id as 'product_line_assemblyline.id',
+        <!-- 流水线名称 -->
+        product_line_assemblyline.name as 'product_line_assemblyline.name',
+        <!-- 流水线编码 -->
+        product_line_assemblyline.code as 'product_line_assemblyline.code',
+        <!-- 删除区分(0有效1删除) -->
+        product_line_assemblyline.is_del as 'product_line_assemblyline.is_del'
+        /*product_line_assemblyline end*/
+        FROM product_line as product_line
+        LEFT JOIN product_line_axle as product_line_axle ON product_line_axle.code = product_line.axle_code
+        LEFT JOIN product_line_assemblyline as product_line_assemblyline ON product_line_assemblyline.code = product_line.assemblyline_code
+        LEFT JOIN product_line_equipment as product_line_equipment ON product_line_equipment.code = product_line.equipment_code
+        LEFT JOIN product_line_process as product_line_process ON product_line_process.code = product_line.process_code
+        LEFT JOIN product_line_parts as product_line_parts ON product_line_parts.code = product_line.parts_code
+        LEFT JOIN synthesis_cutting_tool as synthesis_cutting_tool ON synthesis_cutting_tool.code = product_line.synthesis_cutting_tool_code
+        WHERE
+            1 = 1 AND  product_line.is_del = 0
+        /*product_line begin*/
+        <!-- 关联关系id -->
+        <if test="id != null and id != '' " >
+            and product_line.id = #{id}
+        </if>
+        <!-- 生产线编码 -->
+        <if test="productLineCode != null and productLineCode != '' " >
+            and product_line.product_line_code = #{productLineCode}
+        </if>
+        <!-- 轴ID -->
+        <if test="axleCode != null and axleCode != '' " >
+            and product_line.axle_code = #{axleCode}
+        </if>
+        <!-- 流水线ID -->
+        <if test="assemblylineCode != null and assemblylineCode != '' " >
+            and product_line.assemblyline_code = #{assemblylineCode}
+        </if>
+        <!-- 设备ID -->
+        <if test="equipmentCode != null and equipmentCode != '' " >
+            and product_line.equipment_code = #{equipmentCode}
+        </if>
+        <!--  -->
+        <if test="processCode != null and processCode != '' " >
+            and product_line.process_code = #{processCode}
+        </if>
+        <!--  -->
+        <if test="toolDurable != null and toolDurable != '' " >
+            and product_line.tool_durable = #{toolDurable}
+        </if>
+        <!--  -->
+        <if test="isDel != null and isDel != '' " >
+            and product_line.is_del = #{isDel}
+        </if>
+        <!-- 零件 -->
+        <if test="partsCode != null and partsCode != '' " >
+            and product_line.parts_code = #{partsCode}
+        </if>
+        <!-- 合成刀编码 -->
+        <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+            and product_line.synthesis_cutting_tool_code = #{synthesisCuttingToolCode}
+        </if>
+        /*product_line end*/
+        /*product_line_axles begin*/
+        <if test="productLineAxleVO != null">
+        <!-- 轴ID -->
+        <if test="productLineAxleVO.id != null and productLineAxleVO.id != '' " >
+            and product_line_axles.id = #{productLineAxleVO.id}
+        </if>
+        <!-- 轴编码 -->
+        <if test="productLineAxleVO.code != null and productLineAxleVO.code != '' " >
+            and product_line_axles.code = #{productLineAxleVO.code}
+        </if>
+        <!-- 轴名称 -->
+        <if test="productLineAxleVO.name != null and productLineAxleVO.name != '' " >
+            and product_line_axles.name = #{productLineAxleVO.name}
+        </if>
+        <!--  -->
+        <if test="productLineAxleVO.isDel != null and productLineAxleVO.isDel != '' " >
+            and product_line_axles.is_del = #{productLineAxleVO.isDel}
+        </if>
+        </if>
+        /*product_line_axle end*/
+        /*synthesis_cutting_tools begin*/
+        <if test="synthesisCuttingToolVO != null">
+        <!-- id -->
+        <if test="synthesisCuttingToolVO.id != null and synthesisCuttingToolVO.id != '' " >
+            and synthesis_cutting_tools.id = #{synthesisCuttingToolVO.id}
+        </if>
+        <!-- 编码 -->
+        <if test="synthesisCuttingToolVO.code != null and synthesisCuttingToolVO.code != '' " >
+            and synthesis_cutting_tools.code = #{synthesisCuttingToolVO.code}
+        </if>
+        <!-- 合成刀业务编码 -->
+        <if test="synthesisCuttingToolVO.synthesisCode != null and synthesisCuttingToolVO.synthesisCode != '' " >
+            and synthesis_cutting_tools.synthesis_code = #{synthesisCuttingToolVO.synthesisCode}
+        </if>
+        <!-- 图纸url -->
+        <if test="synthesisCuttingToolVO.picUrl != null and synthesisCuttingToolVO.picUrl != '' " >
+            and synthesis_cutting_tools.pic_url = #{synthesisCuttingToolVO.picUrl}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="synthesisCuttingToolVO.isDel != null and synthesisCuttingToolVO.isDel != '' " >
+            and synthesis_cutting_tools.is_del = #{synthesisCuttingToolVO.isDel}
+        </if>
+        <!-- 合成刀类型  -->
+        <if test="synthesisCuttingToolVO.synthesisCuttingToolTypeId != null and synthesisCuttingToolVO.synthesisCuttingToolTypeId != '' " >
+            and synthesis_cutting_tools.synthesis_cutting_tool_type_id = #{synthesisCuttingToolVO.synthesisCuttingToolTypeId}
+        </if>
+        <!--  -->
+        <if test="synthesisCuttingToolVO.abc != null and synthesisCuttingToolVO.abc != '' " >
+            and synthesis_cutting_tools.abc = #{synthesisCuttingToolVO.abc}
+        </if>
+        </if>
+        /*synthesis_cutting_tool end*/
+        /*product_line_equipments begin*/
+        <if test="productLineEquipmentVO != null">
+        <!-- 设备id -->
+        <if test="productLineEquipmentVO.id != null and productLineEquipmentVO.id != '' " >
+            and product_line_equipments.id = #{productLineEquipmentVO.id}
+        </if>
+        <!-- RFID载体 -->
+        <if test="productLineEquipmentVO.rfidContainerCode != null and productLineEquipmentVO.rfidContainerCode != '' " >
+            and product_line_equipments.rfid_container_code = #{productLineEquipmentVO.rfidContainerCode}
+        </if>
+        <!-- 当前是否使用(0是,1否) -->
+        <if test="productLineEquipmentVO.statues != null and productLineEquipmentVO.statues != '' " >
+            and product_line_equipments.statues = #{productLineEquipmentVO.statues}
+        </if>
+        <!-- 编码 -->
+        <if test="productLineEquipmentVO.code != null and productLineEquipmentVO.code != '' " >
+            and product_line_equipments.code = #{productLineEquipmentVO.code}
+        </if>
+        <!-- 名称 -->
+        <if test="productLineEquipmentVO.name != null and productLineEquipmentVO.name != '' " >
+            and product_line_equipments.name = #{productLineEquipmentVO.name}
+        </if>
+        <!-- 设备类型(0:加工设备1:对刀设备2:专机) -->
+        <if test="productLineEquipmentVO.type != null and productLineEquipmentVO.type != '' " >
+            and product_line_equipments.type = #{productLineEquipmentVO.type}
+        </if>
+        <!--  -->
+        <if test="productLineEquipmentVO.isDel != null and productLineEquipmentVO.isDel != '' " >
+            and product_line_equipments.is_del = #{productLineEquipmentVO.isDel}
+        </if>
+        </if>
+        /*product_line_equipment end*/
+        /*product_line_partss begin*/
+        <if test="productLinePartsVO != null">
+        <!-- 零部件id -->
+        <if test="productLinePartsVO.id != null and productLinePartsVO.id != '' " >
+            and product_line_partss.id = #{productLinePartsVO.id}
+        </if>
+        <!-- 编码 -->
+        <if test="productLinePartsVO.code != null and productLinePartsVO.code != '' " >
+            and product_line_partss.code = #{productLinePartsVO.code}
+        </if>
+        <!-- 零部件型号（0:1.6L,1:1.4T） -->
+        <if test="productLinePartsVO.type != null and productLinePartsVO.type != '' " >
+            and product_line_partss.type = #{productLinePartsVO.type}
+        </if>
+        <!-- 名称 -->
+        <if test="productLinePartsVO.name != null and productLinePartsVO.name != '' " >
+            and product_line_partss.name = #{productLinePartsVO.name}
+        </if>
+        <!--  -->
+        <if test="productLinePartsVO.isDel != null and productLinePartsVO.isDel != '' " >
+            and product_line_partss.is_del = #{productLinePartsVO.isDel}
+        </if>
+        </if>
+        /*product_line_parts end*/
+        /*product_line_processs begin*/
+        <if test="productLineProcessVO != null">
+        <!-- 工序id -->
+        <if test="productLineProcessVO.id != null and productLineProcessVO.id != '' " >
+            and product_line_processs.id = #{productLineProcessVO.id}
+        </if>
+        <!-- 编码 -->
+        <if test="productLineProcessVO.code != null and productLineProcessVO.code != '' " >
+            and product_line_processs.code = #{productLineProcessVO.code}
+        </if>
+        <!-- 流水线 -->
+        <if test="productLineProcessVO.assemblylineCode != null and productLineProcessVO.assemblylineCode != '' " >
+            and product_line_processs.assemblyline_code = #{productLineProcessVO.assemblylineCode}
+        </if>
+        <!-- 名称 -->
+        <if test="productLineProcessVO.name != null and productLineProcessVO.name != '' " >
+            and product_line_processs.name = #{productLineProcessVO.name}
+        </if>
+        <!--  -->
+        <if test="productLineProcessVO.isDel != null and productLineProcessVO.isDel != '' " >
+            and product_line_processs.is_del = #{productLineProcessVO.isDel}
+        </if>
+        </if>
+        /*product_line_process end*/
+        /*product_line_assemblylines begin*/
+        <if test="productLineAssemblylineVO != null">
+        <!-- 流水线ID -->
+        <if test="productLineAssemblylineVO.id != null and productLineAssemblylineVO.id != '' " >
+            and product_line_assemblylines.id = #{productLineAssemblylineVO.id}
+        </if>
+        <!-- 流水线名称 -->
+        <if test="productLineAssemblylineVO.name != null and productLineAssemblylineVO.name != '' " >
+            and product_line_assemblylines.name = #{productLineAssemblylineVO.name}
+        </if>
+        <!-- 流水线编码 -->
+        <if test="productLineAssemblylineVO.code != null and productLineAssemblylineVO.code != '' " >
+            and product_line_assemblylines.code = #{productLineAssemblylineVO.code}
+        </if>
+        <!-- 删除区分(0有效1删除) -->
+        <if test="productLineAssemblylineVO.isDel != null and productLineAssemblylineVO.isDel != '' " >
+            and product_line_assemblylines.is_del = #{productLineAssemblylineVO.isDel}
+        </if>
+        </if>
+        /*product_line_assemblyline end*/
+    </select>
+
+
+
+
+
+    <select id="getAssemblylineByEquipmentAndAxle" parameterType="com.common.vo.ProductLineVO" resultMap="productLineQueryMap">
+        SELECT
+        /*product_line begin*/
+        <!-- 关联关系id -->
+        product_line.id as 'product_line.id',
+        <!-- 生产线编码 -->
+        product_line.product_line_code as 'product_line.product_line_code',
+        <!-- 轴ID -->
+        product_line.axle_code as 'product_line.axle_code',
+        <!-- 流水线ID -->
+        product_line.assemblyline_code as 'product_line.assemblyline_code',
+        <!-- 设备ID -->
+        product_line.equipment_code as 'product_line.equipment_code',
+        <!--  -->
+        product_line.process_code as 'product_line.process_code',
+        <!--  -->
+        product_line.tool_durable as 'product_line.tool_durable',
+        <!--  -->
+        product_line.is_del as 'product_line.is_del',
+        <!-- 零件 -->
+        product_line.parts_code as 'product_line.parts_code',
+        <!-- 合成刀编码 -->
+        product_line.synthesis_cutting_tool_code as 'product_line.synthesis_cutting_tool_code',
+        /*product_line end*/
+        /*product_line_axle begin*/
+        <!-- 轴ID -->
+        product_line_axle.id as 'product_line_axle.id',
+        <!-- 轴编码 -->
+        product_line_axle.code as 'product_line_axle.code',
+        <!-- 轴名称 -->
+        product_line_axle.name as 'product_line_axle.name',
+        <!--  -->
+        product_line_axle.is_del as 'product_line_axle.is_del',
+        /*product_line_axle end*/
+        /*synthesis_cutting_tool begin*/
+        <!-- id -->
+        synthesis_cutting_tool.id as 'synthesis_cutting_tool.id',
+        <!-- 编码 -->
+        synthesis_cutting_tool.code as 'synthesis_cutting_tool.code',
+        <!-- 合成刀业务编码 -->
+        synthesis_cutting_tool.synthesis_code as 'synthesis_cutting_tool.synthesis_code',
+        <!-- 图纸url -->
+        synthesis_cutting_tool.pic_url as 'synthesis_cutting_tool.pic_url',
+        <!-- 逻辑删除 -->
+        synthesis_cutting_tool.is_del as 'synthesis_cutting_tool.is_del',
+        <!-- 合成刀类型  -->
+        synthesis_cutting_tool.synthesis_cutting_tool_type_id as 'synthesis_cutting_tool.synthesis_cutting_tool_type_id',
+        <!--  -->
+        synthesis_cutting_tool.abc as 'synthesis_cutting_tool.abc',
+        /*synthesis_cutting_tool end*/
+        /*product_line_equipment begin*/
+        <!-- 设备id -->
+        product_line_equipment.id as 'product_line_equipment.id',
+        <!-- RFID载体 -->
+        product_line_equipment.rfid_container_code as 'product_line_equipment.rfid_container_code',
+        <!-- 当前是否使用(0是,1否) -->
+        product_line_equipment.statues as 'product_line_equipment.statues',
+        <!-- 编码 -->
+        product_line_equipment.code as 'product_line_equipment.code',
+        <!-- 名称 -->
+        product_line_equipment.name as 'product_line_equipment.name',
+        <!-- 设备类型(0:加工设备1:对刀设备2:专机) -->
+        product_line_equipment.type as 'product_line_equipment.type',
+        <!--  -->
+        product_line_equipment.is_del as 'product_line_equipment.is_del',
+        /*product_line_equipment end*/
+        /*product_line_parts begin*/
+        <!-- 零部件id -->
+        product_line_parts.id as 'product_line_parts.id',
+        <!-- 编码 -->
+        product_line_parts.code as 'product_line_parts.code',
+        <!-- 零部件型号（0:1.6L,1:1.4T） -->
+        product_line_parts.type as 'product_line_parts.type',
+        <!-- 名称 -->
+        product_line_parts.name as 'product_line_parts.name',
+        <!--  -->
+        product_line_parts.is_del as 'product_line_parts.is_del',
+        /*product_line_parts end*/
+        /*product_line_process begin*/
+        <!-- 工序id -->
+        product_line_process.id as 'product_line_process.id',
+        <!-- 编码 -->
+        product_line_process.code as 'product_line_process.code',
+        <!-- 流水线 -->
+        product_line_process.assemblyline_code as 'product_line_process.assemblyline_code',
+        <!-- 名称 -->
+        product_line_process.name as 'product_line_process.name',
+        <!--  -->
+        product_line_process.is_del as 'product_line_process.is_del',
+        /*product_line_process end*/
+        /*product_line_assemblyline begin*/
+        <!-- 流水线ID -->
+        product_line_assemblyline.id as 'product_line_assemblyline.id',
+        <!-- 流水线名称 -->
+        product_line_assemblyline.name as 'product_line_assemblyline.name',
+        <!-- 流水线编码 -->
+        product_line_assemblyline.code as 'product_line_assemblyline.code',
+        <!-- 删除区分(0有效1删除) -->
+        product_line_assemblyline.is_del as 'product_line_assemblyline.is_del'
+        /*product_line_assemblyline end*/
+        FROM product_line as product_line
+        LEFT JOIN product_line_axle as product_line_axle ON product_line_axle.code = product_line.axle_code
+        LEFT JOIN product_line_assemblyline as product_line_assemblyline ON product_line_assemblyline.code = product_line.assemblyline_code
+        LEFT JOIN product_line_equipment as product_line_equipment ON product_line_equipment.code = product_line.equipment_code
+        LEFT JOIN product_line_process as product_line_process ON product_line_process.code = product_line.process_code
+        LEFT JOIN product_line_parts as product_line_parts ON product_line_parts.code = product_line.parts_code
+        LEFT JOIN synthesis_cutting_tool as synthesis_cutting_tool ON synthesis_cutting_tool.code = product_line.synthesis_cutting_tool_code
+        WHERE
+        1 = 1 AND  product_line.is_del = 0
+        /*product_line begin*/
+        <!-- 关联关系id -->
+        <if test="id != null and id != '' " >
+            and product_line.id = #{id}
+        </if>
+        <!-- 生产线编码 -->
+        <if test="productLineCode != null and productLineCode != '' " >
+            and product_line.product_line_code = #{productLineCode}
+        </if>
+        <!-- 轴ID -->
+        <if test="axleCode != null and axleCode != '' " >
+            and product_line.axle_code = #{axleCode}
+        </if>
+        <!-- 流水线ID -->
+        <if test="assemblylineCode != null and assemblylineCode != '' " >
+            and product_line.assemblyline_code = #{assemblylineCode}
+        </if>
+        <!-- 设备ID -->
+        <if test="equipmentCode != null and equipmentCode != '' " >
+            and product_line.equipment_code = #{equipmentCode}
+        </if>
+        <!--  -->
+        <if test="processCode != null and processCode != '' " >
+            and product_line.process_code = #{processCode}
+        </if>
+        <!--  -->
+        <if test="toolDurable != null and toolDurable != '' " >
+            and product_line.tool_durable = #{toolDurable}
+        </if>
+        <!--  -->
+        <if test="isDel != null and isDel != '' " >
+            and product_line.is_del = #{isDel}
+        </if>
+        <!-- 零件 -->
+        <if test="partsCode != null and partsCode != '' " >
+            and product_line.parts_code = #{partsCode}
+        </if>
+        <!-- 合成刀编码 -->
+        <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+            and product_line.synthesis_cutting_tool_code = #{synthesisCuttingToolCode}
+        </if>
+        /*product_line end*/
+        /*product_line_axles begin*/
+        <if test="productLineAxleVO != null">
+            <!-- 轴ID -->
+            <if test="productLineAxleVO.id != null and productLineAxleVO.id != '' " >
+                and product_line_axles.id = #{productLineAxleVO.id}
+            </if>
+            <!-- 轴编码 -->
+            <if test="productLineAxleVO.code != null and productLineAxleVO.code != '' " >
+                and product_line_axles.code = #{productLineAxleVO.code}
+            </if>
+            <!-- 轴名称 -->
+            <if test="productLineAxleVO.name != null and productLineAxleVO.name != '' " >
+                and product_line_axles.name = #{productLineAxleVO.name}
+            </if>
+            <!--  -->
+            <if test="productLineAxleVO.isDel != null and productLineAxleVO.isDel != '' " >
+                and product_line_axles.is_del = #{productLineAxleVO.isDel}
+            </if>
+        </if>
+        /*product_line_axle end*/
+        /*synthesis_cutting_tools begin*/
+        <if test="synthesisCuttingToolVO != null">
+            <!-- id -->
+            <if test="synthesisCuttingToolVO.id != null and synthesisCuttingToolVO.id != '' " >
+                and synthesis_cutting_tools.id = #{synthesisCuttingToolVO.id}
+            </if>
+            <!-- 编码 -->
+            <if test="synthesisCuttingToolVO.code != null and synthesisCuttingToolVO.code != '' " >
+                and synthesis_cutting_tools.code = #{synthesisCuttingToolVO.code}
+            </if>
+            <!-- 合成刀业务编码 -->
+            <if test="synthesisCuttingToolVO.synthesisCode != null and synthesisCuttingToolVO.synthesisCode != '' " >
+                and synthesis_cutting_tools.synthesis_code = #{synthesisCuttingToolVO.synthesisCode}
+            </if>
+            <!-- 图纸url -->
+            <if test="synthesisCuttingToolVO.picUrl != null and synthesisCuttingToolVO.picUrl != '' " >
+                and synthesis_cutting_tools.pic_url = #{synthesisCuttingToolVO.picUrl}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="synthesisCuttingToolVO.isDel != null and synthesisCuttingToolVO.isDel != '' " >
+                and synthesis_cutting_tools.is_del = #{synthesisCuttingToolVO.isDel}
+            </if>
+            <!-- 合成刀类型  -->
+            <if test="synthesisCuttingToolVO.synthesisCuttingToolTypeId != null and synthesisCuttingToolVO.synthesisCuttingToolTypeId != '' " >
+                and synthesis_cutting_tools.synthesis_cutting_tool_type_id = #{synthesisCuttingToolVO.synthesisCuttingToolTypeId}
+            </if>
+            <!--  -->
+            <if test="synthesisCuttingToolVO.abc != null and synthesisCuttingToolVO.abc != '' " >
+                and synthesis_cutting_tools.abc = #{synthesisCuttingToolVO.abc}
+            </if>
+        </if>
+        /*synthesis_cutting_tool end*/
+        /*product_line_equipments begin*/
+        <if test="productLineEquipmentVO != null">
+            <!-- 设备id -->
+            <if test="productLineEquipmentVO.id != null and productLineEquipmentVO.id != '' " >
+                and product_line_equipments.id = #{productLineEquipmentVO.id}
+            </if>
+            <!-- RFID载体 -->
+            <if test="productLineEquipmentVO.rfidContainerCode != null and productLineEquipmentVO.rfidContainerCode != '' " >
+                and product_line_equipments.rfid_container_code = #{productLineEquipmentVO.rfidContainerCode}
+            </if>
+            <!-- 当前是否使用(0是,1否) -->
+            <if test="productLineEquipmentVO.statues != null and productLineEquipmentVO.statues != '' " >
+                and product_line_equipments.statues = #{productLineEquipmentVO.statues}
+            </if>
+            <!-- 编码 -->
+            <if test="productLineEquipmentVO.code != null and productLineEquipmentVO.code != '' " >
+                and product_line_equipments.code = #{productLineEquipmentVO.code}
+            </if>
+            <!-- 名称 -->
+            <if test="productLineEquipmentVO.name != null and productLineEquipmentVO.name != '' " >
+                and product_line_equipments.name = #{productLineEquipmentVO.name}
+            </if>
+            <!-- 设备类型(0:加工设备1:对刀设备2:专机) -->
+            <if test="productLineEquipmentVO.type != null and productLineEquipmentVO.type != '' " >
+                and product_line_equipments.type = #{productLineEquipmentVO.type}
+            </if>
+            <!--  -->
+            <if test="productLineEquipmentVO.isDel != null and productLineEquipmentVO.isDel != '' " >
+                and product_line_equipments.is_del = #{productLineEquipmentVO.isDel}
+            </if>
+        </if>
+        /*product_line_equipment end*/
+        /*product_line_partss begin*/
+        <if test="productLinePartsVO != null">
+            <!-- 零部件id -->
+            <if test="productLinePartsVO.id != null and productLinePartsVO.id != '' " >
+                and product_line_partss.id = #{productLinePartsVO.id}
+            </if>
+            <!-- 编码 -->
+            <if test="productLinePartsVO.code != null and productLinePartsVO.code != '' " >
+                and product_line_partss.code = #{productLinePartsVO.code}
+            </if>
+            <!-- 零部件型号（0:1.6L,1:1.4T） -->
+            <if test="productLinePartsVO.type != null and productLinePartsVO.type != '' " >
+                and product_line_partss.type = #{productLinePartsVO.type}
+            </if>
+            <!-- 名称 -->
+            <if test="productLinePartsVO.name != null and productLinePartsVO.name != '' " >
+                and product_line_partss.name = #{productLinePartsVO.name}
+            </if>
+            <!--  -->
+            <if test="productLinePartsVO.isDel != null and productLinePartsVO.isDel != '' " >
+                and product_line_partss.is_del = #{productLinePartsVO.isDel}
+            </if>
+        </if>
+        /*product_line_parts end*/
+        /*product_line_processs begin*/
+        <if test="productLineProcessVO != null">
+            <!-- 工序id -->
+            <if test="productLineProcessVO.id != null and productLineProcessVO.id != '' " >
+                and product_line_processs.id = #{productLineProcessVO.id}
+            </if>
+            <!-- 编码 -->
+            <if test="productLineProcessVO.code != null and productLineProcessVO.code != '' " >
+                and product_line_processs.code = #{productLineProcessVO.code}
+            </if>
+            <!-- 流水线 -->
+            <if test="productLineProcessVO.assemblylineCode != null and productLineProcessVO.assemblylineCode != '' " >
+                and product_line_processs.assemblyline_code = #{productLineProcessVO.assemblylineCode}
+            </if>
+            <!-- 名称 -->
+            <if test="productLineProcessVO.name != null and productLineProcessVO.name != '' " >
+                and product_line_processs.name = #{productLineProcessVO.name}
+            </if>
+            <!--  -->
+            <if test="productLineProcessVO.isDel != null and productLineProcessVO.isDel != '' " >
+                and product_line_processs.is_del = #{productLineProcessVO.isDel}
+            </if>
+        </if>
+        /*product_line_process end*/
+        /*product_line_assemblylines begin*/
+        <if test="productLineAssemblylineVO != null">
+            <!-- 流水线ID -->
+            <if test="productLineAssemblylineVO.id != null and productLineAssemblylineVO.id != '' " >
+                and product_line_assemblylines.id = #{productLineAssemblylineVO.id}
+            </if>
+            <!-- 流水线名称 -->
+            <if test="productLineAssemblylineVO.name != null and productLineAssemblylineVO.name != '' " >
+                and product_line_assemblylines.name = #{productLineAssemblylineVO.name}
+            </if>
+            <!-- 流水线编码 -->
+            <if test="productLineAssemblylineVO.code != null and productLineAssemblylineVO.code != '' " >
+                and product_line_assemblylines.code = #{productLineAssemblylineVO.code}
+            </if>
+            <!-- 删除区分(0有效1删除) -->
+            <if test="productLineAssemblylineVO.isDel != null and productLineAssemblylineVO.isDel != '' " >
+                and product_line_assemblylines.is_del = #{productLineAssemblylineVO.isDel}
+            </if>
+        </if>
+        /*product_line_assemblyline end*/
+        GROUP BY product_line.assemblyline_code
+    </select>
+</mapper>

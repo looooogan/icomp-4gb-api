@@ -1,0 +1,695 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.mapper.ICuttingToolProductionRecordsMapper">
+    <resultMap id="cuttingToolProductionRecordsQueryMap" type="com.common.pojo.CuttingToolProductionRecords">
+        <!-- 材料刀加工记录 -->
+        <id property="id" column="cutting_tool_production_records.id"/>
+
+        <!-- 材料号 -->
+        <result property="businessCode" column="cutting_tool_production_records.business_code"/>
+        <!-- 材料刀编码 -->
+        <result property="cuttingToolCode" column="cutting_tool_production_records.cutting_tool_code"/>
+        <!-- 工序编码 -->
+        <result property="processCode" column="cutting_tool_production_records.process_code"/>
+        <!-- 工序名 -->
+        <result property="processName" column="cutting_tool_production_records.process_name"/>
+        <!-- 设备名称 -->
+        <result property="equipmentName" column="cutting_tool_production_records.equipment_name"/>
+        <!-- 设备编码 -->
+        <result property="equipmentCode" column="cutting_tool_production_records.equipment_code"/>
+        <!-- 轴名称 -->
+        <result property="axleName" column="cutting_tool_production_records.axle_name"/>
+        <!-- 轴编码 -->
+        <result property="axleCode" column="cutting_tool_production_records.axle_code"/>
+        <!-- 流水线编码 -->
+        <result property="assemblylineCode" column="cutting_tool_production_records.assemblyline_code"/>
+        <!-- 流水线名称 -->
+        <result property="assemblylineName" column="cutting_tool_production_records.assemblyline_name"/>
+        <!-- 最后加工时间 -->
+        <result property="lastTime" column="cutting_tool_production_records.last_time"/>
+        <!-- 加工数量 -->
+        <result property="processingCount" column="cutting_tool_production_records.processing_count"/>
+        <!-- 额定数量 -->
+        <result property="ratedNumber" column="cutting_tool_production_records.rated_number"/>
+        <!-- 生产关联关系编码 -->
+        <result property="productLineCode" column="cutting_tool_production_records.product_line_code"/>
+        <!-- 逻辑删除 -->
+        <result property="isDel" column="cutting_tool_production_records.is_del"/>
+        <!-- 零件编码 -->
+        <result property="partsCode" column="cutting_tool_production_records.parts_code"/>
+        <!-- 零件名称 -->
+        <result property="partsName" column="cutting_tool_production_records.parts_name"/>
+        <!-- 合成刀编码 -->
+        <result property="synthesisCuttingToolCode" column="cutting_tool_production_records.synthesis_cutting_tool_code"/>
+        <!-- 合成刀业务编码 -->
+        <result property="synthesisCode" column="cutting_tool_production_records.synthesis_code"/>
+    </resultMap>
+    <!--添加-->
+    <insert id="addCuttingToolProductionRecords" parameterType="com.common.pojo.CuttingToolProductionRecords">
+        INSERT INTO cutting_tool_production_records (
+            <!-- 材料刀加工记录 -->
+            id,
+            <!-- 材料号 -->
+            business_code,
+            <!-- 材料刀编码 -->
+            cutting_tool_code,
+            <!-- 工序编码 -->
+            process_code,
+            <!-- 工序名 -->
+            process_name,
+            <!-- 设备名称 -->
+            equipment_name,
+            <!-- 设备编码 -->
+            equipment_code,
+            <!-- 轴名称 -->
+            axle_name,
+            <!-- 轴编码 -->
+            axle_code,
+            <!-- 流水线编码 -->
+            assemblyline_code,
+            <!-- 流水线名称 -->
+            assemblyline_name,
+            <!-- 最后加工时间 -->
+            last_time,
+            <!-- 加工数量 -->
+            processing_count,
+            <!-- 额定数量 -->
+            rated_number,
+            <!-- 生产关联关系编码 -->
+            product_line_code,
+            <!-- 逻辑删除 -->
+            is_del,
+            <!-- 零件编码 -->
+            parts_code,
+            <!-- 零件名称 -->
+            parts_name,
+            <!-- 合成刀编码 -->
+            synthesis_cutting_tool_code,
+            <!-- 合成刀业务编码 -->
+            synthesis_code
+        )
+        VALUES (
+            <!-- 材料刀加工记录 -->
+            #{id},
+            <!-- 材料号 -->
+            #{businessCode},
+            <!-- 材料刀编码 -->
+            #{cuttingToolCode},
+            <!-- 工序编码 -->
+            #{processCode},
+            <!-- 工序名 -->
+            #{processName},
+            <!-- 设备名称 -->
+            #{equipmentName},
+            <!-- 设备编码 -->
+            #{equipmentCode},
+            <!-- 轴名称 -->
+            #{axleName},
+            <!-- 轴编码 -->
+            #{axleCode},
+            <!-- 流水线编码 -->
+            #{assemblylineCode},
+            <!-- 流水线名称 -->
+            #{assemblylineName},
+            <!-- 最后加工时间 -->
+            #{lastTime},
+            <!-- 加工数量 -->
+            #{processingCount},
+            <!-- 额定数量 -->
+            #{ratedNumber},
+            <!-- 生产关联关系编码 -->
+            #{productLineCode},
+            <!-- 逻辑删除 -->
+            #{isDel},
+            <!-- 零件编码 -->
+            #{partsCode},
+            <!-- 零件名称 -->
+            #{partsName},
+            <!-- 合成刀编码 -->
+            #{synthesisCuttingToolCode},
+            <!-- 合成刀业务编码 -->
+            #{synthesisCode}
+        )
+    </insert>
+
+    <!--删除-->
+    <delete id="delCuttingToolProductionRecords" parameterType="com.common.pojo.CuttingToolProductionRecords">
+        DELETE
+        FROM cutting_tool_production_records
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--逻辑删除-->
+    <delete id="delCuttingToolProductionRecordsForLogic" parameterType="com.common.pojo.CuttingToolProductionRecords">
+        UPDATE cutting_tool_production_records SET
+        is_del = 1
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--根据VO删除-->
+    <delete id="delCuttingToolProductionRecordsByVo" parameterType="com.common.vo.CuttingToolProductionRecordsVO">
+        UPDATE cutting_tool_production_records SET is_del = 1
+        WHERE
+            1=1
+            <!-- 材料刀加工记录 -->
+            <if test="id != null and id != '' " >
+                and id =  #{id}
+            </if>
+            <!-- 材料号 -->
+            <if test="businessCode != null and businessCode != '' " >
+                and business_code =  #{businessCode}
+            </if>
+            <!-- 材料刀编码 -->
+            <if test="cuttingToolCode != null and cuttingToolCode != '' " >
+                and cutting_tool_code =  #{cuttingToolCode}
+            </if>
+            <!-- 工序编码 -->
+            <if test="processCode != null and processCode != '' " >
+                and process_code =  #{processCode}
+            </if>
+            <!-- 工序名 -->
+            <if test="processName != null and processName != '' " >
+                and process_name =  #{processName}
+            </if>
+            <!-- 设备名称 -->
+            <if test="equipmentName != null and equipmentName != '' " >
+                and equipment_name =  #{equipmentName}
+            </if>
+            <!-- 设备编码 -->
+            <if test="equipmentCode != null and equipmentCode != '' " >
+                and equipment_code =  #{equipmentCode}
+            </if>
+            <!-- 轴名称 -->
+            <if test="axleName != null and axleName != '' " >
+                and axle_name =  #{axleName}
+            </if>
+            <!-- 轴编码 -->
+            <if test="axleCode != null and axleCode != '' " >
+                and axle_code =  #{axleCode}
+            </if>
+            <!-- 流水线编码 -->
+            <if test="assemblylineCode != null and assemblylineCode != '' " >
+                and assemblyline_code =  #{assemblylineCode}
+            </if>
+            <!-- 流水线名称 -->
+            <if test="assemblylineName != null and assemblylineName != '' " >
+                and assemblyline_name =  #{assemblylineName}
+            </if>
+            <!-- 最后加工时间 -->
+            <if test="lastTime != null and lastTime != '' " >
+                and last_time =  #{lastTime}
+            </if>
+            <!-- 加工数量 -->
+            <if test="processingCount != null and processingCount != '' " >
+                and processing_count =  #{processingCount}
+            </if>
+            <!-- 额定数量 -->
+            <if test="ratedNumber != null and ratedNumber != '' " >
+                and rated_number =  #{ratedNumber}
+            </if>
+            <!-- 生产关联关系编码 -->
+            <if test="productLineCode != null and productLineCode != '' " >
+                and product_line_code =  #{productLineCode}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                and is_del =  #{isDel}
+            </if>
+            <!-- 零件编码 -->
+            <if test="partsCode != null and partsCode != '' " >
+                and parts_code =  #{partsCode}
+            </if>
+            <!-- 零件名称 -->
+            <if test="partsName != null and partsName != '' " >
+                and parts_name =  #{partsName}
+            </if>
+            <!-- 合成刀编码 -->
+            <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+                and synthesis_cutting_tool_code =  #{synthesisCuttingToolCode}
+            </if>
+            <!-- 合成刀业务编码 -->
+            <if test="synthesisCode != null and synthesisCode != '' " >
+                and synthesis_code =  #{synthesisCode}
+            </if>
+    </delete>
+
+    <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
+    <update id="updCuttingToolProductionRecords" parameterType="com.common.pojo.CuttingToolProductionRecords">
+        UPDATE cutting_tool_production_records
+        SET
+            <!-- 材料号 -->
+            <if test="businessCode != null and businessCode != '' " >
+                business_code =  #{businessCode},
+            </if>
+            <!-- 材料刀编码 -->
+            <if test="cuttingToolCode != null and cuttingToolCode != '' " >
+                cutting_tool_code =  #{cuttingToolCode},
+            </if>
+            <!-- 工序编码 -->
+            <if test="processCode != null and processCode != '' " >
+                process_code =  #{processCode},
+            </if>
+            <!-- 工序名 -->
+            <if test="processName != null and processName != '' " >
+                process_name =  #{processName},
+            </if>
+            <!-- 设备名称 -->
+            <if test="equipmentName != null and equipmentName != '' " >
+                equipment_name =  #{equipmentName},
+            </if>
+            <!-- 设备编码 -->
+            <if test="equipmentCode != null and equipmentCode != '' " >
+                equipment_code =  #{equipmentCode},
+            </if>
+            <!-- 轴名称 -->
+            <if test="axleName != null and axleName != '' " >
+                axle_name =  #{axleName},
+            </if>
+            <!-- 轴编码 -->
+            <if test="axleCode != null and axleCode != '' " >
+                axle_code =  #{axleCode},
+            </if>
+            <!-- 流水线编码 -->
+            <if test="assemblylineCode != null and assemblylineCode != '' " >
+                assemblyline_code =  #{assemblylineCode},
+            </if>
+            <!-- 流水线名称 -->
+            <if test="assemblylineName != null and assemblylineName != '' " >
+                assemblyline_name =  #{assemblylineName},
+            </if>
+            <!-- 最后加工时间 -->
+            <if test="lastTime != null and lastTime != '' " >
+                last_time =  #{lastTime},
+            </if>
+            <!-- 加工数量 -->
+            <if test="processingCount != null and processingCount != '' " >
+                processing_count =  #{processingCount},
+            </if>
+            <!-- 额定数量 -->
+            <if test="ratedNumber != null and ratedNumber != '' " >
+                rated_number =  #{ratedNumber},
+            </if>
+            <!-- 生产关联关系编码 -->
+            <if test="productLineCode != null and productLineCode != '' " >
+                product_line_code =  #{productLineCode},
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                is_del =  #{isDel},
+            </if>
+            <!-- 零件编码 -->
+            <if test="partsCode != null and partsCode != '' " >
+                parts_code =  #{partsCode},
+            </if>
+            <!-- 零件名称 -->
+            <if test="partsName != null and partsName != '' " >
+                parts_name =  #{partsName},
+            </if>
+            <!-- 合成刀编码 -->
+            <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+                synthesis_cutting_tool_code =  #{synthesisCuttingToolCode},
+            </if>
+            <!-- 合成刀业务编码 -->
+            <if test="synthesisCode != null and synthesisCode != '' " >
+                synthesis_code =  #{synthesisCode},
+            </if>
+            <!-- 材料刀加工记录 -->
+            id = #{id}
+        WHERE
+            1 = 1
+            and id = #{id}
+    </update>
+
+    <!--分页查询 -->
+    <select id="getCuttingToolProductionRecordsByPage" parameterType="com.common.vo.CuttingToolProductionRecordsVO" resultMap="cuttingToolProductionRecordsQueryMap">
+        SELECT
+        /*cuttingToolProductionRecords begin*/
+            <!-- 材料刀加工记录 -->
+            cutting_tool_production_records.id as 'cutting_tool_production_records.id',
+            <!-- 材料号 -->
+            cutting_tool_production_records.business_code as 'cutting_tool_production_records.business_code',
+            <!-- 材料刀编码 -->
+            cutting_tool_production_records.cutting_tool_code as 'cutting_tool_production_records.cutting_tool_code',
+            <!-- 工序编码 -->
+            cutting_tool_production_records.process_code as 'cutting_tool_production_records.process_code',
+            <!-- 工序名 -->
+            cutting_tool_production_records.process_name as 'cutting_tool_production_records.process_name',
+            <!-- 设备名称 -->
+            cutting_tool_production_records.equipment_name as 'cutting_tool_production_records.equipment_name',
+            <!-- 设备编码 -->
+            cutting_tool_production_records.equipment_code as 'cutting_tool_production_records.equipment_code',
+            <!-- 轴名称 -->
+            cutting_tool_production_records.axle_name as 'cutting_tool_production_records.axle_name',
+            <!-- 轴编码 -->
+            cutting_tool_production_records.axle_code as 'cutting_tool_production_records.axle_code',
+            <!-- 流水线编码 -->
+            cutting_tool_production_records.assemblyline_code as 'cutting_tool_production_records.assemblyline_code',
+            <!-- 流水线名称 -->
+            cutting_tool_production_records.assemblyline_name as 'cutting_tool_production_records.assemblyline_name',
+            <!-- 最后加工时间 -->
+            cutting_tool_production_records.last_time as 'cutting_tool_production_records.last_time',
+            <!-- 加工数量 -->
+            cutting_tool_production_records.processing_count as 'cutting_tool_production_records.processing_count',
+            <!-- 额定数量 -->
+            cutting_tool_production_records.rated_number as 'cutting_tool_production_records.rated_number',
+            <!-- 生产关联关系编码 -->
+            cutting_tool_production_records.product_line_code as 'cutting_tool_production_records.product_line_code',
+            <!-- 逻辑删除 -->
+            cutting_tool_production_records.is_del as 'cutting_tool_production_records.is_del',
+            <!-- 零件编码 -->
+            cutting_tool_production_records.parts_code as 'cutting_tool_production_records.parts_code',
+            <!-- 零件名称 -->
+            cutting_tool_production_records.parts_name as 'cutting_tool_production_records.parts_name',
+            <!-- 合成刀编码 -->
+            cutting_tool_production_records.synthesis_cutting_tool_code as 'cutting_tool_production_records.synthesis_cutting_tool_code',
+            <!-- 合成刀业务编码 -->
+            cutting_tool_production_records.synthesis_code as 'cutting_tool_production_records.synthesis_code'
+        /*cuttingToolProductionRecords end*/
+        FROM cutting_tool_production_records as cutting_tool_production_records
+        WHERE
+            1 = 1 AND  cutting_tool_production_records.is_del = 0
+        /*cutting_tool_production_records begin*/
+            <!-- 材料刀加工记录 -->
+            <if test="id != null and id != '' " >
+                and cutting_tool_production_records.id = #{id}
+            </if>
+            <!-- 材料号 -->
+            <if test="businessCode != null and businessCode != '' " >
+                and cutting_tool_production_records.business_code = #{businessCode}
+            </if>
+            <!-- 材料刀编码 -->
+            <if test="cuttingToolCode != null and cuttingToolCode != '' " >
+                and cutting_tool_production_records.cutting_tool_code = #{cuttingToolCode}
+            </if>
+            <!-- 工序编码 -->
+            <if test="processCode != null and processCode != '' " >
+                and cutting_tool_production_records.process_code = #{processCode}
+            </if>
+            <!-- 工序名 -->
+            <if test="processName != null and processName != '' " >
+                and cutting_tool_production_records.process_name = #{processName}
+            </if>
+            <!-- 设备名称 -->
+            <if test="equipmentName != null and equipmentName != '' " >
+                and cutting_tool_production_records.equipment_name = #{equipmentName}
+            </if>
+            <!-- 设备编码 -->
+            <if test="equipmentCode != null and equipmentCode != '' " >
+                and cutting_tool_production_records.equipment_code = #{equipmentCode}
+            </if>
+            <!-- 轴名称 -->
+            <if test="axleName != null and axleName != '' " >
+                and cutting_tool_production_records.axle_name = #{axleName}
+            </if>
+            <!-- 轴编码 -->
+            <if test="axleCode != null and axleCode != '' " >
+                and cutting_tool_production_records.axle_code = #{axleCode}
+            </if>
+            <!-- 流水线编码 -->
+            <if test="assemblylineCode != null and assemblylineCode != '' " >
+                and cutting_tool_production_records.assemblyline_code = #{assemblylineCode}
+            </if>
+            <!-- 流水线名称 -->
+            <if test="assemblylineName != null and assemblylineName != '' " >
+                and cutting_tool_production_records.assemblyline_name = #{assemblylineName}
+            </if>
+            <!-- 最后加工时间 -->
+            <if test="lastTime != null and lastTime != '' " >
+                and cutting_tool_production_records.last_time &lt;= #{lastTimeEnd}
+            </if>
+            <if test="lastTime != null and lastTime != '' " >
+                and cutting_tool_production_records.last_time &gt;= #{lastTimeBegin}
+            </if>
+            <!-- 加工数量 -->
+            <if test="processingCount != null and processingCount != '' " >
+                and cutting_tool_production_records.processing_count = #{processingCount}
+            </if>
+            <!-- 额定数量 -->
+            <if test="ratedNumber != null and ratedNumber != '' " >
+                and cutting_tool_production_records.rated_number = #{ratedNumber}
+            </if>
+            <!-- 生产关联关系编码 -->
+            <if test="productLineCode != null and productLineCode != '' " >
+                and cutting_tool_production_records.product_line_code = #{productLineCode}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                and cutting_tool_production_records.is_del = #{isDel}
+            </if>
+            <!-- 零件编码 -->
+            <if test="partsCode != null and partsCode != '' " >
+                and cutting_tool_production_records.parts_code = #{partsCode}
+            </if>
+            <!-- 零件名称 -->
+            <if test="partsName != null and partsName != '' " >
+                and cutting_tool_production_records.parts_name = #{partsName}
+            </if>
+            <!-- 合成刀编码 -->
+            <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+                and cutting_tool_production_records.synthesis_cutting_tool_code = #{synthesisCuttingToolCode}
+            </if>
+            <!-- 合成刀业务编码 -->
+            <if test="synthesisCode != null and synthesisCode != '' " >
+                and cutting_tool_production_records.synthesis_code = #{synthesisCode}
+            </if>
+        /*cutting_tool_production_records end*/
+        ORDER BY cutting_tool_production_records.id desc
+        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
+        LIMIT #{startRecord},#{pageSize}
+        </if>
+    </select>
+
+
+    <!--查询记录数-->
+    <select id="getCuttingToolProductionRecordsCount" parameterType="com.common.vo.CuttingToolProductionRecordsVO" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM cutting_tool_production_records as cutting_tool_production_records
+        WHERE
+            1 = 1 AND  cutting_tool_production_records.is_del = 0
+        /*cutting_tool_production_records begin*/
+        <!-- 材料刀加工记录 -->
+        <if test="id != null and id != '' " >
+            and cutting_tool_production_records.id = #{id}
+        </if>
+        <!-- 材料号 -->
+        <if test="businessCode != null and businessCode != '' " >
+            and cutting_tool_production_records.business_code = #{businessCode}
+        </if>
+        <!-- 材料刀编码 -->
+        <if test="cuttingToolCode != null and cuttingToolCode != '' " >
+            and cutting_tool_production_records.cutting_tool_code = #{cuttingToolCode}
+        </if>
+        <!-- 工序编码 -->
+        <if test="processCode != null and processCode != '' " >
+            and cutting_tool_production_records.process_code = #{processCode}
+        </if>
+        <!-- 工序名 -->
+        <if test="processName != null and processName != '' " >
+            and cutting_tool_production_records.process_name = #{processName}
+        </if>
+        <!-- 设备名称 -->
+        <if test="equipmentName != null and equipmentName != '' " >
+            and cutting_tool_production_records.equipment_name = #{equipmentName}
+        </if>
+        <!-- 设备编码 -->
+        <if test="equipmentCode != null and equipmentCode != '' " >
+            and cutting_tool_production_records.equipment_code = #{equipmentCode}
+        </if>
+        <!-- 轴名称 -->
+        <if test="axleName != null and axleName != '' " >
+            and cutting_tool_production_records.axle_name = #{axleName}
+        </if>
+        <!-- 轴编码 -->
+        <if test="axleCode != null and axleCode != '' " >
+            and cutting_tool_production_records.axle_code = #{axleCode}
+        </if>
+        <!-- 流水线编码 -->
+        <if test="assemblylineCode != null and assemblylineCode != '' " >
+            and cutting_tool_production_records.assemblyline_code = #{assemblylineCode}
+        </if>
+        <!-- 流水线名称 -->
+        <if test="assemblylineName != null and assemblylineName != '' " >
+            and cutting_tool_production_records.assemblyline_name = #{assemblylineName}
+        </if>
+        <!-- 最后加工时间 -->
+        <if test="lastTime != null and lastTime != '' " >
+            and cutting_tool_production_records.last_time &lt;= #{lastTimeEnd}
+        </if>
+        <if test="lastTime != null and lastTime != '' " >
+            and cutting_tool_production_records.last_time &gt;= #{lastTimeBegin}
+        </if>
+        <!-- 加工数量 -->
+        <if test="processingCount != null and processingCount != '' " >
+            and cutting_tool_production_records.processing_count = #{processingCount}
+        </if>
+        <!-- 额定数量 -->
+        <if test="ratedNumber != null and ratedNumber != '' " >
+            and cutting_tool_production_records.rated_number = #{ratedNumber}
+        </if>
+        <!-- 生产关联关系编码 -->
+        <if test="productLineCode != null and productLineCode != '' " >
+            and cutting_tool_production_records.product_line_code = #{productLineCode}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="isDel != null and isDel != '' " >
+            and cutting_tool_production_records.is_del = #{isDel}
+        </if>
+        <!-- 零件编码 -->
+        <if test="partsCode != null and partsCode != '' " >
+            and cutting_tool_production_records.parts_code = #{partsCode}
+        </if>
+        <!-- 零件名称 -->
+        <if test="partsName != null and partsName != '' " >
+            and cutting_tool_production_records.parts_name = #{partsName}
+        </if>
+        <!-- 合成刀编码 -->
+        <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+            and cutting_tool_production_records.synthesis_cutting_tool_code = #{synthesisCuttingToolCode}
+        </if>
+        <!-- 合成刀业务编码 -->
+        <if test="synthesisCode != null and synthesisCode != '' " >
+            and cutting_tool_production_records.synthesis_code = #{synthesisCode}
+        </if>
+        /*cutting_tool_production_records end*/
+    </select>
+
+    <!--根据vo查询 -->
+    <select id="getCuttingToolProductionRecords" parameterType="com.common.vo.CuttingToolProductionRecordsVO" resultMap="cuttingToolProductionRecordsQueryMap">
+        SELECT
+        /*cutting_tool_production_records begin*/
+        <!-- 材料刀加工记录 -->
+        cutting_tool_production_records.id as 'cutting_tool_production_records.id',
+        <!-- 材料号 -->
+        cutting_tool_production_records.business_code as 'cutting_tool_production_records.business_code',
+        <!-- 材料刀编码 -->
+        cutting_tool_production_records.cutting_tool_code as 'cutting_tool_production_records.cutting_tool_code',
+        <!-- 工序编码 -->
+        cutting_tool_production_records.process_code as 'cutting_tool_production_records.process_code',
+        <!-- 工序名 -->
+        cutting_tool_production_records.process_name as 'cutting_tool_production_records.process_name',
+        <!-- 设备名称 -->
+        cutting_tool_production_records.equipment_name as 'cutting_tool_production_records.equipment_name',
+        <!-- 设备编码 -->
+        cutting_tool_production_records.equipment_code as 'cutting_tool_production_records.equipment_code',
+        <!-- 轴名称 -->
+        cutting_tool_production_records.axle_name as 'cutting_tool_production_records.axle_name',
+        <!-- 轴编码 -->
+        cutting_tool_production_records.axle_code as 'cutting_tool_production_records.axle_code',
+        <!-- 流水线编码 -->
+        cutting_tool_production_records.assemblyline_code as 'cutting_tool_production_records.assemblyline_code',
+        <!-- 流水线名称 -->
+        cutting_tool_production_records.assemblyline_name as 'cutting_tool_production_records.assemblyline_name',
+        <!-- 最后加工时间 -->
+        cutting_tool_production_records.last_time as 'cutting_tool_production_records.last_time',
+        <!-- 加工数量 -->
+        cutting_tool_production_records.processing_count as 'cutting_tool_production_records.processing_count',
+        <!-- 额定数量 -->
+        cutting_tool_production_records.rated_number as 'cutting_tool_production_records.rated_number',
+        <!-- 生产关联关系编码 -->
+        cutting_tool_production_records.product_line_code as 'cutting_tool_production_records.product_line_code',
+        <!-- 逻辑删除 -->
+        cutting_tool_production_records.is_del as 'cutting_tool_production_records.is_del',
+        <!-- 零件编码 -->
+        cutting_tool_production_records.parts_code as 'cutting_tool_production_records.parts_code',
+        <!-- 零件名称 -->
+        cutting_tool_production_records.parts_name as 'cutting_tool_production_records.parts_name',
+        <!-- 合成刀编码 -->
+        cutting_tool_production_records.synthesis_cutting_tool_code as 'cutting_tool_production_records.synthesis_cutting_tool_code',
+        <!-- 合成刀业务编码 -->
+        cutting_tool_production_records.synthesis_code as 'cutting_tool_production_records.synthesis_code'
+        /*cutting_tool_production_records end*/
+        FROM cutting_tool_production_records as cutting_tool_production_records
+        WHERE
+            1 = 1 AND  cutting_tool_production_records.is_del = 0
+        /*cutting_tool_production_records begin*/
+        <!-- 材料刀加工记录 -->
+        <if test="id != null and id != '' " >
+            and cutting_tool_production_records.id = #{id}
+        </if>
+        <!-- 材料号 -->
+        <if test="businessCode != null and businessCode != '' " >
+            and cutting_tool_production_records.business_code = #{businessCode}
+        </if>
+        <!-- 材料刀编码 -->
+        <if test="cuttingToolCode != null and cuttingToolCode != '' " >
+            and cutting_tool_production_records.cutting_tool_code = #{cuttingToolCode}
+        </if>
+        <!-- 工序编码 -->
+        <if test="processCode != null and processCode != '' " >
+            and cutting_tool_production_records.process_code = #{processCode}
+        </if>
+        <!-- 工序名 -->
+        <if test="processName != null and processName != '' " >
+            and cutting_tool_production_records.process_name = #{processName}
+        </if>
+        <!-- 设备名称 -->
+        <if test="equipmentName != null and equipmentName != '' " >
+            and cutting_tool_production_records.equipment_name = #{equipmentName}
+        </if>
+        <!-- 设备编码 -->
+        <if test="equipmentCode != null and equipmentCode != '' " >
+            and cutting_tool_production_records.equipment_code = #{equipmentCode}
+        </if>
+        <!-- 轴名称 -->
+        <if test="axleName != null and axleName != '' " >
+            and cutting_tool_production_records.axle_name = #{axleName}
+        </if>
+        <!-- 轴编码 -->
+        <if test="axleCode != null and axleCode != '' " >
+            and cutting_tool_production_records.axle_code = #{axleCode}
+        </if>
+        <!-- 流水线编码 -->
+        <if test="assemblylineCode != null and assemblylineCode != '' " >
+            and cutting_tool_production_records.assemblyline_code = #{assemblylineCode}
+        </if>
+        <!-- 流水线名称 -->
+        <if test="assemblylineName != null and assemblylineName != '' " >
+            and cutting_tool_production_records.assemblyline_name = #{assemblylineName}
+        </if>
+        <!-- 最后加工时间 -->
+        <if test="lastTime != null and lastTime != '' " >
+            and cutting_tool_production_records.last_time &lt;= #{lastTimeEnd}
+        </if>
+        <if test="lastTime != null and lastTime != '' " >
+            and cutting_tool_production_records.last_time &gt;= #{lastTimeBegin}
+        </if>
+        <!-- 加工数量 -->
+        <if test="processingCount != null and processingCount != '' " >
+            and cutting_tool_production_records.processing_count = #{processingCount}
+        </if>
+        <!-- 额定数量 -->
+        <if test="ratedNumber != null and ratedNumber != '' " >
+            and cutting_tool_production_records.rated_number = #{ratedNumber}
+        </if>
+        <!-- 生产关联关系编码 -->
+        <if test="productLineCode != null and productLineCode != '' " >
+            and cutting_tool_production_records.product_line_code = #{productLineCode}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="isDel != null and isDel != '' " >
+            and cutting_tool_production_records.is_del = #{isDel}
+        </if>
+        <!-- 零件编码 -->
+        <if test="partsCode != null and partsCode != '' " >
+            and cutting_tool_production_records.parts_code = #{partsCode}
+        </if>
+        <!-- 零件名称 -->
+        <if test="partsName != null and partsName != '' " >
+            and cutting_tool_production_records.parts_name = #{partsName}
+        </if>
+        <!-- 合成刀编码 -->
+        <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+            and cutting_tool_production_records.synthesis_cutting_tool_code = #{synthesisCuttingToolCode}
+        </if>
+        <!-- 合成刀业务编码 -->
+        <if test="synthesisCode != null and synthesisCode != '' " >
+            and cutting_tool_production_records.synthesis_code = #{synthesisCode}
+        </if>
+        /*cutting_tool_production_records end*/
+    </select>
+</mapper>

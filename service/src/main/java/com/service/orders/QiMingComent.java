@@ -1,6 +1,8 @@
 package com.service.orders;
 
 import com.common.pojo.*;
+import com.common.utils.exception.ExceptionConstans;
+import com.common.utils.exception.SelfDefinedException;
 import com.common.utils.loadConfig.IMessageSourceHanlder;
 import com.common.vo.*;
 import com.service.common.*;
@@ -61,16 +63,29 @@ public class QiMingComent {
         List<SearchOutLiberaryVO> searchOutLiberaryVOS = new ArrayList<>();
         DjOutapplyAkpVO djOutapplyAkpVO = new DjOutapplyAkpVO();
         djOutapplyAkpVO.setAuditid("1");
+
         List<DjOutapplyAkp> djOutapplyAkps = djOutapplyAkpService.getDjOutapplyAkpByPage(djOutapplyAkpVO);
+        if (djOutapplyAkps == null){
+
+        }
+
         for (DjOutapplyAkp djOutapplyAkp : djOutapplyAkps) {
+            if (null == djOutapplyAkp){
+                throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.QM_DJOUTAPPLYAKP_MAP_ERROR));
+            }
             SearchOutLiberaryVO searchOutLiberaryVO = new SearchOutLiberaryVO();
             DjCircleKanbanAkpVO djCircleKanbanAkpVO = new DjCircleKanbanAkpVO();
             djCircleKanbanAkpVO.setCKanbanCode(djOutapplyAkp.getLltm());
             DjCircleKanbanAkp djCircleKanbanAkp = djCircleKanbanAkpService.getDjCircleKanbanAkp(djCircleKanbanAkpVO);
+            if (null == djCircleKanbanAkp){
+                throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.QM_DJOUTAPPLYAKP_MAP_ERROR));
+            }
             CuttingToolVO cuttingToolVO = new CuttingToolVO();
             cuttingToolVO.setBusinessCode(djCircleKanbanAkp.getLoc());
             CuttingTool cuttingTool = cuttingToolService.getCuttingTool(cuttingToolVO);
-
+            if (null == cuttingTool){
+                throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.QM_DJOUTAPPLYAKP_MAP_ERROR));
+            }
             searchOutLiberaryVO.setApplyno(djOutapplyAkp.getApplyno());
             searchOutLiberaryVO.setMtlno(djOutapplyAkp.getMtlno());
             searchOutLiberaryVO.setCuttingtollBusinessCode(cuttingTool.getBusinessCode());

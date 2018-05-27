@@ -1,6 +1,6 @@
 package com.apiclient.vo;
 
-import com.common.pojo.ProductLineParts;
+import com.apiclient.pojo.ProductLineParts;
 
 /**
  * Created by logan on 2018/4/30.

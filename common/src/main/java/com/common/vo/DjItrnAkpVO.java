@@ -17,7 +17,7 @@ public class DjItrnAkpVO implements Serializable{
     * @fieldType  Integer
     * @Description  序列
      */
-    private Integer id;
+    private String id;
 
 
     /**
@@ -262,11 +262,12 @@ public class DjItrnAkpVO implements Serializable{
 
 
     /* 序列 */
-    public Integer getId() {
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

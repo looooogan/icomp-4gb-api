@@ -21,128 +21,14 @@
             initTableHeand();
 
             /************* 刀具类型  相关代码************/
-            $("#DivToolType,#DivToolConsumetype").change(function (e) {
-                var toolType = $("#toolEditFormTable select[id=DivToolType]").val();
-                var toolConsumetype = $("#toolEditFormTable select[id=DivToolConsumetype]").val();
-                checkToolConsumetype(toolType, toolConsumetype);
-            });
             $("#DivToolType").change(function (e) {
-                var toolType = $("#toolEditFormTable select[id=DivToolType]").val();
-                var toolConsumetype = $("#toolEditFormTable select[id=DivToolConsumetype]").val();
-                checkToolType(toolType, toolConsumetype);
-                $("#DivToolConsumetype").trigger("change");
+                copyTypeElement($(this).val());
+            });
+            $("#DivToolConsumetype").change(function (e) {
+                copyConsumeTypeElement($(this).val());
             });
             /******************************************/
         });
-
-        /**根据刀具分类-消耗类别显示输入框**/
-        function checkToolType(toolType, toolConsumetype) {
-            //如果是1辅具和2配套, 消耗类别为其他
-            console.log(toolType);
-            if (toolType == "2" || toolType == "3") {
-                $("#toolEditFormTable select[id=DivToolConsumetype]").empty();
-                $("#Base_DivToolConsumetype option").each(function () {
-                    if ($(this).val() == "9") {
-                        var $op = $(this).clone();
-                        $("#toolEditFormTable select[id=DivToolConsumetype]").append($op);
-                    }
-                });
-            } else if (toolType == "") {
-                $("#toolEditFormTable select[id=DivToolConsumetype]").empty();
-                $("#toolEditFormTable select[id=DivToolConsumetype]").append('<option value="">--请选择--</option>');
-            } else {
-                $("#toolEditFormTable select[id=DivToolConsumetype]").empty();
-                $("#Base_DivToolConsumetype option").each(function () {
-                    if ($(this).val() == "3" || $(this).val() == "1" || $(this).val() == "2") {
-                        var $op = $(this).clone();
-                        $("#toolEditFormTable select[id=DivToolConsumetype]").append($op);
-                    }
-                });
-            }
-        }
-        /**根据刀具分类-消耗类别显示输入框**/
-        function checkToolConsumetype(toolType, toolConsumetype) {
-            //刀具分类和消耗类别都选择后再做操作
-            if (toolType != "") {
-                if (toolConsumetype != "") {
-                    if (toolType == "1" && toolConsumetype == "1") {
-                        //如果是0刀具-0可刃磨钻头
-                        showOrHide("0-0");
-                    } else if (toolType == "1") {
-                        //如果是0刀具-非转头
-                        showOrHide("0-1,2,9");
-                    } else if (toolType == "2" || toolType == "3") {
-                        //如果是1辅具和2配套
-                        showOrHide("1,2");
-                    }
-
-                }
-
-            }
-        }
-
-        /**str:
-         *        0-0如果是0刀具-0可刃磨钻头:为显示"复磨标准 "、“可刃磨长度”、“刀具长度 ”,不需要“可使用次数”
-         *        0-1,2,9如果是0刀具-非钻头:为显示“可使用次数”,不需要"复磨标准 "、“可刃磨长度”、“刀具长度 ”
-         *        1,2如果是1辅具和2配套：不需要“可使用次数”、“周转量”
-         *
-         }
-         **/
-        function showOrHide(str, type) {
-            $("#toolEditFormTable tr:gt(5)").remove();
-            if ($("#toolEditFormTable tr:eq(6) td").length == 2) {
-                $("#toolEditFormTable tr:eq(6) td:eq(0)").remove();
-                $("#toolEditFormTable tr:eq(6) th:eq(0)").remove();
-            }
-            var $tab = $("#NotMustTr_table tr").clone();
-            $tab.find(".hidder").each(function (i) {
-
-                var flag = true;
-                if (str == "0-0") {
-                    if ($(this).attr('name') == "sharpenNum") {
-                        flag = false;
-                    }
-
-                } else if (str == ("0-1,2,9")) {
-                    if ($(this).attr('name') == "sharpenCriterion") {
-                        flag = false;
-                    }
-                    if ($(this).attr('name') == "sharpenLength") {
-                        flag = false;
-                    }
-                    if ($(this).attr('name') == "materialLength") {
-                        flag = false;
-                    }
-
-                } else if (str == ("1,2")) {
-                    if ($(this).attr('name') == "sharpenCriterion") {
-                        flag = false;
-                    }
-                    if ($(this).attr('name') == "sharpenLength") {
-                        flag = false;
-                    }
-                    if ($(this).attr('name') == "materialLength") {
-                        flag = false;
-                    }
-                    if ($(this).attr('name') == "sharpenNum") {
-                        flag = false;
-                    }
-                    if ($(this).attr('name') == "DivToolTurnover") {
-                        flag = false;
-                    }
-                }
-                if (flag) {
-                    if ($("#toolEditFormTable tr:last td").length == 2) {
-                        $("#toolEditFormTable ").append("<tr></tr>");
-                        $("#toolEditFormTable tr:last").append($(this).parent("td").prev());
-                        $("#toolEditFormTable tr:last").append($(this).parent("td"));
-                    } else {
-                        $("#toolEditFormTable tr:last").append($(this).parent("td").prev());
-                        $("#toolEditFormTable tr:last").append($(this).parent("td"));
-                    }
-                }
-            });
-        }
 
         /**
          * 查询处理
@@ -195,15 +81,31 @@
                 pagerpos: 'right',
                 pagercon: 'first,last,number,next,prev',
                 column: [{
-                    title: '材料号',
+                    title: '刀具号',
                     name: 'businessCode'
-                }, {
-                    title: '刀具名称',
-                    name: 'name'
-                }, {
+                },{
                     title: '规格型号',
                     name: 'specifications'
-                },  //  {
+                },
+                    {
+                        title: '刀具类型',
+                        name: 'consumeType',
+                        format: function (r) {
+                            if (r.consumeType == 1) {
+                                return '<span class="ui-grid-tdtx">可刃磨钻头</span>';
+                            }
+                            else if (r.consumeType == 2) {
+                                return '<span class="ui-grid-tdtx">可刃磨刀片</span>';
+                            }
+                            else if (r.consumeType == 3) {
+                                return '<span class="ui-grid-tdtx">一次性刀具</span>';
+                            }
+                            else if (r.consumeType == 9) {
+                                return '<span class="ui-grid-tdtx">其他</span>';
+                            }
+                            return '<span class="ui-grid-tdtx">-</span>';
+                        }
+                    },
                     {
                         title: '刀具分类',
                         name: 'type',
@@ -221,16 +123,27 @@
                             else if (r.type == 9) {
                                 return '<span class="ui-grid-tdtx">其他</span>';
                             }
-                            return '<span class="ui-grid-tdtx"></span>';
+                            return '<span class="ui-grid-tdtx">-</span>';
                         }
                     },
                     {
-                        title: '刀具图纸',
-                        name: 'pic',
+                        title: '刃磨类别',
+                        name: 'grinding',
                         format: function (r) {
-                            return option(r, "ToolPicText");
+                            //1刀具2辅具3配套9其他
+                            if (r.grinding == 1) {
+                                return '<span class="ui-grid-tdtx">厂内修磨</span>';
+                            }
+                            else if (r.grinding == 2) {
+                                return '<span class="ui-grid-tdtx">厂外修磨</span>';
+                            }
+                            else if (r.grinding == 3) {
+                                return '<span class="ui-grid-tdtx">厂外涂层</span>';
+                            }
+                            return '<span class="ui-grid-tdtx">-</span>';
                         }
                     },
+
                     {
                         title: '操作列',
                         name: '',
@@ -258,91 +171,98 @@
         }
 
 
-
-        //从选择库位码页面中 选出code返回编辑页面
-        function sysCode(lcid, scode, ccode) {
-            var show;
-
-            if (ccode && ccode != "") {
-                show = ccode;
+        function copyTypeElement(type){
+            $('#copy_table').html('');
+            $('#ct_copy_table').html('');
+            $('#DivToolConsumetype').html('');
+            var content = '';
+            if (type == '1'){
+                $('#copy_table').append($('#assistive_device_none').html());
+                content = $('#Base_cutting_tool').html();
+            }else{
+                content = $('#Base_assistive_device').html();
             }
-            else {
-                show = scode;
+            $('#DivToolConsumetype').html(content);
+            $('#DivToolConsumetype').trigger("change");
+
+        }
+
+        function copyConsumeTypeElement(type){
+            console.log(type);
+            $('#ct_copy_table').html('');
+            if (type == '3' || type == '9'){
+                return;
             }
-            $(toolEditForm.DivLibraryCodeID).val(lcid)
-            $(toolEditForm.DivSysteCodeShow).val(show);
-            $.dialog.list['codeDialog'].close();
+            $('#ct_copy_table').html($('#microtome_blade_none').html());
+        }
+
+        function clearCtr(){
+            $('#toolEditForm')[0].reset();
+            $('#copy_table').html('');
+            $('#ct_copy_table').html('');
+            $('#DivToolConsumetype').html('');
+        }
+
+        function dataHandler(data){
+//            copyTypeElement(data);
+            $(toolEditForm.opt).val('edit');
+            $(toolEditForm.type).val(data.type);
+            $(toolEditForm.type).trigger("change");
+            $(toolEditForm.consumeType).val(data.consumeType);
+            $(toolEditForm.consumeType).trigger("change");
+            $(toolEditForm.code).val(data.code);
+            $(toolEditForm.id).val(data.id);
+            $(toolEditForm.businessCode).val(data.businessCode);
+            $(toolEditForm.name).val(data.name);
+            $(toolEditForm.pic).val(data.pic);
+            $(toolEditForm.toolNumber).val(data.toolNumber);//可修磨次数
+            $(toolEditForm.cutNumber).val(data.cutNumber);//刃口数
+            $(toolEditForm.specifications).val(data.specifications);
+            $(toolEditForm.materialMax).val(data.materialMax);
+            $(toolEditForm.materialMin).val(data.materialMin);
+            $(toolEditForm.beiMin).val(data.beiMin);
+            $(toolEditForm.beiMax).val(data.beiMax);
+            $(toolEditForm.toolPrice).val(data.toolPrice);
+            $(toolEditForm.averagePrice).val(data.averagePrice);
+            $(toolEditForm.userfulType).val(data.userfulType);
+            $(toolEditForm.grinding).val(data.grinding);
+            $(toolEditForm.libraryCode).val(data.libraryCode);
+            $(toolEditForm.isDel).val(data.isDel);//删除区分
+            $(toolEditForm.sharpen_num).val(data.sharpenNum);
+            $(toolEditForm.materialLength).val(data.materialLength);//刀具长度
+            $(toolEditForm.sharpenCriterion).val(data.sharpenCriterion);//复磨标准
+            $(toolEditForm.sharpenLength).val(data.sharpenLength);//可刃磨长度
+            $(toolEditForm.code).attr("disabled", "");//禁用刀具编码
         }
 
 
         //添加刀具
-        function wd_tool(data, id, obj) {
-            //复制table
-            $("#toolEditFormTable tr:not(tr:lt(6))").remove();
-            var $tab = $("#NotMustTr_table tr").clone();
-            $tab.children("td").each(function (i) {
+        function wd_tool(data) {
+            clearCtr();
+            $(toolEditForm.type).val('');
+            if (typeof(data) == 'object') {
+                //为刀具类型赋值
+                dataHandler(data);
 
-                if ($("#toolEditFormTable tr:last td").length == 2) {
-                    $("#toolEditFormTable ").append("<tr></tr>");
-                    $("#toolEditFormTable tr:last").append($(this).prev());
-                    $("#toolEditFormTable tr:last").append($(this));
-                } else {
-                    $("#toolEditFormTable tr:last").append($(this).prev());
-                    $("#toolEditFormTable tr:last").append($(this));
-                }
-            });
-
-
-            $('#toolEditForm').form('reset');
-            var title = '${session.lang.toolAddTitle}';
-            $('#toolEditForm :input').removeClass('u-ipt-err');
-            $('#toolEditForm').find("*").each(function () {
-                if ($(this).hasClass("u-sel")) {
-                    $(this).removeAttr("style");
-                }
-            });
+            }
+//            $('#toolEditForm').form('reset');
+//            $('#toolEditForm :input').removeClass('u-ipt-err');
+//            $('#toolEditForm').find("*").each(function () {
+//                if ($(this).hasClass("u-sel")) {
+//                    $(this).removeAttr("style");
+//                }
+//            });
 
             if (typeof(data) == 'object') {
-                $(toolEditForm.opt).val('edit');
-                // 页面赋值
-                checkToolType(data.type, data.consumeType);
-                checkToolConsumetype(data.type, data.consumeType);
-                $(toolEditForm.type).val(data.type);
-                $(toolEditForm.consumeType).val(data.consumeType);
-                $(toolEditForm.code).val(data.code);
-                $(toolEditForm.id).val(data.id);
-                $(toolEditForm.businessCode).val(data.businessCode);
-                $(toolEditForm.name).val(data.name);
-                $(toolEditForm.pic).val(data.pic);
-                $(toolEditForm.toolNumber).val(data.toolNumber);//可修磨次数
-                $(toolEditForm.cutNumber).val(data.cutNumber);//刃口数
-                $(toolEditForm.specifications).val(data.specifications);
-                $(toolEditForm.materialMax).val(data.materialMax);
-                $(toolEditForm.materialMin).val(data.materialMin);
-                $(toolEditForm.beiMin).val(data.beiMin);
-                $(toolEditForm.beiMax).val(data.beiMax);
-                $(toolEditForm.toolPrice).val(data.toolPrice);
-                $(toolEditForm.averagePrice).val(data.averagePrice);
-                $(toolEditForm.userfulType).val(data.userfulType);
-                $(toolEditForm.grinding).val(data.grinding);
-                $(toolEditForm.libraryCode).val(data.libraryCode);
-                $(toolEditForm.isDel).val(data.isDel);//删除区分
-
-                $(toolEditForm.sharpenNum).val(data.sharpenNum);
-                $(toolEditForm.materialLength).val(data.materialLength);//刀具长度
-                $(toolEditForm.sharpenCriterion).val(data.sharpenCriterion);//复磨标准
-                $(toolEditForm.sharpenLength).val(data.sharpenLength);//可刃磨长度
-                $(toolEditForm.code).attr("disabled", "");//禁用刀具编码
+                $(toolEditForm.businessCode).attr("disabled","disabled");//启用刀具编码
 
             } else {
-                checkToolType("", "");
-                $(toolEditForm.code).removeAttr("disabled");//启用刀具编码
+                $(toolEditForm.businessCode).removeAttr("disabled");//启用刀具编码
                 $(toolEditForm.isDel).val(0);//删除区分-有效
-//                $('#toolEditForm').attr('action', 'toolAdd.action');
             }
             $.dialog({
                 id: 'toolEdit_dialog',
-                title: title,
+                title: "刀具参数",
                 lock: true,
                 content: document.getElementById('toolEdit'),
                 button: [{
@@ -351,17 +271,13 @@
                     callback: function () {
                         if (typeof(data) == 'object'){
                             editCuttingTool();
-                            console.log('123');
                         }else{
                             addCuttingTool();
-                            console.log('aaa');
                         }
-
-                        return false;
+                        $.dialog.list['toolEdit_dialog'].close();
                     }
                 }]
             });
-            return false;
         }
 
         function initParam(){
@@ -370,15 +286,13 @@
             param.id = $(toolEditForm.id).val();
             param.libraryCode = $(toolEditForm.libraryCode).val();
             param.businessCode = $(toolEditForm.businessCode).val();
-            param.name = $(toolEditForm.name).val();
+            param.name =$(toolEditForm.name).val();
             param.type = $(toolEditForm.type).val();
             param.consumeType = $(toolEditForm.consumeType).val();
-            param.pic = $(toolEditForm.pic).val();
             param.specifications = $(toolEditForm.specifications).val();
             param.cutNumber = $(toolEditForm.cutNumber).val();
-            param.brand = $(toolEditForm.brand).val();
             param.grinding = $(toolEditForm.grinding).val();
-            param.sharpenNum = $(toolEditForm.sharpenNum).val();
+            param.sharpenNum = $(toolEditForm.sharpen_num).val();
             param.materialMax = $(toolEditForm.materialMax).val();
             param.materialMin = $(toolEditForm.materialMin).val();
             param.toolNumber = $(toolEditForm.toolNumber).val();
@@ -390,7 +304,6 @@
             param.toolPrice = $(toolEditForm.toolPrice).val();
             param.averagePrice = $(toolEditForm.averagePrice).val();
             param.userfulType = $(toolEditForm.userfulType).val();
-//            param.userfulType = $(toolEditForm.userfulType).val();
             param.qimingCode = $(toolEditForm.qimingCode).val();
             param.wuliaoCode = $(toolEditForm.wuliaoCode).val();
             return JSON.stringify(param);
@@ -406,11 +319,8 @@
                     artDialog(XHR.responseText, "OK");
                 },
                 success: function(data,textStatus,response) {
-                    if(response.status == '200'){
-                        search();
-                    }else{
-                        artDialog(data, "OK");
-                    }
+                    artDialog("操作成功", "OK");
+                    search();
                 },
                 headers: {
                     "content-type":"application/json"
@@ -471,27 +381,6 @@
             return $ul.append($li);
         }
 
-
-        /**图片过大处理**/
-        var adjustImgSize = function (img, boxWidth, boxHeight) {
-            // var imgWidth=img.width();
-            // var imgHeight=img.height();
-            // 上面这种取得img的宽度和高度的做法有点儿bug
-            // src如果由两个大小不一样的图片相互替换时，上面的写法就有问题了，换过之后的图片的宽度和高度始终取得的还是换之前图片的值。
-            // 解决方法：创建一个新的图片类，并将其src属性设上。
-            var tempImg = new Image();
-            tempImg.src = img.attr('src');
-            var imgWidth = tempImg.width;
-            var imgHeight = tempImg.height;
-            if (imgWidth > 800 || imgHeight > 800) {
-                if ((imgWidth / imgHeight) > 1) {
-                    img.width(875);
-                } else {
-                    img.height(875);
-                }
-            }
-        };
-
         /**
          * 编辑处理
          */
@@ -548,29 +437,6 @@
                 });
             });
         }
-
-        /**文件上传js*/
-        $(function () {
-            $("input[type=file]").change(function () {
-                $(this).parents(".uploader").find(".uplode-filename").val($(this).val());
-            });
-            $("input[type=file]").each(function () {
-                if ($(this).val() == "") {
-                    $(this).parents(".uploader").find(".uplode-filename").val("No file selected...");
-                }
-            });
-
-            /**可使用次数 = 可刃磨长度/刃磨标准**/
-            $('input[name=DivToolSharpennum]').focus(function () {
-                var SharpenLength = $('input[name=DivToolSharpenLength]').val();
-                var SharpenCriterion = $('input[name=DivToolSharpenCriterion]').val();
-                var ret = parseInt(SharpenLength / SharpenCriterion);
-                if (!isNaN(ret)) {
-                    $(this).val(ret);
-                }
-            });
-        });
-
         function pageClick(page){
             $(toolForm.currentPage).val(page);
             search();
@@ -706,10 +572,10 @@
             </tr>
             <tr>
                 <th width="150">
-                    刃口数<%--每盒数量--%>
+                    库位码
                 </th>
                 <td>
-                    <input name="cutNumber" type="text" class="u-ipt" maxlength="4">
+                    <input name="libraryCode" type="text" class="u-ipt" maxlength="16">
                 </td>
                 <th width="150">
                     规格型号
@@ -718,7 +584,6 @@
                     <input name="specifications" type="text" class="u-ipt" maxlength="80">
                 </td>
             </tr>
-
             <tr>
                 <th width="150">
                     <%--供应商--%> 库存最大值
@@ -749,17 +614,6 @@
                     <input name="beiMin" type="text" class="u-ipt" maxlength="8">
                 </td>
             </tr>
-
-            <tr>
-                <th width="150">
-                    库位码
-                </th>
-                <td>
-                    <input name="libraryCode" type="text" class="u-ipt" maxlength="16">
-                </td>
-            </tr>
-        </table>
-        <table class="m-frmtb" width="100%">
             <tr>
                 <th width="150">
                     刀具单价
@@ -768,52 +622,44 @@
                     <input name="toolPrice" type="text" class="u-ipt" maxlength="10">
                     <p id="DivToolPrice"></p>
                 </td>
-                <th width="150">
-                    平均修磨单价
-                </th>
-                <td>
-                    <input name="averagePrice" type="text" class="u-ipt" maxlength="10">
-                    <p id="DivToolAveragePrice"></p>
-                </td>
-            </tr>
-            <tr>
-                <th width="150">
-                    刀具用途类型
-                </th>
-                <td>
-                    <select name="userfulType"  class="u-sel hidder" maxlength="2">
-                            <option value="1">复合类</option>
-                            <option value="2">热套类</option>
-                            <option value="3">专机</option>
-                            <option value="9">其他</option>
-                    </select>
-                    <p id="DivTooluserfulType"></p>
-                </td>
-            </tr>
 
+            </tr>
+        </table>
+        <table class="m-frmtb" width="100%" id="copy_table">
+        </table>
+        <table class="m-frmtb" width="100%" id="ct_copy_table">
         </table>
     </form>
 </div>
 
+
+
+
 <!-- 用于复制页面  -->
 <div class="f-dn">
-    <select class="u-sel" id="Base_DivToolConsumetype">
-        <option value="1">可刃磨钻头</option>
-        <option value="2">可刃磨刀片</option>
-        <option value="3">一次性刀片</option>
-        <option value="9">其他</option>
-    </select>
-    <table id="NotMustTr_table">
+    <table id="microtome_blade_none">
         <tr>
+            <th width="150">
+                平均修磨单价
+            </th>
+            <td>
+                <input name="averagePrice" type="text" class="u-ipt" maxlength="10">
+                <p id="DivToolAveragePrice"></p>
+            </td>
             <th width="150">
                 可刃磨次数
             </th>
             <td>
-                <input name="toolNumber" type="text" class="u-ipt hidder" maxlength="5">
-                <p id="DivToolNumeber"></p>
+                <input name="sharpen_num" type="text" class="u-ipt" maxlength="4">
             </td>
         </tr>
         <tr>
+            <th width="150">
+                刃口数
+            </th>
+            <td>
+                <input name="cutNumber" type="text" class="u-ipt" maxlength="4">
+            </td>
             <th width="150" >
                 修磨类别
             </th>
@@ -827,8 +673,32 @@
             </td>
         </tr>
     </table>
-</div>
-<div id="showImage" class="f-dn">
+    <table id="assistive_device_none">
+        <tr>
+            <th width="150">
+                刀具用途类型
+            </th>
+            <td>
+                <select name="userfulType"  class="u-sel hidder" maxlength="2">
+                    <option value="1">复合类</option>
+                    <option value="2">热套类</option>
+                    <option value="3">专机</option>
+                    <option value="9">其他</option>
+                </select>
+                <p id="DivTooluserfulType"></p>
+            </td>
+        </tr>
+    </table>
+
+    <select class="u-sel" id="Base_cutting_tool">
+        <option value="1">可刃磨钻头</option>
+        <option value="2">可刃磨刀片</option>
+        <option value="3">一次性刀片</option>
+        <option value="9">其他</option>
+    </select>
+    <select class="u-sel" id="Base_assistive_device">
+        <option value="9">其他</option>
+    </select>
 </div>
 
 </body>

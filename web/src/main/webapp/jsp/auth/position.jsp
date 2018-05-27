@@ -92,6 +92,7 @@
             var $ul = $('<ul class="u-option"></ul>');
             var $li = $('');
             var ary_li = new Array();
+            ary_li.push($('<li><a href="/jsp/auth/role_setting.jsp?positonId='+r.id+'" target="center">权限设置</a></li>'));
             ary_li.push($('<li><a href="javascript:void(0)">编辑</a></li>').click(function(){wd_parts(r)}));
             ary_li.push($('<li><a href="javascript:void(0)">删除</a></li>').click(function(){if(r.isDel == 0){del(r)}}));
             $.each(ary_li,function(i,o){

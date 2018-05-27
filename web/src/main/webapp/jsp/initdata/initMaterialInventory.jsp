@@ -100,11 +100,8 @@
                         artDialog(XHR.responseText, "OK");
                     },
                     success: function(data,textStatus,response) {
-                        if(response.status == '200'){
-                            search();
-                        }else{
-                            artDialog(data, "OK");
-                        }
+                        search();
+                        artDialog('操作成功', "OK");
                     },
                     headers: {
                         "content-type":"application/json"
@@ -151,41 +148,7 @@
                         }else{
                             add();
                         }
-//                        $('#printEditForm').form('submit',{
-//                            success:function(d){
-//                                $('#printEditForm :input').removeClass('u-ipt-err');
-//
-//                                $('#printEditForm').find("*").each(function () {
-//                                    if($(this).hasClass("u-sel")){
-//                                        $(this).removeAttr("style");
-//                                    }
-//                                });
-//                                debugger
-//                                if($.parseJSON(d).status >= 0){
-//                                    <!-- 2017/09/8 宋健 变更↓↓↓　dazhong@YMSC -->
-//                                    var param = {
-//                                        opt:'list',
-//                                        PageName:$(printEditForm.PageName).val(),
-//                                        expandSpace1:$(printEditForm.DivexpandSpace1).val()
-//                                    }
-//                                    $('#list').grid('url','B09S005.action');
-//                                    $('#list').grid('data',param);
-//                                    if($(printEditForm.opt).val()!='edit'){
-//                                        $('#list').grid('load',1);
-//                                    }else{
-//                                        $('#list').grid('load');
-//                                    }
-//                                    artDialog($.parseJSON(d).message,"OK");
-//                                    $.dialog.list['printEdit_dialog'].close();
-//                                } else if($.parseJSON(d).status == -1){
-//                                    artDialog($.parseJSON(d).message,"OK");
-//                                }else {
-//                                    artDialog(setContorllBackColor($('#printEditForm'),$.parseJSON(d).message),"OK");
-//                                }
-//                                <!-- 2017/09/1 宋健 变更↑↑↑　dazhong@YMSC -->
-//                            }
-//
-//                        });
+                        $.dialog.list['printEdit_dialog'].close();
                         return false;
                     }
                 }]

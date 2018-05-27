@@ -1,6 +1,6 @@
 package com.apiclient.vo;
 
-import com.common.pojo.SynthesisCuttingToolBind;
+import com.apiclient.pojo.SynthesisCuttingToolBind;
 
 import java.util.List;
 

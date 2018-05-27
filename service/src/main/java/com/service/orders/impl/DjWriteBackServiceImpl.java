@@ -66,7 +66,7 @@ public class DjWriteBackServiceImpl implements IDjWriteBackService {
                 djItrnAkp.setJgcs(cuttingToolBind.getJgcs()+"");
                 //djItrnAkp
                 djItrnAkp.setLhcs(cuttingToolBind.getLhcs()+"");
-                djItrnAkp.setSharpenTimes(cuttingToolBind.getSharpenTimes()+"");
+                djItrnAkp.setSharpenTimes(cuttingToolBind.getSharpenTimes());
                 djItrnAkp.setCasecode(cuttingToolBind.getBladeCode());
             }
 

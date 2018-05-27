@@ -77,6 +77,7 @@
             <tx:method name="delete*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
 			<tx:method name="del*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
 			<tx:method name="upd*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+			<tx:method name="*Data" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
 			<tx:method name="*" read-only="true" />
 		</tx:attributes>
 	</tx:advice>

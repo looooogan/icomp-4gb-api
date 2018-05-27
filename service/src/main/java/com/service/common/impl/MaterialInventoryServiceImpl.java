@@ -1,6 +1,7 @@
 package com.service.common.impl;
 
 
+import com.common.constants.CuttingToolConsumeTypeEnum;
 import com.common.mapper.ICuttingToolMapper;
 import com.common.mapper.IMaterialInventoryMapper;
 import com.common.pojo.CuttingTool;
@@ -51,6 +52,18 @@ public class MaterialInventoryServiceImpl implements IMaterialInventoryService{
         if (cuttingTool == null){
             throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.MATERIALINVENTORY_CUTTINGTOOL_UNFOUND));
         }
+
+        if (cuttingTool.getConsumeType().equals(CuttingToolConsumeTypeEnum.griding_zt.getKey())){
+            throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.MATERIALINVENTORY_CUTTINGTOOL_TYPE_ERROR));
+        }
+
+        MaterialInventoryVO materialInventoryVO = new MaterialInventoryVO();
+        materialInventoryVO.setCuttingToolVO(cuttingToolVO);
+        List<MaterialInventory> materialInventories = materialInventoryMapper.getMaterialInventoryByPage(materialInventoryVO);
+        if (null!=materialInventories && materialInventories.size()>0){
+            throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.MATERIALINVENTORY_CUTTINGTOOL_EXISTS));
+        }
+
         materialInventory.setCuttingTool(cuttingTool);
         materialInventory.setCuttingToolCode(cuttingTool.getCode());
         materialInventory.setIsDel(0);

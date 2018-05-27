@@ -3,382 +3,376 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.common.mapper.IDjMtlAkpMapper">
     <resultMap id="djMtlAkpQueryMap" type="com.common.pojo.DjMtlAkp">
+        <id property="mtlCode" column="MTL_CODE"/>
         <!-- 供应商代码 -->
-        <id property="ownerCode" column="DJ_MTL_AKP.OWNER_CODE"/>
-
+        <result property="ownerCode" column="OWNER_CODE"/>
         <!-- 物料代码 -->
-        <result property="mtlCode" column="DJ_MTL_AKP.MTL_CODE"/>
+        <result property="mtlCode" column="MTL_CODE"/>
         <!-- 物料名称 -->
-        <result property="mtlName" column="DJ_MTL_AKP.MTL_NAME"/>
+        <result property="mtlName" column="MTL_NAME"/>
         <!-- 刀具号 -->
-        <result property="susr11" column="DJ_MTL_AKP.SUSR11"/>
+        <result property="susr11" column="SUSR11"/>
         <!-- 外委标识，W外委，N非外委 -->
-        <result property="susr13" column="DJ_MTL_AKP.SUSR13"/>
+        <result property="susr13" column="SUSR13"/>
         <!-- 最大刃磨次数 -->
-        <result property="susr18" column="DJ_MTL_AKP.SUSR18"/>
+        <result property="susr18" column="SUSR18"/>
         <!-- 最大刀头号 -->
-        <result property="susr20" column="DJ_MTL_AKP.SUSR20"/>
+        <result property="susr20" column="SUSR20"/>
         <!-- 规格型号 -->
-        <result property="specification" column="DJ_MTL_AKP.SPECIFICATION"/>
+        <result property="specification" column="SPECIFICATION"/>
         <!-- 刀具品牌 -->
-        <result property="brand" column="DJ_MTL_AKP.BRAND"/>
+        <result property="brand" column="BRAND"/>
         <!-- 刀具订货号 -->
-        <result property="orderCode" column="DJ_MTL_AKP.ORDER_CODE"/>
+        <result property="orderCode" column="ORDER_CODE"/>
     </resultMap>
-    <!--添加-->
+    <!-- 添加 -->
     <insert id="addDjMtlAkp" parameterType="com.common.pojo.DjMtlAkp">
         INSERT INTO DJ_MTL_AKP (
-            <!-- 供应商代码 -->
-            OWNER_CODE,
-            <!-- 物料代码 -->
-            MTL_CODE,
-            <!-- 物料名称 -->
-            MTL_NAME,
-            <!-- 刀具号 -->
-            SUSR11,
-            <!-- 外委标识，W外委，N非外委 -->
-            SUSR13,
-            <!-- 最大刃磨次数 -->
-            SUSR18,
-            <!-- 最大刀头号 -->
-            SUSR20,
-            <!-- 规格型号 -->
-            SPECIFICATION,
-            <!-- 刀具品牌 -->
-            BRAND,
-            <!-- 刀具订货号 -->
-            ORDER_CODE
+        /* 供应商代码 */
+        OWNER_CODE,
+        /* 物料代码 */
+        MTL_CODE,
+        /* 物料名称 */
+        MTL_NAME,
+        /* 刀具号 */
+        SUSR11,
+        /* 外委标识，W外委，N非外委 */
+        SUSR13,
+        /* 最大刃磨次数 */
+        SUSR18,
+        /* 最大刀头号 */
+        SUSR20,
+        /* 规格型号 */
+        SPECIFICATION,
+        /* 刀具品牌 */
+        BRAND,
+        /* 刀具订货号 */
+        ORDER_CODE
         )
         VALUES (
-            <!-- 供应商代码 -->
-            #{ownerCode},
-            <!-- 物料代码 -->
-            #{mtlCode},
-            <!-- 物料名称 -->
-            #{mtlName},
-            <!-- 刀具号 -->
-            #{susr11},
-            <!-- 外委标识，W外委，N非外委 -->
-            #{susr13},
-            <!-- 最大刃磨次数 -->
-            #{susr18},
-            <!-- 最大刀头号 -->
-            #{susr20},
-            <!-- 规格型号 -->
-            #{specification},
-            <!-- 刀具品牌 -->
-            #{brand},
-            <!-- 刀具订货号 -->
-            #{orderCode}
+        /* 供应商代码 */
+        #{ownerCode},
+        /* 物料代码 */
+        #{mtlCode},
+        /* 物料名称 */
+        #{mtlName},
+        /* 刀具号 */
+        #{susr11},
+        /* 外委标识，W外委，N非外委 */
+        #{susr13},
+        /* 最大刃磨次数 */
+        #{susr18},
+        /* 最大刀头号 */
+        #{susr20},
+        /* 规格型号 */
+        #{specification},
+        /* 刀具品牌 */
+        #{brand},
+        /* 刀具订货号 */
+        #{orderCode}
         )
     </insert>
 
-    <!--删除-->
+    <!-- 删除 -->
     <delete id="delDjMtlAkp" parameterType="com.common.pojo.DjMtlAkp">
         DELETE
         FROM DJ_MTL_AKP
         WHERE
-            1 = 1
-            and MTL_CODE = #{mtlCode}
+        1 = 1 and OWNER_CODE = #{ownerCode}
     </delete>
 
-    <!--逻辑删除-->
+    <!-- 逻辑删除 -->
     <delete id="delDjMtlAkpForLogic" parameterType="com.common.pojo.DjMtlAkp">
-        DELETE FROM DJ_MTL_AKP
+        DELETE FROM  DJ_MTL_AKP
         WHERE
-            1 = 1
-            and MTL_CODE = #{mtlCode}
+        1 = 1 and OWNER_CODE = #{ownerCode}
     </delete>
 
-    <!--根据VO删除-->
+    <!-- 根据VO删除 -->
     <delete id="delDjMtlAkpByVo" parameterType="com.common.vo.DjMtlAkpVO">
         DELETE FROM DJ_MTL_AKP
         WHERE
-            1=1
-            <!-- 供应商代码 -->
-            <if test="ownerCode != null and ownerCode != '' " >
-                and OWNER_CODE =  #{ownerCode}
-            </if>
-            <!-- 物料代码 -->
-            <if test="mtlCode != null and mtlCode != '' " >
-                and MTL_CODE =  #{mtlCode}
-            </if>
-            <!-- 物料名称 -->
-            <if test="mtlName != null and mtlName != '' " >
-                and MTL_NAME =  #{mtlName}
-            </if>
-            <!-- 刀具号 -->
-            <if test="susr11 != null and susr11 != '' " >
-                and SUSR11 =  #{susr11}
-            </if>
-            <!-- 外委标识，W外委，N非外委 -->
-            <if test="susr13 != null and susr13 != '' " >
-                and SUSR13 =  #{susr13}
-            </if>
-            <!-- 最大刃磨次数 -->
-            <if test="susr18 != null and susr18 != '' " >
-                and SUSR18 =  #{susr18}
-            </if>
-            <!-- 最大刀头号 -->
-            <if test="susr20 != null and susr20 != '' " >
-                and SUSR20 =  #{susr20}
-            </if>
-            <!-- 规格型号 -->
-            <if test="specification != null and specification != '' " >
-                and SPECIFICATION =  #{specification}
-            </if>
-            <!-- 刀具品牌 -->
-            <if test="brand != null and brand != '' " >
-                and BRAND =  #{brand}
-            </if>
-            <!-- 刀具订货号 -->
-            <if test="orderCode != null and orderCode != '' " >
-                and ORDER_CODE =  #{orderCode}
-            </if>
+        1=1 and OWNER_CODE = #{ownerCode}
+        /* 供应商代码 */
+        <if test="ownerCode != null and ownerCode != '' " >
+            and OWNER_CODE =  #{ownerCode}
+        </if>
+        /* 物料代码 */
+        <if test="mtlCode != null and mtlCode != '' " >
+            and MTL_CODE =  #{mtlCode}
+        </if>
+        /* 物料名称 */
+        <if test="mtlName != null and mtlName != '' " >
+            and MTL_NAME =  #{mtlName}
+        </if>
+        /* 刀具号 */
+        <if test="susr11 != null and susr11 != '' " >
+            and SUSR11 =  #{susr11}
+        </if>
+        /* 外委标识，W外委，N非外委 */
+        <if test="susr13 != null and susr13 != '' " >
+            and SUSR13 =  #{susr13}
+        </if>
+        /* 最大刃磨次数 */
+        <if test="susr18 != null and susr18 != '' " >
+            and SUSR18 =  #{susr18}
+        </if>
+        /* 最大刀头号 */
+        <if test="susr20 != null and susr20 != '' " >
+            and SUSR20 =  #{susr20}
+        </if>
+        /* 规格型号 */
+        <if test="specification != null and specification != '' " >
+            and SPECIFICATION =  #{specification}
+        </if>
+        /* 刀具品牌 */
+        <if test="brand != null and brand != '' " >
+            and BRAND =  #{brand}
+        </if>
+        /* 刀具订货号 */
+        <if test="orderCode != null and orderCode != '' " >
+            and ORDER_CODE =  #{orderCode}
+        </if>
     </delete>
 
-    <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
+    <!-- 更新,如果属性不为null 则更新该属性,根据id更新 -->
     <update id="updDjMtlAkp" parameterType="com.common.pojo.DjMtlAkp">
         UPDATE DJ_MTL_AKP
         SET
-            <!-- 物料代码 -->
-            <if test="mtlCode != null and mtlCode != '' " >
-                MTL_CODE =  #{mtlCode},
-            </if>
-            <!-- 物料名称 -->
-            <if test="mtlName != null and mtlName != '' " >
-                MTL_NAME =  #{mtlName},
-            </if>
-            <!-- 刀具号 -->
-            <if test="susr11 != null and susr11 != '' " >
-                SUSR11 =  #{susr11},
-            </if>
-            <!-- 外委标识，W外委，N非外委 -->
-            <if test="susr13 != null and susr13 != '' " >
-                SUSR13 =  #{susr13},
-            </if>
-            <!-- 最大刃磨次数 -->
-            <if test="susr18 != null and susr18 != '' " >
-                SUSR18 =  #{susr18},
-            </if>
-            <!-- 最大刀头号 -->
-            <if test="susr20 != null and susr20 != '' " >
-                SUSR20 =  #{susr20},
-            </if>
-            <!-- 规格型号 -->
-            <if test="specification != null and specification != '' " >
-                SPECIFICATION =  #{specification},
-            </if>
-            <!-- 刀具品牌 -->
-            <if test="brand != null and brand != '' " >
-                BRAND =  #{brand},
-            </if>
-            <!-- 刀具订货号 -->
-            <if test="orderCode != null and orderCode != '' " >
-                ORDER_CODE =  #{orderCode},
-            </if>
-            <!-- 供应商代码 -->
-            OWNER_CODE = #{ownerCode}
+        /* 供应商代码 */
+        <if test="ownerCode != null and ownerCode != '' " >
+            OWNER_CODE =  #{ownerCode},
+        </if>
+        /* 物料名称 */
+        <if test="mtlName != null and mtlName != '' " >
+            MTL_NAME =  #{mtlName},
+        </if>
+        /* 刀具号 */
+        <if test="susr11 != null and susr11 != '' " >
+            SUSR11 =  #{susr11},
+        </if>
+        /* 外委标识，W外委，N非外委 */
+        <if test="susr13 != null and susr13 != '' " >
+            SUSR13 =  #{susr13},
+        </if>
+        /* 最大刃磨次数 */
+        <if test="susr18 != null and susr18 != '' " >
+            SUSR18 =  #{susr18},
+        </if>
+        /* 最大刀头号 */
+        <if test="susr20 != null and susr20 != '' " >
+            SUSR20 =  #{susr20},
+        </if>
+        /* 规格型号 */
+        <if test="specification != null and specification != '' " >
+            SPECIFICATION =  #{specification},
+        </if>
+        /* 刀具品牌 */
+        <if test="brand != null and brand != '' " >
+            BRAND =  #{brand},
+        </if>
+        /* 刀具订货号 */
+        <if test="orderCode != null and orderCode != '' " >
+            ORDER_CODE =  #{orderCode},
+        </if>
+        /* 物料代码 */
+        MTL_CODE =  #{mtlCode}
         WHERE
-            1 = 1
-            and MTL_CODE =  #{mtlCode}
+        1 = 1 and MTL_CODE = #{mtlCode}
     </update>
 
-    <!--分页查询 -->
+    <!-- 分页查询 -->
     <select id="getDjMtlAkpByPage" parameterType="com.common.vo.DjMtlAkpVO" resultMap="djMtlAkpQueryMap">
         SELECT
         /*djMtlAkp begin*/
-            <!-- 供应商代码 -->
-            DJ_MTL_AKP.OWNER_CODE as 'DJ_MTL_AKP.OWNER_CODE',
-            <!-- 物料代码 -->
-            DJ_MTL_AKP.MTL_CODE as 'DJ_MTL_AKP.MTL_CODE',
-            <!-- 物料名称 -->
-            DJ_MTL_AKP.MTL_NAME as 'DJ_MTL_AKP.MTL_NAME',
-            <!-- 刀具号 -->
-            DJ_MTL_AKP.SUSR11 as 'DJ_MTL_AKP.SUSR11',
-            <!-- 外委标识，W外委，N非外委 -->
-            DJ_MTL_AKP.SUSR13 as 'DJ_MTL_AKP.SUSR13',
-            <!-- 最大刃磨次数 -->
-            DJ_MTL_AKP.SUSR18 as 'DJ_MTL_AKP.SUSR18',
-            <!-- 最大刀头号 -->
-            DJ_MTL_AKP.SUSR20 as 'DJ_MTL_AKP.SUSR20',
-            <!-- 规格型号 -->
-            DJ_MTL_AKP.SPECIFICATION as 'DJ_MTL_AKP.SPECIFICATION',
-            <!-- 刀具品牌 -->
-            DJ_MTL_AKP.BRAND as 'DJ_MTL_AKP.BRAND',
-            <!-- 刀具订货号 -->
-            DJ_MTL_AKP.ORDER_CODE as 'DJ_MTL_AKP.ORDER_CODE'
+        /* 供应商代码 */
+        OWNER_CODE,
+        /* 物料代码 */
+        MTL_CODE,
+        /* 物料名称 */
+        MTL_NAME,
+        /* 刀具号 */
+        SUSR11,
+        /* 外委标识，W外委，N非外委 */
+        SUSR13,
+        /* 最大刃磨次数 */
+        SUSR18,
+        /* 最大刀头号 */
+        SUSR20,
+        /* 规格型号 */
+        SPECIFICATION,
+        /* 刀具品牌 */
+        BRAND,
+        /* 刀具订货号 */
+        ORDER_CODE
         /*djMtlAkp end*/
-        FROM DJ_MTL_AKP as DJ_MTL_AKP
+        FROM DJ_MTL_AKP
         WHERE
-            1 = 1
+        1 = 1
         /*DJ_MTL_AKP begin*/
-            <!-- 供应商代码 -->
-            <if test="ownerCode != null and ownerCode != '' " >
-                and DJ_MTL_AKP.OWNER_CODE = #{ownerCode}
-            </if>
-            <!-- 物料代码 -->
-            <if test="mtlCode != null and mtlCode != '' " >
-                and DJ_MTL_AKP.MTL_CODE = #{mtlCode}
-            </if>
-            <!-- 物料名称 -->
-            <if test="mtlName != null and mtlName != '' " >
-                and DJ_MTL_AKP.MTL_NAME = #{mtlName}
-            </if>
-            <!-- 刀具号 -->
-            <if test="susr11 != null and susr11 != '' " >
-                and DJ_MTL_AKP.SUSR11 = #{susr11}
-            </if>
-            <!-- 外委标识，W外委，N非外委 -->
-            <if test="susr13 != null and susr13 != '' " >
-                and DJ_MTL_AKP.SUSR13 = #{susr13}
-            </if>
-            <!-- 最大刃磨次数 -->
-            <if test="susr18 != null and susr18 != '' " >
-                and DJ_MTL_AKP.SUSR18 = #{susr18}
-            </if>
-            <!-- 最大刀头号 -->
-            <if test="susr20 != null and susr20 != '' " >
-                and DJ_MTL_AKP.SUSR20 = #{susr20}
-            </if>
-            <!-- 规格型号 -->
-            <if test="specification != null and specification != '' " >
-                and DJ_MTL_AKP.SPECIFICATION = #{specification}
-            </if>
-            <!-- 刀具品牌 -->
-            <if test="brand != null and brand != '' " >
-                and DJ_MTL_AKP.BRAND = #{brand}
-            </if>
-            <!-- 刀具订货号 -->
-            <if test="orderCode != null and orderCode != '' " >
-                and DJ_MTL_AKP.ORDER_CODE = #{orderCode}
-            </if>
-        /*DJ_MTL_AKP end*/
-        ORDER BY DJ_MTL_AKP.OWNER_CODE desc
-        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
-        LIMIT #{startRecord},#{pageSize}
+        /* 供应商代码 */
+        <if test="ownerCode != null and ownerCode != '' " >
+            and OWNER_CODE = #{ownerCode}
         </if>
+        /* 物料代码 */
+        <if test="mtlCode != null and mtlCode != '' " >
+            and MTL_CODE = #{mtlCode}
+        </if>
+        /* 物料名称 */
+        <if test="mtlName != null and mtlName != '' " >
+            and MTL_NAME = #{mtlName}
+        </if>
+        /* 刀具号 */
+        <if test="susr11 != null and susr11 != '' " >
+            and SUSR11 = #{susr11}
+        </if>
+        /* 外委标识，W外委，N非外委 */
+        <if test="susr13 != null and susr13 != '' " >
+            and SUSR13 = #{susr13}
+        </if>
+        /* 最大刃磨次数 */
+        <if test="susr18 != null and susr18 != '' " >
+            and SUSR18 = #{susr18}
+        </if>
+        /* 最大刀头号 */
+        <if test="susr20 != null and susr20 != '' " >
+            and SUSR20 = #{susr20}
+        </if>
+        /* 规格型号 */
+        <if test="specification != null and specification != '' " >
+            and SPECIFICATION = #{specification}
+        </if>
+        /* 刀具品牌 */
+        <if test="brand != null and brand != '' " >
+            and BRAND = #{brand}
+        </if>
+        /* 刀具订货号 */
+        <if test="orderCode != null and orderCode != '' " >
+            and ORDER_CODE = #{orderCode}
+        </if>
+        /*DJ_MTL_AKP end*/
+        ORDER BY  desc
     </select>
 
 
-    <!--查询记录数-->
+    <!-- 查询记录数 -->
     <select id="getDjMtlAkpCount" parameterType="com.common.vo.DjMtlAkpVO" resultType="java.lang.Integer">
         SELECT COUNT(1)
-        FROM DJ_MTL_AKP as DJ_MTL_AKP
+        FROM DJ_MTL_AKP
         WHERE
-            1 = 1
+        1 = 1
         /*DJ_MTL_AKP begin*/
-        <!-- 供应商代码 -->
+        /* 供应商代码 */
         <if test="ownerCode != null and ownerCode != '' " >
-            and DJ_MTL_AKP.OWNER_CODE = #{ownerCode}
+            and OWNER_CODE = #{ownerCode}
         </if>
-        <!-- 物料代码 -->
+        /* 物料代码 */
         <if test="mtlCode != null and mtlCode != '' " >
-            and DJ_MTL_AKP.MTL_CODE = #{mtlCode}
+            and MTL_CODE = #{mtlCode}
         </if>
-        <!-- 物料名称 -->
+        /* 物料名称 */
         <if test="mtlName != null and mtlName != '' " >
-            and DJ_MTL_AKP.MTL_NAME = #{mtlName}
+            and MTL_NAME = #{mtlName}
         </if>
-        <!-- 刀具号 -->
+        /* 刀具号 */
         <if test="susr11 != null and susr11 != '' " >
-            and DJ_MTL_AKP.SUSR11 = #{susr11}
+            and SUSR11 = #{susr11}
         </if>
-        <!-- 外委标识，W外委，N非外委 -->
+        /* 外委标识，W外委，N非外委 */
         <if test="susr13 != null and susr13 != '' " >
-            and DJ_MTL_AKP.SUSR13 = #{susr13}
+            and SUSR13 = #{susr13}
         </if>
-        <!-- 最大刃磨次数 -->
+        /* 最大刃磨次数 */
         <if test="susr18 != null and susr18 != '' " >
-            and DJ_MTL_AKP.SUSR18 = #{susr18}
+            and SUSR18 = #{susr18}
         </if>
-        <!-- 最大刀头号 -->
+        /* 最大刀头号 */
         <if test="susr20 != null and susr20 != '' " >
-            and DJ_MTL_AKP.SUSR20 = #{susr20}
+            and SUSR20 = #{susr20}
         </if>
-        <!-- 规格型号 -->
+        /* 规格型号 */
         <if test="specification != null and specification != '' " >
-            and DJ_MTL_AKP.SPECIFICATION = #{specification}
+            and SPECIFICATION = #{specification}
         </if>
-        <!-- 刀具品牌 -->
+        /* 刀具品牌 */
         <if test="brand != null and brand != '' " >
-            and DJ_MTL_AKP.BRAND = #{brand}
+            and BRAND = #{brand}
         </if>
-        <!-- 刀具订货号 -->
+        /* 刀具订货号 */
         <if test="orderCode != null and orderCode != '' " >
-            and DJ_MTL_AKP.ORDER_CODE = #{orderCode}
+            and ORDER_CODE = #{orderCode}
         </if>
         /*DJ_MTL_AKP end*/
     </select>
 
-    <!--根据vo查询 -->
+    <!-- 根据vo查询 -->
     <select id="getDjMtlAkp" parameterType="com.common.vo.DjMtlAkpVO" resultMap="djMtlAkpQueryMap">
         SELECT
         /*DJ_MTL_AKP begin*/
-        <!-- 供应商代码 -->
-        DJ_MTL_AKP.OWNER_CODE as 'DJ_MTL_AKP.OWNER_CODE',
-        <!-- 物料代码 -->
-        DJ_MTL_AKP.MTL_CODE as 'DJ_MTL_AKP.MTL_CODE',
-        <!-- 物料名称 -->
-        DJ_MTL_AKP.MTL_NAME as 'DJ_MTL_AKP.MTL_NAME',
-        <!-- 刀具号 -->
-        DJ_MTL_AKP.SUSR11 as 'DJ_MTL_AKP.SUSR11',
-        <!-- 外委标识，W外委，N非外委 -->
-        DJ_MTL_AKP.SUSR13 as 'DJ_MTL_AKP.SUSR13',
-        <!-- 最大刃磨次数 -->
-        DJ_MTL_AKP.SUSR18 as 'DJ_MTL_AKP.SUSR18',
-        <!-- 最大刀头号 -->
-        DJ_MTL_AKP.SUSR20 as 'DJ_MTL_AKP.SUSR20',
-        <!-- 规格型号 -->
-        DJ_MTL_AKP.SPECIFICATION as 'DJ_MTL_AKP.SPECIFICATION',
-        <!-- 刀具品牌 -->
-        DJ_MTL_AKP.BRAND as 'DJ_MTL_AKP.BRAND',
-        <!-- 刀具订货号 -->
-        DJ_MTL_AKP.ORDER_CODE as 'DJ_MTL_AKP.ORDER_CODE'
+        /* 供应商代码 */
+        OWNER_CODE,
+        /* 物料代码 */
+        MTL_CODE,
+        /* 物料名称 */
+        MTL_NAME,
+        /* 刀具号 */
+        SUSR11,
+        /* 外委标识，W外委，N非外委 */
+        SUSR13,
+        /* 最大刃磨次数 */
+        SUSR18,
+        /* 最大刀头号 */
+        SUSR20,
+        /* 规格型号 */
+        SPECIFICATION,
+        /* 刀具品牌 */
+        BRAND,
+        /* 刀具订货号 */
+        ORDER_CODE
         /*DJ_MTL_AKP end*/
-        FROM DJ_MTL_AKP as DJ_MTL_AKP
+        FROM DJ_MTL_AKP
         WHERE
-            1 = 1
+        1 = 1
         /*DJ_MTL_AKP begin*/
-        <!-- 供应商代码 -->
+        /* 供应商代码 */
         <if test="ownerCode != null and ownerCode != '' " >
-            and DJ_MTL_AKP.OWNER_CODE = #{ownerCode}
+            and OWNER_CODE = #{ownerCode}
         </if>
-        <!-- 物料代码 -->
+        /* 物料代码 */
         <if test="mtlCode != null and mtlCode != '' " >
-            and DJ_MTL_AKP.MTL_CODE = #{mtlCode}
+            and MTL_CODE = #{mtlCode}
         </if>
-        <!-- 物料名称 -->
+        /* 物料名称 */
         <if test="mtlName != null and mtlName != '' " >
-            and DJ_MTL_AKP.MTL_NAME = #{mtlName}
+            and MTL_NAME = #{mtlName}
         </if>
-        <!-- 刀具号 -->
+        /* 刀具号 */
         <if test="susr11 != null and susr11 != '' " >
-            and DJ_MTL_AKP.SUSR11 = #{susr11}
+            and SUSR11 = #{susr11}
         </if>
-        <!-- 外委标识，W外委，N非外委 -->
+        /* 外委标识，W外委，N非外委 */
         <if test="susr13 != null and susr13 != '' " >
-            and DJ_MTL_AKP.SUSR13 = #{susr13}
+            and SUSR13 = #{susr13}
         </if>
-        <!-- 最大刃磨次数 -->
+        /* 最大刃磨次数 */
         <if test="susr18 != null and susr18 != '' " >
-            and DJ_MTL_AKP.SUSR18 = #{susr18}
+            and SUSR18 = #{susr18}
         </if>
-        <!-- 最大刀头号 -->
+        /* 最大刀头号 */
         <if test="susr20 != null and susr20 != '' " >
-            and DJ_MTL_AKP.SUSR20 = #{susr20}
+            and SUSR20 = #{susr20}
         </if>
-        <!-- 规格型号 -->
+        /* 规格型号 */
         <if test="specification != null and specification != '' " >
-            and DJ_MTL_AKP.SPECIFICATION = #{specification}
+            and SPECIFICATION = #{specification}
         </if>
-        <!-- 刀具品牌 -->
+        /* 刀具品牌 */
         <if test="brand != null and brand != '' " >
-            and DJ_MTL_AKP.BRAND = #{brand}
+            and BRAND = #{brand}
         </if>
-        <!-- 刀具订货号 -->
+        /* 刀具订货号 */
         <if test="orderCode != null and orderCode != '' " >
-            and DJ_MTL_AKP.ORDER_CODE = #{orderCode}
+            and ORDER_CODE = #{orderCode}
         </if>
         /*DJ_MTL_AKP end*/
     </select>

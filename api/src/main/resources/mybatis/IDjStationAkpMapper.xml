@@ -3,172 +3,168 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.common.mapper.IDjStationAkpMapper">
     <resultMap id="djStationAkpQueryMap" type="com.common.pojo.DjStationAkp">
+        <id property="stationCode" column="STATION_CODE"/>
         <!-- 工序代码 -->
-        <id property="stationCode" column="DJ_STATION_AKP.STATION_CODE"/>
-
+        <!--<result property="stationCode" column="STATION_CODE"/>-->
         <!-- 工序名称 -->
-        <result property="stationName" column="DJ_STATION_AKP.STATION_NAME"/>
+        <result property="stationName" column="STATION_NAME"/>
         <!-- 生产线代码 -->
-        <result property="lineCode" column="DJ_STATION_AKP.LINE_CODE"/>
+        <result property="lineCode" column="LINE_CODE"/>
     </resultMap>
-    <!--添加-->
+    <!-- 添加 -->
     <insert id="addDjStationAkp" parameterType="com.common.pojo.DjStationAkp">
         INSERT INTO DJ_STATION_AKP (
-            <!-- 工序代码 -->
-            STATION_CODE,
-            <!-- 工序名称 -->
-            STATION_NAME,
-            <!-- 生产线代码 -->
-            LINE_CODE
+        /* 工序代码 */
+        STATION_CODE,
+        /* 工序名称 */
+        STATION_NAME,
+        /* 生产线代码 */
+        LINE_CODE
         )
         VALUES (
-            <!-- 工序代码 -->
-            #{stationCode},
-            <!-- 工序名称 -->
-            #{stationName},
-            <!-- 生产线代码 -->
-            #{lineCode}
+        /* 工序代码 */
+        #{stationCode},
+        /* 工序名称 */
+        #{stationName},
+        /* 生产线代码 */
+        #{lineCode}
         )
     </insert>
 
-    <!--删除-->
+    <!-- 删除 -->
     <delete id="delDjStationAkp" parameterType="com.common.pojo.DjStationAkp">
         DELETE
         FROM DJ_STATION_AKP
         WHERE
-            1 = 1
-            and STATION_CODE = #{stationCode}
+        1 = 1
     </delete>
 
-    <!--逻辑删除-->
+    <!-- 逻辑删除 -->
     <delete id="delDjStationAkpForLogic" parameterType="com.common.pojo.DjStationAkp">
-        DELETE FROM DJ_STATION_AKP
+        DELETE FROM  DJ_STATION_AKP
         WHERE
-            1 = 1
-            and STATION_CODE = #{stationCode}
+        1 = 1
     </delete>
 
-    <!--根据VO删除-->
+    <!-- 根据VO删除 -->
     <delete id="delDjStationAkpByVo" parameterType="com.common.vo.DjStationAkpVO">
         DELETE FROM DJ_STATION_AKP
         WHERE
-            1=1
-            <!-- 工序代码 -->
-            <if test="stationCode != null and stationCode != '' " >
-                and STATION_CODE =  #{stationCode}
-            </if>
-            <!-- 工序名称 -->
-            <if test="stationName != null and stationName != '' " >
-                and STATION_NAME =  #{stationName}
-            </if>
-            <!-- 生产线代码 -->
-            <if test="lineCode != null and lineCode != '' " >
-                and LINE_CODE =  #{lineCode}
-            </if>
+        1=1
+        /* 工序代码 */
+        <if test="stationCode != null and stationCode != '' " >
+            and STATION_CODE =  #{stationCode}
+        </if>
+        /* 工序名称 */
+        <if test="stationName != null and stationName != '' " >
+            and STATION_NAME =  #{stationName}
+        </if>
+        /* 生产线代码 */
+        <if test="lineCode != null and lineCode != '' " >
+            and LINE_CODE =  #{lineCode}
+        </if>
     </delete>
 
-    <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
+    <!-- 更新,如果属性不为null 则更新该属性,根据id更新 -->
     <update id="updDjStationAkp" parameterType="com.common.pojo.DjStationAkp">
         UPDATE DJ_STATION_AKP
         SET
-            <!-- 工序名称 -->
-            <if test="stationName != null and stationName != '' " >
-                STATION_NAME =  #{stationName},
-            </if>
-            <!-- 生产线代码 -->
-            <if test="lineCode != null and lineCode != '' " >
-                LINE_CODE =  #{lineCode},
-            </if>
-            <!-- 工序代码 -->
-            STATION_CODE = #{stationCode}
+        /* 工序代码 */
+        <if test="stationCode != null and stationCode != '' " >
+            STATION_CODE =  #{stationCode},
+        </if>
+        /* 工序名称 */
+        <if test="stationName != null and stationName != '' " >
+            STATION_NAME =  #{stationName},
+        </if>
+        /* 生产线代码 */
+        <if test="lineCode != null and lineCode != '' " >
+            LINE_CODE =  #{lineCode},
+        </if>
         WHERE
-            1 = 1
-            and STATION_CODE = #{stationCode}
+        1 = 1
     </update>
 
-    <!--分页查询 -->
+    <!-- 分页查询 -->
     <select id="getDjStationAkpByPage" parameterType="com.common.vo.DjStationAkpVO" resultMap="djStationAkpQueryMap">
         SELECT
         /*djStationAkp begin*/
-            <!-- 工序代码 -->
-            DJ_STATION_AKP.STATION_CODE as 'DJ_STATION_AKP.STATION_CODE',
-            <!-- 工序名称 -->
-            DJ_STATION_AKP.STATION_NAME as 'DJ_STATION_AKP.STATION_NAME',
-            <!-- 生产线代码 -->
-            DJ_STATION_AKP.LINE_CODE as 'DJ_STATION_AKP.LINE_CODE'
+        /* 工序代码 */
+        STATION_CODE,
+        /* 工序名称 */
+        STATION_NAME,
+        /* 生产线代码 */
+        LINE_CODE
         /*djStationAkp end*/
-        FROM DJ_STATION_AKP as DJ_STATION_AKP
+        FROM DJ_STATION_AKP
         WHERE
-            1 = 1
+        1 = 1
         /*DJ_STATION_AKP begin*/
-            <!-- 工序代码 -->
-            <if test="stationCode != null and stationCode != '' " >
-                and DJ_STATION_AKP.STATION_CODE = #{stationCode}
-            </if>
-            <!-- 工序名称 -->
-            <if test="stationName != null and stationName != '' " >
-                and DJ_STATION_AKP.STATION_NAME = #{stationName}
-            </if>
-            <!-- 生产线代码 -->
-            <if test="lineCode != null and lineCode != '' " >
-                and DJ_STATION_AKP.LINE_CODE = #{lineCode}
-            </if>
-        /*DJ_STATION_AKP end*/
-        ORDER BY DJ_STATION_AKP.STATION_CODE desc
-        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
-        LIMIT #{startRecord},#{pageSize}
+        /* 工序代码 */
+        <if test="stationCode != null and stationCode != '' " >
+            and STATION_CODE = #{stationCode}
         </if>
+        /* 工序名称 */
+        <if test="stationName != null and stationName != '' " >
+            and STATION_NAME = #{stationName}
+        </if>
+        /* 生产线代码 */
+        <if test="lineCode != null and lineCode != '' " >
+            and LINE_CODE = #{lineCode}
+        </if>
+        /*DJ_STATION_AKP end*/
+        ORDER BY  desc
     </select>
 
 
-    <!--查询记录数-->
+    <!-- 查询记录数 -->
     <select id="getDjStationAkpCount" parameterType="com.common.vo.DjStationAkpVO" resultType="java.lang.Integer">
         SELECT COUNT(1)
-        FROM DJ_STATION_AKP as DJ_STATION_AKP
+        FROM DJ_STATION_AKP
         WHERE
-            1 = 1
+        1 = 1
         /*DJ_STATION_AKP begin*/
-        <!-- 工序代码 -->
+        /* 工序代码 */
         <if test="stationCode != null and stationCode != '' " >
-            and DJ_STATION_AKP.STATION_CODE = #{stationCode}
+            and STATION_CODE = #{stationCode}
         </if>
-        <!-- 工序名称 -->
+        /* 工序名称 */
         <if test="stationName != null and stationName != '' " >
-            and DJ_STATION_AKP.STATION_NAME = #{stationName}
+            and STATION_NAME = #{stationName}
         </if>
-        <!-- 生产线代码 -->
+        /* 生产线代码 */
         <if test="lineCode != null and lineCode != '' " >
-            and DJ_STATION_AKP.LINE_CODE = #{lineCode}
+            and LINE_CODE = #{lineCode}
         </if>
         /*DJ_STATION_AKP end*/
     </select>
 
-    <!--根据vo查询 -->
+    <!-- 根据vo查询 -->
     <select id="getDjStationAkp" parameterType="com.common.vo.DjStationAkpVO" resultMap="djStationAkpQueryMap">
         SELECT
         /*DJ_STATION_AKP begin*/
-        <!-- 工序代码 -->
-        DJ_STATION_AKP.STATION_CODE as 'DJ_STATION_AKP.STATION_CODE',
-        <!-- 工序名称 -->
-        DJ_STATION_AKP.STATION_NAME as 'DJ_STATION_AKP.STATION_NAME',
-        <!-- 生产线代码 -->
-        DJ_STATION_AKP.LINE_CODE as 'DJ_STATION_AKP.LINE_CODE'
+        /* 工序代码 */
+        STATION_CODE,
+        /* 工序名称 */
+        STATION_NAME,
+        /* 生产线代码 */
+        LINE_CODE
         /*DJ_STATION_AKP end*/
-        FROM DJ_STATION_AKP as DJ_STATION_AKP
+        FROM DJ_STATION_AKP
         WHERE
-            1 = 1
+        1 = 1
         /*DJ_STATION_AKP begin*/
-        <!-- 工序代码 -->
+        /* 工序代码 */
         <if test="stationCode != null and stationCode != '' " >
-            and DJ_STATION_AKP.STATION_CODE = #{stationCode}
+            and STATION_CODE = #{stationCode}
         </if>
-        <!-- 工序名称 -->
+        /* 工序名称 */
         <if test="stationName != null and stationName != '' " >
-            and DJ_STATION_AKP.STATION_NAME = #{stationName}
+            and STATION_NAME = #{stationName}
         </if>
-        <!-- 生产线代码 -->
+        /* 生产线代码 */
         <if test="lineCode != null and lineCode != '' " >
-            and DJ_STATION_AKP.LINE_CODE = #{lineCode}
+            and LINE_CODE = #{lineCode}
         </if>
         /*DJ_STATION_AKP end*/
     </select>

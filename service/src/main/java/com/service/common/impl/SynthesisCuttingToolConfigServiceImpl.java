@@ -1,6 +1,7 @@
 package com.service.common.impl;
 
 
+import com.common.constants.CuttingToolTypeEnum;
 import com.common.mapper.*;
 import com.common.pojo.CuttingTool;
 import com.common.pojo.SynthesisCuttingTool;
@@ -82,12 +83,27 @@ public class SynthesisCuttingToolConfigServiceImpl implements ISynthesisCuttingT
         CuttingTool replaceCuttingToolTemp2 = null;
         List<SynthesisCuttingToolLocationConfig> LocationConfigs = synthesisCuttingToolConfig.getSynthesisCuttingToolLocationConfigList();
         for (SynthesisCuttingToolLocationConfig locationConfig : LocationConfigs) {
+            replaceCuttingToolTemp1 = null;
+            replaceCuttingToolTemp2 = null;
             cuttingToolVO = new CuttingToolVO();
             cuttingToolVO.setIsDel(0);
             cuttingToolVO.setBusinessCode(locationConfig.getCuttingTool().getBusinessCode());
             CuttingTool cuttingToolTemp = cuttingToolMapper.getCuttingTool(cuttingToolVO);
             if (cuttingToolTemp == null){
                 throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.CUTTINGTOOL_NOT_EXISTS));
+            }
+
+            if (null!=cuttingToolTemp.getUserfulType()&&(!cuttingToolTemp.getUserfulType().equals(synthesisCuttingTool.getSynthesisCuttingToolTypeId()+""))
+                    &&cuttingToolTemp.getType().equals(CuttingToolTypeEnum.dj)){
+                throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.SYNTHESISCUTTINGTOOL_CTTYPE_NOTMATCH));
+            }
+
+            if (!cuttingToolTemp.getType().equals(locationConfig.getType())){
+                throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.SYNTHESISCUTTINGTOOL_CTTYPE_ERROR));
+            }
+
+            if (null == locationConfig.getCount() || locationConfig.getCount()<=0){
+                throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.SYNTHESISCUTTINGTOOL_CTCOUNT_ERROR));
             }
 
             if (!StringUtils.isBlank(locationConfig.getReplaceCuttingTool1().getBusinessCode())){

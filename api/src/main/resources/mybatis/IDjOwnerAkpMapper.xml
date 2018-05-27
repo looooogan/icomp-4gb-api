@@ -4,28 +4,28 @@
 <mapper namespace="com.common.mapper.IDjOwnerAkpMapper">
     <resultMap id="djOwnerAkpQueryMap" type="com.common.pojo.DjOwnerAkp">
         <!-- 供应商代码 -->
-        <id property="ownerCode" column="DJ_OWNER_AKP.OWNER_CODE"/>
+        <id property="ownerCode" column="OWNER_CODE"/>
 
         <!-- 供应商名称 -->
-        <result property="name" column="DJ_OWNER_AKP.NAME"/>
+        <result property="name" column="NAME"/>
     </resultMap>
-    <!--添加-->
+    <!-- 添加 -->
     <insert id="addDjOwnerAkp" parameterType="com.common.pojo.DjOwnerAkp">
         INSERT INTO DJ_OWNER_AKP (
-            <!-- 供应商代码 -->
+            /* 供应商代码 */
             OWNER_CODE,
-            <!-- 供应商名称 -->
+            /* 供应商名称 */
             NAME
         )
         VALUES (
-            <!-- 供应商代码 -->
+            /* 供应商代码 */
             #{ownerCode},
-            <!-- 供应商名称 -->
+            /* 供应商名称 */
             #{name}
         )
     </insert>
 
-    <!--删除-->
+    <!-- 删除 -->
     <delete id="delDjOwnerAkp" parameterType="com.common.pojo.DjOwnerAkp">
         DELETE
         FROM DJ_OWNER_AKP
@@ -34,7 +34,7 @@
             and OWNER_CODE = #{ownerCode}
     </delete>
 
-    <!--逻辑删除-->
+    <!-- 逻辑删除 -->
     <delete id="delDjOwnerAkpForLogic" parameterType="com.common.pojo.DjOwnerAkp">
         DELETE FROM  DJ_OWNER_AKP
         WHERE
@@ -42,103 +42,100 @@
             and OWNER_CODE = #{ownerCode}
     </delete>
 
-    <!--根据VO删除-->
+    <!-- 根据VO删除 -->
     <delete id="delDjOwnerAkpByVo" parameterType="com.common.vo.DjOwnerAkpVO">
         DELETE FROM DJ_OWNER_AKP
         WHERE
-            1=1
-            <!-- 供应商代码 -->
-            <if test="ownerCode != null and ownerCode != '' " >
-                and OWNER_CODE =  #{ownerCode}
-            </if>
-            <!-- 供应商名称 -->
-            <if test="name != null and name != '' " >
-                and NAME =  #{name}
-            </if>
+        1=1
+        /* 供应商代码 */
+        <if test="ownerCode != null and ownerCode != '' " >
+            and OWNER_CODE =  #{ownerCode}
+        </if>
+        /* 供应商名称 */
+        <if test="name != null and name != '' " >
+            and NAME =  #{name}
+        </if>
     </delete>
 
-    <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
+    <!-- 更新,如果属性不为null 则更新该属性,根据id更新 -->
     <update id="updDjOwnerAkp" parameterType="com.common.pojo.DjOwnerAkp">
         UPDATE DJ_OWNER_AKP
         SET
-            <!-- 供应商名称 -->
-            <if test="name != null and name != '' " >
-                NAME =  #{name},
-            </if>
-            <!-- 供应商代码 -->
-            OWNER_CODE = #{ownerCode}
+        /* 供应商名称 */
+        <if test="name != null and name != '' " >
+            NAME =  #{name},
+        </if>
+        /* 供应商代码 */
+        OWNER_CODE = #{ownerCode}
         WHERE
-            1 = 1
-            and OWNER_CODE = #{ownerCode}
+        1 = 1
+        and OWNER_CODE = #{ownerCode}
     </update>
 
-    <!--分页查询 -->
+    <!-- 分页查询 -->
     <select id="getDjOwnerAkpByPage" parameterType="com.common.vo.DjOwnerAkpVO" resultMap="djOwnerAkpQueryMap">
         SELECT
         /*djOwnerAkp begin*/
-            <!-- 供应商代码 -->
-            DJ_OWNER_AKP.OWNER_CODE as 'DJ_OWNER_AKP.OWNER_CODE',
-            <!-- 供应商名称 -->
-            DJ_OWNER_AKP.NAME as 'DJ_OWNER_AKP.NAME'
+        /* 供应商代码 */
+        OWNER_CODE,
+        /* 供应商名称 */
+        NAME
         /*djOwnerAkp end*/
-        FROM DJ_OWNER_AKP as DJ_OWNER_AKP
+        FROM DJ_OWNER_AKP
         WHERE
-            1 = 1
+        1 = 1
         /*DJ_OWNER_AKP begin*/
-            <!-- 供应商代码 -->
-            <if test="ownerCode != null and ownerCode != '' " >
-                and DJ_OWNER_AKP.OWNER_CODE = #{ownerCode}
-            </if>
-            <!-- 供应商名称 -->
-            <if test="name != null and name != '' " >
-                and DJ_OWNER_AKP.NAME = #{name}
-            </if>
-        /*DJ_OWNER_AKP end*/
-        ORDER BY DJ_OWNER_AKP.OWNER_CODE desc
-        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
-        LIMIT #{startRecord},#{pageSize}
+        /* 供应商代码 */
+        <if test="ownerCode != null and ownerCode != '' " >
+            and OWNER_CODE = #{ownerCode}
         </if>
+        /* 供应商名称 */
+        <if test="name != null and name != '' " >
+            and NAME = #{name}
+        </if>
+        /*DJ_OWNER_AKP end*/
+        ORDER BY OWNER_CODE desc
     </select>
 
 
-    <!--查询记录数-->
+    <!-- 查询记录数 -->
     <select id="getDjOwnerAkpCount" parameterType="com.common.vo.DjOwnerAkpVO" resultType="java.lang.Integer">
         SELECT COUNT(1)
-        FROM DJ_OWNER_AKP as DJ_OWNER_AKP
+        FROM DJ_OWNER_AKP
         WHERE
-            1 = 1
+        1 = 1
         /*DJ_OWNER_AKP begin*/
-        <!-- 供应商代码 -->
+        /* 供应商代码 */
         <if test="ownerCode != null and ownerCode != '' " >
-            and DJ_OWNER_AKP.OWNER_CODE = #{ownerCode}
+            and OWNER_CODE = #{ownerCode}
         </if>
-        <!-- 供应商名称 -->
+        /* 供应商名称 */
         <if test="name != null and name != '' " >
-            and DJ_OWNER_AKP.NAME = #{name}
+            and NAME = #{name}
         </if>
         /*DJ_OWNER_AKP end*/
     </select>
 
-    <!--根据vo查询 -->
+    <!-- 根据vo查询 -->
     <select id="getDjOwnerAkp" parameterType="com.common.vo.DjOwnerAkpVO" resultMap="djOwnerAkpQueryMap">
         SELECT
         /*DJ_OWNER_AKP begin*/
-        <!-- 供应商代码 -->
-        DJ_OWNER_AKP.OWNER_CODE as 'DJ_OWNER_AKP.OWNER_CODE',
-        <!-- 供应商名称 -->
-        DJ_OWNER_AKP.NAME as 'DJ_OWNER_AKP.NAME'
+        /* 供应商代码 */
+        OWNER_CODE,
+        /* 供应商名称 */
+        NAME
         /*DJ_OWNER_AKP end*/
-        FROM DJ_OWNER_AKP as DJ_OWNER_AKP
+        FROM DJ_OWNER_AKP
         WHERE
-            1 = 1
+        1 = 1
         /*DJ_OWNER_AKP begin*/
-        <!-- 供应商代码 -->
+        /* 供应商代码 */
         <if test="ownerCode != null and ownerCode != '' " >
-            and DJ_OWNER_AKP.OWNER_CODE = #{ownerCode}
+            and OWNER_CODE = #{ownerCode}
         </if>
-        <!-- 供应商名称 -->
+        /* 供应商名称 */
         <if test="name != null and name != '' " >
-            and DJ_OWNER_AKP.NAME = #{name}
+            and NAME = #{name}
         </if>
         /*DJ_OWNER_AKP end*/
     </select>

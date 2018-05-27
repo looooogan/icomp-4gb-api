@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.mapper.IPowerHasGroupMapper">
+    <resultMap id="powerHasGroupQueryMap" type="com.common.pojo.PowerHasGroup">
+        <!-- 标识 -->
+        <id property="id" column="power_has_group.id"/>
+
+        <!-- 权限组 -->
+        <result property="powerGroupCode" column="power_has_group.power_group_code"/>
+        <!-- 权限 -->
+        <result property="powerCode" column="power_has_group.power_code"/>
+        <!--  -->
+        <result property="isDel" column="power_has_group.is_del"/>
+        <!-- 权限 -->
+        <association property="power"  column="power.id" resultMap="powerHasGroupPowerMap"/>
+        <!-- 权限组 -->
+        <association property="powerGroup"  column="power_group.id" resultMap="powerHasGroupPowerGroupMap"/>
+    </resultMap>
+        <resultMap id="powerHasGroupPowerGroupMap" type="com.common.pojo.PowerGroup">
+            <!-- 标识 -->
+            <id property="id" column="power_group.id"/>
+
+            <!-- 权限组名称 -->
+            <result property="name" column="power_group.name"/>
+            <!-- 逻辑删除 -->
+            <result property="isDel" column="power_group.is_del"/>
+            <!-- 是否为角色分组 1是 0 否 -->
+            <result property="isRole" column="power_group.is_role"/>
+        </resultMap>
+        <resultMap id="powerHasGroupPowerMap" type="com.common.pojo.Power">
+            <!-- 标识 -->
+            <id property="id" column="power.id"/>
+
+            <!-- 名称 -->
+            <result property="name" column="power.name"/>
+            <!-- 操作地址 -->
+            <result property="url" column="power.url"/>
+            <!-- 操作枚举key -->
+            <result property="enumKey" column="power.enum_key"/>
+            <!-- 操作枚举名称 -->
+            <result property="enumValue" column="power.enum_value"/>
+            <!-- 唯一标识 -->
+            <result property="identify" column="power.identify"/>
+            <!-- 逻辑删除 -->
+            <result property="isDel" column="power.is_del"/>
+            <!-- 父权限id -->
+            <result property="parentId" column="power.parent_id"/>
+            <!-- 根节点 -->
+            <result property="isRoot" column="power.is_root"/>
+            <!-- 权限类型 1 可执行操作 2 可查看数据 3流程通过 4 菜单 -->
+            <result property="powerType" column="power.power_type"/>
+        </resultMap>
+    <!--添加-->
+    <insert id="addPowerHasGroup" parameterType="com.common.pojo.PowerHasGroup">
+        INSERT INTO power_has_group (
+            <!-- 标识 -->
+            id,
+            <!-- 权限组 -->
+            power_group_code,
+            <!-- 权限 -->
+            power_code,
+            <!--  -->
+            is_del
+        )
+        VALUES (
+            <!-- 标识 -->
+            #{id},
+            <!-- 权限组 -->
+            #{powerGroupCode},
+            <!-- 权限 -->
+            #{powerCode},
+            <!--  -->
+            #{isDel}
+        )
+    </insert>
+
+    <!--删除-->
+    <delete id="delPowerHasGroup" parameterType="com.common.pojo.PowerHasGroup">
+        DELETE
+        FROM power_has_group
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--逻辑删除-->
+    <delete id="delPowerHasGroupForLogic" parameterType="com.common.pojo.PowerHasGroup">
+        UPDATE power_has_group SET
+        is_del = 1
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--根据VO删除-->
+    <delete id="delPowerHasGroupByVo" parameterType="com.common.vo.PowerHasGroupVO">
+        UPDATE power_has_group SET is_del = 1
+        WHERE
+            1=1
+            <!-- 标识 -->
+            <if test="id != null and id != '' " >
+                and id =  #{id}
+            </if>
+            <!-- 权限组 -->
+            <if test="powerGroupCode != null and powerGroupCode != '' " >
+                and power_group_code =  #{powerGroupCode}
+            </if>
+            <!-- 权限 -->
+            <if test="powerCode != null and powerCode != '' " >
+                and power_code =  #{powerCode}
+            </if>
+            <!--  -->
+            <if test="isDel != null and isDel != '' " >
+                and is_del =  #{isDel}
+            </if>
+    </delete>
+
+    <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
+    <update id="updPowerHasGroup" parameterType="com.common.pojo.PowerHasGroup">
+        UPDATE power_has_group
+        SET
+            <!-- 权限组 -->
+            <if test="powerGroupCode != null and powerGroupCode != '' " >
+                power_group_code =  #{powerGroupCode},
+            </if>
+            <!-- 权限 -->
+            <if test="powerCode != null and powerCode != '' " >
+                power_code =  #{powerCode},
+            </if>
+            <!--  -->
+            <if test="isDel != null and isDel != '' " >
+                is_del =  #{isDel},
+            </if>
+            <!-- 标识 -->
+            id = #{id}
+        WHERE
+            1 = 1
+            and id = #{id}
+    </update>
+
+    <!--分页查询 -->
+    <select id="getPowerHasGroupByPage" parameterType="com.common.vo.PowerHasGroupVO" resultMap="powerHasGroupQueryMap">
+        SELECT
+        /*powerHasGroup begin*/
+            <!-- 标识 -->
+            power_has_group.id as 'power_has_group.id',
+            <!-- 权限组 -->
+            power_has_group.power_group_code as 'power_has_group.power_group_code',
+            <!-- 权限 -->
+            power_has_group.power_code as 'power_has_group.power_code',
+            <!--  -->
+            power_has_group.is_del as 'power_has_group.is_del',
+        /*powerHasGroup end*/
+        /*power_group begin*/
+            <!-- 标识 -->
+            power_group.id as 'power_group.id',
+            <!-- 权限组名称 -->
+            power_group.name as 'power_group.name',
+            <!-- 逻辑删除 -->
+            power_group.is_del as 'power_group.is_del',
+            <!-- 是否为角色分组 1是 0 否 -->
+            power_group.is_role as 'power_group.is_role',
+        /*power_group end*/
+        /*power begin*/
+            <!-- 标识 -->
+            power.id as 'power.id',
+            <!-- 名称 -->
+            power.name as 'power.name',
+            <!-- 操作地址 -->
+            power.url as 'power.url',
+            <!-- 操作枚举key -->
+            power.enum_key as 'power.enum_key',
+            <!-- 操作枚举名称 -->
+            power.enum_value as 'power.enum_value',
+            <!-- 唯一标识 -->
+            power.identify as 'power.identify',
+            <!-- 逻辑删除 -->
+            power.is_del as 'power.is_del',
+            <!-- 父权限id -->
+            power.parent_id as 'power.parent_id',
+            <!-- 根节点 -->
+            power.is_root as 'power.is_root',
+            <!-- 权限类型 1 可执行操作 2 可查看数据 3流程通过 4 菜单 -->
+            power.power_type as 'power.power_type'
+        /*power end*/
+        FROM power_has_group as power_has_group
+        LEFT JOIN power as power ON power.id = power_has_group.power_code
+        LEFT JOIN power_group as power_group ON power_group.id = power_has_group.power_group_code
+        WHERE
+            1 = 1 AND  power_has_group.is_del = 0
+        /*power_has_group begin*/
+            <!-- 标识 -->
+            <if test="id != null and id != '' " >
+                and power_has_group.id = #{id}
+            </if>
+            <!-- 权限组 -->
+            <if test="powerGroupCode != null and powerGroupCode != '' " >
+                and power_has_group.power_group_code = #{powerGroupCode}
+            </if>
+            <!-- 权限 -->
+            <if test="powerCode != null and powerCode != '' " >
+                and power_has_group.power_code = #{powerCode}
+            </if>
+            <!--  -->
+            <if test="isDel != null and isDel != '' " >
+                and power_has_group.is_del = #{isDel}
+            </if>
+        /*power_has_group end*/
+        /*power_group begin*/
+            <if test="powerGroupVO != null ">
+            <!-- 标识 -->
+            <if test="powerGroupVO.id != null and powerGroupVO.id != '' " >
+                and power_group.id = #{powerGroupVO.id}
+            </if>
+            <!-- 权限组名称 -->
+            <if test="powerGroupVO.name != null and powerGroupVO.name != '' " >
+                and power_group.name = #{powerGroupVO.name}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="powerGroupVO.isDel != null and powerGroupVO.isDel != '' " >
+                and power_group.is_del = #{powerGroupVO.isDel}
+            </if>
+            <!-- 是否为角色分组 1是 0 否 -->
+            <if test="powerGroupVO.isRole != null and powerGroupVO.isRole != '' " >
+                and power_group.is_role = #{powerGroupVO.isRole}
+            </if>
+            </if>
+        /*power_group end*/
+        /*power begin*/
+            <if test="powerVO != null ">
+            <!-- 标识 -->
+            <if test="powerVO.id != null and powerVO.id != '' " >
+                and power.id = #{powerVO.id}
+            </if>
+            <!-- 名称 -->
+            <if test="powerVO.name != null and powerVO.name != '' " >
+                and power.name = #{powerVO.name}
+            </if>
+            <!-- 操作地址 -->
+            <if test="powerVO.url != null and powerVO.url != '' " >
+                and power.url = #{powerVO.url}
+            </if>
+            <!-- 操作枚举key -->
+            <if test="powerVO.enumKey != null and powerVO.enumKey != '' " >
+                and power.enum_key = #{powerVO.enumKey}
+            </if>
+            <!-- 操作枚举名称 -->
+            <if test="powerVO.enumValue != null and powerVO.enumValue != '' " >
+                and power.enum_value = #{powerVO.enumValue}
+            </if>
+            <!-- 唯一标识 -->
+            <if test="powerVO.identify != null and powerVO.identify != '' " >
+                and power.identify = #{powerVO.identify}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="powerVO.isDel != null and powerVO.isDel != '' " >
+                and power.is_del = #{powerVO.isDel}
+            </if>
+            <!-- 父权限id -->
+            <if test="powerVO.parentId != null and powerVO.parentId != '' " >
+                and power.parent_id = #{powerVO.parentId}
+            </if>
+            <!-- 根节点 -->
+            <if test="powerVO.isRoot != null and powerVO.isRoot != '' " >
+                and power.is_root = #{powerVO.isRoot}
+            </if>
+            <!-- 权限类型 1 可执行操作 2 可查看数据 3流程通过 4 菜单 -->
+            <if test="powerVO.powerType != null and powerVO.powerType != '' " >
+                and power.power_type = #{powerVO.powerType}
+            </if>
+            </if>
+        /*power end*/
+        ORDER BY power_has_group.id desc
+        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
+        LIMIT #{startRecord},#{pageSize}
+        </if>
+    </select>
+
+
+    <!--查询记录数-->
+    <select id="getPowerHasGroupCount" parameterType="com.common.vo.PowerHasGroupVO" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM power_has_group as power_has_group
+        LEFT JOIN power as power ON power.id = power_has_group.power_code
+        LEFT JOIN power_group as power_group ON power_group.id = power_has_group.power_group_code
+        WHERE
+            1 = 1 AND  power_has_group.is_del = 0
+        /*power_has_group begin*/
+        <!-- 标识 -->
+        <if test="id != null and id != '' " >
+            and power_has_group.id = #{id}
+        </if>
+        <!-- 权限组 -->
+        <if test="powerGroupCode != null and powerGroupCode != '' " >
+            and power_has_group.power_group_code = #{powerGroupCode}
+        </if>
+        <!-- 权限 -->
+        <if test="powerCode != null and powerCode != '' " >
+            and power_has_group.power_code = #{powerCode}
+        </if>
+        <!--  -->
+        <if test="isDel != null and isDel != '' " >
+            and power_has_group.is_del = #{isDel}
+        </if>
+        /*power_has_group end*/
+        /*power_group begin*/
+        <if test="powerGroupVO != null ">
+        <!-- 标识 -->
+        <if test="powerGroupVO.id != null and powerGroupVO.id != '' " >
+            and power_group.id = #{powerGroupVO.id}
+        </if>
+        <!-- 权限组名称 -->
+        <if test="powerGroupVO.name != null and powerGroupVO.name != '' " >
+            and power_group.name = #{powerGroupVO.name}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="powerGroupVO.isDel != null and powerGroupVO.isDel != '' " >
+            and power_group.is_del = #{powerGroupVO.isDel}
+        </if>
+        <!-- 是否为角色分组 1是 0 否 -->
+        <if test="powerGroupVO.isRole != null and powerGroupVO.isRole != '' " >
+            and power_group.is_role = #{powerGroupVO.isRole}
+        </if>
+        </if>
+        /*power_group end*/
+        /*power begin*/
+        <if test="powerVO != null ">
+        <!-- 标识 -->
+        <if test="powerVO.id != null and powerVO.id != '' " >
+            and power.id = #{powerVO.id}
+        </if>
+        <!-- 名称 -->
+        <if test="powerVO.name != null and powerVO.name != '' " >
+            and power.name = #{powerVO.name}
+        </if>
+        <!-- 操作地址 -->
+        <if test="powerVO.url != null and powerVO.url != '' " >
+            and power.url = #{powerVO.url}
+        </if>
+        <!-- 操作枚举key -->
+        <if test="powerVO.enumKey != null and powerVO.enumKey != '' " >
+            and power.enum_key = #{powerVO.enumKey}
+        </if>
+        <!-- 操作枚举名称 -->
+        <if test="powerVO.enumValue != null and powerVO.enumValue != '' " >
+            and power.enum_value = #{powerVO.enumValue}
+        </if>
+        <!-- 唯一标识 -->
+        <if test="powerVO.identify != null and powerVO.identify != '' " >
+            and power.identify = #{powerVO.identify}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="powerVO.isDel != null and powerVO.isDel != '' " >
+            and power.is_del = #{powerVO.isDel}
+        </if>
+        <!-- 父权限id -->
+        <if test="powerVO.parentId != null and powerVO.parentId != '' " >
+            and power.parent_id = #{powerVO.parentId}
+        </if>
+        <!-- 根节点 -->
+        <if test="powerVO.isRoot != null and powerVO.isRoot != '' " >
+            and power.is_root = #{powerVO.isRoot}
+        </if>
+        <!-- 权限类型 1 可执行操作 2 可查看数据 3流程通过 4 菜单 -->
+        <if test="powerVO.powerType != null and powerVO.powerType != '' " >
+            and power.power_type = #{powerVO.powerType}
+        </if>
+        </if>
+        /*power end*/
+    </select>
+
+    <!--根据vo查询 -->
+    <select id="getPowerHasGroup" parameterType="com.common.vo.PowerHasGroupVO" resultMap="powerHasGroupQueryMap">
+        SELECT
+        /*power_has_group begin*/
+        <!-- 标识 -->
+        power_has_group.id as 'power_has_group.id',
+        <!-- 权限组 -->
+        power_has_group.power_group_code as 'power_has_group.power_group_code',
+        <!-- 权限 -->
+        power_has_group.power_code as 'power_has_group.power_code',
+        <!--  -->
+        power_has_group.is_del as 'power_has_group.is_del',
+        /*power_has_group end*/
+        /*power_group begin*/
+        <!-- 标识 -->
+        power_group.id as 'power_group.id',
+        <!-- 权限组名称 -->
+        power_group.name as 'power_group.name',
+        <!-- 逻辑删除 -->
+        power_group.is_del as 'power_group.is_del',
+        <!-- 是否为角色分组 1是 0 否 -->
+        power_group.is_role as 'power_group.is_role',
+        /*power_group end*/
+        /*power begin*/
+        <!-- 标识 -->
+        power.id as 'power.id',
+        <!-- 名称 -->
+        power.name as 'power.name',
+        <!-- 操作地址 -->
+        power.url as 'power.url',
+        <!-- 操作枚举key -->
+        power.enum_key as 'power.enum_key',
+        <!-- 操作枚举名称 -->
+        power.enum_value as 'power.enum_value',
+        <!-- 唯一标识 -->
+        power.identify as 'power.identify',
+        <!-- 逻辑删除 -->
+        power.is_del as 'power.is_del',
+        <!-- 父权限id -->
+        power.parent_id as 'power.parent_id',
+        <!-- 根节点 -->
+        power.is_root as 'power.is_root',
+        <!-- 权限类型 1 可执行操作 2 可查看数据 3流程通过 4 菜单 -->
+        power.power_type as 'power.power_type'
+        /*power end*/
+        FROM power_has_group as power_has_group
+        LEFT JOIN power as power ON power.id = power_has_group.power_code
+        LEFT JOIN power_group as power_group ON power_group.id = power_has_group.power_group_code
+        WHERE
+            1 = 1 AND  power_has_group.is_del = 0
+        /*power_has_group begin*/
+        <!-- 标识 -->
+        <if test="id != null and id != '' " >
+            and power_has_group.id = #{id}
+        </if>
+        <!-- 权限组 -->
+        <if test="powerGroupCode != null and powerGroupCode != '' " >
+            and power_has_group.power_group_code = #{powerGroupCode}
+        </if>
+        <!-- 权限 -->
+        <if test="powerCode != null and powerCode != '' " >
+            and power_has_group.power_code = #{powerCode}
+        </if>
+        <!--  -->
+        <if test="isDel != null and isDel != '' " >
+            and power_has_group.is_del = #{isDel}
+        </if>
+        /*power_has_group end*/
+        /*power_groups begin*/
+        <if test="powerGroupVO != null ">
+        <!-- 标识 -->
+        <if test="powerGroupVO.id != null and powerGroupVO.id != '' " >
+            and power_groups.id = #{powerGroupVO.id}
+        </if>
+        <!-- 权限组名称 -->
+        <if test="powerGroupVO.name != null and powerGroupVO.name != '' " >
+            and power_groups.name = #{powerGroupVO.name}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="powerGroupVO.isDel != null and powerGroupVO.isDel != '' " >
+            and power_groups.is_del = #{powerGroupVO.isDel}
+        </if>
+        <!-- 是否为角色分组 1是 0 否 -->
+        <if test="powerGroupVO.isRole != null and powerGroupVO.isRole != '' " >
+            and power_groups.is_role = #{powerGroupVO.isRole}
+        </if>
+        </if>
+        /*power_group end*/
+        /*powers begin*/
+        <if test="powerVO != null ">
+        <!-- 标识 -->
+        <if test="powerVO.id != null and powerVO.id != '' " >
+            and powers.id = #{powerVO.id}
+        </if>
+        <!-- 名称 -->
+        <if test="powerVO.name != null and powerVO.name != '' " >
+            and powers.name = #{powerVO.name}
+        </if>
+        <!-- 操作地址 -->
+        <if test="powerVO.url != null and powerVO.url != '' " >
+            and powers.url = #{powerVO.url}
+        </if>
+        <!-- 操作枚举key -->
+        <if test="powerVO.enumKey != null and powerVO.enumKey != '' " >
+            and powers.enum_key = #{powerVO.enumKey}
+        </if>
+        <!-- 操作枚举名称 -->
+        <if test="powerVO.enumValue != null and powerVO.enumValue != '' " >
+            and powers.enum_value = #{powerVO.enumValue}
+        </if>
+        <!-- 唯一标识 -->
+        <if test="powerVO.identify != null and powerVO.identify != '' " >
+            and powers.identify = #{powerVO.identify}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="powerVO.isDel != null and powerVO.isDel != '' " >
+            and powers.is_del = #{powerVO.isDel}
+        </if>
+        <!-- 父权限id -->
+        <if test="powerVO.parentId != null and powerVO.parentId != '' " >
+            and powers.parent_id = #{powerVO.parentId}
+        </if>
+        <!-- 根节点 -->
+        <if test="powerVO.isRoot != null and powerVO.isRoot != '' " >
+            and powers.is_root = #{powerVO.isRoot}
+        </if>
+        <!-- 权限类型 1 可执行操作 2 可查看数据 3流程通过 4 菜单 -->
+        <if test="powerVO.powerType != null and powerVO.powerType != '' " >
+            and powers.power_type = #{powerVO.powerType}
+        </if>
+        </if>
+        /*power end*/
+    </select>
+</mapper>

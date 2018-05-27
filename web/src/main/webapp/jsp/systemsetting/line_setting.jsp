@@ -142,31 +142,33 @@
                 var v = $("#hEdit").val();
                 if(v == "edit"){
                     var param = {
-                        DivOplinkID:$(OplinkEditForm.DivOplinkID).val(),
-                        DivProcess:$("select[name='DivProcess']").val(),
-                        DivEquipment:$(OplinkEditForm.DivEquipment).val(),
-                        DivAssemblyLine:$("select[name='DivAssemblyLine']").val(),
-                        SynthesisParameters: $("select[name='SynthesisParameters']").val(),
-                        Parts:$("select[name='Parts']").val(),
-                        DivAxle: $(OplinkEditForm.DivAxle).val(),
-                        DivToolDurable:$(OplinkEditForm.DivToolDurable).val()
+                        assemblylineCode:$(OplinkEditForm.DivAssemblyLine).val(),
+                        processCode:$(OplinkEditForm.DivProcess).val(),
+                        equipmentCode:$(OplinkEditForm.DivEquipment).val(),
+                        axleCode:$(OplinkEditForm.DivAxle).val(),
+                        partsCode:$(OplinkEditForm.Parts_select).val(),
+                        synthesisCuttingToolCode:$(OplinkEditForm.SynthesisParameters).val(),
+                        toolDurable:$(OplinkEditForm.DivToolDurable).val(),
+                        id:$(OplinkEditForm.DivOplinkID).val(),
                     }
                     console.log('编辑提交');
                      $.ajax({
-                    type: "POST",
+                        type: "POST",
                         url: "/productLine/upd",
                         dataType: "json",
                         data: JSON.stringify(param),
                         error: function (XHR, textStatus, errorThrown) {
-                        artDialog(XHR.responseText, "OK");
-                    },
-                    success: function (data, textStatus) {
-                        $.dialog.list['OplinkEdit_dialog'].close();
-                    },
-                    headers: {
-                        "content-type": "application/json"
-                    }
-                });
+                            artDialog(XHR.responseText, "OK");
+                        },
+                        success: function (data, textStatus) {
+                            $.dialog.list['OplinkEdit_dialog'].close();
+                            artDialog("操作成功", "OK");
+                            search();
+                        },
+                        headers: {
+                            "content-type": "application/json"
+                        }
+                     });
                 }else{
                     // 设备名称
                     var eq = document.getElementsByName("eqCode");
@@ -268,6 +270,8 @@
                         },
                         success: function (data, textStatus) {
                             $.dialog.list['OplinkEdit_dialog'].close();
+                            artDialog("操作成功", "OK");
+                            search();
                         },
                         headers: {
                             "content-type": "application/json"
@@ -445,6 +449,13 @@
             var param = {
                 name:$('#query_name').val(),
                 code:$('#query_code').val(),
+                synthesisCuttingToolVO:{
+                    synthesisCode:$('#synthesisCode').val()
+                },
+                assemblylineCode:$('#query_assemblylineCode').val(),
+                equipmentCode:$('#query_equipmentCode').val(),
+                processCode:$('#query_processCode').val(),
+                partsCode:$('#query_partsCode').val(),
                 pageSize:15,
                 currentPage : $('#currentPage').val()==""?1:$('#currentPage').val()
             }
@@ -509,61 +520,7 @@
             });
         }
 
-        /**
-         * 编辑处理
-         */
-        function edit(){
-            var param = {
-                id:$('#id').val(),
-                name:$('#name').val(),
-                code:$('#code').val(),
-            }
-            $.ajax({
-                type: "POST",
-                url:"/productLine/upd",
-                dataType:"json",
-                data:JSON.stringify(param),
-                error: function(XHR,textStatus,errorThrown) {
-                    artDialog(XHR.responseText, "OK");
-                },
-                success: function(data,textStatus,response) {
-                    if(response.status == '200'){
-                        search();
-                    }else{
-                        artDialog(data, "OK");
-                    }
-                },
-                headers: {
-                    "content-type":"application/json"
-                }
-            });
-        }
 
-        function add(){
-            var param = {
-                name:$('#name').val(),
-                code:$('#code').val()
-            }
-            $.ajax({
-                type: "POST",
-                url:"/productLine/add",
-                dataType:"json",
-                data:JSON.stringify(param),
-                error: function(XHR,textStatus,errorThrown) {
-                    artDialog(XHR.responseText, "OK");
-                },
-                success: function(data,textStatus,response) {
-                    if(response.status == '200'){
-                        search();
-                    }else{
-                        artDialog(data, "OK");
-                    }
-                },
-                headers: {
-                    "content-type":"application/json"
-                }
-            });
-        }
 
         function pageClick(page){
             $('#currentPage').val(page);
@@ -624,6 +581,7 @@
 
 
         function S_editInit(id,baseSelect,S_DivId){
+            console.log(baseSelect + " : "+S_DivId);
             $("select[name="+baseSelect+"] option").each(function(){
                 if($(this).val().indexOf(id)>-1){
                     $("#"+S_DivId+" input:eq(0)").val($(this).text().trim());
@@ -638,7 +596,7 @@
             $("tr[name='newTr']").remove();
 
             $('#OplinkEditForm').form('reset');
-            var title = '${session.lang.AddOplinkTitle}';
+            var title = '生产关联关系';
             $('#OplinkEditForm :input').removeClass('u-ipt-err');
             $('#OplinkEditForm').find("*").each(function () {
                 if($(this).hasClass("u-sel")){
@@ -648,8 +606,6 @@
             if(typeof(data) == 'object'){
                 $(OplinkEditForm.opt).val('edit');
                 // 页面赋值
-                console.log(data);
-                console.log(data.productLineParts.code);
                 $(OplinkEditForm.DivOplinkID).val(data.id);
                 $(OplinkEditForm.DivAssemblyLine).val(data.productLineAssemblyline.code);
                 $(OplinkEditForm.DivProcess).val(data.productLineProcess.code);
@@ -659,7 +615,7 @@
                 S_editInit(data.synthesisCuttingTool.code,'DivSynthesisParameters','s_SynthesisParameters');
                 $(OplinkEditForm.DivEquipment).val(data.productLineEquipment.code);
                 $("select[name='DivAxle']").val(data.productLineEquipment.code);
-                $("select[name='Parts']").val(data.productLineParts.code);
+                $("select[name='Parts_select']").val(data.productLineParts.code);
                 $("select[name='SynthesisParameters']").val(data.synthesisCuttingTool.code);
                 $(OplinkEditForm.DivToolDurable).val(data.toolDurable);
                 $(OplinkEditForm.DivAxle).val(data.productLineAxle.code);//机构
@@ -758,10 +714,6 @@
                     <td>
                         <input  id="synthesisCode" type="text" class="u-ipt" maxlength="50">
                     </td>
-                    <th width="150">
-                        设备名称
-                    </th>
-
                 </tr>
             </table>
             <div class="g-fx1 f-fr">
@@ -869,6 +821,7 @@
                     </th>
                     <td>
                         <input name="DivToolDurable" type="text" id="SynthesisTools_toolDurable" class="u-ipt" maxlength="11">
+                        <input name="DivID" type="hidden" id="editID" class="u-ipt" maxlength="11">
                         <button id="button1" class="aui_state_highlight" type="button" style="padding: 3px;">添加</button>
                     </td>
                 </tr>

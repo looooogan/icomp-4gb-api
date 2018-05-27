@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.mapper.IPowerGroupMapper">
+    <resultMap id="powerGroupQueryMap" type="com.common.pojo.PowerGroup">
+        <!-- 标识 -->
+        <id property="id" column="power_group.id"/>
+
+        <!-- 权限组名称 -->
+        <result property="name" column="power_group.name"/>
+        <!-- 逻辑删除 -->
+        <result property="isDel" column="power_group.is_del"/>
+        <!-- 是否为角色分组 1是 0 否 -->
+        <result property="isRole" column="power_group.is_role"/>
+    </resultMap>
+    <!--添加-->
+    <insert id="addPowerGroup" parameterType="com.common.pojo.PowerGroup">
+        INSERT INTO power_group (
+            <!-- 标识 -->
+            id,
+            <!-- 权限组名称 -->
+            name,
+            <!-- 逻辑删除 -->
+            is_del,
+            <!-- 是否为角色分组 1是 0 否 -->
+            is_role
+        )
+        VALUES (
+            <!-- 标识 -->
+            #{id},
+            <!-- 权限组名称 -->
+            #{name},
+            <!-- 逻辑删除 -->
+            #{isDel},
+            <!-- 是否为角色分组 1是 0 否 -->
+            #{isRole}
+        )
+    </insert>
+
+    <!--删除-->
+    <delete id="delPowerGroup" parameterType="com.common.pojo.PowerGroup">
+        DELETE
+        FROM power_group
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--逻辑删除-->
+    <delete id="delPowerGroupForLogic" parameterType="com.common.pojo.PowerGroup">
+        UPDATE power_group SET
+        is_del = 1
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--根据VO删除-->
+    <delete id="delPowerGroupByVo" parameterType="com.common.vo.PowerGroupVO">
+        UPDATE power_group SET is_del = 1
+        WHERE
+            1=1
+            <!-- 标识 -->
+            <if test="id != null and id != '' " >
+                and id =  #{id}
+            </if>
+            <!-- 权限组名称 -->
+            <if test="name != null and name != '' " >
+                and name =  #{name}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                and is_del =  #{isDel}
+            </if>
+            <!-- 是否为角色分组 1是 0 否 -->
+            <if test="isRole != null and isRole != '' " >
+                and is_role =  #{isRole}
+            </if>
+    </delete>
+
+    <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
+    <update id="updPowerGroup" parameterType="com.common.pojo.PowerGroup">
+        UPDATE power_group
+        SET
+            <!-- 权限组名称 -->
+            <if test="name != null and name != '' " >
+                name =  #{name},
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                is_del =  #{isDel},
+            </if>
+            <!-- 是否为角色分组 1是 0 否 -->
+            <if test="isRole != null and isRole != '' " >
+                is_role =  #{isRole},
+            </if>
+            <!-- 标识 -->
+            id = #{id}
+        WHERE
+            1 = 1
+            and id = #{id}
+    </update>
+
+    <!--分页查询 -->
+    <select id="getPowerGroupByPage" parameterType="com.common.vo.PowerGroupVO" resultMap="powerGroupQueryMap">
+        SELECT
+        /*powerGroup begin*/
+            <!-- 标识 -->
+            power_group.id as 'power_group.id',
+            <!-- 权限组名称 -->
+            power_group.name as 'power_group.name',
+            <!-- 逻辑删除 -->
+            power_group.is_del as 'power_group.is_del',
+            <!-- 是否为角色分组 1是 0 否 -->
+            power_group.is_role as 'power_group.is_role'
+        /*powerGroup end*/
+        FROM power_group as power_group
+        WHERE
+            1 = 1 AND  power_group.is_del = 0
+        /*power_group begin*/
+            <!-- 标识 -->
+            <if test="id != null and id != '' " >
+                and power_group.id = #{id}
+            </if>
+            <!-- 权限组名称 -->
+            <if test="name != null and name != '' " >
+                and power_group.name = #{name}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                and power_group.is_del = #{isDel}
+            </if>
+            <!-- 是否为角色分组 1是 0 否 -->
+            <if test="isRole != null and isRole != '' " >
+                and power_group.is_role = #{isRole}
+            </if>
+        /*power_group end*/
+        ORDER BY power_group.id desc
+        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
+        LIMIT #{startRecord},#{pageSize}
+        </if>
+    </select>
+
+
+    <!--查询记录数-->
+    <select id="getPowerGroupCount" parameterType="com.common.vo.PowerGroupVO" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM power_group as power_group
+        WHERE
+            1 = 1 AND  power_group.is_del = 0
+        /*power_group begin*/
+        <!-- 标识 -->
+        <if test="id != null and id != '' " >
+            and power_group.id = #{id}
+        </if>
+        <!-- 权限组名称 -->
+        <if test="name != null and name != '' " >
+            and power_group.name = #{name}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="isDel != null and isDel != '' " >
+            and power_group.is_del = #{isDel}
+        </if>
+        <!-- 是否为角色分组 1是 0 否 -->
+        <if test="isRole != null and isRole != '' " >
+            and power_group.is_role = #{isRole}
+        </if>
+        /*power_group end*/
+    </select>
+
+    <!--根据vo查询 -->
+    <select id="getPowerGroup" parameterType="com.common.vo.PowerGroupVO" resultMap="powerGroupQueryMap">
+        SELECT
+        /*power_group begin*/
+        <!-- 标识 -->
+        power_group.id as 'power_group.id',
+        <!-- 权限组名称 -->
+        power_group.name as 'power_group.name',
+        <!-- 逻辑删除 -->
+        power_group.is_del as 'power_group.is_del',
+        <!-- 是否为角色分组 1是 0 否 -->
+        power_group.is_role as 'power_group.is_role'
+        /*power_group end*/
+        FROM power_group as power_group
+        WHERE
+            1 = 1 AND  power_group.is_del = 0
+        /*power_group begin*/
+        <!-- 标识 -->
+        <if test="id != null and id != '' " >
+            and power_group.id = #{id}
+        </if>
+        <!-- 权限组名称 -->
+        <if test="name != null and name != '' " >
+            and power_group.name = #{name}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="isDel != null and isDel != '' " >
+            and power_group.is_del = #{isDel}
+        </if>
+        <!-- 是否为角色分组 1是 0 否 -->
+        <if test="isRole != null and isRole != '' " >
+            and power_group.is_role = #{isRole}
+        </if>
+        /*power_group end*/
+    </select>
+</mapper>

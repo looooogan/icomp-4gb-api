@@ -1,0 +1,578 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.mapper.IPowerUserHasGroupMapper">
+    <resultMap id="powerUserHasGroupQueryMap" type="com.common.pojo.PowerUserHasGroup">
+        <!-- 标识 -->
+        <id property="id" column="power_user_has_group.id"/>
+
+        <!--  -->
+        <result property="authCustomerCode" column="power_user_has_group.auth_customer_code"/>
+        <!--  -->
+        <result property="powerGroupCode" column="power_user_has_group.power_group_code"/>
+        <!--  -->
+        <result property="isDel" column="power_user_has_group.is_del"/>
+        <!--  -->
+        <association property="authCustomer"  column="auth_customer.code" resultMap="powerUserHasGroupAuthCustomerMap"/>
+        <!--  -->
+        <association property="powerGroup"  column="power_group.id" resultMap="powerUserHasGroupPowerGroupMap"/>
+    </resultMap>
+        <resultMap id="powerUserHasGroupPowerGroupMap" type="com.common.pojo.PowerGroup">
+            <!-- 标识 -->
+            <id property="id" column="power_group.id"/>
+
+            <!-- 权限组名称 -->
+            <result property="name" column="power_group.name"/>
+            <!-- 逻辑删除 -->
+            <result property="isDel" column="power_group.is_del"/>
+            <!-- 是否为角色分组 1是 0 否 -->
+            <result property="isRole" column="power_group.is_role"/>
+        </resultMap>
+        <resultMap id="powerUserHasGroupAuthCustomerMap" type="com.common.pojo.AuthCustomer">
+            <!--  -->
+            <id property="id" column="auth_customer.id"/>
+
+            <!-- 用户名[16位数字字母组合] -->
+            <result property="account" column="auth_customer.account"/>
+            <!-- 用户密码[16位数字字母组合] -->
+            <result property="password" column="auth_customer.password"/>
+            <!-- 员工卡号[20位员工卡] -->
+            <result property="employeeCode" column="auth_customer.employee_code"/>
+            <!-- 用户类型(0系统用户1普通用户) -->
+            <result property="type" column="auth_customer.type"/>
+            <!-- 用户锁定区分(0正常1锁定) -->
+            <result property="lockFlag" column="auth_customer.lock_flag"/>
+            <!--  -->
+            <result property="isDel" column="auth_customer.is_del"/>
+            <!-- 用户编码 -->
+            <result property="code" column="auth_customer.code"/>
+            <!-- RFID标签 -->
+            <result property="rfidContainerCode" column="auth_customer.rfid_container_code"/>
+            <!-- 真实姓名 -->
+            <result property="name" column="auth_customer.name"/>
+            <!--  -->
+            <result property="rfidCode" column="auth_customer.rfid_code"/>
+            <!--  -->
+            <result property="authPositionCode" column="auth_customer.auth_position_code"/>
+            <!--  -->
+            <result property="authDepartmentCode" column="auth_customer.auth_department_code"/>
+            <!--  -->
+            <result property="authAgencyCode" column="auth_customer.auth_agency_code"/>
+        </resultMap>
+    <!--添加-->
+    <insert id="addPowerUserHasGroup" parameterType="com.common.pojo.PowerUserHasGroup">
+        INSERT INTO power_user_has_group (
+            <!-- 标识 -->
+            id,
+            <!--  -->
+            auth_customer_code,
+            <!--  -->
+            power_group_code,
+            <!--  -->
+            is_del
+        )
+        VALUES (
+            <!-- 标识 -->
+            #{id},
+            <!--  -->
+            #{authCustomerCode},
+            <!--  -->
+            #{powerGroupCode},
+            <!--  -->
+            #{isDel}
+        )
+    </insert>
+
+    <!--删除-->
+    <delete id="delPowerUserHasGroup" parameterType="com.common.pojo.PowerUserHasGroup">
+        DELETE
+        FROM power_user_has_group
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--逻辑删除-->
+    <delete id="delPowerUserHasGroupForLogic" parameterType="com.common.pojo.PowerUserHasGroup">
+        UPDATE power_user_has_group SET
+        is_del = 1
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--根据VO删除-->
+    <delete id="delPowerUserHasGroupByVo" parameterType="com.common.vo.PowerUserHasGroupVO">
+        UPDATE power_user_has_group SET is_del = 1
+        WHERE
+            1=1
+            <!-- 标识 -->
+            <if test="id != null and id != '' " >
+                and id =  #{id}
+            </if>
+            <!--  -->
+            <if test="authCustomerCode != null and authCustomerCode != '' " >
+                and auth_customer_code =  #{authCustomerCode}
+            </if>
+            <!--  -->
+            <if test="powerGroupCode != null and powerGroupCode != '' " >
+                and power_group_code =  #{powerGroupCode}
+            </if>
+            <!--  -->
+            <if test="isDel != null and isDel != '' " >
+                and is_del =  #{isDel}
+            </if>
+    </delete>
+
+    <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
+    <update id="updPowerUserHasGroup" parameterType="com.common.pojo.PowerUserHasGroup">
+        UPDATE power_user_has_group
+        SET
+            <!--  -->
+            <if test="authCustomerCode != null and authCustomerCode != '' " >
+                auth_customer_code =  #{authCustomerCode},
+            </if>
+            <!--  -->
+            <if test="powerGroupCode != null and powerGroupCode != '' " >
+                power_group_code =  #{powerGroupCode},
+            </if>
+            <!--  -->
+            <if test="isDel != null and isDel != '' " >
+                is_del =  #{isDel},
+            </if>
+            <!-- 标识 -->
+            id = #{id}
+        WHERE
+            1 = 1
+            and id = #{id}
+    </update>
+
+    <!--分页查询 -->
+    <select id="getPowerUserHasGroupByPage" parameterType="com.common.vo.PowerUserHasGroupVO" resultMap="powerUserHasGroupQueryMap">
+        SELECT
+        /*powerUserHasGroup begin*/
+            <!-- 标识 -->
+            power_user_has_group.id as 'power_user_has_group.id',
+            <!--  -->
+            power_user_has_group.auth_customer_code as 'power_user_has_group.auth_customer_code',
+            <!--  -->
+            power_user_has_group.power_group_code as 'power_user_has_group.power_group_code',
+            <!--  -->
+            power_user_has_group.is_del as 'power_user_has_group.is_del',
+        /*powerUserHasGroup end*/
+        /*power_group begin*/
+            <!-- 标识 -->
+            power_group.id as 'power_group.id',
+            <!-- 权限组名称 -->
+            power_group.name as 'power_group.name',
+            <!-- 逻辑删除 -->
+            power_group.is_del as 'power_group.is_del',
+            <!-- 是否为角色分组 1是 0 否 -->
+            power_group.is_role as 'power_group.is_role',
+        /*power_group end*/
+        /*auth_customer begin*/
+            <!--  -->
+            auth_customer.id as 'auth_customer.id',
+            <!-- 用户名[16位数字字母组合] -->
+            auth_customer.account as 'auth_customer.account',
+            <!-- 用户密码[16位数字字母组合] -->
+            auth_customer.password as 'auth_customer.password',
+            <!-- 员工卡号[20位员工卡] -->
+            auth_customer.employee_code as 'auth_customer.employee_code',
+            <!-- 用户类型(0系统用户1普通用户) -->
+            auth_customer.type as 'auth_customer.type',
+            <!-- 用户锁定区分(0正常1锁定) -->
+            auth_customer.lock_flag as 'auth_customer.lock_flag',
+            <!--  -->
+            auth_customer.is_del as 'auth_customer.is_del',
+            <!-- 用户编码 -->
+            auth_customer.code as 'auth_customer.code',
+            <!-- RFID标签 -->
+            auth_customer.rfid_container_code as 'auth_customer.rfid_container_code',
+            <!-- 真实姓名 -->
+            auth_customer.name as 'auth_customer.name',
+            <!--  -->
+            auth_customer.rfid_code as 'auth_customer.rfid_code',
+            <!--  -->
+            auth_customer.auth_position_code as 'auth_customer.auth_position_code',
+            <!--  -->
+            auth_customer.auth_department_code as 'auth_customer.auth_department_code',
+            <!--  -->
+            auth_customer.auth_agency_code as 'auth_customer.auth_agency_code'
+        /*auth_customer end*/
+        FROM power_user_has_group as power_user_has_group
+        LEFT JOIN auth_customer as auth_customer ON auth_customer.code = power_user_has_group.auth_customer_code
+        LEFT JOIN power_group as power_group ON power_group.id = power_user_has_group.power_group_code
+        WHERE
+            1 = 1 AND  power_user_has_group.is_del = 0
+        /*power_user_has_group begin*/
+            <!-- 标识 -->
+            <if test="id != null and id != '' " >
+                and power_user_has_group.id = #{id}
+            </if>
+            <!--  -->
+            <if test="authCustomerCode != null and authCustomerCode != '' " >
+                and power_user_has_group.auth_customer_code = #{authCustomerCode}
+            </if>
+            <!--  -->
+            <if test="powerGroupCode != null and powerGroupCode != '' " >
+                and power_user_has_group.power_group_code = #{powerGroupCode}
+            </if>
+            <!--  -->
+            <if test="isDel != null and isDel != '' " >
+                and power_user_has_group.is_del = #{isDel}
+            </if>
+        /*power_user_has_group end*/
+        /*power_group begin*/
+            <if test="powerGroupVO != null ">
+            <!-- 标识 -->
+            <if test="powerGroupVO.id != null and powerGroupVO.id != '' " >
+                and power_group.id = #{powerGroupVO.id}
+            </if>
+            <!-- 权限组名称 -->
+            <if test="powerGroupVO.name != null and powerGroupVO.name != '' " >
+                and power_group.name = #{powerGroupVO.name}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="powerGroupVO.isDel != null and powerGroupVO.isDel != '' " >
+                and power_group.is_del = #{powerGroupVO.isDel}
+            </if>
+            <!-- 是否为角色分组 1是 0 否 -->
+            <if test="powerGroupVO.isRole != null and powerGroupVO.isRole != '' " >
+                and power_group.is_role = #{powerGroupVO.isRole}
+            </if>
+            </if>
+        /*power_group end*/
+        /*auth_customer begin*/
+            <if test="authCustomerVO != null ">
+            <!--  -->
+            <if test="authCustomerVO.id != null and authCustomerVO.id != '' " >
+                and auth_customer.id = #{authCustomerVO.id}
+            </if>
+            <!-- 用户名[16位数字字母组合] -->
+            <if test="authCustomerVO.account != null and authCustomerVO.account != '' " >
+                and auth_customer.account = #{authCustomerVO.account}
+            </if>
+            <!-- 用户密码[16位数字字母组合] -->
+            <if test="authCustomerVO.password != null and authCustomerVO.password != '' " >
+                and auth_customer.password = #{authCustomerVO.password}
+            </if>
+            <!-- 员工卡号[20位员工卡] -->
+            <if test="authCustomerVO.employeeCode != null and authCustomerVO.employeeCode != '' " >
+                and auth_customer.employee_code = #{authCustomerVO.employeeCode}
+            </if>
+            <!-- 用户类型(0系统用户1普通用户) -->
+            <if test="authCustomerVO.type != null and authCustomerVO.type != '' " >
+                and auth_customer.type = #{authCustomerVO.type}
+            </if>
+            <!-- 用户锁定区分(0正常1锁定) -->
+            <if test="authCustomerVO.lockFlag != null and authCustomerVO.lockFlag != '' " >
+                and auth_customer.lock_flag = #{authCustomerVO.lockFlag}
+            </if>
+            <!--  -->
+            <if test="authCustomerVO.isDel != null and authCustomerVO.isDel != '' " >
+                and auth_customer.is_del = #{authCustomerVO.isDel}
+            </if>
+            <!-- 用户编码 -->
+            <if test="authCustomerVO.code != null and authCustomerVO.code != '' " >
+                and auth_customer.code = #{authCustomerVO.code}
+            </if>
+            <!-- RFID标签 -->
+            <if test="authCustomerVO.rfidContainerCode != null and authCustomerVO.rfidContainerCode != '' " >
+                and auth_customer.rfid_container_code = #{authCustomerVO.rfidContainerCode}
+            </if>
+            <!-- 真实姓名 -->
+            <if test="authCustomerVO.name != null and authCustomerVO.name != '' " >
+                and auth_customer.name = #{authCustomerVO.name}
+            </if>
+            <!--  -->
+            <if test="authCustomerVO.rfidCode != null and authCustomerVO.rfidCode != '' " >
+                and auth_customer.rfid_code = #{authCustomerVO.rfidCode}
+            </if>
+            <!--  -->
+            <if test="authCustomerVO.authPositionCode != null and authCustomerVO.authPositionCode != '' " >
+                and auth_customer.auth_position_code = #{authCustomerVO.authPositionCode}
+            </if>
+            <!--  -->
+            <if test="authCustomerVO.authDepartmentCode != null and authCustomerVO.authDepartmentCode != '' " >
+                and auth_customer.auth_department_code = #{authCustomerVO.authDepartmentCode}
+            </if>
+            <!--  -->
+            <if test="authCustomerVO.authAgencyCode != null and authCustomerVO.authAgencyCode != '' " >
+                and auth_customer.auth_agency_code = #{authCustomerVO.authAgencyCode}
+            </if>
+            </if>
+        /*auth_customer end*/
+        ORDER BY power_user_has_group.id desc
+        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
+        LIMIT #{startRecord},#{pageSize}
+        </if>
+    </select>
+
+
+    <!--查询记录数-->
+    <select id="getPowerUserHasGroupCount" parameterType="com.common.vo.PowerUserHasGroupVO" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM power_user_has_group as power_user_has_group
+        LEFT JOIN auth_customer as auth_customer ON auth_customer.code = power_user_has_group.auth_customer_code
+        LEFT JOIN power_group as power_group ON power_group.id = power_user_has_group.power_group_code
+        WHERE
+            1 = 1 AND  power_user_has_group.is_del = 0
+        /*power_user_has_group begin*/
+        <!-- 标识 -->
+        <if test="id != null and id != '' " >
+            and power_user_has_group.id = #{id}
+        </if>
+        <!--  -->
+        <if test="authCustomerCode != null and authCustomerCode != '' " >
+            and power_user_has_group.auth_customer_code = #{authCustomerCode}
+        </if>
+        <!--  -->
+        <if test="powerGroupCode != null and powerGroupCode != '' " >
+            and power_user_has_group.power_group_code = #{powerGroupCode}
+        </if>
+        <!--  -->
+        <if test="isDel != null and isDel != '' " >
+            and power_user_has_group.is_del = #{isDel}
+        </if>
+        /*power_user_has_group end*/
+        /*power_group begin*/
+        <if test="powerGroupVO != null ">
+        <!-- 标识 -->
+        <if test="powerGroupVO.id != null and powerGroupVO.id != '' " >
+            and power_group.id = #{powerGroupVO.id}
+        </if>
+        <!-- 权限组名称 -->
+        <if test="powerGroupVO.name != null and powerGroupVO.name != '' " >
+            and power_group.name = #{powerGroupVO.name}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="powerGroupVO.isDel != null and powerGroupVO.isDel != '' " >
+            and power_group.is_del = #{powerGroupVO.isDel}
+        </if>
+        <!-- 是否为角色分组 1是 0 否 -->
+        <if test="powerGroupVO.isRole != null and powerGroupVO.isRole != '' " >
+            and power_group.is_role = #{powerGroupVO.isRole}
+        </if>
+        </if>
+        /*power_group end*/
+        /*auth_customer begin*/
+        <if test="authCustomerVO != null ">
+        <!--  -->
+        <if test="authCustomerVO.id != null and authCustomerVO.id != '' " >
+            and auth_customer.id = #{authCustomerVO.id}
+        </if>
+        <!-- 用户名[16位数字字母组合] -->
+        <if test="authCustomerVO.account != null and authCustomerVO.account != '' " >
+            and auth_customer.account = #{authCustomerVO.account}
+        </if>
+        <!-- 用户密码[16位数字字母组合] -->
+        <if test="authCustomerVO.password != null and authCustomerVO.password != '' " >
+            and auth_customer.password = #{authCustomerVO.password}
+        </if>
+        <!-- 员工卡号[20位员工卡] -->
+        <if test="authCustomerVO.employeeCode != null and authCustomerVO.employeeCode != '' " >
+            and auth_customer.employee_code = #{authCustomerVO.employeeCode}
+        </if>
+        <!-- 用户类型(0系统用户1普通用户) -->
+        <if test="authCustomerVO.type != null and authCustomerVO.type != '' " >
+            and auth_customer.type = #{authCustomerVO.type}
+        </if>
+        <!-- 用户锁定区分(0正常1锁定) -->
+        <if test="authCustomerVO.lockFlag != null and authCustomerVO.lockFlag != '' " >
+            and auth_customer.lock_flag = #{authCustomerVO.lockFlag}
+        </if>
+        <!--  -->
+        <if test="authCustomerVO.isDel != null and authCustomerVO.isDel != '' " >
+            and auth_customer.is_del = #{authCustomerVO.isDel}
+        </if>
+        <!-- 用户编码 -->
+        <if test="authCustomerVO.code != null and authCustomerVO.code != '' " >
+            and auth_customer.code = #{authCustomerVO.code}
+        </if>
+        <!-- RFID标签 -->
+        <if test="authCustomerVO.rfidContainerCode != null and authCustomerVO.rfidContainerCode != '' " >
+            and auth_customer.rfid_container_code = #{authCustomerVO.rfidContainerCode}
+        </if>
+        <!-- 真实姓名 -->
+        <if test="authCustomerVO.name != null and authCustomerVO.name != '' " >
+            and auth_customer.name = #{authCustomerVO.name}
+        </if>
+        <!--  -->
+        <if test="authCustomerVO.rfidCode != null and authCustomerVO.rfidCode != '' " >
+            and auth_customer.rfid_code = #{authCustomerVO.rfidCode}
+        </if>
+        <!--  -->
+        <if test="authCustomerVO.authPositionCode != null and authCustomerVO.authPositionCode != '' " >
+            and auth_customer.auth_position_code = #{authCustomerVO.authPositionCode}
+        </if>
+        <!--  -->
+        <if test="authCustomerVO.authDepartmentCode != null and authCustomerVO.authDepartmentCode != '' " >
+            and auth_customer.auth_department_code = #{authCustomerVO.authDepartmentCode}
+        </if>
+        <!--  -->
+        <if test="authCustomerVO.authAgencyCode != null and authCustomerVO.authAgencyCode != '' " >
+            and auth_customer.auth_agency_code = #{authCustomerVO.authAgencyCode}
+        </if>
+        </if>
+        /*auth_customer end*/
+    </select>
+
+    <!--根据vo查询 -->
+    <select id="getPowerUserHasGroup" parameterType="com.common.vo.PowerUserHasGroupVO" resultMap="powerUserHasGroupQueryMap">
+        SELECT
+        /*power_user_has_group begin*/
+        <!-- 标识 -->
+        power_user_has_group.id as 'power_user_has_group.id',
+        <!--  -->
+        power_user_has_group.auth_customer_code as 'power_user_has_group.auth_customer_code',
+        <!--  -->
+        power_user_has_group.power_group_code as 'power_user_has_group.power_group_code',
+        <!--  -->
+        power_user_has_group.is_del as 'power_user_has_group.is_del',
+        /*power_user_has_group end*/
+        /*power_group begin*/
+        <!-- 标识 -->
+        power_group.id as 'power_group.id',
+        <!-- 权限组名称 -->
+        power_group.name as 'power_group.name',
+        <!-- 逻辑删除 -->
+        power_group.is_del as 'power_group.is_del',
+        <!-- 是否为角色分组 1是 0 否 -->
+        power_group.is_role as 'power_group.is_role',
+        /*power_group end*/
+        /*auth_customer begin*/
+        <!--  -->
+        auth_customer.id as 'auth_customer.id',
+        <!-- 用户名[16位数字字母组合] -->
+        auth_customer.account as 'auth_customer.account',
+        <!-- 用户密码[16位数字字母组合] -->
+        auth_customer.password as 'auth_customer.password',
+        <!-- 员工卡号[20位员工卡] -->
+        auth_customer.employee_code as 'auth_customer.employee_code',
+        <!-- 用户类型(0系统用户1普通用户) -->
+        auth_customer.type as 'auth_customer.type',
+        <!-- 用户锁定区分(0正常1锁定) -->
+        auth_customer.lock_flag as 'auth_customer.lock_flag',
+        <!--  -->
+        auth_customer.is_del as 'auth_customer.is_del',
+        <!-- 用户编码 -->
+        auth_customer.code as 'auth_customer.code',
+        <!-- RFID标签 -->
+        auth_customer.rfid_container_code as 'auth_customer.rfid_container_code',
+        <!-- 真实姓名 -->
+        auth_customer.name as 'auth_customer.name',
+        <!--  -->
+        auth_customer.rfid_code as 'auth_customer.rfid_code',
+        <!--  -->
+        auth_customer.auth_position_code as 'auth_customer.auth_position_code',
+        <!--  -->
+        auth_customer.auth_department_code as 'auth_customer.auth_department_code',
+        <!--  -->
+        auth_customer.auth_agency_code as 'auth_customer.auth_agency_code'
+        /*auth_customer end*/
+        FROM power_user_has_group as power_user_has_group
+        LEFT JOIN auth_customer as auth_customer ON auth_customer.code = power_user_has_group.auth_customer_code
+        LEFT JOIN power_group as power_group ON power_group.id = power_user_has_group.power_group_code
+        WHERE
+            1 = 1 AND  power_user_has_group.is_del = 0
+        /*power_user_has_group begin*/
+        <!-- 标识 -->
+        <if test="id != null and id != '' " >
+            and power_user_has_group.id = #{id}
+        </if>
+        <!--  -->
+        <if test="authCustomerCode != null and authCustomerCode != '' " >
+            and power_user_has_group.auth_customer_code = #{authCustomerCode}
+        </if>
+        <!--  -->
+        <if test="powerGroupCode != null and powerGroupCode != '' " >
+            and power_user_has_group.power_group_code = #{powerGroupCode}
+        </if>
+        <!--  -->
+        <if test="isDel != null and isDel != '' " >
+            and power_user_has_group.is_del = #{isDel}
+        </if>
+        /*power_user_has_group end*/
+        /*power_groups begin*/
+        <if test="powerGroupVO != null ">
+        <!-- 标识 -->
+        <if test="powerGroupVO.id != null and powerGroupVO.id != '' " >
+            and power_groups.id = #{powerGroupVO.id}
+        </if>
+        <!-- 权限组名称 -->
+        <if test="powerGroupVO.name != null and powerGroupVO.name != '' " >
+            and power_groups.name = #{powerGroupVO.name}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="powerGroupVO.isDel != null and powerGroupVO.isDel != '' " >
+            and power_groups.is_del = #{powerGroupVO.isDel}
+        </if>
+        <!-- 是否为角色分组 1是 0 否 -->
+        <if test="powerGroupVO.isRole != null and powerGroupVO.isRole != '' " >
+            and power_groups.is_role = #{powerGroupVO.isRole}
+        </if>
+        </if>
+        /*power_group end*/
+        /*auth_customers begin*/
+        <if test="authCustomerVO != null ">
+        <!--  -->
+        <if test="authCustomerVO.id != null and authCustomerVO.id != '' " >
+            and auth_customers.id = #{authCustomerVO.id}
+        </if>
+        <!-- 用户名[16位数字字母组合] -->
+        <if test="authCustomerVO.account != null and authCustomerVO.account != '' " >
+            and auth_customers.account = #{authCustomerVO.account}
+        </if>
+        <!-- 用户密码[16位数字字母组合] -->
+        <if test="authCustomerVO.password != null and authCustomerVO.password != '' " >
+            and auth_customers.password = #{authCustomerVO.password}
+        </if>
+        <!-- 员工卡号[20位员工卡] -->
+        <if test="authCustomerVO.employeeCode != null and authCustomerVO.employeeCode != '' " >
+            and auth_customers.employee_code = #{authCustomerVO.employeeCode}
+        </if>
+        <!-- 用户类型(0系统用户1普通用户) -->
+        <if test="authCustomerVO.type != null and authCustomerVO.type != '' " >
+            and auth_customers.type = #{authCustomerVO.type}
+        </if>
+        <!-- 用户锁定区分(0正常1锁定) -->
+        <if test="authCustomerVO.lockFlag != null and authCustomerVO.lockFlag != '' " >
+            and auth_customers.lock_flag = #{authCustomerVO.lockFlag}
+        </if>
+        <!--  -->
+        <if test="authCustomerVO.isDel != null and authCustomerVO.isDel != '' " >
+            and auth_customers.is_del = #{authCustomerVO.isDel}
+        </if>
+        <!-- 用户编码 -->
+        <if test="authCustomerVO.code != null and authCustomerVO.code != '' " >
+            and auth_customers.code = #{authCustomerVO.code}
+        </if>
+        <!-- RFID标签 -->
+        <if test="authCustomerVO.rfidContainerCode != null and authCustomerVO.rfidContainerCode != '' " >
+            and auth_customers.rfid_container_code = #{authCustomerVO.rfidContainerCode}
+        </if>
+        <!-- 真实姓名 -->
+        <if test="authCustomerVO.name != null and authCustomerVO.name != '' " >
+            and auth_customers.name = #{authCustomerVO.name}
+        </if>
+        <!--  -->
+        <if test="authCustomerVO.rfidCode != null and authCustomerVO.rfidCode != '' " >
+            and auth_customers.rfid_code = #{authCustomerVO.rfidCode}
+        </if>
+        <!--  -->
+        <if test="authCustomerVO.authPositionCode != null and authCustomerVO.authPositionCode != '' " >
+            and auth_customers.auth_position_code = #{authCustomerVO.authPositionCode}
+        </if>
+        <!--  -->
+        <if test="authCustomerVO.authDepartmentCode != null and authCustomerVO.authDepartmentCode != '' " >
+            and auth_customers.auth_department_code = #{authCustomerVO.authDepartmentCode}
+        </if>
+        <!--  -->
+        <if test="authCustomerVO.authAgencyCode != null and authCustomerVO.authAgencyCode != '' " >
+            and auth_customers.auth_agency_code = #{authCustomerVO.authAgencyCode}
+        </if>
+        </if>
+        /*auth_customer end*/
+    </select>
+</mapper>

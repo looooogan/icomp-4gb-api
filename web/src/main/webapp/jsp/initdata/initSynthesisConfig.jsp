@@ -282,7 +282,6 @@
                     artDialog(XHR.responseText, "OK");
                 },
                 success: function(data,textStatus) {
-                    console.log(data);
                     wd_synthesisEdit(data,id,obj);
                 },
                 headers: {
@@ -343,6 +342,7 @@
                         }else{
                             add();
                         }
+                        $.dialog.list['synthesisEdit_dialog'].close();
                         return false;
                     }
                 }]

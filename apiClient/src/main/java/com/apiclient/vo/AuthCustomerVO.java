@@ -1,5 +1,10 @@
 package com.apiclient.vo;
 
+import com.apiclient.vo.AuthAgencyVO;
+import com.apiclient.vo.AuthAuthorizationVO;
+import com.apiclient.vo.AuthDepartmentVO;
+import com.apiclient.vo.AuthPositionVO;
+
 import java.io.Serializable;
 import java.util.List;
 

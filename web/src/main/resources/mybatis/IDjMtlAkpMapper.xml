@@ -179,7 +179,7 @@
                 ORDER_CODE =  #{orderCode},
             </if>
             <!-- 供应商代码 -->
-            OWNER_CODE = #{ownerCode}
+            MTL_CODE =  #{mtlCode}
         WHERE
             1 = 1
             and OWNER_CODE = #{ownerCode}

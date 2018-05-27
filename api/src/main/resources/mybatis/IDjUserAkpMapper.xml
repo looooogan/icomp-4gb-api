@@ -4,46 +4,46 @@
 <mapper namespace="com.common.mapper.IDjUserAkpMapper">
     <resultMap id="djUserAkpQueryMap" type="com.common.pojo.DjUserAkp">
         <!-- 用户ID -->
-        <id property="userId" column="DJ_USER_AKP.USER_ID"/>
+        <id property="userId" column="USER_ID"/>
 
         <!-- 用户名 -->
-        <result property="userName" column="DJ_USER_AKP.USER_NAME"/>
+        <result property="userName" column="USER_NAME"/>
         <!-- 密码 -->
-        <result property="password" column="DJ_USER_AKP.PASSWORD"/>
+        <result property="password" column="PASSWORD"/>
         <!-- 姓名 -->
-        <result property="name" column="DJ_USER_AKP.NAME"/>
+        <result property="name" column="NAME"/>
         <!-- 性别 -->
-        <result property="title" column="DJ_USER_AKP.TITLE"/>
+        <result property="title" column="TITLE"/>
     </resultMap>
-    <!--添加-->
+    <!-- 添加 -->
     <insert id="addDjUserAkp" parameterType="com.common.pojo.DjUserAkp">
         INSERT INTO DJ_USER_AKP (
-            <!-- 用户ID -->
+            /* 用户ID */
             USER_ID,
-            <!-- 用户名 -->
+            /* 用户名 */
             USER_NAME,
-            <!-- 密码 -->
+            /* 密码 */
             PASSWORD,
-            <!-- 姓名 -->
+            /* 姓名 */
             NAME,
-            <!-- 性别 -->
+            /* 性别 */
             TITLE
         )
         VALUES (
-            <!-- 用户ID -->
+            /* 用户ID */
             #{userId},
-            <!-- 用户名 -->
+            /* 用户名 */
             #{userName},
-            <!-- 密码 -->
+            /* 密码 */
             #{password},
-            <!-- 姓名 -->
+            /* 姓名 */
             #{name},
-            <!-- 性别 -->
+            /* 性别 */
             #{title}
         )
     </insert>
 
-    <!--删除-->
+    <!-- 删除 -->
     <delete id="delDjUserAkp" parameterType="com.common.pojo.DjUserAkp">
         DELETE
         FROM DJ_USER_AKP
@@ -52,183 +52,180 @@
             and USER_ID = #{userId}
     </delete>
 
-    <!--逻辑删除-->
+    <!-- 逻辑删除 -->
     <delete id="delDjUserAkpForLogic" parameterType="com.common.pojo.DjUserAkp">
-        DELETE FROM DJ_USER_AKP
+        DELETE FROM  DJ_USER_AKP
         WHERE
             1 = 1
             and USER_ID = #{userId}
     </delete>
 
-    <!--根据VO删除-->
+    <!-- 根据VO删除 -->
     <delete id="delDjUserAkpByVo" parameterType="com.common.vo.DjUserAkpVO">
         DELETE FROM DJ_USER_AKP
         WHERE
-            1=1
-            <!-- 用户ID -->
-            <if test="userId != null and userId != '' " >
-                and USER_ID =  #{userId}
-            </if>
-            <!-- 用户名 -->
-            <if test="userName != null and userName != '' " >
-                and USER_NAME =  #{userName}
-            </if>
-            <!-- 密码 -->
-            <if test="password != null and password != '' " >
-                and PASSWORD =  #{password}
-            </if>
-            <!-- 姓名 -->
-            <if test="name != null and name != '' " >
-                and NAME =  #{name}
-            </if>
-            <!-- 性别 -->
-            <if test="title != null and title != '' " >
-                and TITLE =  #{title}
-            </if>
+        1=1
+        /* 用户ID */
+        <if test="userId != null and userId != '' " >
+            and USER_ID =  #{userId}
+        </if>
+        /* 用户名 */
+        <if test="userName != null and userName != '' " >
+            and USER_NAME =  #{userName}
+        </if>
+        /* 密码 */
+        <if test="password != null and password != '' " >
+            and PASSWORD =  #{password}
+        </if>
+        /* 姓名 */
+        <if test="name != null and name != '' " >
+            and NAME =  #{name}
+        </if>
+        /* 性别 */
+        <if test="title != null and title != '' " >
+            and TITLE =  #{title}
+        </if>
     </delete>
 
-    <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
+    <!-- 更新,如果属性不为null 则更新该属性,根据id更新 -->
     <update id="updDjUserAkp" parameterType="com.common.pojo.DjUserAkp">
         UPDATE DJ_USER_AKP
         SET
-            <!-- 用户名 -->
-            <if test="userName != null and userName != '' " >
-                USER_NAME =  #{userName},
-            </if>
-            <!-- 密码 -->
-            <if test="password != null and password != '' " >
-                PASSWORD =  #{password},
-            </if>
-            <!-- 姓名 -->
-            <if test="name != null and name != '' " >
-                NAME =  #{name},
-            </if>
-            <!-- 性别 -->
-            <if test="title != null and title != '' " >
-                TITLE =  #{title},
-            </if>
-            <!-- 用户ID -->
-            USER_ID = #{userId}
+        /* 用户名 */
+        <if test="userName != null and userName != '' " >
+            USER_NAME =  #{userName},
+        </if>
+        /* 密码 */
+        <if test="password != null and password != '' " >
+            PASSWORD =  #{password},
+        </if>
+        /* 姓名 */
+        <if test="name != null and name != '' " >
+            NAME =  #{name},
+        </if>
+        /* 性别 */
+        <if test="title != null and title != '' " >
+            TITLE =  #{title},
+        </if>
+        /* 用户ID */
+        USER_ID = #{userId}
         WHERE
-            1 = 1
-            and USER_ID = #{userId}
+        1 = 1
+        and USER_ID = #{userId}
     </update>
 
-    <!--分页查询 -->
+    <!-- 分页查询 -->
     <select id="getDjUserAkpByPage" parameterType="com.common.vo.DjUserAkpVO" resultMap="djUserAkpQueryMap">
         SELECT
         /*djUserAkp begin*/
-            <!-- 用户ID -->
-            DJ_USER_AKP.USER_ID as 'DJ_USER_AKP.USER_ID',
-            <!-- 用户名 -->
-            DJ_USER_AKP.USER_NAME as 'DJ_USER_AKP.USER_NAME',
-            <!-- 密码 -->
-            DJ_USER_AKP.PASSWORD as 'DJ_USER_AKP.PASSWORD',
-            <!-- 姓名 -->
-            DJ_USER_AKP.NAME as 'DJ_USER_AKP.NAME',
-            <!-- 性别 -->
-            DJ_USER_AKP.TITLE as 'DJ_USER_AKP.TITLE'
+        /* 用户ID */
+        USER_ID,
+        /* 用户名 */
+        USER_NAME,
+        /* 密码 */
+        PASSWORD,
+        /* 姓名 */
+        NAME,
+        /* 性别 */
+        TITLE
         /*djUserAkp end*/
-        FROM DJ_USER_AKP as DJ_USER_AKP
+        FROM DJ_USER_AKP
         WHERE
-            1 = 1
+        1 = 1
         /*DJ_USER_AKP begin*/
-            <!-- 用户ID -->
-            <if test="userId != null and userId != '' " >
-                and DJ_USER_AKP.USER_ID = #{userId}
-            </if>
-            <!-- 用户名 -->
-            <if test="userName != null and userName != '' " >
-                and DJ_USER_AKP.USER_NAME = #{userName}
-            </if>
-            <!-- 密码 -->
-            <if test="password != null and password != '' " >
-                and DJ_USER_AKP.PASSWORD = #{password}
-            </if>
-            <!-- 姓名 -->
-            <if test="name != null and name != '' " >
-                and DJ_USER_AKP.NAME = #{name}
-            </if>
-            <!-- 性别 -->
-            <if test="title != null and title != '' " >
-                and DJ_USER_AKP.TITLE = #{title}
-            </if>
-        /*DJ_USER_AKP end*/
-        ORDER BY DJ_USER_AKP.USER_ID desc
-        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
-        LIMIT #{startRecord},#{pageSize}
+        /* 用户ID */
+        <if test="userId != null and userId != '' " >
+            and USER_ID = #{userId}
         </if>
+        /* 用户名 */
+        <if test="userName != null and userName != '' " >
+            and USER_NAME = #{userName}
+        </if>
+        /* 密码 */
+        <if test="password != null and password != '' " >
+            and PASSWORD = #{password}
+        </if>
+        /* 姓名 */
+        <if test="name != null and name != '' " >
+            and NAME = #{name}
+        </if>
+        /* 性别 */
+        <if test="title != null and title != '' " >
+            and TITLE = #{title}
+        </if>
+        /*DJ_USER_AKP end*/
+        ORDER BY USER_ID desc
     </select>
 
 
-    <!--查询记录数-->
+    <!-- 查询记录数 -->
     <select id="getDjUserAkpCount" parameterType="com.common.vo.DjUserAkpVO" resultType="java.lang.Integer">
         SELECT COUNT(1)
-        FROM DJ_USER_AKP as DJ_USER_AKP
+        FROM DJ_USER_AKP
         WHERE
-            1 = 1
+        1 = 1
         /*DJ_USER_AKP begin*/
-        <!-- 用户ID -->
+        /* 用户ID */
         <if test="userId != null and userId != '' " >
-            and DJ_USER_AKP.USER_ID = #{userId}
+            and USER_ID = #{userId}
         </if>
-        <!-- 用户名 -->
+        /* 用户名 */
         <if test="userName != null and userName != '' " >
-            and DJ_USER_AKP.USER_NAME = #{userName}
+            and USER_NAME = #{userName}
         </if>
-        <!-- 密码 -->
+        /* 密码 */
         <if test="password != null and password != '' " >
-            and DJ_USER_AKP.PASSWORD = #{password}
+            and PASSWORD = #{password}
         </if>
-        <!-- 姓名 -->
+        /* 姓名 */
         <if test="name != null and name != '' " >
-            and DJ_USER_AKP.NAME = #{name}
+            and NAME = #{name}
         </if>
-        <!-- 性别 -->
+        /* 性别 */
         <if test="title != null and title != '' " >
-            and DJ_USER_AKP.TITLE = #{title}
+            and TITLE = #{title}
         </if>
         /*DJ_USER_AKP end*/
     </select>
 
-    <!--根据vo查询 -->
+    <!-- 根据vo查询 -->
     <select id="getDjUserAkp" parameterType="com.common.vo.DjUserAkpVO" resultMap="djUserAkpQueryMap">
         SELECT
         /*DJ_USER_AKP begin*/
-        <!-- 用户ID -->
-        DJ_USER_AKP.USER_ID as 'DJ_USER_AKP.USER_ID',
-        <!-- 用户名 -->
-        DJ_USER_AKP.USER_NAME as 'DJ_USER_AKP.USER_NAME',
-        <!-- 密码 -->
-        DJ_USER_AKP.PASSWORD as 'DJ_USER_AKP.PASSWORD',
-        <!-- 姓名 -->
-        DJ_USER_AKP.NAME as 'DJ_USER_AKP.NAME',
-        <!-- 性别 -->
-        DJ_USER_AKP.TITLE as 'DJ_USER_AKP.TITLE'
+        /* 用户ID */
+        USER_ID,
+        /* 用户名 */
+        USER_NAME,
+        /* 密码 */
+        PASSWORD,
+        /* 姓名 */
+        NAME,
+        /* 性别 */
+        TITLE
         /*DJ_USER_AKP end*/
-        FROM DJ_USER_AKP as DJ_USER_AKP
+        FROM DJ_USER_AKP
         WHERE
-            1 = 1
+        1 = 1
         /*DJ_USER_AKP begin*/
-        <!-- 用户ID -->
+        /* 用户ID */
         <if test="userId != null and userId != '' " >
-            and DJ_USER_AKP.USER_ID = #{userId}
+            and USER_ID = #{userId}
         </if>
-        <!-- 用户名 -->
+        /* 用户名 */
         <if test="userName != null and userName != '' " >
-            and DJ_USER_AKP.USER_NAME = #{userName}
+            and USER_NAME = #{userName}
         </if>
-        <!-- 密码 -->
+        /* 密码 */
         <if test="password != null and password != '' " >
-            and DJ_USER_AKP.PASSWORD = #{password}
+            and PASSWORD = #{password}
         </if>
-        <!-- 姓名 -->
+        /* 姓名 */
         <if test="name != null and name != '' " >
-            and DJ_USER_AKP.NAME = #{name}
+            and NAME = #{name}
         </if>
-        <!-- 性别 -->
+        /* 性别 */
         <if test="title != null and title != '' " >
-            and DJ_USER_AKP.TITLE = #{title}
+            and TITLE = #{title}
         </if>
         /*DJ_USER_AKP end*/
     </select>

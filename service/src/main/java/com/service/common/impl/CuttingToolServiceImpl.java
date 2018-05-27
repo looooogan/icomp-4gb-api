@@ -4,6 +4,9 @@ package com.service.common.impl;
 import com.common.mapper.ICuttingToolMapper;
 import com.common.pojo.CuttingTool;
 import com.common.utils.UUID;
+import com.common.utils.exception.ExceptionConstans;
+import com.common.utils.exception.SelfDefinedException;
+import com.common.utils.loadConfig.IMessageSourceHanlder;
 import com.common.vo.CuttingToolVO;
 import com.service.common.ICuttingToolService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,8 @@ public class CuttingToolServiceImpl implements ICuttingToolService{
 
     @Autowired
     private ICuttingToolMapper cuttingToolMapper;
+    @Autowired
+    private IMessageSourceHanlder messageSourceHanlder;
 
 
 
@@ -35,6 +40,12 @@ public class CuttingToolServiceImpl implements ICuttingToolService{
     */
     @Override
     public void addCuttingTool(CuttingTool cuttingTool) throws Exception{
+        CuttingToolVO cuttingToolVO = new CuttingToolVO();
+        cuttingToolVO.setBusinessCode(cuttingTool.getBusinessCode());
+        List<CuttingTool> cuttingTools = cuttingToolMapper.getCuttingToolByPage(cuttingToolVO);
+        if (null != cuttingTools && cuttingTools.size()>0){
+            throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.CUTTINGTOOL_EXISTS));
+        }
         cuttingTool.setIsDel(0);
         cuttingTool.setCode(UUID.getInstance());
         cuttingToolMapper.addCuttingTool(cuttingTool);

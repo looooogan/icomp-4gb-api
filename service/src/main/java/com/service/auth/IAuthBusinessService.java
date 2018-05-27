@@ -2,7 +2,6 @@ package com.service.auth;
 
 import com.common.pojo.AuthCustomer;
 import com.common.vo.AuthCustomerVO;
-
 /**
  * Created by logan on 2018/5/6.
  */

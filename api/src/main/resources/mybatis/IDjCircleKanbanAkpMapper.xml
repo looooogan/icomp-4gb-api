@@ -3,773 +3,769 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.common.mapper.IDjCircleKanbanAkpMapper">
     <resultMap id="djCircleKanbanAkpQueryMap" type="com.common.pojo.DjCircleKanbanAkp">
+        <id property="cKanbanCode" column="C_KANBAN_CODE"/>
         <!-- 仓库 -->
-        <id property="whCode" column="DJ_CIRCLE_KANBAN_AKP.WH_CODE"/>
-
+        <result property="whCode" column="WH_CODE"/>
         <!-- 刀具条码，看板号 'CK' -->
-        <result property="cKanbanCode" column="DJ_CIRCLE_KANBAN_AKP.C_KANBAN_CODE"/>
+        <result property="cKanbanCode" column="C_KANBAN_CODE"/>
         <!-- 供应商 -->
-        <result property="ownerCode" column="DJ_CIRCLE_KANBAN_AKP.OWNER_CODE"/>
+        <result property="ownerCode" column="OWNER_CODE"/>
         <!-- 物料号 -->
-        <result property="mtlCode" column="DJ_CIRCLE_KANBAN_AKP.MTL_CODE"/>
+        <result property="mtlCode" column="MTL_CODE"/>
         <!-- 物料名称 -->
-        <result property="mtlName" column="DJ_CIRCLE_KANBAN_AKP.MTL_NAME"/>
+        <result property="mtlName" column="MTL_NAME"/>
         <!-- 单次加工寿命 -->
-        <result property="qty" column="DJ_CIRCLE_KANBAN_AKP.QTY"/>
+        <result property="qty" column="QTY"/>
         <!-- 刀具号 -->
-        <result property="loc" column="DJ_CIRCLE_KANBAN_AKP.LOC"/>
+        <result property="loc" column="LOC"/>
         <!-- 生产线 -->
-        <result property="prdLine" column="DJ_CIRCLE_KANBAN_AKP.PRD_LINE"/>
+        <result property="prdLine" column="PRD_LINE"/>
         <!-- 工位 -->
-        <result property="station" column="DJ_CIRCLE_KANBAN_AKP.STATION"/>
+        <result property="station" column="STATION"/>
         <!-- 工厂 -->
-        <result property="boxType" column="DJ_CIRCLE_KANBAN_AKP.BOX_TYPE"/>
+        <result property="boxType" column="BOX_TYPE"/>
         <!-- 项目 -->
-        <result property="prdLineType" column="DJ_CIRCLE_KANBAN_AKP.PRD_LINE_TYPE"/>
+        <result property="prdLineType" column="PRD_LINE_TYPE"/>
         <!-- 0-新建 1-已打印 -->
-        <result property="status" column="DJ_CIRCLE_KANBAN_AKP.STATUS"/>
+        <result property="status" column="STATUS"/>
         <!-- 安装数 -->
-        <result property="susr1" column="DJ_CIRCLE_KANBAN_AKP.SUSR1"/>
+        <result property="susr1" column="SUSR1"/>
         <!-- 规则型号 -->
-        <result property="susr2" column="DJ_CIRCLE_KANBAN_AKP.SUSR2"/>
+        <result property="susr2" column="SUSR2"/>
         <!-- 采购价格 -->
-        <result property="susr3" column="DJ_CIRCLE_KANBAN_AKP.SUSR3"/>
+        <result property="susr3" column="SUSR3"/>
         <!-- 同时加工件数 -->
-        <result property="susr4" column="DJ_CIRCLE_KANBAN_AKP.SUSR4"/>
+        <result property="susr4" column="SUSR4"/>
         <!-- 刀具品牌 -->
-        <result property="brand" column="DJ_CIRCLE_KANBAN_AKP.BRAND"/>
+        <result property="brand" column="BRAND"/>
         <!-- 订货号 -->
-        <result property="orderCode" column="DJ_CIRCLE_KANBAN_AKP.ORDER_CODE"/>
+        <result property="orderCode" column="ORDER_CODE"/>
         <!-- 用途 -->
-        <result property="application" column="DJ_CIRCLE_KANBAN_AKP.APPLICATION"/>
+        <result property="application" column="APPLICATION"/>
         <!-- 复列设备数/复列工位数 -->
-        <result property="stationNum" column="DJ_CIRCLE_KANBAN_AKP.STATION_NUM"/>
+        <result property="stationNum" column="STATION_NUM"/>
         <!-- 产品标识 -->
-        <result property="productFlag" column="DJ_CIRCLE_KANBAN_AKP.PRODUCT_FLAG"/>
+        <result property="productFlag" column="PRODUCT_FLAG"/>
         <!-- 外委标识 -->
-        <result property="outsourcingFlag" column="DJ_CIRCLE_KANBAN_AKP.OUTSOURCING_FLAG"/>
+        <result property="outsourcingFlag" column="OUTSOURCING_FLAG"/>
         <!-- 总寿命 -->
-        <result property="lifeMax" column="DJ_CIRCLE_KANBAN_AKP.LIFE_MAX"/>
+        <result property="lifeMax" column="LIFE_MAX"/>
     </resultMap>
-    <!--添加-->
+    <!-- 添加 -->
     <insert id="addDjCircleKanbanAkp" parameterType="com.common.pojo.DjCircleKanbanAkp">
         INSERT INTO DJ_CIRCLE_KANBAN_AKP (
-            <!-- 仓库 -->
-            WH_CODE,
-            <!-- 刀具条码，看板号 'CK' -->
-            C_KANBAN_CODE,
-            <!-- 供应商 -->
-            OWNER_CODE,
-            <!-- 物料号 -->
-            MTL_CODE,
-            <!-- 物料名称 -->
-            MTL_NAME,
-            <!-- 单次加工寿命 -->
-            QTY,
-            <!-- 刀具号 -->
-            LOC,
-            <!-- 生产线 -->
-            PRD_LINE,
-            <!-- 工位 -->
-            STATION,
-            <!-- 工厂 -->
-            BOX_TYPE,
-            <!-- 项目 -->
-            PRD_LINE_TYPE,
-            <!-- 0-新建 1-已打印 -->
-            STATUS,
-            <!-- 安装数 -->
-            SUSR1,
-            <!-- 规则型号 -->
-            SUSR2,
-            <!-- 采购价格 -->
-            SUSR3,
-            <!-- 同时加工件数 -->
-            SUSR4,
-            <!-- 刀具品牌 -->
-            BRAND,
-            <!-- 订货号 -->
-            ORDER_CODE,
-            <!-- 用途 -->
-            APPLICATION,
-            <!-- 复列设备数/复列工位数 -->
-            STATION_NUM,
-            <!-- 产品标识 -->
-            PRODUCT_FLAG,
-            <!-- 外委标识 -->
-            OUTSOURCING_FLAG,
-            <!-- 总寿命 -->
-            LIFE_MAX
+        /* 仓库 */
+        WH_CODE,
+        /* 刀具条码，看板号 'CK' */
+        C_KANBAN_CODE,
+        /* 供应商 */
+        OWNER_CODE,
+        /* 物料号 */
+        MTL_CODE,
+        /* 物料名称 */
+        MTL_NAME,
+        /* 单次加工寿命 */
+        QTY,
+        /* 刀具号 */
+        LOC,
+        /* 生产线 */
+        PRD_LINE,
+        /* 工位 */
+        STATION,
+        /* 工厂 */
+        BOX_TYPE,
+        /* 项目 */
+        PRD_LINE_TYPE,
+        /* 0-新建 1-已打印 */
+        STATUS,
+        /* 安装数 */
+        SUSR1,
+        /* 规则型号 */
+        SUSR2,
+        /* 采购价格 */
+        SUSR3,
+        /* 同时加工件数 */
+        SUSR4,
+        /* 刀具品牌 */
+        BRAND,
+        /* 订货号 */
+        ORDER_CODE,
+        /* 用途 */
+        APPLICATION,
+        /* 复列设备数/复列工位数 */
+        STATION_NUM,
+        /* 产品标识 */
+        PRODUCT_FLAG,
+        /* 外委标识 */
+        OUTSOURCING_FLAG,
+        /* 总寿命 */
+        LIFE_MAX
         )
         VALUES (
-            <!-- 仓库 -->
-            #{whCode},
-            <!-- 刀具条码，看板号 'CK' -->
-            #{cKanbanCode},
-            <!-- 供应商 -->
-            #{ownerCode},
-            <!-- 物料号 -->
-            #{mtlCode},
-            <!-- 物料名称 -->
-            #{mtlName},
-            <!-- 单次加工寿命 -->
-            #{qty},
-            <!-- 刀具号 -->
-            #{loc},
-            <!-- 生产线 -->
-            #{prdLine},
-            <!-- 工位 -->
-            #{station},
-            <!-- 工厂 -->
-            #{boxType},
-            <!-- 项目 -->
-            #{prdLineType},
-            <!-- 0-新建 1-已打印 -->
-            #{status},
-            <!-- 安装数 -->
-            #{susr1},
-            <!-- 规则型号 -->
-            #{susr2},
-            <!-- 采购价格 -->
-            #{susr3},
-            <!-- 同时加工件数 -->
-            #{susr4},
-            <!-- 刀具品牌 -->
-            #{brand},
-            <!-- 订货号 -->
-            #{orderCode},
-            <!-- 用途 -->
-            #{application},
-            <!-- 复列设备数/复列工位数 -->
-            #{stationNum},
-            <!-- 产品标识 -->
-            #{productFlag},
-            <!-- 外委标识 -->
-            #{outsourcingFlag},
-            <!-- 总寿命 -->
-            #{lifeMax}
+        /* 仓库 */
+        #{whCode},
+        /* 刀具条码，看板号 'CK' */
+        #{cKanbanCode},
+        /* 供应商 */
+        #{ownerCode},
+        /* 物料号 */
+        #{mtlCode},
+        /* 物料名称 */
+        #{mtlName},
+        /* 单次加工寿命 */
+        #{qty},
+        /* 刀具号 */
+        #{loc},
+        /* 生产线 */
+        #{prdLine},
+        /* 工位 */
+        #{station},
+        /* 工厂 */
+        #{boxType},
+        /* 项目 */
+        #{prdLineType},
+        /* 0-新建 1-已打印 */
+        #{status},
+        /* 安装数 */
+        #{susr1},
+        /* 规则型号 */
+        #{susr2},
+        /* 采购价格 */
+        #{susr3},
+        /* 同时加工件数 */
+        #{susr4},
+        /* 刀具品牌 */
+        #{brand},
+        /* 订货号 */
+        #{orderCode},
+        /* 用途 */
+        #{application},
+        /* 复列设备数/复列工位数 */
+        #{stationNum},
+        /* 产品标识 */
+        #{productFlag},
+        /* 外委标识 */
+        #{outsourcingFlag},
+        /* 总寿命 */
+        #{lifeMax}
         )
     </insert>
 
-    <!--删除-->
+    <!-- 删除 -->
     <delete id="delDjCircleKanbanAkp" parameterType="com.common.pojo.DjCircleKanbanAkp">
         DELETE
         FROM DJ_CIRCLE_KANBAN_AKP
         WHERE
-            1 = 1
-            and WH_CODE = #{whCode}
+        1 = 1
     </delete>
 
-    <!--逻辑删除-->
+    <!-- 逻辑删除 -->
     <delete id="delDjCircleKanbanAkpForLogic" parameterType="com.common.pojo.DjCircleKanbanAkp">
-        UPDATE DJ_CIRCLE_KANBAN_AKP SET
-        is_del = 1
+        DELETE FROM  DJ_CIRCLE_KANBAN_AKP
         WHERE
-            1 = 1
-            and WH_CODE = #{whCode}
+        1 = 1
     </delete>
 
-    <!--根据VO删除-->
+    <!-- 根据VO删除 -->
     <delete id="delDjCircleKanbanAkpByVo" parameterType="com.common.vo.DjCircleKanbanAkpVO">
         DELETE FROM DJ_CIRCLE_KANBAN_AKP
         WHERE
-            1=1
-            <!-- 仓库 -->
-            <if test="whCode != null and whCode != '' " >
-                and WH_CODE =  #{whCode}
-            </if>
-            <!-- 刀具条码，看板号 'CK' -->
-            <if test="cKanbanCode != null and cKanbanCode != '' " >
-                and C_KANBAN_CODE =  #{cKanbanCode}
-            </if>
-            <!-- 供应商 -->
-            <if test="ownerCode != null and ownerCode != '' " >
-                and OWNER_CODE =  #{ownerCode}
-            </if>
-            <!-- 物料号 -->
-            <if test="mtlCode != null and mtlCode != '' " >
-                and MTL_CODE =  #{mtlCode}
-            </if>
-            <!-- 物料名称 -->
-            <if test="mtlName != null and mtlName != '' " >
-                and MTL_NAME =  #{mtlName}
-            </if>
-            <!-- 单次加工寿命 -->
-            <if test="qty != null and qty != '' " >
-                and QTY =  #{qty}
-            </if>
-            <!-- 刀具号 -->
-            <if test="loc != null and loc != '' " >
-                and LOC =  #{loc}
-            </if>
-            <!-- 生产线 -->
-            <if test="prdLine != null and prdLine != '' " >
-                and PRD_LINE =  #{prdLine}
-            </if>
-            <!-- 工位 -->
-            <if test="station != null and station != '' " >
-                and STATION =  #{station}
-            </if>
-            <!-- 工厂 -->
-            <if test="boxType != null and boxType != '' " >
-                and BOX_TYPE =  #{boxType}
-            </if>
-            <!-- 项目 -->
-            <if test="prdLineType != null and prdLineType != '' " >
-                and PRD_LINE_TYPE =  #{prdLineType}
-            </if>
-            <!-- 0-新建 1-已打印 -->
-            <if test="status != null and status != '' " >
-                and STATUS =  #{status}
-            </if>
-            <!-- 安装数 -->
-            <if test="susr1 != null and susr1 != '' " >
-                and SUSR1 =  #{susr1}
-            </if>
-            <!-- 规则型号 -->
-            <if test="susr2 != null and susr2 != '' " >
-                and SUSR2 =  #{susr2}
-            </if>
-            <!-- 采购价格 -->
-            <if test="susr3 != null and susr3 != '' " >
-                and SUSR3 =  #{susr3}
-            </if>
-            <!-- 同时加工件数 -->
-            <if test="susr4 != null and susr4 != '' " >
-                and SUSR4 =  #{susr4}
-            </if>
-            <!-- 刀具品牌 -->
-            <if test="brand != null and brand != '' " >
-                and BRAND =  #{brand}
-            </if>
-            <!-- 订货号 -->
-            <if test="orderCode != null and orderCode != '' " >
-                and ORDER_CODE =  #{orderCode}
-            </if>
-            <!-- 用途 -->
-            <if test="application != null and application != '' " >
-                and APPLICATION =  #{application}
-            </if>
-            <!-- 复列设备数/复列工位数 -->
-            <if test="stationNum != null and stationNum != '' " >
-                and STATION_NUM =  #{stationNum}
-            </if>
-            <!-- 产品标识 -->
-            <if test="productFlag != null and productFlag != '' " >
-                and PRODUCT_FLAG =  #{productFlag}
-            </if>
-            <!-- 外委标识 -->
-            <if test="outsourcingFlag != null and outsourcingFlag != '' " >
-                and OUTSOURCING_FLAG =  #{outsourcingFlag}
-            </if>
-            <!-- 总寿命 -->
-            <if test="lifeMax != null and lifeMax != '' " >
-                and LIFE_MAX =  #{lifeMax}
-            </if>
+        1=1
+        /* 仓库 */
+        <if test="whCode != null and whCode != '' " >
+            and WH_CODE =  #{whCode}
+        </if>
+        /* 刀具条码，看板号 'CK' */
+        <if test="cKanbanCode != null and cKanbanCode != '' " >
+            and C_KANBAN_CODE =  #{cKanbanCode}
+        </if>
+        /* 供应商 */
+        <if test="ownerCode != null and ownerCode != '' " >
+            and OWNER_CODE =  #{ownerCode}
+        </if>
+        /* 物料号 */
+        <if test="mtlCode != null and mtlCode != '' " >
+            and MTL_CODE =  #{mtlCode}
+        </if>
+        /* 物料名称 */
+        <if test="mtlName != null and mtlName != '' " >
+            and MTL_NAME =  #{mtlName}
+        </if>
+        /* 单次加工寿命 */
+        <if test="qty != null and qty != '' " >
+            and QTY =  #{qty}
+        </if>
+        /* 刀具号 */
+        <if test="loc != null and loc != '' " >
+            and LOC =  #{loc}
+        </if>
+        /* 生产线 */
+        <if test="prdLine != null and prdLine != '' " >
+            and PRD_LINE =  #{prdLine}
+        </if>
+        /* 工位 */
+        <if test="station != null and station != '' " >
+            and STATION =  #{station}
+        </if>
+        /* 工厂 */
+        <if test="boxType != null and boxType != '' " >
+            and BOX_TYPE =  #{boxType}
+        </if>
+        /* 项目 */
+        <if test="prdLineType != null and prdLineType != '' " >
+            and PRD_LINE_TYPE =  #{prdLineType}
+        </if>
+        /* 0-新建 1-已打印 */
+        <if test="status != null and status != '' " >
+            and STATUS =  #{status}
+        </if>
+        /* 安装数 */
+        <if test="susr1 != null and susr1 != '' " >
+            and SUSR1 =  #{susr1}
+        </if>
+        /* 规则型号 */
+        <if test="susr2 != null and susr2 != '' " >
+            and SUSR2 =  #{susr2}
+        </if>
+        /* 采购价格 */
+        <if test="susr3 != null and susr3 != '' " >
+            and SUSR3 =  #{susr3}
+        </if>
+        /* 同时加工件数 */
+        <if test="susr4 != null and susr4 != '' " >
+            and SUSR4 =  #{susr4}
+        </if>
+        /* 刀具品牌 */
+        <if test="brand != null and brand != '' " >
+            and BRAND =  #{brand}
+        </if>
+        /* 订货号 */
+        <if test="orderCode != null and orderCode != '' " >
+            and ORDER_CODE =  #{orderCode}
+        </if>
+        /* 用途 */
+        <if test="application != null and application != '' " >
+            and APPLICATION =  #{application}
+        </if>
+        /* 复列设备数/复列工位数 */
+        <if test="stationNum != null and stationNum != '' " >
+            and STATION_NUM =  #{stationNum}
+        </if>
+        /* 产品标识 */
+        <if test="productFlag != null and productFlag != '' " >
+            and PRODUCT_FLAG =  #{productFlag}
+        </if>
+        /* 外委标识 */
+        <if test="outsourcingFlag != null and outsourcingFlag != '' " >
+            and OUTSOURCING_FLAG =  #{outsourcingFlag}
+        </if>
+        /* 总寿命 */
+        <if test="lifeMax != null and lifeMax != '' " >
+            and LIFE_MAX =  #{lifeMax}
+        </if>
     </delete>
 
-    <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
+    <!-- 更新,如果属性不为null 则更新该属性,根据id更新 -->
     <update id="updDjCircleKanbanAkp" parameterType="com.common.pojo.DjCircleKanbanAkp">
         UPDATE DJ_CIRCLE_KANBAN_AKP
         SET
-            <!-- 刀具条码，看板号 'CK' -->
-            <if test="cKanbanCode != null and cKanbanCode != '' " >
-                C_KANBAN_CODE =  #{cKanbanCode},
-            </if>
-            <!-- 供应商 -->
-            <if test="ownerCode != null and ownerCode != '' " >
-                OWNER_CODE =  #{ownerCode},
-            </if>
-            <!-- 物料号 -->
-            <if test="mtlCode != null and mtlCode != '' " >
-                MTL_CODE =  #{mtlCode},
-            </if>
-            <!-- 物料名称 -->
-            <if test="mtlName != null and mtlName != '' " >
-                MTL_NAME =  #{mtlName},
-            </if>
-            <!-- 单次加工寿命 -->
-            <if test="qty != null and qty != '' " >
-                QTY =  #{qty},
-            </if>
-            <!-- 刀具号 -->
-            <if test="loc != null and loc != '' " >
-                LOC =  #{loc},
-            </if>
-            <!-- 生产线 -->
-            <if test="prdLine != null and prdLine != '' " >
-                PRD_LINE =  #{prdLine},
-            </if>
-            <!-- 工位 -->
-            <if test="station != null and station != '' " >
-                STATION =  #{station},
-            </if>
-            <!-- 工厂 -->
-            <if test="boxType != null and boxType != '' " >
-                BOX_TYPE =  #{boxType},
-            </if>
-            <!-- 项目 -->
-            <if test="prdLineType != null and prdLineType != '' " >
-                PRD_LINE_TYPE =  #{prdLineType},
-            </if>
-            <!-- 0-新建 1-已打印 -->
-            <if test="status != null and status != '' " >
-                STATUS =  #{status},
-            </if>
-            <!-- 安装数 -->
-            <if test="susr1 != null and susr1 != '' " >
-                SUSR1 =  #{susr1},
-            </if>
-            <!-- 规则型号 -->
-            <if test="susr2 != null and susr2 != '' " >
-                SUSR2 =  #{susr2},
-            </if>
-            <!-- 采购价格 -->
-            <if test="susr3 != null and susr3 != '' " >
-                SUSR3 =  #{susr3},
-            </if>
-            <!-- 同时加工件数 -->
-            <if test="susr4 != null and susr4 != '' " >
-                SUSR4 =  #{susr4},
-            </if>
-            <!-- 刀具品牌 -->
-            <if test="brand != null and brand != '' " >
-                BRAND =  #{brand},
-            </if>
-            <!-- 订货号 -->
-            <if test="orderCode != null and orderCode != '' " >
-                ORDER_CODE =  #{orderCode},
-            </if>
-            <!-- 用途 -->
-            <if test="application != null and application != '' " >
-                APPLICATION =  #{application},
-            </if>
-            <!-- 复列设备数/复列工位数 -->
-            <if test="stationNum != null and stationNum != '' " >
-                STATION_NUM =  #{stationNum},
-            </if>
-            <!-- 产品标识 -->
-            <if test="productFlag != null and productFlag != '' " >
-                PRODUCT_FLAG =  #{productFlag},
-            </if>
-            <!-- 外委标识 -->
-            <if test="outsourcingFlag != null and outsourcingFlag != '' " >
-                OUTSOURCING_FLAG =  #{outsourcingFlag},
-            </if>
-            <!-- 总寿命 -->
-            <if test="lifeMax != null and lifeMax != '' " >
-                LIFE_MAX =  #{lifeMax},
-            </if>
-            <!-- 仓库 -->
-            WH_CODE = #{whCode}
+        /* 仓库 */
+        <if test="whCode != null and whCode != '' " >
+            WH_CODE =  #{whCode},
+        </if>
+        /* 刀具条码，看板号 'CK' */
+        <if test="cKanbanCode != null and cKanbanCode != '' " >
+            C_KANBAN_CODE =  #{cKanbanCode},
+        </if>
+        /* 供应商 */
+        <if test="ownerCode != null and ownerCode != '' " >
+            OWNER_CODE =  #{ownerCode},
+        </if>
+        /* 物料号 */
+        <if test="mtlCode != null and mtlCode != '' " >
+            MTL_CODE =  #{mtlCode},
+        </if>
+        /* 物料名称 */
+        <if test="mtlName != null and mtlName != '' " >
+            MTL_NAME =  #{mtlName},
+        </if>
+        /* 单次加工寿命 */
+        <if test="qty != null and qty != '' " >
+            QTY =  #{qty},
+        </if>
+        /* 刀具号 */
+        <if test="loc != null and loc != '' " >
+            LOC =  #{loc},
+        </if>
+        /* 生产线 */
+        <if test="prdLine != null and prdLine != '' " >
+            PRD_LINE =  #{prdLine},
+        </if>
+        /* 工位 */
+        <if test="station != null and station != '' " >
+            STATION =  #{station},
+        </if>
+        /* 工厂 */
+        <if test="boxType != null and boxType != '' " >
+            BOX_TYPE =  #{boxType},
+        </if>
+        /* 项目 */
+        <if test="prdLineType != null and prdLineType != '' " >
+            PRD_LINE_TYPE =  #{prdLineType},
+        </if>
+        /* 0-新建 1-已打印 */
+        <if test="status != null and status != '' " >
+            STATUS =  #{status},
+        </if>
+        /* 安装数 */
+        <if test="susr1 != null and susr1 != '' " >
+            SUSR1 =  #{susr1},
+        </if>
+        /* 规则型号 */
+        <if test="susr2 != null and susr2 != '' " >
+            SUSR2 =  #{susr2},
+        </if>
+        /* 采购价格 */
+        <if test="susr3 != null and susr3 != '' " >
+            SUSR3 =  #{susr3},
+        </if>
+        /* 同时加工件数 */
+        <if test="susr4 != null and susr4 != '' " >
+            SUSR4 =  #{susr4},
+        </if>
+        /* 刀具品牌 */
+        <if test="brand != null and brand != '' " >
+            BRAND =  #{brand},
+        </if>
+        /* 订货号 */
+        <if test="orderCode != null and orderCode != '' " >
+            ORDER_CODE =  #{orderCode},
+        </if>
+        /* 用途 */
+        <if test="application != null and application != '' " >
+            APPLICATION =  #{application},
+        </if>
+        /* 复列设备数/复列工位数 */
+        <if test="stationNum != null and stationNum != '' " >
+            STATION_NUM =  #{stationNum},
+        </if>
+        /* 产品标识 */
+        <if test="productFlag != null and productFlag != '' " >
+            PRODUCT_FLAG =  #{productFlag},
+        </if>
+        /* 外委标识 */
+        <if test="outsourcingFlag != null and outsourcingFlag != '' " >
+            OUTSOURCING_FLAG =  #{outsourcingFlag},
+        </if>
+        /* 总寿命 */
+        <if test="lifeMax != null and lifeMax != '' " >
+            LIFE_MAX =  #{lifeMax},
+        </if>
         WHERE
-            1 = 1
-            and WH_CODE = #{whCode}
+        1 = 1
     </update>
 
-    <!--分页查询 -->
+    <!-- 分页查询 -->
     <select id="getDjCircleKanbanAkpByPage" parameterType="com.common.vo.DjCircleKanbanAkpVO" resultMap="djCircleKanbanAkpQueryMap">
         SELECT
         /*djCircleKanbanAkp begin*/
-            <!-- 仓库 -->
-            DJ_CIRCLE_KANBAN_AKP.WH_CODE as 'DJ_CIRCLE_KANBAN_AKP.WH_CODE',
-            <!-- 刀具条码，看板号 'CK' -->
-            DJ_CIRCLE_KANBAN_AKP.C_KANBAN_CODE as 'DJ_CIRCLE_KANBAN_AKP.C_KANBAN_CODE',
-            <!-- 供应商 -->
-            DJ_CIRCLE_KANBAN_AKP.OWNER_CODE as 'DJ_CIRCLE_KANBAN_AKP.OWNER_CODE',
-            <!-- 物料号 -->
-            DJ_CIRCLE_KANBAN_AKP.MTL_CODE as 'DJ_CIRCLE_KANBAN_AKP.MTL_CODE',
-            <!-- 物料名称 -->
-            DJ_CIRCLE_KANBAN_AKP.MTL_NAME as 'DJ_CIRCLE_KANBAN_AKP.MTL_NAME',
-            <!-- 单次加工寿命 -->
-            DJ_CIRCLE_KANBAN_AKP.QTY as 'DJ_CIRCLE_KANBAN_AKP.QTY',
-            <!-- 刀具号 -->
-            DJ_CIRCLE_KANBAN_AKP.LOC as 'DJ_CIRCLE_KANBAN_AKP.LOC',
-            <!-- 生产线 -->
-            DJ_CIRCLE_KANBAN_AKP.PRD_LINE as 'DJ_CIRCLE_KANBAN_AKP.PRD_LINE',
-            <!-- 工位 -->
-            DJ_CIRCLE_KANBAN_AKP.STATION as 'DJ_CIRCLE_KANBAN_AKP.STATION',
-            <!-- 工厂 -->
-            DJ_CIRCLE_KANBAN_AKP.BOX_TYPE as 'DJ_CIRCLE_KANBAN_AKP.BOX_TYPE',
-            <!-- 项目 -->
-            DJ_CIRCLE_KANBAN_AKP.PRD_LINE_TYPE as 'DJ_CIRCLE_KANBAN_AKP.PRD_LINE_TYPE',
-            <!-- 0-新建 1-已打印 -->
-            DJ_CIRCLE_KANBAN_AKP.STATUS as 'DJ_CIRCLE_KANBAN_AKP.STATUS',
-            <!-- 安装数 -->
-            DJ_CIRCLE_KANBAN_AKP.SUSR1 as 'DJ_CIRCLE_KANBAN_AKP.SUSR1',
-            <!-- 规则型号 -->
-            DJ_CIRCLE_KANBAN_AKP.SUSR2 as 'DJ_CIRCLE_KANBAN_AKP.SUSR2',
-            <!-- 采购价格 -->
-            DJ_CIRCLE_KANBAN_AKP.SUSR3 as 'DJ_CIRCLE_KANBAN_AKP.SUSR3',
-            <!-- 同时加工件数 -->
-            DJ_CIRCLE_KANBAN_AKP.SUSR4 as 'DJ_CIRCLE_KANBAN_AKP.SUSR4',
-            <!-- 刀具品牌 -->
-            DJ_CIRCLE_KANBAN_AKP.BRAND as 'DJ_CIRCLE_KANBAN_AKP.BRAND',
-            <!-- 订货号 -->
-            DJ_CIRCLE_KANBAN_AKP.ORDER_CODE as 'DJ_CIRCLE_KANBAN_AKP.ORDER_CODE',
-            <!-- 用途 -->
-            DJ_CIRCLE_KANBAN_AKP.APPLICATION as 'DJ_CIRCLE_KANBAN_AKP.APPLICATION',
-            <!-- 复列设备数/复列工位数 -->
-            DJ_CIRCLE_KANBAN_AKP.STATION_NUM as 'DJ_CIRCLE_KANBAN_AKP.STATION_NUM',
-            <!-- 产品标识 -->
-            DJ_CIRCLE_KANBAN_AKP.PRODUCT_FLAG as 'DJ_CIRCLE_KANBAN_AKP.PRODUCT_FLAG',
-            <!-- 外委标识 -->
-            DJ_CIRCLE_KANBAN_AKP.OUTSOURCING_FLAG as 'DJ_CIRCLE_KANBAN_AKP.OUTSOURCING_FLAG',
-            <!-- 总寿命 -->
-            DJ_CIRCLE_KANBAN_AKP.LIFE_MAX as 'DJ_CIRCLE_KANBAN_AKP.LIFE_MAX'
+        /* 仓库 */
+        WH_CODE as WH_CODE,
+        /* 刀具条码，看板号 'CK' */
+        C_KANBAN_CODE as C_KANBAN_CODE,
+        /* 供应商 */
+        OWNER_CODE as OWNER_CODE,
+        /* 物料号 */
+        MTL_CODE as MTL_CODE,
+        /* 物料名称 */
+        MTL_NAME as MTL_NAME,
+        /* 单次加工寿命 */
+        QTY as QTY,
+        /* 刀具号 */
+        LOC as LOC,
+        /* 生产线 */
+        PRD_LINE as PRD_LINE,
+        /* 工位 */
+        STATION as STATION,
+        /* 工厂 */
+        BOX_TYPE as BOX_TYPE,
+        /* 项目 */
+        PRD_LINE_TYPE as PRD_LINE_TYPE,
+        /* 0-新建 1-已打印 */
+        STATUS as STATUS,
+        /* 安装数 */
+        SUSR1 as SUSR1,
+        /* 规则型号 */
+        SUSR2 as SUSR2,
+        /* 采购价格 */
+        SUSR3 as SUSR3,
+        /* 同时加工件数 */
+        SUSR4 as SUSR4,
+        /* 刀具品牌 */
+        BRAND as BRAND,
+        /* 订货号 */
+        ORDER_CODE as ORDER_CODE,
+        /* 用途 */
+        APPLICATION as APPLICATION,
+        /* 复列设备数/复列工位数 */
+        STATION_NUM as STATION_NUM,
+        /* 产品标识 */
+        PRODUCT_FLAG as PRODUCT_FLAG,
+        /* 外委标识 */
+        OUTSOURCING_FLAG as OUTSOURCING_FLAG,
+        /* 总寿命 */
+        LIFE_MAX as LIFE_MAX
         /*djCircleKanbanAkp end*/
-        FROM DJ_CIRCLE_KANBAN_AKP as DJ_CIRCLE_KANBAN_AKP
+        FROM DJ_CIRCLE_KANBAN_AKP
         WHERE
-            1 = 1
+        1 = 1
         /*DJ_CIRCLE_KANBAN_AKP begin*/
-            <!-- 仓库 -->
-            <if test="whCode != null and whCode != '' " >
-                and DJ_CIRCLE_KANBAN_AKP.WH_CODE = #{whCode}
-            </if>
-            <!-- 刀具条码，看板号 'CK' -->
-            <if test="cKanbanCode != null and cKanbanCode != '' " >
-                and DJ_CIRCLE_KANBAN_AKP.C_KANBAN_CODE = #{cKanbanCode}
-            </if>
-            <!-- 供应商 -->
-            <if test="ownerCode != null and ownerCode != '' " >
-                and DJ_CIRCLE_KANBAN_AKP.OWNER_CODE = #{ownerCode}
-            </if>
-            <!-- 物料号 -->
-            <if test="mtlCode != null and mtlCode != '' " >
-                and DJ_CIRCLE_KANBAN_AKP.MTL_CODE = #{mtlCode}
-            </if>
-            <!-- 物料名称 -->
-            <if test="mtlName != null and mtlName != '' " >
-                and DJ_CIRCLE_KANBAN_AKP.MTL_NAME = #{mtlName}
-            </if>
-            <!-- 单次加工寿命 -->
-            <if test="qty != null and qty != '' " >
-                and DJ_CIRCLE_KANBAN_AKP.QTY = #{qty}
-            </if>
-            <!-- 刀具号 -->
-            <if test="loc != null and loc != '' " >
-                and DJ_CIRCLE_KANBAN_AKP.LOC = #{loc}
-            </if>
-            <!-- 生产线 -->
-            <if test="prdLine != null and prdLine != '' " >
-                and DJ_CIRCLE_KANBAN_AKP.PRD_LINE = #{prdLine}
-            </if>
-            <!-- 工位 -->
-            <if test="station != null and station != '' " >
-                and DJ_CIRCLE_KANBAN_AKP.STATION = #{station}
-            </if>
-            <!-- 工厂 -->
-            <if test="boxType != null and boxType != '' " >
-                and DJ_CIRCLE_KANBAN_AKP.BOX_TYPE = #{boxType}
-            </if>
-            <!-- 项目 -->
-            <if test="prdLineType != null and prdLineType != '' " >
-                and DJ_CIRCLE_KANBAN_AKP.PRD_LINE_TYPE = #{prdLineType}
-            </if>
-            <!-- 0-新建 1-已打印 -->
-            <if test="status != null and status != '' " >
-                and DJ_CIRCLE_KANBAN_AKP.STATUS = #{status}
-            </if>
-            <!-- 安装数 -->
-            <if test="susr1 != null and susr1 != '' " >
-                and DJ_CIRCLE_KANBAN_AKP.SUSR1 = #{susr1}
-            </if>
-            <!-- 规则型号 -->
-            <if test="susr2 != null and susr2 != '' " >
-                and DJ_CIRCLE_KANBAN_AKP.SUSR2 = #{susr2}
-            </if>
-            <!-- 采购价格 -->
-            <if test="susr3 != null and susr3 != '' " >
-                and DJ_CIRCLE_KANBAN_AKP.SUSR3 = #{susr3}
-            </if>
-            <!-- 同时加工件数 -->
-            <if test="susr4 != null and susr4 != '' " >
-                and DJ_CIRCLE_KANBAN_AKP.SUSR4 = #{susr4}
-            </if>
-            <!-- 刀具品牌 -->
-            <if test="brand != null and brand != '' " >
-                and DJ_CIRCLE_KANBAN_AKP.BRAND = #{brand}
-            </if>
-            <!-- 订货号 -->
-            <if test="orderCode != null and orderCode != '' " >
-                and DJ_CIRCLE_KANBAN_AKP.ORDER_CODE = #{orderCode}
-            </if>
-            <!-- 用途 -->
-            <if test="application != null and application != '' " >
-                and DJ_CIRCLE_KANBAN_AKP.APPLICATION = #{application}
-            </if>
-            <!-- 复列设备数/复列工位数 -->
-            <if test="stationNum != null and stationNum != '' " >
-                and DJ_CIRCLE_KANBAN_AKP.STATION_NUM = #{stationNum}
-            </if>
-            <!-- 产品标识 -->
-            <if test="productFlag != null and productFlag != '' " >
-                and DJ_CIRCLE_KANBAN_AKP.PRODUCT_FLAG = #{productFlag}
-            </if>
-            <!-- 外委标识 -->
-            <if test="outsourcingFlag != null and outsourcingFlag != '' " >
-                and DJ_CIRCLE_KANBAN_AKP.OUTSOURCING_FLAG = #{outsourcingFlag}
-            </if>
-            <!-- 总寿命 -->
-            <if test="lifeMax != null and lifeMax != '' " >
-                and DJ_CIRCLE_KANBAN_AKP.LIFE_MAX = #{lifeMax}
-            </if>
-        /*DJ_CIRCLE_KANBAN_AKP end*/
-        ORDER BY DJ_CIRCLE_KANBAN_AKP.WH_CODE desc
-        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
-        LIMIT #{startRecord},#{pageSize}
+        /* 仓库 */
+        <if test="whCode != null and whCode != '' " >
+            and WH_CODE = #{whCode}
         </if>
+        /* 刀具条码，看板号 'CK' */
+        <if test="cKanbanCode != null and cKanbanCode != '' " >
+            and C_KANBAN_CODE = #{cKanbanCode}
+        </if>
+        /* 供应商 */
+        <if test="ownerCode != null and ownerCode != '' " >
+            and OWNER_CODE = #{ownerCode}
+        </if>
+        /* 物料号 */
+        <if test="mtlCode != null and mtlCode != '' " >
+            and MTL_CODE = #{mtlCode}
+        </if>
+        /* 物料名称 */
+        <if test="mtlName != null and mtlName != '' " >
+            and MTL_NAME = #{mtlName}
+        </if>
+        /* 单次加工寿命 */
+        <if test="qty != null and qty != '' " >
+            and QTY = #{qty}
+        </if>
+        /* 刀具号 */
+        <if test="loc != null and loc != '' " >
+            and LOC = #{loc}
+        </if>
+        /* 生产线 */
+        <if test="prdLine != null and prdLine != '' " >
+            and PRD_LINE = #{prdLine}
+        </if>
+        /* 工位 */
+        <if test="station != null and station != '' " >
+            and STATION = #{station}
+        </if>
+        /* 工厂 */
+        <if test="boxType != null and boxType != '' " >
+            and BOX_TYPE = #{boxType}
+        </if>
+        /* 项目 */
+        <if test="prdLineType != null and prdLineType != '' " >
+            and PRD_LINE_TYPE = #{prdLineType}
+        </if>
+        /* 0-新建 1-已打印 */
+        <if test="status != null and status != '' " >
+            and STATUS = #{status}
+        </if>
+        /* 安装数 */
+        <if test="susr1 != null and susr1 != '' " >
+            and SUSR1 = #{susr1}
+        </if>
+        /* 规则型号 */
+        <if test="susr2 != null and susr2 != '' " >
+            and SUSR2 = #{susr2}
+        </if>
+        /* 采购价格 */
+        <if test="susr3 != null and susr3 != '' " >
+            and SUSR3 = #{susr3}
+        </if>
+        /* 同时加工件数 */
+        <if test="susr4 != null and susr4 != '' " >
+            and SUSR4 = #{susr4}
+        </if>
+        /* 刀具品牌 */
+        <if test="brand != null and brand != '' " >
+            and BRAND = #{brand}
+        </if>
+        /* 订货号 */
+        <if test="orderCode != null and orderCode != '' " >
+            and ORDER_CODE = #{orderCode}
+        </if>
+        /* 用途 */
+        <if test="application != null and application != '' " >
+            and APPLICATION = #{application}
+        </if>
+        /* 复列设备数/复列工位数 */
+        <if test="stationNum != null and stationNum != '' " >
+            and STATION_NUM = #{stationNum}
+        </if>
+        /* 产品标识 */
+        <if test="productFlag != null and productFlag != '' " >
+            and PRODUCT_FLAG = #{productFlag}
+        </if>
+        /* 外委标识 */
+        <if test="outsourcingFlag != null and outsourcingFlag != '' " >
+            and OUTSOURCING_FLAG = #{outsourcingFlag}
+        </if>
+        /* 总寿命 */
+        <if test="lifeMax != null and lifeMax != '' " >
+            and LIFE_MAX = #{lifeMax}
+        </if>
+        /*DJ_CIRCLE_KANBAN_AKP end*/
+        ORDER BY  desc
     </select>
 
 
-    <!--查询记录数-->
+    <!-- 查询记录数 -->
     <select id="getDjCircleKanbanAkpCount" parameterType="com.common.vo.DjCircleKanbanAkpVO" resultType="java.lang.Integer">
         SELECT COUNT(1)
-        FROM DJ_CIRCLE_KANBAN_AKP as DJ_CIRCLE_KANBAN_AKP
+        FROM DJ_CIRCLE_KANBAN_AKP
         WHERE
-            1 = 1
+        1 = 1
         /*DJ_CIRCLE_KANBAN_AKP begin*/
-        <!-- 仓库 -->
+        /* 仓库 */
         <if test="whCode != null and whCode != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.WH_CODE = #{whCode}
+            and WH_CODE = #{whCode}
         </if>
-        <!-- 刀具条码，看板号 'CK' -->
+        /* 刀具条码，看板号 'CK' */
         <if test="cKanbanCode != null and cKanbanCode != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.C_KANBAN_CODE = #{cKanbanCode}
+            and C_KANBAN_CODE = #{cKanbanCode}
         </if>
-        <!-- 供应商 -->
+        /* 供应商 */
         <if test="ownerCode != null and ownerCode != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.OWNER_CODE = #{ownerCode}
+            and OWNER_CODE = #{ownerCode}
         </if>
-        <!-- 物料号 -->
+        /* 物料号 */
         <if test="mtlCode != null and mtlCode != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.MTL_CODE = #{mtlCode}
+            and MTL_CODE = #{mtlCode}
         </if>
-        <!-- 物料名称 -->
+        /* 物料名称 */
         <if test="mtlName != null and mtlName != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.MTL_NAME = #{mtlName}
+            and MTL_NAME = #{mtlName}
         </if>
-        <!-- 单次加工寿命 -->
+        /* 单次加工寿命 */
         <if test="qty != null and qty != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.QTY = #{qty}
+            and QTY = #{qty}
         </if>
-        <!-- 刀具号 -->
+        /* 刀具号 */
         <if test="loc != null and loc != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.LOC = #{loc}
+            and LOC = #{loc}
         </if>
-        <!-- 生产线 -->
+        /* 生产线 */
         <if test="prdLine != null and prdLine != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.PRD_LINE = #{prdLine}
+            and PRD_LINE = #{prdLine}
         </if>
-        <!-- 工位 -->
+        /* 工位 */
         <if test="station != null and station != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.STATION = #{station}
+            and STATION = #{station}
         </if>
-        <!-- 工厂 -->
+        /* 工厂 */
         <if test="boxType != null and boxType != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.BOX_TYPE = #{boxType}
+            and BOX_TYPE = #{boxType}
         </if>
-        <!-- 项目 -->
+        /* 项目 */
         <if test="prdLineType != null and prdLineType != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.PRD_LINE_TYPE = #{prdLineType}
+            and PRD_LINE_TYPE = #{prdLineType}
         </if>
-        <!-- 0-新建 1-已打印 -->
+        /* 0-新建 1-已打印 */
         <if test="status != null and status != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.STATUS = #{status}
+            and STATUS = #{status}
         </if>
-        <!-- 安装数 -->
+        /* 安装数 */
         <if test="susr1 != null and susr1 != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.SUSR1 = #{susr1}
+            and SUSR1 = #{susr1}
         </if>
-        <!-- 规则型号 -->
+        /* 规则型号 */
         <if test="susr2 != null and susr2 != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.SUSR2 = #{susr2}
+            and SUSR2 = #{susr2}
         </if>
-        <!-- 采购价格 -->
+        /* 采购价格 */
         <if test="susr3 != null and susr3 != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.SUSR3 = #{susr3}
+            and SUSR3 = #{susr3}
         </if>
-        <!-- 同时加工件数 -->
+        /* 同时加工件数 */
         <if test="susr4 != null and susr4 != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.SUSR4 = #{susr4}
+            and SUSR4 = #{susr4}
         </if>
-        <!-- 刀具品牌 -->
+        /* 刀具品牌 */
         <if test="brand != null and brand != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.BRAND = #{brand}
+            and BRAND = #{brand}
         </if>
-        <!-- 订货号 -->
+        /* 订货号 */
         <if test="orderCode != null and orderCode != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.ORDER_CODE = #{orderCode}
+            and ORDER_CODE = #{orderCode}
         </if>
-        <!-- 用途 -->
+        /* 用途 */
         <if test="application != null and application != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.APPLICATION = #{application}
+            and APPLICATION = #{application}
         </if>
-        <!-- 复列设备数/复列工位数 -->
+        /* 复列设备数/复列工位数 */
         <if test="stationNum != null and stationNum != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.STATION_NUM = #{stationNum}
+            and STATION_NUM = #{stationNum}
         </if>
-        <!-- 产品标识 -->
+        /* 产品标识 */
         <if test="productFlag != null and productFlag != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.PRODUCT_FLAG = #{productFlag}
+            and PRODUCT_FLAG = #{productFlag}
         </if>
-        <!-- 外委标识 -->
+        /* 外委标识 */
         <if test="outsourcingFlag != null and outsourcingFlag != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.OUTSOURCING_FLAG = #{outsourcingFlag}
+            and OUTSOURCING_FLAG = #{outsourcingFlag}
         </if>
-        <!-- 总寿命 -->
+        /* 总寿命 */
         <if test="lifeMax != null and lifeMax != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.LIFE_MAX = #{lifeMax}
+            and LIFE_MAX = #{lifeMax}
         </if>
         /*DJ_CIRCLE_KANBAN_AKP end*/
     </select>
 
-    <!--根据vo查询 -->
+    <!-- 根据vo查询 -->
     <select id="getDjCircleKanbanAkp" parameterType="com.common.vo.DjCircleKanbanAkpVO" resultMap="djCircleKanbanAkpQueryMap">
         SELECT
         /*DJ_CIRCLE_KANBAN_AKP begin*/
-        <!-- 仓库 -->
-        DJ_CIRCLE_KANBAN_AKP.WH_CODE as 'DJ_CIRCLE_KANBAN_AKP.WH_CODE',
-        <!-- 刀具条码，看板号 'CK' -->
-        DJ_CIRCLE_KANBAN_AKP.C_KANBAN_CODE as 'DJ_CIRCLE_KANBAN_AKP.C_KANBAN_CODE',
-        <!-- 供应商 -->
-        DJ_CIRCLE_KANBAN_AKP.OWNER_CODE as 'DJ_CIRCLE_KANBAN_AKP.OWNER_CODE',
-        <!-- 物料号 -->
-        DJ_CIRCLE_KANBAN_AKP.MTL_CODE as 'DJ_CIRCLE_KANBAN_AKP.MTL_CODE',
-        <!-- 物料名称 -->
-        DJ_CIRCLE_KANBAN_AKP.MTL_NAME as 'DJ_CIRCLE_KANBAN_AKP.MTL_NAME',
-        <!-- 单次加工寿命 -->
-        DJ_CIRCLE_KANBAN_AKP.QTY as 'DJ_CIRCLE_KANBAN_AKP.QTY',
-        <!-- 刀具号 -->
-        DJ_CIRCLE_KANBAN_AKP.LOC as 'DJ_CIRCLE_KANBAN_AKP.LOC',
-        <!-- 生产线 -->
-        DJ_CIRCLE_KANBAN_AKP.PRD_LINE as 'DJ_CIRCLE_KANBAN_AKP.PRD_LINE',
-        <!-- 工位 -->
-        DJ_CIRCLE_KANBAN_AKP.STATION as 'DJ_CIRCLE_KANBAN_AKP.STATION',
-        <!-- 工厂 -->
-        DJ_CIRCLE_KANBAN_AKP.BOX_TYPE as 'DJ_CIRCLE_KANBAN_AKP.BOX_TYPE',
-        <!-- 项目 -->
-        DJ_CIRCLE_KANBAN_AKP.PRD_LINE_TYPE as 'DJ_CIRCLE_KANBAN_AKP.PRD_LINE_TYPE',
-        <!-- 0-新建 1-已打印 -->
-        DJ_CIRCLE_KANBAN_AKP.STATUS as 'DJ_CIRCLE_KANBAN_AKP.STATUS',
-        <!-- 安装数 -->
-        DJ_CIRCLE_KANBAN_AKP.SUSR1 as 'DJ_CIRCLE_KANBAN_AKP.SUSR1',
-        <!-- 规则型号 -->
-        DJ_CIRCLE_KANBAN_AKP.SUSR2 as 'DJ_CIRCLE_KANBAN_AKP.SUSR2',
-        <!-- 采购价格 -->
-        DJ_CIRCLE_KANBAN_AKP.SUSR3 as 'DJ_CIRCLE_KANBAN_AKP.SUSR3',
-        <!-- 同时加工件数 -->
-        DJ_CIRCLE_KANBAN_AKP.SUSR4 as 'DJ_CIRCLE_KANBAN_AKP.SUSR4',
-        <!-- 刀具品牌 -->
-        DJ_CIRCLE_KANBAN_AKP.BRAND as 'DJ_CIRCLE_KANBAN_AKP.BRAND',
-        <!-- 订货号 -->
-        DJ_CIRCLE_KANBAN_AKP.ORDER_CODE as 'DJ_CIRCLE_KANBAN_AKP.ORDER_CODE',
-        <!-- 用途 -->
-        DJ_CIRCLE_KANBAN_AKP.APPLICATION as 'DJ_CIRCLE_KANBAN_AKP.APPLICATION',
-        <!-- 复列设备数/复列工位数 -->
-        DJ_CIRCLE_KANBAN_AKP.STATION_NUM as 'DJ_CIRCLE_KANBAN_AKP.STATION_NUM',
-        <!-- 产品标识 -->
-        DJ_CIRCLE_KANBAN_AKP.PRODUCT_FLAG as 'DJ_CIRCLE_KANBAN_AKP.PRODUCT_FLAG',
-        <!-- 外委标识 -->
-        DJ_CIRCLE_KANBAN_AKP.OUTSOURCING_FLAG as 'DJ_CIRCLE_KANBAN_AKP.OUTSOURCING_FLAG',
-        <!-- 总寿命 -->
-        DJ_CIRCLE_KANBAN_AKP.LIFE_MAX as 'DJ_CIRCLE_KANBAN_AKP.LIFE_MAX'
+        /*djCircleKanbanAkp begin*/
+        /* 仓库 */
+        WH_CODE as WH_CODE,
+        /* 刀具条码，看板号 'CK' */
+        C_KANBAN_CODE as C_KANBAN_CODE,
+        /* 供应商 */
+        OWNER_CODE as OWNER_CODE,
+        /* 物料号 */
+        MTL_CODE as MTL_CODE,
+        /* 物料名称 */
+        MTL_NAME as MTL_NAME,
+        /* 单次加工寿命 */
+        QTY as QTY,
+        /* 刀具号 */
+        LOC as LOC,
+        /* 生产线 */
+        PRD_LINE as PRD_LINE,
+        /* 工位 */
+        STATION as STATION,
+        /* 工厂 */
+        BOX_TYPE as BOX_TYPE,
+        /* 项目 */
+        PRD_LINE_TYPE as PRD_LINE_TYPE,
+        /* 0-新建 1-已打印 */
+        STATUS as STATUS,
+        /* 安装数 */
+        SUSR1 as SUSR1,
+        /* 规则型号 */
+        SUSR2 as SUSR2,
+        /* 采购价格 */
+        SUSR3 as SUSR3,
+        /* 同时加工件数 */
+        SUSR4 as SUSR4,
+        /* 刀具品牌 */
+        BRAND as BRAND,
+        /* 订货号 */
+        ORDER_CODE as ORDER_CODE,
+        /* 用途 */
+        APPLICATION as APPLICATION,
+        /* 复列设备数/复列工位数 */
+        STATION_NUM as STATION_NUM,
+        /* 产品标识 */
+        PRODUCT_FLAG as PRODUCT_FLAG,
+        /* 外委标识 */
+        OUTSOURCING_FLAG as OUTSOURCING_FLAG,
+        /* 总寿命 */
+        LIFE_MAX as LIFE_MAX
         /*DJ_CIRCLE_KANBAN_AKP end*/
-        FROM DJ_CIRCLE_KANBAN_AKP as DJ_CIRCLE_KANBAN_AKP
+        FROM DJ_CIRCLE_KANBAN_AKP
         WHERE
-            1 = 1
+        1 = 1
         /*DJ_CIRCLE_KANBAN_AKP begin*/
-        <!-- 仓库 -->
+        /* 仓库 */
         <if test="whCode != null and whCode != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.WH_CODE = #{whCode}
+            and WH_CODE = #{whCode}
         </if>
-        <!-- 刀具条码，看板号 'CK' -->
+        /* 刀具条码，看板号 'CK' */
         <if test="cKanbanCode != null and cKanbanCode != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.C_KANBAN_CODE = #{cKanbanCode}
+            and C_KANBAN_CODE = #{cKanbanCode}
         </if>
-        <!-- 供应商 -->
+        /* 供应商 */
         <if test="ownerCode != null and ownerCode != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.OWNER_CODE = #{ownerCode}
+            and OWNER_CODE = #{ownerCode}
         </if>
-        <!-- 物料号 -->
+        /* 物料号 */
         <if test="mtlCode != null and mtlCode != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.MTL_CODE = #{mtlCode}
+            and MTL_CODE = #{mtlCode}
         </if>
-        <!-- 物料名称 -->
+        /* 物料名称 */
         <if test="mtlName != null and mtlName != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.MTL_NAME = #{mtlName}
+            and MTL_NAME = #{mtlName}
         </if>
-        <!-- 单次加工寿命 -->
+        /* 单次加工寿命 */
         <if test="qty != null and qty != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.QTY = #{qty}
+            and QTY = #{qty}
         </if>
-        <!-- 刀具号 -->
+        /* 刀具号 */
         <if test="loc != null and loc != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.LOC = #{loc}
+            and LOC = #{loc}
         </if>
-        <!-- 生产线 -->
+        /* 生产线 */
         <if test="prdLine != null and prdLine != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.PRD_LINE = #{prdLine}
+            and PRD_LINE = #{prdLine}
         </if>
-        <!-- 工位 -->
+        /* 工位 */
         <if test="station != null and station != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.STATION = #{station}
+            and STATION = #{station}
         </if>
-        <!-- 工厂 -->
+        /* 工厂 */
         <if test="boxType != null and boxType != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.BOX_TYPE = #{boxType}
+            and BOX_TYPE = #{boxType}
         </if>
-        <!-- 项目 -->
+        /* 项目 */
         <if test="prdLineType != null and prdLineType != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.PRD_LINE_TYPE = #{prdLineType}
+            and PRD_LINE_TYPE = #{prdLineType}
         </if>
-        <!-- 0-新建 1-已打印 -->
+        /* 0-新建 1-已打印 */
         <if test="status != null and status != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.STATUS = #{status}
+            and STATUS = #{status}
         </if>
-        <!-- 安装数 -->
+        /* 安装数 */
         <if test="susr1 != null and susr1 != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.SUSR1 = #{susr1}
+            and SUSR1 = #{susr1}
         </if>
-        <!-- 规则型号 -->
+        /* 规则型号 */
         <if test="susr2 != null and susr2 != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.SUSR2 = #{susr2}
+            and SUSR2 = #{susr2}
         </if>
-        <!-- 采购价格 -->
+        /* 采购价格 */
         <if test="susr3 != null and susr3 != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.SUSR3 = #{susr3}
+            and SUSR3 = #{susr3}
         </if>
-        <!-- 同时加工件数 -->
+        /* 同时加工件数 */
         <if test="susr4 != null and susr4 != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.SUSR4 = #{susr4}
+            and SUSR4 = #{susr4}
         </if>
-        <!-- 刀具品牌 -->
+        /* 刀具品牌 */
         <if test="brand != null and brand != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.BRAND = #{brand}
+            and BRAND = #{brand}
         </if>
-        <!-- 订货号 -->
+        /* 订货号 */
         <if test="orderCode != null and orderCode != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.ORDER_CODE = #{orderCode}
+            and ORDER_CODE = #{orderCode}
         </if>
-        <!-- 用途 -->
+        /* 用途 */
         <if test="application != null and application != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.APPLICATION = #{application}
+            and APPLICATION = #{application}
         </if>
-        <!-- 复列设备数/复列工位数 -->
+        /* 复列设备数/复列工位数 */
         <if test="stationNum != null and stationNum != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.STATION_NUM = #{stationNum}
+            and STATION_NUM = #{stationNum}
         </if>
-        <!-- 产品标识 -->
+        /* 产品标识 */
         <if test="productFlag != null and productFlag != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.PRODUCT_FLAG = #{productFlag}
+            and PRODUCT_FLAG = #{productFlag}
         </if>
-        <!-- 外委标识 -->
+        /* 外委标识 */
         <if test="outsourcingFlag != null and outsourcingFlag != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.OUTSOURCING_FLAG = #{outsourcingFlag}
+            and OUTSOURCING_FLAG = #{outsourcingFlag}
         </if>
-        <!-- 总寿命 -->
+        /* 总寿命 */
         <if test="lifeMax != null and lifeMax != '' " >
-            and DJ_CIRCLE_KANBAN_AKP.LIFE_MAX = #{lifeMax}
+            and LIFE_MAX = #{lifeMax}
         </if>
         /*DJ_CIRCLE_KANBAN_AKP end*/
     </select>

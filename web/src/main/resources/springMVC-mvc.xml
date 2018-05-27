@@ -50,21 +50,21 @@
         <property name="defaultEncoding" value="UTF-8"/>
         <property name="cacheSeconds" value="60"/>
     </bean>
-    <!-- 	content-negotiation-manager="contentManager" -->
-    <!--<bean id="contentManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">-->
-        <!--<property name="favorPathExtension" value="true"/>-->
-        <!--<property name="ignoreAcceptHeader" value="true"/>-->
-        <!--&lt;!&ndash;                 <property name="defaultContentType" value="text/html" />   &ndash;&gt;-->
-        <!--<property name="useJaf" value="false"/>-->
-        <!--<property name="mediaTypes">-->
-            <!--<map>-->
-                <!--<entry key="json" value="application/json"/>-->
-                <!--<entry key="html" value="text/html"/>-->
-                <!--<entry key="xml" value="application/xml"/>-->
-                <!--<entry key="*" value="*/*"/>-->
-            <!--</map>-->
-        <!--</property>-->
-    <!--</bean>-->
+     	<!--content-negotiation-manager="contentManager"-->
+    <bean id="contentManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+        <property name="favorPathExtension" value="true"/>
+        <property name="ignoreAcceptHeader" value="true"/>
+        <!--                 <property name="defaultContentType" value="text/html" />   -->
+        <property name="useJaf" value="false"/>
+        <property name="mediaTypes">
+            <map>
+                <entry key="json" value="application/json"/>
+                <entry key="html" value="text/html"/>
+                <entry key="xml" value="application/xml"/>
+                <entry key="*" value="*/*"/>
+            </map>
+        </property>
+    </bean>
     <!-- 自动扫描的包名 -->
     <context:component-scan base-package="com.api.*.controller">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
@@ -73,30 +73,30 @@
     </context:component-scan>
 
     <!-- freemarker -->
-    <!--<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">-->
-        <!--<property name="templateLoaderPath" value="/pages"/>-->
-        <!--<property name="freemarkerSettings">-->
-            <!--<props>-->
-                <!--<prop key="template_update_delay">0</prop>-->
-                <!--<prop key="default_encoding">UTF-8</prop>-->
-                <!--<prop key="number_format">0.##########</prop>-->
-                <!--<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>-->
-                <!--<prop key="classic_compatible">true</prop>-->
-                <!--<prop key="template_exception_handler">ignore</prop>-->
-                <!--&lt;!&ndash;<prop key="auto_import">header.html as header/</prop>&ndash;&gt;-->
-            <!--</props>-->
-        <!--</property>-->
-    <!--</bean>-->
-    <!--<bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">-->
-        <!--&lt;!&ndash; <property name="cache" value="true" /> &ndash;&gt;-->
-        <!--<property name="prefix" value=""/>-->
-        <!--<property name="suffix" value=".html"/>-->
-        <!--<property name="contentType" value="text/html;charset=UTF-8"></property>-->
-        <!--<property name="requestContextAttribute" value="request"/>-->
-        <!--<property name="exposeSpringMacroHelpers" value="true"/>-->
-        <!--<property name="exposeRequestAttributes" value="true"/>-->
-        <!--<property name="exposeSessionAttributes" value="true"/>-->
-    <!--</bean>-->
+    <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath" value="/jsp"/>
+        <property name="freemarkerSettings">
+            <props>
+                <prop key="template_update_delay">0</prop>
+                <prop key="default_encoding">UTF-8</prop>
+                <prop key="number_format">0.##########</prop>
+                <prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+                <prop key="classic_compatible">true</prop>
+                <prop key="template_exception_handler">ignore</prop>
+                <!--<prop key="auto_import">header.html as header/</prop>-->
+            </props>
+        </property>
+    </bean>
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <!-- <property name="cache" value="true" /> -->
+        <property name="prefix" value=""/>
+        <property name="suffix" value=".jsp"/>
+        <property name="contentType" value="text/html;charset=UTF-8"></property>
+        <property name="requestContextAttribute" value="request"/>
+        <property name="exposeSpringMacroHelpers" value="true"/>
+        <property name="exposeRequestAttributes" value="true"/>
+        <property name="exposeSessionAttributes" value="true"/>
+    </bean>
     <!--<bean class="com.jcloudutils.tools.Generator" id="generator">
         <property name="freemarkerConfig" ref="freemarkerConfig"/>
     </bean>-->

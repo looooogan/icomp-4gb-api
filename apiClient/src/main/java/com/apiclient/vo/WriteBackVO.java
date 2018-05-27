@@ -1,8 +1,9 @@
 package com.apiclient.vo;
 
-import com.common.pojo.DjCircleKanbanAkp;
-import com.common.pojo.DjMtlAkp;
-import com.common.pojo.DjOutapplyAkp;
+
+import com.apiclient.pojo.DjCircleKanbanAkp;
+import com.apiclient.pojo.DjMtlAkp;
+import com.apiclient.pojo.DjOutapplyAkp;
 
 import java.util.Date;
 import java.util.List;

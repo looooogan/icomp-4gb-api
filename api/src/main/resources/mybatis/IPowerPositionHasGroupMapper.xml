@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.mapper.IPowerPositionHasGroupMapper">
+    <resultMap id="powerPositionHasGroupQueryMap" type="com.common.pojo.PowerPositionHasGroup">
+        <!-- 标识 -->
+        <id property="id" column="power_position_has_group.id"/>
+
+        <!--  -->
+        <result property="authPositionCode" column="power_position_has_group.auth_position_code"/>
+        <!--  -->
+        <result property="powerGroupCode" column="power_position_has_group.power_group_code"/>
+        <!--  -->
+        <result property="isDel" column="power_position_has_group.is_del"/>
+        <!--  -->
+        <association property="authPosition"  column="auth_position.id" resultMap="powerPositionHasGroupAuthPositionMap"/>
+        <!--  -->
+        <association property="powerGroup"  column="power_group.id" resultMap="powerPositionHasGroupPowerGroupMap"/>
+    </resultMap>
+        <resultMap id="powerPositionHasGroupPowerGroupMap" type="com.common.pojo.PowerGroup">
+            <!-- 标识 -->
+            <id property="id" column="power_group.id"/>
+
+            <!-- 权限组名称 -->
+            <result property="name" column="power_group.name"/>
+            <!-- 逻辑删除 -->
+            <result property="isDel" column="power_group.is_del"/>
+            <!-- 是否为角色分组 1是 0 否 -->
+            <result property="isRole" column="power_group.is_role"/>
+        </resultMap>
+        <resultMap id="powerPositionHasGroupAuthPositionMap" type="com.common.pojo.AuthPosition">
+            <!--  -->
+            <id property="id" column="auth_position.id"/>
+
+            <!--  -->
+            <result property="isDel" column="auth_position.is_del"/>
+            <!-- 职务编码 -->
+            <result property="code" column="auth_position.code"/>
+            <!-- 职务名称 -->
+            <result property="name" column="auth_position.name"/>
+            <!--  -->
+            <result property="authDepartmentCode1" column="auth_position.auth_department_code1"/>
+        </resultMap>
+    <!--添加-->
+    <insert id="addPowerPositionHasGroup" parameterType="com.common.pojo.PowerPositionHasGroup">
+        INSERT INTO power_position_has_group (
+            <!-- 标识 -->
+            id,
+            <!--  -->
+            auth_position_code,
+            <!--  -->
+            power_group_code,
+            <!--  -->
+            is_del
+        )
+        VALUES (
+            <!-- 标识 -->
+            #{id},
+            <!--  -->
+            #{authPositionCode},
+            <!--  -->
+            #{powerGroupCode},
+            <!--  -->
+            #{isDel}
+        )
+    </insert>
+
+    <!--删除-->
+    <delete id="delPowerPositionHasGroup" parameterType="com.common.pojo.PowerPositionHasGroup">
+        DELETE
+        FROM power_position_has_group
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--逻辑删除-->
+    <delete id="delPowerPositionHasGroupForLogic" parameterType="com.common.pojo.PowerPositionHasGroup">
+        UPDATE power_position_has_group SET
+        is_del = 1
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--根据VO删除-->
+    <delete id="delPowerPositionHasGroupByVo" parameterType="com.common.vo.PowerPositionHasGroupVO">
+        UPDATE power_position_has_group SET is_del = 1
+        WHERE
+            1=1
+            <!-- 标识 -->
+            <if test="id != null and id != '' " >
+                and id =  #{id}
+            </if>
+            <!--  -->
+            <if test="authPositionCode != null and authPositionCode != '' " >
+                and auth_position_code =  #{authPositionCode}
+            </if>
+            <!--  -->
+            <if test="powerGroupCode != null and powerGroupCode != '' " >
+                and power_group_code =  #{powerGroupCode}
+            </if>
+            <!--  -->
+            <if test="isDel != null and isDel != '' " >
+                and is_del =  #{isDel}
+            </if>
+    </delete>
+
+    <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
+    <update id="updPowerPositionHasGroup" parameterType="com.common.pojo.PowerPositionHasGroup">
+        UPDATE power_position_has_group
+        SET
+            <!--  -->
+            <if test="authPositionCode != null and authPositionCode != '' " >
+                auth_position_code =  #{authPositionCode},
+            </if>
+            <!--  -->
+            <if test="powerGroupCode != null and powerGroupCode != '' " >
+                power_group_code =  #{powerGroupCode},
+            </if>
+            <!--  -->
+            <if test="isDel != null and isDel != '' " >
+                is_del =  #{isDel},
+            </if>
+            <!-- 标识 -->
+            id = #{id}
+        WHERE
+            1 = 1
+            and id = #{id}
+    </update>
+
+    <!--分页查询 -->
+    <select id="getPowerPositionHasGroupByPage" parameterType="com.common.vo.PowerPositionHasGroupVO" resultMap="powerPositionHasGroupQueryMap">
+        SELECT
+        /*powerPositionHasGroup begin*/
+            <!-- 标识 -->
+            power_position_has_group.id as 'power_position_has_group.id',
+            <!--  -->
+            power_position_has_group.auth_position_code as 'power_position_has_group.auth_position_code',
+            <!--  -->
+            power_position_has_group.power_group_code as 'power_position_has_group.power_group_code',
+            <!--  -->
+            power_position_has_group.is_del as 'power_position_has_group.is_del',
+        /*powerPositionHasGroup end*/
+        /*power_group begin*/
+            <!-- 标识 -->
+            power_group.id as 'power_group.id',
+            <!-- 权限组名称 -->
+            power_group.name as 'power_group.name',
+            <!-- 逻辑删除 -->
+            power_group.is_del as 'power_group.is_del',
+            <!-- 是否为角色分组 1是 0 否 -->
+            power_group.is_role as 'power_group.is_role',
+        /*power_group end*/
+        /*auth_position begin*/
+            <!--  -->
+            auth_position.id as 'auth_position.id',
+            <!--  -->
+            auth_position.is_del as 'auth_position.is_del',
+            <!-- 职务编码 -->
+            auth_position.code as 'auth_position.code',
+            <!-- 职务名称 -->
+            auth_position.name as 'auth_position.name',
+            <!--  -->
+            auth_position.auth_department_code1 as 'auth_position.auth_department_code1'
+        /*auth_position end*/
+        FROM power_position_has_group as power_position_has_group
+        LEFT JOIN auth_position as auth_position ON auth_position.id = power_position_has_group.auth_position_code
+        LEFT JOIN power_group as power_group ON power_group.id = power_position_has_group.power_group_code
+        WHERE
+            1 = 1 AND  power_position_has_group.is_del = 0
+        /*power_position_has_group begin*/
+            <!-- 标识 -->
+            <if test="id != null and id != '' " >
+                and power_position_has_group.id = #{id}
+            </if>
+            <!--  -->
+            <if test="authPositionCode != null and authPositionCode != '' " >
+                and power_position_has_group.auth_position_code = #{authPositionCode}
+            </if>
+            <!--  -->
+            <if test="powerGroupCode != null and powerGroupCode != '' " >
+                and power_position_has_group.power_group_code = #{powerGroupCode}
+            </if>
+            <!--  -->
+            <if test="isDel != null and isDel != '' " >
+                and power_position_has_group.is_del = #{isDel}
+            </if>
+        /*power_position_has_group end*/
+        /*power_group begin*/
+            <if test="powerGroupVO != null ">
+            <!-- 标识 -->
+            <if test="powerGroupVO.id != null and powerGroupVO.id != '' " >
+                and power_group.id = #{powerGroupVO.id}
+            </if>
+            <!-- 权限组名称 -->
+            <if test="powerGroupVO.name != null and powerGroupVO.name != '' " >
+                and power_group.name = #{powerGroupVO.name}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="powerGroupVO.isDel != null and powerGroupVO.isDel != '' " >
+                and power_group.is_del = #{powerGroupVO.isDel}
+            </if>
+            <!-- 是否为角色分组 1是 0 否 -->
+            <if test="powerGroupVO.isRole != null and powerGroupVO.isRole != '' " >
+                and power_group.is_role = #{powerGroupVO.isRole}
+            </if>
+            </if>
+        /*power_group end*/
+        /*auth_position begin*/
+            <if test="authPositionVO != null ">
+            <!--  -->
+            <if test="authPositionVO.id != null and authPositionVO.id != '' " >
+                and auth_position.id = #{authPositionVO.id}
+            </if>
+            <!--  -->
+            <if test="authPositionVO.isDel != null and authPositionVO.isDel != '' " >
+                and auth_position.is_del = #{authPositionVO.isDel}
+            </if>
+            <!-- 职务编码 -->
+            <if test="authPositionVO.code != null and authPositionVO.code != '' " >
+                and auth_position.code = #{authPositionVO.code}
+            </if>
+            <!-- 职务名称 -->
+            <if test="authPositionVO.name != null and authPositionVO.name != '' " >
+                and auth_position.name = #{authPositionVO.name}
+            </if>
+            <!--  -->
+            <if test="authPositionVO.authDepartmentCode1 != null and authPositionVO.authDepartmentCode1 != '' " >
+                and auth_position.auth_department_code1 = #{authPositionVO.authDepartmentCode1}
+            </if>
+            </if>
+        /*auth_position end*/
+        ORDER BY power_position_has_group.id desc
+        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
+        LIMIT #{startRecord},#{pageSize}
+        </if>
+    </select>
+
+
+    <!--查询记录数-->
+    <select id="getPowerPositionHasGroupCount" parameterType="com.common.vo.PowerPositionHasGroupVO" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM power_position_has_group as power_position_has_group
+        LEFT JOIN auth_position as auth_position ON auth_position.id = power_position_has_group.auth_position_code
+        LEFT JOIN power_group as power_group ON power_group.id = power_position_has_group.power_group_code
+        WHERE
+            1 = 1 AND  power_position_has_group.is_del = 0
+        /*power_position_has_group begin*/
+        <!-- 标识 -->
+        <if test="id != null and id != '' " >
+            and power_position_has_group.id = #{id}
+        </if>
+        <!--  -->
+        <if test="authPositionCode != null and authPositionCode != '' " >
+            and power_position_has_group.auth_position_code = #{authPositionCode}
+        </if>
+        <!--  -->
+        <if test="powerGroupCode != null and powerGroupCode != '' " >
+            and power_position_has_group.power_group_code = #{powerGroupCode}
+        </if>
+        <!--  -->
+        <if test="isDel != null and isDel != '' " >
+            and power_position_has_group.is_del = #{isDel}
+        </if>
+        /*power_position_has_group end*/
+        /*power_group begin*/
+        <if test="powerGroupVO != null ">
+        <!-- 标识 -->
+        <if test="powerGroupVO.id != null and powerGroupVO.id != '' " >
+            and power_group.id = #{powerGroupVO.id}
+        </if>
+        <!-- 权限组名称 -->
+        <if test="powerGroupVO.name != null and powerGroupVO.name != '' " >
+            and power_group.name = #{powerGroupVO.name}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="powerGroupVO.isDel != null and powerGroupVO.isDel != '' " >
+            and power_group.is_del = #{powerGroupVO.isDel}
+        </if>
+        <!-- 是否为角色分组 1是 0 否 -->
+        <if test="powerGroupVO.isRole != null and powerGroupVO.isRole != '' " >
+            and power_group.is_role = #{powerGroupVO.isRole}
+        </if>
+        </if>
+        /*power_group end*/
+        /*auth_position begin*/
+        <if test="authPositionVO != null ">
+        <!--  -->
+        <if test="authPositionVO.id != null and authPositionVO.id != '' " >
+            and auth_position.id = #{authPositionVO.id}
+        </if>
+        <!--  -->
+        <if test="authPositionVO.isDel != null and authPositionVO.isDel != '' " >
+            and auth_position.is_del = #{authPositionVO.isDel}
+        </if>
+        <!-- 职务编码 -->
+        <if test="authPositionVO.code != null and authPositionVO.code != '' " >
+            and auth_position.code = #{authPositionVO.code}
+        </if>
+        <!-- 职务名称 -->
+        <if test="authPositionVO.name != null and authPositionVO.name != '' " >
+            and auth_position.name = #{authPositionVO.name}
+        </if>
+        <!--  -->
+        <if test="authPositionVO.authDepartmentCode1 != null and authPositionVO.authDepartmentCode1 != '' " >
+            and auth_position.auth_department_code1 = #{authPositionVO.authDepartmentCode1}
+        </if>
+        </if>
+        /*auth_position end*/
+    </select>
+
+    <!--根据vo查询 -->
+    <select id="getPowerPositionHasGroup" parameterType="com.common.vo.PowerPositionHasGroupVO" resultMap="powerPositionHasGroupQueryMap">
+        SELECT
+        /*power_position_has_group begin*/
+        <!-- 标识 -->
+        power_position_has_group.id as 'power_position_has_group.id',
+        <!--  -->
+        power_position_has_group.auth_position_code as 'power_position_has_group.auth_position_code',
+        <!--  -->
+        power_position_has_group.power_group_code as 'power_position_has_group.power_group_code',
+        <!--  -->
+        power_position_has_group.is_del as 'power_position_has_group.is_del',
+        /*power_position_has_group end*/
+        /*power_group begin*/
+        <!-- 标识 -->
+        power_group.id as 'power_group.id',
+        <!-- 权限组名称 -->
+        power_group.name as 'power_group.name',
+        <!-- 逻辑删除 -->
+        power_group.is_del as 'power_group.is_del',
+        <!-- 是否为角色分组 1是 0 否 -->
+        power_group.is_role as 'power_group.is_role',
+        /*power_group end*/
+        /*auth_position begin*/
+        <!--  -->
+        auth_position.id as 'auth_position.id',
+        <!--  -->
+        auth_position.is_del as 'auth_position.is_del',
+        <!-- 职务编码 -->
+        auth_position.code as 'auth_position.code',
+        <!-- 职务名称 -->
+        auth_position.name as 'auth_position.name',
+        <!--  -->
+        auth_position.auth_department_code1 as 'auth_position.auth_department_code1'
+        /*auth_position end*/
+        FROM power_position_has_group as power_position_has_group
+        LEFT JOIN auth_position as auth_position ON auth_position.id = power_position_has_group.auth_position_code
+        LEFT JOIN power_group as power_group ON power_group.id = power_position_has_group.power_group_code
+        WHERE
+            1 = 1 AND  power_position_has_group.is_del = 0
+        /*power_position_has_group begin*/
+        <!-- 标识 -->
+        <if test="id != null and id != '' " >
+            and power_position_has_group.id = #{id}
+        </if>
+        <!--  -->
+        <if test="authPositionCode != null and authPositionCode != '' " >
+            and power_position_has_group.auth_position_code = #{authPositionCode}
+        </if>
+        <!--  -->
+        <if test="powerGroupCode != null and powerGroupCode != '' " >
+            and power_position_has_group.power_group_code = #{powerGroupCode}
+        </if>
+        <!--  -->
+        <if test="isDel != null and isDel != '' " >
+            and power_position_has_group.is_del = #{isDel}
+        </if>
+        /*power_position_has_group end*/
+        /*power_groups begin*/
+        <if test="powerGroupVO != null ">
+        <!-- 标识 -->
+        <if test="powerGroupVO.id != null and powerGroupVO.id != '' " >
+            and power_groups.id = #{powerGroupVO.id}
+        </if>
+        <!-- 权限组名称 -->
+        <if test="powerGroupVO.name != null and powerGroupVO.name != '' " >
+            and power_groups.name = #{powerGroupVO.name}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="powerGroupVO.isDel != null and powerGroupVO.isDel != '' " >
+            and power_groups.is_del = #{powerGroupVO.isDel}
+        </if>
+        <!-- 是否为角色分组 1是 0 否 -->
+        <if test="powerGroupVO.isRole != null and powerGroupVO.isRole != '' " >
+            and power_groups.is_role = #{powerGroupVO.isRole}
+        </if>
+        </if>
+        /*power_group end*/
+        /*auth_positions begin*/
+        <if test="authPositionVO != null ">
+        <!--  -->
+        <if test="authPositionVO.id != null and authPositionVO.id != '' " >
+            and auth_positions.id = #{authPositionVO.id}
+        </if>
+        <!--  -->
+        <if test="authPositionVO.isDel != null and authPositionVO.isDel != '' " >
+            and auth_positions.is_del = #{authPositionVO.isDel}
+        </if>
+        <!-- 职务编码 -->
+        <if test="authPositionVO.code != null and authPositionVO.code != '' " >
+            and auth_positions.code = #{authPositionVO.code}
+        </if>
+        <!-- 职务名称 -->
+        <if test="authPositionVO.name != null and authPositionVO.name != '' " >
+            and auth_positions.name = #{authPositionVO.name}
+        </if>
+        <!--  -->
+        <if test="authPositionVO.authDepartmentCode1 != null and authPositionVO.authDepartmentCode1 != '' " >
+            and auth_positions.auth_department_code1 = #{authPositionVO.authDepartmentCode1}
+        </if>
+        </if>
+        /*auth_position end*/
+    </select>
+</mapper>

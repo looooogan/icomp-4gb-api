@@ -1,8 +1,8 @@
 package com.apiclient.vo;
 
-import com.common.pojo.CuttingToolBind;
-import com.common.pojo.ProductLineEquipment;
-import com.common.pojo.SynthesisCuttingToolBind;
+import com.apiclient.pojo.CuttingToolBind;
+import com.apiclient.pojo.ProductLineEquipment;
+import com.apiclient.pojo.SynthesisCuttingToolBind;
 
 /**
  * Created by logan on 2018/5/7.

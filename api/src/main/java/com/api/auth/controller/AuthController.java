@@ -2,15 +2,18 @@ package com.api.auth.controller;
 
 import com.api.base.controller.BaseController;
 import com.common.pojo.AuthCustomer;
+import com.common.pojo.Power;
 import com.common.vo.AuthCustomerVO;
-import com.common.vo.RfidContainerVO;
 import com.service.auth.IAuthBusinessService;
-import org.apache.commons.lang3.StringUtils;
+import com.service.power.IPowerService;
+import com.service.power.vo.PowerSearchVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 /**
  * Created by logan on 2018/5/6.
@@ -21,6 +24,8 @@ public class AuthController extends BaseController{
 
     @Autowired
     private IAuthBusinessService authBusinessService;
+    @Autowired
+    private IPowerService powerService;
 
 
     @RequestMapping("query")
@@ -41,6 +46,10 @@ public class AuthController extends BaseController{
         return authBusinessService.loginForPDA(authCustomerVO);
     }
 
-
+    @RequestMapping("getPowers")
+    @ResponseBody
+    public List<Power> getPowers(@RequestBody PowerSearchVO powerSearchVO) throws Exception{
+        return powerService.getPowerByVO(powerSearchVO);
+    }
 
 }

@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.mapper.IPowerMapper">
+    <resultMap id="powerQueryMap" type="com.common.pojo.Power">
+        <!-- 标识 -->
+        <id property="id" column="power.id"/>
+
+        <!-- 名称 -->
+        <result property="name" column="power.name"/>
+        <!-- 操作地址 -->
+        <result property="url" column="power.url"/>
+        <!-- 操作枚举key -->
+        <result property="enumKey" column="power.enum_key"/>
+        <!-- 操作枚举名称 -->
+        <result property="enumValue" column="power.enum_value"/>
+        <!-- 唯一标识 -->
+        <result property="identify" column="power.identify"/>
+        <!-- 逻辑删除 -->
+        <result property="isDel" column="power.is_del"/>
+        <!-- 父权限id -->
+        <result property="parentId" column="power.parent_id"/>
+        <!-- 根节点 -->
+        <result property="isRoot" column="power.is_root"/>
+        <!-- 权限类型 1 可执行操作 2 可查看数据 3流程通过 4 菜单 -->
+        <result property="powerType" column="power.power_type"/>
+    </resultMap>
+    <!--添加-->
+    <insert id="addPower" parameterType="com.common.pojo.Power">
+        INSERT INTO power (
+            <!-- 标识 -->
+            id,
+            <!-- 名称 -->
+            name,
+            <!-- 操作地址 -->
+            url,
+            <!-- 操作枚举key -->
+            enum_key,
+            <!-- 操作枚举名称 -->
+            enum_value,
+            <!-- 唯一标识 -->
+            identify,
+            <!-- 逻辑删除 -->
+            is_del,
+            <!-- 父权限id -->
+            parent_id,
+            <!-- 根节点 -->
+            is_root,
+            <!-- 权限类型 1 可执行操作 2 可查看数据 3流程通过 4 菜单 -->
+            power_type
+        )
+        VALUES (
+            <!-- 标识 -->
+            #{id},
+            <!-- 名称 -->
+            #{name},
+            <!-- 操作地址 -->
+            #{url},
+            <!-- 操作枚举key -->
+            #{enumKey},
+            <!-- 操作枚举名称 -->
+            #{enumValue},
+            <!-- 唯一标识 -->
+            #{identify},
+            <!-- 逻辑删除 -->
+            #{isDel},
+            <!-- 父权限id -->
+            #{parentId},
+            <!-- 根节点 -->
+            #{isRoot},
+            <!-- 权限类型 1 可执行操作 2 可查看数据 3流程通过 4 菜单 -->
+            #{powerType}
+        )
+    </insert>
+
+    <!--删除-->
+    <delete id="delPower" parameterType="com.common.pojo.Power">
+        DELETE
+        FROM power
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--逻辑删除-->
+    <delete id="delPowerForLogic" parameterType="com.common.pojo.Power">
+        UPDATE power SET
+        is_del = 1
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--根据VO删除-->
+    <delete id="delPowerByVo" parameterType="com.common.vo.PowerVO">
+        UPDATE power SET is_del = 1
+        WHERE
+            1=1
+            <!-- 标识 -->
+            <if test="id != null and id != '' " >
+                and id =  #{id}
+            </if>
+            <!-- 名称 -->
+            <if test="name != null and name != '' " >
+                and name =  #{name}
+            </if>
+            <!-- 操作地址 -->
+            <if test="url != null and url != '' " >
+                and url =  #{url}
+            </if>
+            <!-- 操作枚举key -->
+            <if test="enumKey != null and enumKey != '' " >
+                and enum_key =  #{enumKey}
+            </if>
+            <!-- 操作枚举名称 -->
+            <if test="enumValue != null and enumValue != '' " >
+                and enum_value =  #{enumValue}
+            </if>
+            <!-- 唯一标识 -->
+            <if test="identify != null and identify != '' " >
+                and identify =  #{identify}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                and is_del =  #{isDel}
+            </if>
+            <!-- 父权限id -->
+            <if test="parentId != null and parentId != '' " >
+                and parent_id =  #{parentId}
+            </if>
+            <!-- 根节点 -->
+            <if test="isRoot != null and isRoot != '' " >
+                and is_root =  #{isRoot}
+            </if>
+            <!-- 权限类型 1 可执行操作 2 可查看数据 3流程通过 4 菜单 -->
+            <if test="powerType != null and powerType != '' " >
+                and power_type =  #{powerType}
+            </if>
+    </delete>
+
+    <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
+    <update id="updPower" parameterType="com.common.pojo.Power">
+        UPDATE power
+        SET
+            <!-- 名称 -->
+            <if test="name != null and name != '' " >
+                name =  #{name},
+            </if>
+            <!-- 操作地址 -->
+            <if test="url != null and url != '' " >
+                url =  #{url},
+            </if>
+            <!-- 操作枚举key -->
+            <if test="enumKey != null and enumKey != '' " >
+                enum_key =  #{enumKey},
+            </if>
+            <!-- 操作枚举名称 -->
+            <if test="enumValue != null and enumValue != '' " >
+                enum_value =  #{enumValue},
+            </if>
+            <!-- 唯一标识 -->
+            <if test="identify != null and identify != '' " >
+                identify =  #{identify},
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                is_del =  #{isDel},
+            </if>
+            <!-- 父权限id -->
+            <if test="parentId != null and parentId != '' " >
+                parent_id =  #{parentId},
+            </if>
+            <!-- 根节点 -->
+            <if test="isRoot != null and isRoot != '' " >
+                is_root =  #{isRoot},
+            </if>
+            <!-- 权限类型 1 可执行操作 2 可查看数据 3流程通过 4 菜单 -->
+            <if test="powerType != null and powerType != '' " >
+                power_type =  #{powerType},
+            </if>
+            <!-- 标识 -->
+            id = #{id}
+        WHERE
+            1 = 1
+            and id = #{id}
+    </update>
+
+    <!--分页查询 -->
+    <select id="getPowerByPage" parameterType="com.common.vo.PowerVO" resultMap="powerQueryMap">
+        SELECT
+        /*power begin*/
+            <!-- 标识 -->
+            power.id as 'power.id',
+            <!-- 名称 -->
+            power.name as 'power.name',
+            <!-- 操作地址 -->
+            power.url as 'power.url',
+            <!-- 操作枚举key -->
+            power.enum_key as 'power.enum_key',
+            <!-- 操作枚举名称 -->
+            power.enum_value as 'power.enum_value',
+            <!-- 唯一标识 -->
+            power.identify as 'power.identify',
+            <!-- 逻辑删除 -->
+            power.is_del as 'power.is_del',
+            <!-- 父权限id -->
+            power.parent_id as 'power.parent_id',
+            <!-- 根节点 -->
+            power.is_root as 'power.is_root',
+            <!-- 权限类型 1 可执行操作 2 可查看数据 3流程通过 4 菜单 -->
+            power.power_type as 'power.power_type'
+        /*power end*/
+        FROM power as power
+        WHERE
+            1 = 1 AND  power.is_del = 0
+        /*power begin*/
+            <!-- 标识 -->
+            <if test="id != null and id != '' " >
+                and power.id = #{id}
+            </if>
+            <!-- 名称 -->
+            <if test="name != null and name != '' " >
+                and power.name = #{name}
+            </if>
+            <!-- 操作地址 -->
+            <if test="url != null and url != '' " >
+                and power.url = #{url}
+            </if>
+            <!-- 操作枚举key -->
+            <if test="enumKey != null and enumKey != '' " >
+                and power.enum_key = #{enumKey}
+            </if>
+            <!-- 操作枚举名称 -->
+            <if test="enumValue != null and enumValue != '' " >
+                and power.enum_value = #{enumValue}
+            </if>
+            <!-- 唯一标识 -->
+            <if test="identify != null and identify != '' " >
+                and power.identify = #{identify}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                and power.is_del = #{isDel}
+            </if>
+            <!-- 父权限id -->
+            <if test="parentId != null and parentId != '' " >
+                and power.parent_id = #{parentId}
+            </if>
+            <!-- 根节点 -->
+            <if test="isRoot != null and isRoot != '' " >
+                and power.is_root = #{isRoot}
+            </if>
+            <!-- 权限类型 1 可执行操作 2 可查看数据 3流程通过 4 菜单 -->
+            <if test="powerType != null and powerType != '' " >
+                and power.power_type = #{powerType}
+            </if>
+        /*power end*/
+        ORDER BY power.id desc
+        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
+        LIMIT #{startRecord},#{pageSize}
+        </if>
+    </select>
+
+
+    <!--查询记录数-->
+    <select id="getPowerCount" parameterType="com.common.vo.PowerVO" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM power as power
+        WHERE
+            1 = 1 AND  power.is_del = 0
+        /*power begin*/
+        <!-- 标识 -->
+        <if test="id != null and id != '' " >
+            and power.id = #{id}
+        </if>
+        <!-- 名称 -->
+        <if test="name != null and name != '' " >
+            and power.name = #{name}
+        </if>
+        <!-- 操作地址 -->
+        <if test="url != null and url != '' " >
+            and power.url = #{url}
+        </if>
+        <!-- 操作枚举key -->
+        <if test="enumKey != null and enumKey != '' " >
+            and power.enum_key = #{enumKey}
+        </if>
+        <!-- 操作枚举名称 -->
+        <if test="enumValue != null and enumValue != '' " >
+            and power.enum_value = #{enumValue}
+        </if>
+        <!-- 唯一标识 -->
+        <if test="identify != null and identify != '' " >
+            and power.identify = #{identify}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="isDel != null and isDel != '' " >
+            and power.is_del = #{isDel}
+        </if>
+        <!-- 父权限id -->
+        <if test="parentId != null and parentId != '' " >
+            and power.parent_id = #{parentId}
+        </if>
+        <!-- 根节点 -->
+        <if test="isRoot != null and isRoot != '' " >
+            and power.is_root = #{isRoot}
+        </if>
+        <!-- 权限类型 1 可执行操作 2 可查看数据 3流程通过 4 菜单 -->
+        <if test="powerType != null and powerType != '' " >
+            and power.power_type = #{powerType}
+        </if>
+        /*power end*/
+    </select>
+
+    <!--根据vo查询 -->
+    <select id="getPower" parameterType="com.common.vo.PowerVO" resultMap="powerQueryMap">
+        SELECT
+        /*power begin*/
+        <!-- 标识 -->
+        power.id as 'power.id',
+        <!-- 名称 -->
+        power.name as 'power.name',
+        <!-- 操作地址 -->
+        power.url as 'power.url',
+        <!-- 操作枚举key -->
+        power.enum_key as 'power.enum_key',
+        <!-- 操作枚举名称 -->
+        power.enum_value as 'power.enum_value',
+        <!-- 唯一标识 -->
+        power.identify as 'power.identify',
+        <!-- 逻辑删除 -->
+        power.is_del as 'power.is_del',
+        <!-- 父权限id -->
+        power.parent_id as 'power.parent_id',
+        <!-- 根节点 -->
+        power.is_root as 'power.is_root',
+        <!-- 权限类型 1 可执行操作 2 可查看数据 3流程通过 4 菜单 -->
+        power.power_type as 'power.power_type'
+        /*power end*/
+        FROM power as power
+        WHERE
+            1 = 1 AND  power.is_del = 0
+        /*power begin*/
+        <!-- 标识 -->
+        <if test="id != null and id != '' " >
+            and power.id = #{id}
+        </if>
+        <!-- 名称 -->
+        <if test="name != null and name != '' " >
+            and power.name = #{name}
+        </if>
+        <!-- 操作地址 -->
+        <if test="url != null and url != '' " >
+            and power.url = #{url}
+        </if>
+        <!-- 操作枚举key -->
+        <if test="enumKey != null and enumKey != '' " >
+            and power.enum_key = #{enumKey}
+        </if>
+        <!-- 操作枚举名称 -->
+        <if test="enumValue != null and enumValue != '' " >
+            and power.enum_value = #{enumValue}
+        </if>
+        <!-- 唯一标识 -->
+        <if test="identify != null and identify != '' " >
+            and power.identify = #{identify}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="isDel != null and isDel != '' " >
+            and power.is_del = #{isDel}
+        </if>
+        <!-- 父权限id -->
+        <if test="parentId != null and parentId != '' " >
+            and power.parent_id = #{parentId}
+        </if>
+        <!-- 根节点 -->
+        <if test="isRoot != null and isRoot != '' " >
+            and power.is_root = #{isRoot}
+        </if>
+        <!-- 权限类型 1 可执行操作 2 可查看数据 3流程通过 4 菜单 -->
+        <if test="powerType != null and powerType != '' " >
+            and power.power_type = #{powerType}
+        </if>
+        /*power end*/
+    </select>
+</mapper>

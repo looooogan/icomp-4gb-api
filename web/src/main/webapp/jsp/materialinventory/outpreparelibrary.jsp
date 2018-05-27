@@ -94,7 +94,7 @@
                         }
                     }
                     ],
-                success:function(d){
+                    success:function(d){
                     if(d.status < 0){
                         artDialog(d.message,"OK");
                     }
@@ -120,7 +120,6 @@
                 pageSize:15,
                 currentPage : $('#currentPage').val()==""?1:$('#currentPage').val()
             }
-            console.log(param);
             $.ajax({
                 type: "POST",
                 url: "/outPrepareLibrary/list",
@@ -130,7 +129,6 @@
                     artDialog(XHR.responseText, "OK");
                 },
                 success: function (data, textStatus) {
-                    console.log(data);
                     data.data.forEach(function(d){
                         d.cuttingToolBusinessCode = d.cuttingTool.businessCode;
                     })

@@ -363,12 +363,12 @@
                 success: function (data, textStatus) {
                     var content = '';
                     var eqCode = "";
-
+                    console.log(data);
                     data.data.forEach(function(d){
                         content+='<option value="'+d.code+'">'+d.name+'</option>'
                         eqCode += '<input type="checkbox" name="eqCode" value="'+d.code+'"/>' + '<font style="margin-left:3px;margin-right:3px;">'+d.name+'</font></br>';
                     });
-                    $('#query_equipmentCosde').append(content);
+                    $('#query_equipmentCode').append(content);
                     $('#equipmentCodes_select').append(content);
                     $("#equip").html(eqCode);
 

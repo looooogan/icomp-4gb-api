@@ -3,983 +3,978 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.common.mapper.IDjItrnAkpMapper">
     <resultMap id="djItrnAkpQueryMap" type="com.common.pojo.DjItrnAkp">
-        <!-- 序列 -->
-        <id property="id" column="DJ_ITRN_AKP.ID"/>
 
-        <!-- 批次 -->
-        <result property="batchno" column="DJ_ITRN_AKP.BATCHNO"/>
-        <!-- 仓库 ‘FSDJ’ -->
-        <result property="whCode" column="DJ_ITRN_AKP.WH_CODE"/>
-        <!-- 供应商号 -->
-        <result property="ownerCode" column="DJ_ITRN_AKP.OWNER_CODE"/>
-        <!-- 物料号，加外围类型 -->
-        <result property="mtlCode" column="DJ_ITRN_AKP.MTL_CODE"/>
-        <!-- 规格型号 -->
-        <result property="ggxh" column="DJ_ITRN_AKP.GGXH"/>
-        <!-- 工位 -->
-        <result property="gongw" column="DJ_ITRN_AKP.GONGW"/>
-        <!-- 生产线 -->
-        <result property="shengcx" column="DJ_ITRN_AKP.SHENGCX"/>
-        <!-- 刀具号 -->
-        <result property="daojCase" column="DJ_ITRN_AKP.DAOJ_CASE"/>
-        <!-- 加工寿命 -->
-        <result property="jgsm" column="DJ_ITRN_AKP.JGSM"/>
-        <!-- 价格 -->
-        <result property="price" column="DJ_ITRN_AKP.PRICE"/>
-        <!-- 类型：N生成 U领用 R归还 S1车间刃磨 S2外委刃磨 S3直接外委 SR刃磨归还 SD刃磨报废 D报废 -->
-        <result property="type" column="DJ_ITRN_AKP.TYPE"/>
-        <!-- 外委单号 -->
-        <result property="wwcode" column="DJ_ITRN_AKP.WWCODE"/>
-        <!-- 实际加工寿命，加工次数 -->
-        <result property="jgcs" column="DJ_ITRN_AKP.JGCS"/>
-        <!-- 刀具轮回次数，值为 palabel_cms 中remark03(车间刃磨次数)+remark04(外委刃磨次数)+1 -->
-        <result property="lhcs" column="DJ_ITRN_AKP.LHCS"/>
-        <!-- 归还类型 1外委归还 2刃磨归还 3报废 -->
-        <result property="returnType" column="DJ_ITRN_AKP.RETURN_TYPE"/>
-        <!-- 创建时间 -->
-        <result property="createDate" column="DJ_ITRN_AKP.CREATE_DATE"/>
-        <!-- 创建人 -->
-        <result property="createBy" column="DJ_ITRN_AKP.CREATE_BY"/>
-        <!-- 加工次数 -->
-        <result property="processTimes" column="DJ_ITRN_AKP.PROCESS_TIMES"/>
-        <!-- 刃磨次数 -->
-        <result property="sharpenTimes" column="DJ_ITRN_AKP.SHARPEN_TIMES"/>
-        <!-- 报废原因 -->
-        <result property="bfCause" column="DJ_ITRN_AKP.BF_CAUSE"/>
-        <!-- 报废状态（0.断刀1.丢刀2.到寿3.出库报废4.其他） -->
-        <result property="bfStatus" column="DJ_ITRN_AKP.BF_STATUS"/>
-        <!-- 刀签号 -->
-        <result property="casecode" column="DJ_ITRN_AKP.CASECODE"/>
-        <!-- 领料条码,'CK' -->
-        <result property="cKanbanCode" column="DJ_ITRN_AKP.C_KANBAN_CODE"/>
-        <!-- 备注长文本 -->
-        <result property="not" column="DJ_ITRN_AKP.not"/>
-        <!-- 出库看板号“DJLY” -->
-        <result property="kanbanCode" column="DJ_ITRN_AKP.KANBAN_CODE"/>
-        <!-- 外委供应商 -->
-        <result property="wwOwner" column="DJ_ITRN_AKP.WW_OWNER"/>
-        <!-- 当前最大刀头号 -->
-        <result property="maxDjh" column="DJ_ITRN_AKP.MAX_DJH"/>
-        <!-- 当前RFID -->
-        <result property="rfid" column="DJ_ITRN_AKP.RFID"/>
-        <!-- 外委资材单号 -->
-        <result property="zcCode" column="DJ_ITRN_AKP.ZC_CODE"/>
+        <!--  -->
+        <result property="batchno" column="BATCHNO"/>
+        <!--  -->
+        <result property="whCode" column="WH_CODE"/>
+        <!--  -->
+        <result property="ownerCode" column="OWNER_CODE"/>
+        <!--  -->
+        <result property="mtlCode" column="MTL_CODE"/>
+        <!--  -->
+        <result property="ggxh" column="GGXH"/>
+        <!--  -->
+        <result property="gongw" column="GONGW"/>
+        <!--  -->
+        <result property="shengcx" column="SHENGCX"/>
+        <!--  -->
+        <result property="daojCase" column="DAOJ_CASE"/>
+        <!--  -->
+        <result property="jgsm" column="JGSM"/>
+        <!--  -->
+        <result property="price" column="PRICE"/>
+        <!--  -->
+        <result property="type" column="TYPE"/>
+        <!--  -->
+        <result property="wwcode" column="WWCODE"/>
+        <!--  -->
+        <result property="jgcs" column="JGCS"/>
+        <!--  -->
+        <result property="lhcs" column="LHCS"/>
+        <!--  -->
+        <result property="returnType" column="RETURN_TYPE"/>
+        <!--  -->
+        <result property="createDate" column="CREATE_DATE"/>
+        <!--  -->
+        <result property="createBy" column="CREATE_BY"/>
+        <!--  -->
+        <result property="sharpenTimes" column="SHARPEN_TIMES"/>
+        <!--  -->
+        <result property="bfCause" column="BF_CAUSE"/>
+        <!--  -->
+        <result property="bfStatus" column="BF_STATUS"/>
+        <!--  -->
+        <result property="kanbanCode" column="KANBAN_CODE"/>
+        <!--  -->
+        <result property="wwOwner" column="WW_OWNER"/>
+        <!--  -->
+        <result property="maxDjh" column="MAX_DJH"/>
+        <!--  -->
+        <result property="rfid" column="RFID"/>
+        <!--  -->
+        <result property="zcCode" column="ZC_CODE"/>
+        <!--  -->
+        <result property="casecode" column="CASECODE"/>
+        <!--  -->
+        <result property="cKanbanCode" column="C_KANBAN_CODE"/>
+        <!--  -->
+        <result property="note" column="NOTE"/>
+        <!--  -->
+        <result property="wwType" column="WW_TYPE"/>
+        <!--  -->
+        <result property="qty" column="QTY"/>
     </resultMap>
-    <!--添加-->
+    <!-- 添加 -->
     <insert id="addDjItrnAkp" parameterType="com.common.pojo.DjItrnAkp">
         INSERT INTO DJ_ITRN_AKP (
-            <!-- 序列 -->
-            ID,
-            <!-- 批次 -->
+            /*  */
             BATCHNO,
-            <!-- 仓库 ‘FSDJ’ -->
+            /*  */
             WH_CODE,
-            <!-- 供应商号 -->
+            /*  */
             OWNER_CODE,
-            <!-- 物料号，加外围类型 -->
+            /*  */
             MTL_CODE,
-            <!-- 规格型号 -->
+            /*  */
             GGXH,
-            <!-- 工位 -->
+            /*  */
             GONGW,
-            <!-- 生产线 -->
+            /*  */
             SHENGCX,
-            <!-- 刀具号 -->
+            /*  */
             DAOJ_CASE,
-            <!-- 加工寿命 -->
+            /*  */
             JGSM,
-            <!-- 价格 -->
+            /*  */
             PRICE,
-            <!-- 类型：N生成 U领用 R归还 S1车间刃磨 S2外委刃磨 S3直接外委 SR刃磨归还 SD刃磨报废 D报废 -->
+            /*  */
             TYPE,
-            <!-- 外委单号 -->
+            /*  */
             WWCODE,
-            <!-- 实际加工寿命，加工次数 -->
+            /*  */
             JGCS,
-            <!-- 刀具轮回次数，值为 palabel_cms 中remark03(车间刃磨次数)+remark04(外委刃磨次数)+1 -->
+            /*  */
             LHCS,
-            <!-- 归还类型 1外委归还 2刃磨归还 3报废 -->
+            /*  */
             RETURN_TYPE,
-            <!-- 创建时间 -->
+            /*  */
             CREATE_DATE,
-            <!-- 创建人 -->
+            /*  */
             CREATE_BY,
-            <!-- 加工次数 -->
-            PROCESS_TIMES,
-            <!-- 刃磨次数 -->
+            /*  */
             SHARPEN_TIMES,
-            <!-- 报废原因 -->
+            /*  */
             BF_CAUSE,
-            <!-- 报废状态（0.断刀1.丢刀2.到寿3.出库报废4.其他） -->
+            /*  */
             BF_STATUS,
-            <!-- 刀签号 -->
-            CASECODE,
-            <!-- 领料条码,'CK' -->
-            C_KANBAN_CODE,
-            <!-- 备注长文本 -->
-            not,
-            <!-- 出库看板号“DJLY” -->
+            /*  */
             KANBAN_CODE,
-            <!-- 外委供应商 -->
+            /*  */
             WW_OWNER,
-            <!-- 当前最大刀头号 -->
+            /*  */
             MAX_DJH,
-            <!-- 当前RFID -->
+            /*  */
             RFID,
-            <!-- 外委资材单号 -->
-            ZC_CODE
+            /*  */
+            ZC_CODE,
+            /*  */
+            CASECODE,
+            /*  */
+            C_KANBAN_CODE,
+            /*  */
+            NOTE,
+            /*  */
+            WW_TYPE,
+            /*  */
+            QTY
         )
         VALUES (
-            <!-- 序列 -->
-            #{id},
-            <!-- 批次 -->
+            /*  */
             #{batchno},
-            <!-- 仓库 ‘FSDJ’ -->
+            /*  */
             #{whCode},
-            <!-- 供应商号 -->
+            /*  */
             #{ownerCode},
-            <!-- 物料号，加外围类型 -->
+            /*  */
             #{mtlCode},
-            <!-- 规格型号 -->
+            /*  */
             #{ggxh},
-            <!-- 工位 -->
+            /*  */
             #{gongw},
-            <!-- 生产线 -->
+            /*  */
             #{shengcx},
-            <!-- 刀具号 -->
+            /*  */
             #{daojCase},
-            <!-- 加工寿命 -->
+            /*  */
             #{jgsm},
-            <!-- 价格 -->
+            /*  */
             #{price},
-            <!-- 类型：N生成 U领用 R归还 S1车间刃磨 S2外委刃磨 S3直接外委 SR刃磨归还 SD刃磨报废 D报废 -->
+            /*  */
             #{type},
-            <!-- 外委单号 -->
+            /*  */
             #{wwcode},
-            <!-- 实际加工寿命，加工次数 -->
+            /*  */
             #{jgcs},
-            <!-- 刀具轮回次数，值为 palabel_cms 中remark03(车间刃磨次数)+remark04(外委刃磨次数)+1 -->
+            /*  */
             #{lhcs},
-            <!-- 归还类型 1外委归还 2刃磨归还 3报废 -->
+            /*  */
             #{returnType},
-            <!-- 创建时间 -->
+            /*  */
             #{createDate},
-            <!-- 创建人 -->
+            /*  */
             #{createBy},
-            <!-- 加工次数 -->
-            #{processTimes},
-            <!-- 刃磨次数 -->
+            /*  */
             #{sharpenTimes},
-            <!-- 报废原因 -->
+            /*  */
             #{bfCause},
-            <!-- 报废状态（0.断刀1.丢刀2.到寿3.出库报废4.其他） -->
+            /*  */
             #{bfStatus},
-            <!-- 刀签号 -->
-            #{casecode},
-            <!-- 领料条码,'CK' -->
-            #{cKanbanCode},
-            <!-- 备注长文本 -->
-            #{not},
-            <!-- 出库看板号“DJLY” -->
+            /*  */
             #{kanbanCode},
-            <!-- 外委供应商 -->
+            /*  */
             #{wwOwner},
-            <!-- 当前最大刀头号 -->
+            /*  */
             #{maxDjh},
-            <!-- 当前RFID -->
+            /*  */
             #{rfid},
-            <!-- 外委资材单号 -->
-            #{zcCode}
+            /*  */
+            #{zcCode},
+            /*  */
+            #{casecode},
+            /*  */
+            #{cKanbanCode},
+            /*  */
+            #{note},
+            /*  */
+            #{wwType},
+            /*  */
+            #{qty}
         )
     </insert>
 
-    <!--删除-->
+    <!-- 删除 -->
     <delete id="delDjItrnAkp" parameterType="com.common.pojo.DjItrnAkp">
         DELETE
         FROM DJ_ITRN_AKP
         WHERE
             1 = 1
-            and ID = #{id}
     </delete>
 
-    <!--逻辑删除-->
+    <!-- 逻辑删除 -->
     <delete id="delDjItrnAkpForLogic" parameterType="com.common.pojo.DjItrnAkp">
-        UPDATE DJ_ITRN_AKP SET
-        is_del = 1
+        DELETE FROM  DJ_ITRN_AKP
         WHERE
             1 = 1
-            and ID = #{id}
     </delete>
 
-    <!--根据VO删除-->
+    <!-- 根据VO删除 -->
     <delete id="delDjItrnAkpByVo" parameterType="com.common.vo.DjItrnAkpVO">
-        UPDATE DJ_ITRN_AKP SET is_del = 1
+        DELETE FROM DJ_ITRN_AKP
         WHERE
             1=1
-            <!-- 序列 -->
-            <if test="id != null and id != '' " >
-                and ID =  #{id}
-            </if>
-            <!-- 批次 -->
+            /*  */
             <if test="batchno != null and batchno != '' " >
                 and BATCHNO =  #{batchno}
             </if>
-            <!-- 仓库 ‘FSDJ’ -->
+            /*  */
             <if test="whCode != null and whCode != '' " >
                 and WH_CODE =  #{whCode}
             </if>
-            <!-- 供应商号 -->
+            /*  */
             <if test="ownerCode != null and ownerCode != '' " >
                 and OWNER_CODE =  #{ownerCode}
             </if>
-            <!-- 物料号，加外围类型 -->
+            /*  */
             <if test="mtlCode != null and mtlCode != '' " >
                 and MTL_CODE =  #{mtlCode}
             </if>
-            <!-- 规格型号 -->
+            /*  */
             <if test="ggxh != null and ggxh != '' " >
                 and GGXH =  #{ggxh}
             </if>
-            <!-- 工位 -->
+            /*  */
             <if test="gongw != null and gongw != '' " >
                 and GONGW =  #{gongw}
             </if>
-            <!-- 生产线 -->
+            /*  */
             <if test="shengcx != null and shengcx != '' " >
                 and SHENGCX =  #{shengcx}
             </if>
-            <!-- 刀具号 -->
+            /*  */
             <if test="daojCase != null and daojCase != '' " >
                 and DAOJ_CASE =  #{daojCase}
             </if>
-            <!-- 加工寿命 -->
+            /*  */
             <if test="jgsm != null and jgsm != '' " >
                 and JGSM =  #{jgsm}
             </if>
-            <!-- 价格 -->
+            /*  */
             <if test="price != null and price != '' " >
                 and PRICE =  #{price}
             </if>
-            <!-- 类型：N生成 U领用 R归还 S1车间刃磨 S2外委刃磨 S3直接外委 SR刃磨归还 SD刃磨报废 D报废 -->
+            /*  */
             <if test="type != null and type != '' " >
                 and TYPE =  #{type}
             </if>
-            <!-- 外委单号 -->
+            /*  */
             <if test="wwcode != null and wwcode != '' " >
                 and WWCODE =  #{wwcode}
             </if>
-            <!-- 实际加工寿命，加工次数 -->
+            /*  */
             <if test="jgcs != null and jgcs != '' " >
                 and JGCS =  #{jgcs}
             </if>
-            <!-- 刀具轮回次数，值为 palabel_cms 中remark03(车间刃磨次数)+remark04(外委刃磨次数)+1 -->
+            /*  */
             <if test="lhcs != null and lhcs != '' " >
                 and LHCS =  #{lhcs}
             </if>
-            <!-- 归还类型 1外委归还 2刃磨归还 3报废 -->
+            /*  */
             <if test="returnType != null and returnType != '' " >
                 and RETURN_TYPE =  #{returnType}
             </if>
-            <!-- 创建时间 -->
+            /*  */
             <if test="createDate != null and createDate != '' " >
                 and CREATE_DATE =  #{createDate}
             </if>
-            <!-- 创建人 -->
+            /*  */
             <if test="createBy != null and createBy != '' " >
                 and CREATE_BY =  #{createBy}
             </if>
-            <!-- 加工次数 -->
-            <if test="processTimes != null and processTimes != '' " >
-                and PROCESS_TIMES =  #{processTimes}
-            </if>
-            <!-- 刃磨次数 -->
+            /*  */
             <if test="sharpenTimes != null and sharpenTimes != '' " >
                 and SHARPEN_TIMES =  #{sharpenTimes}
             </if>
-            <!-- 报废原因 -->
+            /*  */
             <if test="bfCause != null and bfCause != '' " >
                 and BF_CAUSE =  #{bfCause}
             </if>
-            <!-- 报废状态（0.断刀1.丢刀2.到寿3.出库报废4.其他） -->
+            /*  */
             <if test="bfStatus != null and bfStatus != '' " >
                 and BF_STATUS =  #{bfStatus}
             </if>
-            <!-- 刀签号 -->
-            <if test="casecode != null and casecode != '' " >
-                and CASECODE =  #{casecode}
-            </if>
-            <!-- 领料条码,'CK' -->
-            <if test="cKanbanCode != null and cKanbanCode != '' " >
-                and C_KANBAN_CODE =  #{cKanbanCode}
-            </if>
-            <!-- 备注长文本 -->
-            <if test="not != null and not != '' " >
-                and not =  #{not}
-            </if>
-            <!-- 出库看板号“DJLY” -->
+            /*  */
             <if test="kanbanCode != null and kanbanCode != '' " >
                 and KANBAN_CODE =  #{kanbanCode}
             </if>
-            <!-- 外委供应商 -->
+            /*  */
             <if test="wwOwner != null and wwOwner != '' " >
                 and WW_OWNER =  #{wwOwner}
             </if>
-            <!-- 当前最大刀头号 -->
+            /*  */
             <if test="maxDjh != null and maxDjh != '' " >
                 and MAX_DJH =  #{maxDjh}
             </if>
-            <!-- 当前RFID -->
+            /*  */
             <if test="rfid != null and rfid != '' " >
                 and RFID =  #{rfid}
             </if>
-            <!-- 外委资材单号 -->
+            /*  */
             <if test="zcCode != null and zcCode != '' " >
                 and ZC_CODE =  #{zcCode}
             </if>
+            /*  */
+            <if test="casecode != null and casecode != '' " >
+                and CASECODE =  #{casecode}
+            </if>
+            /*  */
+            <if test="cKanbanCode != null and cKanbanCode != '' " >
+                and C_KANBAN_CODE =  #{cKanbanCode}
+            </if>
+            /*  */
+            <if test="note != null and note != '' " >
+                and NOTE =  #{note}
+            </if>
+            /*  */
+            <if test="wwType != null and wwType != '' " >
+                and WW_TYPE =  #{wwType}
+            </if>
+            /*  */
+            <if test="qty != null and qty != '' " >
+                and QTY =  #{qty}
+            </if>
     </delete>
 
-    <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
+    <!-- 更新,如果属性不为null 则更新该属性,根据id更新 -->
     <update id="updDjItrnAkp" parameterType="com.common.pojo.DjItrnAkp">
         UPDATE DJ_ITRN_AKP
         SET
-            <!-- 批次 -->
+            /*  */
             <if test="batchno != null and batchno != '' " >
                 BATCHNO =  #{batchno},
             </if>
-            <!-- 仓库 ‘FSDJ’ -->
+            /*  */
             <if test="whCode != null and whCode != '' " >
                 WH_CODE =  #{whCode},
             </if>
-            <!-- 供应商号 -->
+            /*  */
             <if test="ownerCode != null and ownerCode != '' " >
                 OWNER_CODE =  #{ownerCode},
             </if>
-            <!-- 物料号，加外围类型 -->
+            /*  */
             <if test="mtlCode != null and mtlCode != '' " >
                 MTL_CODE =  #{mtlCode},
             </if>
-            <!-- 规格型号 -->
+            /*  */
             <if test="ggxh != null and ggxh != '' " >
                 GGXH =  #{ggxh},
             </if>
-            <!-- 工位 -->
+            /*  */
             <if test="gongw != null and gongw != '' " >
                 GONGW =  #{gongw},
             </if>
-            <!-- 生产线 -->
+            /*  */
             <if test="shengcx != null and shengcx != '' " >
                 SHENGCX =  #{shengcx},
             </if>
-            <!-- 刀具号 -->
+            /*  */
             <if test="daojCase != null and daojCase != '' " >
                 DAOJ_CASE =  #{daojCase},
             </if>
-            <!-- 加工寿命 -->
+            /*  */
             <if test="jgsm != null and jgsm != '' " >
                 JGSM =  #{jgsm},
             </if>
-            <!-- 价格 -->
+            /*  */
             <if test="price != null and price != '' " >
                 PRICE =  #{price},
             </if>
-            <!-- 类型：N生成 U领用 R归还 S1车间刃磨 S2外委刃磨 S3直接外委 SR刃磨归还 SD刃磨报废 D报废 -->
+            /*  */
             <if test="type != null and type != '' " >
                 TYPE =  #{type},
             </if>
-            <!-- 外委单号 -->
+            /*  */
             <if test="wwcode != null and wwcode != '' " >
                 WWCODE =  #{wwcode},
             </if>
-            <!-- 实际加工寿命，加工次数 -->
+            /*  */
             <if test="jgcs != null and jgcs != '' " >
                 JGCS =  #{jgcs},
             </if>
-            <!-- 刀具轮回次数，值为 palabel_cms 中remark03(车间刃磨次数)+remark04(外委刃磨次数)+1 -->
+            /*  */
             <if test="lhcs != null and lhcs != '' " >
                 LHCS =  #{lhcs},
             </if>
-            <!-- 归还类型 1外委归还 2刃磨归还 3报废 -->
+            /*  */
             <if test="returnType != null and returnType != '' " >
                 RETURN_TYPE =  #{returnType},
             </if>
-            <!-- 创建时间 -->
+            /*  */
             <if test="createDate != null and createDate != '' " >
                 CREATE_DATE =  #{createDate},
             </if>
-            <!-- 创建人 -->
+            /*  */
             <if test="createBy != null and createBy != '' " >
                 CREATE_BY =  #{createBy},
             </if>
-            <!-- 加工次数 -->
-            <if test="processTimes != null and processTimes != '' " >
-                PROCESS_TIMES =  #{processTimes},
-            </if>
-            <!-- 刃磨次数 -->
+            /*  */
             <if test="sharpenTimes != null and sharpenTimes != '' " >
                 SHARPEN_TIMES =  #{sharpenTimes},
             </if>
-            <!-- 报废原因 -->
+            /*  */
             <if test="bfCause != null and bfCause != '' " >
                 BF_CAUSE =  #{bfCause},
             </if>
-            <!-- 报废状态（0.断刀1.丢刀2.到寿3.出库报废4.其他） -->
+            /*  */
             <if test="bfStatus != null and bfStatus != '' " >
                 BF_STATUS =  #{bfStatus},
             </if>
-            <!-- 刀签号 -->
-            <if test="casecode != null and casecode != '' " >
-                CASECODE =  #{casecode},
-            </if>
-            <!-- 领料条码,'CK' -->
-            <if test="cKanbanCode != null and cKanbanCode != '' " >
-                C_KANBAN_CODE =  #{cKanbanCode},
-            </if>
-            <!-- 备注长文本 -->
-            <if test="not != null and not != '' " >
-                not =  #{not},
-            </if>
-            <!-- 出库看板号“DJLY” -->
+            /*  */
             <if test="kanbanCode != null and kanbanCode != '' " >
                 KANBAN_CODE =  #{kanbanCode},
             </if>
-            <!-- 外委供应商 -->
+            /*  */
             <if test="wwOwner != null and wwOwner != '' " >
                 WW_OWNER =  #{wwOwner},
             </if>
-            <!-- 当前最大刀头号 -->
+            /*  */
             <if test="maxDjh != null and maxDjh != '' " >
                 MAX_DJH =  #{maxDjh},
             </if>
-            <!-- 当前RFID -->
+            /*  */
             <if test="rfid != null and rfid != '' " >
                 RFID =  #{rfid},
             </if>
-            <!-- 外委资材单号 -->
+            /*  */
             <if test="zcCode != null and zcCode != '' " >
                 ZC_CODE =  #{zcCode},
             </if>
-            <!-- 序列 -->
-            ID = #{id}
+            /*  */
+            <if test="casecode != null and casecode != '' " >
+                CASECODE =  #{casecode},
+            </if>
+            /*  */
+            <if test="cKanbanCode != null and cKanbanCode != '' " >
+                C_KANBAN_CODE =  #{cKanbanCode},
+            </if>
+            /*  */
+            <if test="note != null and note != '' " >
+                NOTE =  #{note},
+            </if>
+            /*  */
+            <if test="wwType != null and wwType != '' " >
+                WW_TYPE =  #{wwType},
+            </if>
+            /*  */
+            <if test="qty != null and qty != '' " >
+                QTY =  #{qty},
+            </if>
         WHERE
             1 = 1
-            and ID = #{id}
     </update>
 
-    <!--分页查询 -->
+    <!-- 分页查询 -->
     <select id="getDjItrnAkpByPage" parameterType="com.common.vo.DjItrnAkpVO" resultMap="djItrnAkpQueryMap">
         SELECT
         /*djItrnAkp begin*/
-            <!-- 序列 -->
-            DJ_ITRN_AKP.ID as 'DJ_ITRN_AKP.ID',
-            <!-- 批次 -->
-            DJ_ITRN_AKP.BATCHNO as 'DJ_ITRN_AKP.BATCHNO',
-            <!-- 仓库 ‘FSDJ’ -->
-            DJ_ITRN_AKP.WH_CODE as 'DJ_ITRN_AKP.WH_CODE',
-            <!-- 供应商号 -->
-            DJ_ITRN_AKP.OWNER_CODE as 'DJ_ITRN_AKP.OWNER_CODE',
-            <!-- 物料号，加外围类型 -->
-            DJ_ITRN_AKP.MTL_CODE as 'DJ_ITRN_AKP.MTL_CODE',
-            <!-- 规格型号 -->
-            DJ_ITRN_AKP.GGXH as 'DJ_ITRN_AKP.GGXH',
-            <!-- 工位 -->
-            DJ_ITRN_AKP.GONGW as 'DJ_ITRN_AKP.GONGW',
-            <!-- 生产线 -->
-            DJ_ITRN_AKP.SHENGCX as 'DJ_ITRN_AKP.SHENGCX',
-            <!-- 刀具号 -->
-            DJ_ITRN_AKP.DAOJ_CASE as 'DJ_ITRN_AKP.DAOJ_CASE',
-            <!-- 加工寿命 -->
-            DJ_ITRN_AKP.JGSM as 'DJ_ITRN_AKP.JGSM',
-            <!-- 价格 -->
-            DJ_ITRN_AKP.PRICE as 'DJ_ITRN_AKP.PRICE',
-            <!-- 类型：N生成 U领用 R归还 S1车间刃磨 S2外委刃磨 S3直接外委 SR刃磨归还 SD刃磨报废 D报废 -->
-            DJ_ITRN_AKP.TYPE as 'DJ_ITRN_AKP.TYPE',
-            <!-- 外委单号 -->
-            DJ_ITRN_AKP.WWCODE as 'DJ_ITRN_AKP.WWCODE',
-            <!-- 实际加工寿命，加工次数 -->
-            DJ_ITRN_AKP.JGCS as 'DJ_ITRN_AKP.JGCS',
-            <!-- 刀具轮回次数，值为 palabel_cms 中remark03(车间刃磨次数)+remark04(外委刃磨次数)+1 -->
-            DJ_ITRN_AKP.LHCS as 'DJ_ITRN_AKP.LHCS',
-            <!-- 归还类型 1外委归还 2刃磨归还 3报废 -->
-            DJ_ITRN_AKP.RETURN_TYPE as 'DJ_ITRN_AKP.RETURN_TYPE',
-            <!-- 创建时间 -->
-            DJ_ITRN_AKP.CREATE_DATE as 'DJ_ITRN_AKP.CREATE_DATE',
-            <!-- 创建人 -->
-            DJ_ITRN_AKP.CREATE_BY as 'DJ_ITRN_AKP.CREATE_BY',
-            <!-- 加工次数 -->
-            DJ_ITRN_AKP.PROCESS_TIMES as 'DJ_ITRN_AKP.PROCESS_TIMES',
-            <!-- 刃磨次数 -->
-            DJ_ITRN_AKP.SHARPEN_TIMES as 'DJ_ITRN_AKP.SHARPEN_TIMES',
-            <!-- 报废原因 -->
-            DJ_ITRN_AKP.BF_CAUSE as 'DJ_ITRN_AKP.BF_CAUSE',
-            <!-- 报废状态（0.断刀1.丢刀2.到寿3.出库报废4.其他） -->
-            DJ_ITRN_AKP.BF_STATUS as 'DJ_ITRN_AKP.BF_STATUS',
-            <!-- 刀签号 -->
-            DJ_ITRN_AKP.CASECODE as 'DJ_ITRN_AKP.CASECODE',
-            <!-- 领料条码,'CK' -->
-            DJ_ITRN_AKP.C_KANBAN_CODE as 'DJ_ITRN_AKP.C_KANBAN_CODE',
-            <!-- 备注长文本 -->
-            DJ_ITRN_AKP.not as 'DJ_ITRN_AKP.not',
-            <!-- 出库看板号“DJLY” -->
-            DJ_ITRN_AKP.KANBAN_CODE as 'DJ_ITRN_AKP.KANBAN_CODE',
-            <!-- 外委供应商 -->
-            DJ_ITRN_AKP.WW_OWNER as 'DJ_ITRN_AKP.WW_OWNER',
-            <!-- 当前最大刀头号 -->
-            DJ_ITRN_AKP.MAX_DJH as 'DJ_ITRN_AKP.MAX_DJH',
-            <!-- 当前RFID -->
-            DJ_ITRN_AKP.RFID as 'DJ_ITRN_AKP.RFID',
-            <!-- 外委资材单号 -->
-            DJ_ITRN_AKP.ZC_CODE as 'DJ_ITRN_AKP.ZC_CODE'
+            /*  */
+            DJ_ITRN_AKP.BATCHNO AS DJ_ITRN_AKP.BATCHNO,
+            /*  */
+            DJ_ITRN_AKP.WH_CODE AS DJ_ITRN_AKP.WH_CODE,
+            /*  */
+            DJ_ITRN_AKP.OWNER_CODE AS DJ_ITRN_AKP.OWNER_CODE,
+            /*  */
+            DJ_ITRN_AKP.MTL_CODE AS DJ_ITRN_AKP.MTL_CODE,
+            /*  */
+            DJ_ITRN_AKP.GGXH AS DJ_ITRN_AKP.GGXH,
+            /*  */
+            DJ_ITRN_AKP.GONGW AS DJ_ITRN_AKP.GONGW,
+            /*  */
+            DJ_ITRN_AKP.SHENGCX AS DJ_ITRN_AKP.SHENGCX,
+            /*  */
+            DJ_ITRN_AKP.DAOJ_CASE AS DJ_ITRN_AKP.DAOJ_CASE,
+            /*  */
+            DJ_ITRN_AKP.JGSM AS DJ_ITRN_AKP.JGSM,
+            /*  */
+            DJ_ITRN_AKP.PRICE AS DJ_ITRN_AKP.PRICE,
+            /*  */
+            DJ_ITRN_AKP.TYPE AS DJ_ITRN_AKP.TYPE,
+            /*  */
+            DJ_ITRN_AKP.WWCODE AS DJ_ITRN_AKP.WWCODE,
+            /*  */
+            DJ_ITRN_AKP.JGCS AS DJ_ITRN_AKP.JGCS,
+            /*  */
+            DJ_ITRN_AKP.LHCS AS DJ_ITRN_AKP.LHCS,
+            /*  */
+            DJ_ITRN_AKP.RETURN_TYPE AS DJ_ITRN_AKP.RETURN_TYPE,
+            /*  */
+            DJ_ITRN_AKP.CREATE_DATE AS DJ_ITRN_AKP.CREATE_DATE,
+            /*  */
+            DJ_ITRN_AKP.CREATE_BY AS DJ_ITRN_AKP.CREATE_BY,
+            /*  */
+            DJ_ITRN_AKP.SHARPEN_TIMES AS DJ_ITRN_AKP.SHARPEN_TIMES,
+            /*  */
+            DJ_ITRN_AKP.BF_CAUSE AS DJ_ITRN_AKP.BF_CAUSE,
+            /*  */
+            DJ_ITRN_AKP.BF_STATUS AS DJ_ITRN_AKP.BF_STATUS,
+            /*  */
+            DJ_ITRN_AKP.KANBAN_CODE AS DJ_ITRN_AKP.KANBAN_CODE,
+            /*  */
+            DJ_ITRN_AKP.WW_OWNER AS DJ_ITRN_AKP.WW_OWNER,
+            /*  */
+            DJ_ITRN_AKP.MAX_DJH AS DJ_ITRN_AKP.MAX_DJH,
+            /*  */
+            DJ_ITRN_AKP.RFID AS DJ_ITRN_AKP.RFID,
+            /*  */
+            DJ_ITRN_AKP.ZC_CODE AS DJ_ITRN_AKP.ZC_CODE,
+            /*  */
+            DJ_ITRN_AKP.CASECODE AS DJ_ITRN_AKP.CASECODE,
+            /*  */
+            DJ_ITRN_AKP.C_KANBAN_CODE AS DJ_ITRN_AKP.C_KANBAN_CODE,
+            /*  */
+            DJ_ITRN_AKP.NOTE AS DJ_ITRN_AKP.NOTE,
+            /*  */
+            DJ_ITRN_AKP.WW_TYPE AS DJ_ITRN_AKP.WW_TYPE,
+            /*  */
+            DJ_ITRN_AKP.QTY AS DJ_ITRN_AKP.QTY
         /*djItrnAkp end*/
-        FROM DJ_ITRN_AKP as DJ_ITRN_AKP
+        FROM DJ_ITRN_AKP DJ_ITRN_AKP
         WHERE
-            1 = 1 AND  DJ_ITRN_AKP.is_del = 0
+            1 = 1
         /*DJ_ITRN_AKP begin*/
-            <!-- 序列 -->
-            <if test="id != null and id != '' " >
-                and DJ_ITRN_AKP.ID = #{id}
-            </if>
-            <!-- 批次 -->
+            /*  */
             <if test="batchno != null and batchno != '' " >
                 and DJ_ITRN_AKP.BATCHNO = #{batchno}
             </if>
-            <!-- 仓库 ‘FSDJ’ -->
+            /*  */
             <if test="whCode != null and whCode != '' " >
                 and DJ_ITRN_AKP.WH_CODE = #{whCode}
             </if>
-            <!-- 供应商号 -->
+            /*  */
             <if test="ownerCode != null and ownerCode != '' " >
                 and DJ_ITRN_AKP.OWNER_CODE = #{ownerCode}
             </if>
-            <!-- 物料号，加外围类型 -->
+            /*  */
             <if test="mtlCode != null and mtlCode != '' " >
                 and DJ_ITRN_AKP.MTL_CODE = #{mtlCode}
             </if>
-            <!-- 规格型号 -->
+            /*  */
             <if test="ggxh != null and ggxh != '' " >
                 and DJ_ITRN_AKP.GGXH = #{ggxh}
             </if>
-            <!-- 工位 -->
+            /*  */
             <if test="gongw != null and gongw != '' " >
                 and DJ_ITRN_AKP.GONGW = #{gongw}
             </if>
-            <!-- 生产线 -->
+            /*  */
             <if test="shengcx != null and shengcx != '' " >
                 and DJ_ITRN_AKP.SHENGCX = #{shengcx}
             </if>
-            <!-- 刀具号 -->
+            /*  */
             <if test="daojCase != null and daojCase != '' " >
                 and DJ_ITRN_AKP.DAOJ_CASE = #{daojCase}
             </if>
-            <!-- 加工寿命 -->
+            /*  */
             <if test="jgsm != null and jgsm != '' " >
                 and DJ_ITRN_AKP.JGSM = #{jgsm}
             </if>
-            <!-- 价格 -->
+            /*  */
             <if test="price != null and price != '' " >
                 and DJ_ITRN_AKP.PRICE = #{price}
             </if>
-            <!-- 类型：N生成 U领用 R归还 S1车间刃磨 S2外委刃磨 S3直接外委 SR刃磨归还 SD刃磨报废 D报废 -->
+            /*  */
             <if test="type != null and type != '' " >
                 and DJ_ITRN_AKP.TYPE = #{type}
             </if>
-            <!-- 外委单号 -->
+            /*  */
             <if test="wwcode != null and wwcode != '' " >
                 and DJ_ITRN_AKP.WWCODE = #{wwcode}
             </if>
-            <!-- 实际加工寿命，加工次数 -->
+            /*  */
             <if test="jgcs != null and jgcs != '' " >
                 and DJ_ITRN_AKP.JGCS = #{jgcs}
             </if>
-            <!-- 刀具轮回次数，值为 palabel_cms 中remark03(车间刃磨次数)+remark04(外委刃磨次数)+1 -->
+            /*  */
             <if test="lhcs != null and lhcs != '' " >
                 and DJ_ITRN_AKP.LHCS = #{lhcs}
             </if>
-            <!-- 归还类型 1外委归还 2刃磨归还 3报废 -->
+            /*  */
             <if test="returnType != null and returnType != '' " >
                 and DJ_ITRN_AKP.RETURN_TYPE = #{returnType}
             </if>
-            <!-- 创建时间 -->
+            /*  */
             <if test="createDate != null and createDate != '' " >
                 and DJ_ITRN_AKP.CREATE_DATE = #{createDate}
             </if>
-            <!-- 创建人 -->
+            /*  */
             <if test="createBy != null and createBy != '' " >
                 and DJ_ITRN_AKP.CREATE_BY = #{createBy}
             </if>
-            <!-- 加工次数 -->
-            <if test="processTimes != null and processTimes != '' " >
-                and DJ_ITRN_AKP.PROCESS_TIMES = #{processTimes}
-            </if>
-            <!-- 刃磨次数 -->
+            /*  */
             <if test="sharpenTimes != null and sharpenTimes != '' " >
                 and DJ_ITRN_AKP.SHARPEN_TIMES = #{sharpenTimes}
             </if>
-            <!-- 报废原因 -->
+            /*  */
             <if test="bfCause != null and bfCause != '' " >
                 and DJ_ITRN_AKP.BF_CAUSE = #{bfCause}
             </if>
-            <!-- 报废状态（0.断刀1.丢刀2.到寿3.出库报废4.其他） -->
+            /*  */
             <if test="bfStatus != null and bfStatus != '' " >
                 and DJ_ITRN_AKP.BF_STATUS = #{bfStatus}
             </if>
-            <!-- 刀签号 -->
-            <if test="casecode != null and casecode != '' " >
-                and DJ_ITRN_AKP.CASECODE = #{casecode}
-            </if>
-            <!-- 领料条码,'CK' -->
-            <if test="cKanbanCode != null and cKanbanCode != '' " >
-                and DJ_ITRN_AKP.C_KANBAN_CODE = #{cKanbanCode}
-            </if>
-            <!-- 备注长文本 -->
-            <if test="not != null and not != '' " >
-                and DJ_ITRN_AKP.not = #{not}
-            </if>
-            <!-- 出库看板号“DJLY” -->
+            /*  */
             <if test="kanbanCode != null and kanbanCode != '' " >
                 and DJ_ITRN_AKP.KANBAN_CODE = #{kanbanCode}
             </if>
-            <!-- 外委供应商 -->
+            /*  */
             <if test="wwOwner != null and wwOwner != '' " >
                 and DJ_ITRN_AKP.WW_OWNER = #{wwOwner}
             </if>
-            <!-- 当前最大刀头号 -->
+            /*  */
             <if test="maxDjh != null and maxDjh != '' " >
                 and DJ_ITRN_AKP.MAX_DJH = #{maxDjh}
             </if>
-            <!-- 当前RFID -->
+            /*  */
             <if test="rfid != null and rfid != '' " >
                 and DJ_ITRN_AKP.RFID = #{rfid}
             </if>
-            <!-- 外委资材单号 -->
+            /*  */
             <if test="zcCode != null and zcCode != '' " >
                 and DJ_ITRN_AKP.ZC_CODE = #{zcCode}
             </if>
+            /*  */
+            <if test="casecode != null and casecode != '' " >
+                and DJ_ITRN_AKP.CASECODE = #{casecode}
+            </if>
+            /*  */
+            <if test="cKanbanCode != null and cKanbanCode != '' " >
+                and DJ_ITRN_AKP.C_KANBAN_CODE = #{cKanbanCode}
+            </if>
+            /*  */
+            <if test="note != null and note != '' " >
+                and DJ_ITRN_AKP.NOTE = #{note}
+            </if>
+            /*  */
+            <if test="wwType != null and wwType != '' " >
+                and DJ_ITRN_AKP.WW_TYPE = #{wwType}
+            </if>
+            /*  */
+            <if test="qty != null and qty != '' " >
+                and DJ_ITRN_AKP.QTY = #{qty}
+            </if>
         /*DJ_ITRN_AKP end*/
-        ORDER BY DJ_ITRN_AKP.ID desc
-        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
-        LIMIT #{startRecord},#{pageSize}
-        </if>
+        ORDER BY  desc
     </select>
 
 
-    <!--查询记录数-->
+    <!-- 查询记录数 -->
     <select id="getDjItrnAkpCount" parameterType="com.common.vo.DjItrnAkpVO" resultType="java.lang.Integer">
         SELECT COUNT(1)
-        FROM DJ_ITRN_AKP as DJ_ITRN_AKP
+        FROM DJ_ITRN_AKP
         WHERE
-            1 = 1 AND  DJ_ITRN_AKP.is_del = 0
+            1 = 1
         /*DJ_ITRN_AKP begin*/
-        <!-- 序列 -->
-        <if test="id != null and id != '' " >
-            and DJ_ITRN_AKP.ID = #{id}
-        </if>
-        <!-- 批次 -->
+        /*  */
         <if test="batchno != null and batchno != '' " >
             and DJ_ITRN_AKP.BATCHNO = #{batchno}
         </if>
-        <!-- 仓库 ‘FSDJ’ -->
+        /*  */
         <if test="whCode != null and whCode != '' " >
             and DJ_ITRN_AKP.WH_CODE = #{whCode}
         </if>
-        <!-- 供应商号 -->
+        /*  */
         <if test="ownerCode != null and ownerCode != '' " >
             and DJ_ITRN_AKP.OWNER_CODE = #{ownerCode}
         </if>
-        <!-- 物料号，加外围类型 -->
+        /*  */
         <if test="mtlCode != null and mtlCode != '' " >
             and DJ_ITRN_AKP.MTL_CODE = #{mtlCode}
         </if>
-        <!-- 规格型号 -->
+        /*  */
         <if test="ggxh != null and ggxh != '' " >
             and DJ_ITRN_AKP.GGXH = #{ggxh}
         </if>
-        <!-- 工位 -->
+        /*  */
         <if test="gongw != null and gongw != '' " >
             and DJ_ITRN_AKP.GONGW = #{gongw}
         </if>
-        <!-- 生产线 -->
+        /*  */
         <if test="shengcx != null and shengcx != '' " >
             and DJ_ITRN_AKP.SHENGCX = #{shengcx}
         </if>
-        <!-- 刀具号 -->
+        /*  */
         <if test="daojCase != null and daojCase != '' " >
             and DJ_ITRN_AKP.DAOJ_CASE = #{daojCase}
         </if>
-        <!-- 加工寿命 -->
+        /*  */
         <if test="jgsm != null and jgsm != '' " >
             and DJ_ITRN_AKP.JGSM = #{jgsm}
         </if>
-        <!-- 价格 -->
+        /*  */
         <if test="price != null and price != '' " >
             and DJ_ITRN_AKP.PRICE = #{price}
         </if>
-        <!-- 类型：N生成 U领用 R归还 S1车间刃磨 S2外委刃磨 S3直接外委 SR刃磨归还 SD刃磨报废 D报废 -->
+        /*  */
         <if test="type != null and type != '' " >
             and DJ_ITRN_AKP.TYPE = #{type}
         </if>
-        <!-- 外委单号 -->
+        /*  */
         <if test="wwcode != null and wwcode != '' " >
             and DJ_ITRN_AKP.WWCODE = #{wwcode}
         </if>
-        <!-- 实际加工寿命，加工次数 -->
+        /*  */
         <if test="jgcs != null and jgcs != '' " >
             and DJ_ITRN_AKP.JGCS = #{jgcs}
         </if>
-        <!-- 刀具轮回次数，值为 palabel_cms 中remark03(车间刃磨次数)+remark04(外委刃磨次数)+1 -->
+        /*  */
         <if test="lhcs != null and lhcs != '' " >
             and DJ_ITRN_AKP.LHCS = #{lhcs}
         </if>
-        <!-- 归还类型 1外委归还 2刃磨归还 3报废 -->
+        /*  */
         <if test="returnType != null and returnType != '' " >
             and DJ_ITRN_AKP.RETURN_TYPE = #{returnType}
         </if>
-        <!-- 创建时间 -->
+        /*  */
         <if test="createDate != null and createDate != '' " >
             and DJ_ITRN_AKP.CREATE_DATE = #{createDate}
         </if>
-        <!-- 创建人 -->
+        /*  */
         <if test="createBy != null and createBy != '' " >
             and DJ_ITRN_AKP.CREATE_BY = #{createBy}
         </if>
-        <!-- 加工次数 -->
-        <if test="processTimes != null and processTimes != '' " >
-            and DJ_ITRN_AKP.PROCESS_TIMES = #{processTimes}
-        </if>
-        <!-- 刃磨次数 -->
+        /*  */
         <if test="sharpenTimes != null and sharpenTimes != '' " >
             and DJ_ITRN_AKP.SHARPEN_TIMES = #{sharpenTimes}
         </if>
-        <!-- 报废原因 -->
+        /*  */
         <if test="bfCause != null and bfCause != '' " >
             and DJ_ITRN_AKP.BF_CAUSE = #{bfCause}
         </if>
-        <!-- 报废状态（0.断刀1.丢刀2.到寿3.出库报废4.其他） -->
+        /*  */
         <if test="bfStatus != null and bfStatus != '' " >
             and DJ_ITRN_AKP.BF_STATUS = #{bfStatus}
         </if>
-        <!-- 刀签号 -->
-        <if test="casecode != null and casecode != '' " >
-            and DJ_ITRN_AKP.CASECODE = #{casecode}
-        </if>
-        <!-- 领料条码,'CK' -->
-        <if test="cKanbanCode != null and cKanbanCode != '' " >
-            and DJ_ITRN_AKP.C_KANBAN_CODE = #{cKanbanCode}
-        </if>
-        <!-- 备注长文本 -->
-        <if test="not != null and not != '' " >
-            and DJ_ITRN_AKP.not = #{not}
-        </if>
-        <!-- 出库看板号“DJLY” -->
+        /*  */
         <if test="kanbanCode != null and kanbanCode != '' " >
             and DJ_ITRN_AKP.KANBAN_CODE = #{kanbanCode}
         </if>
-        <!-- 外委供应商 -->
+        /*  */
         <if test="wwOwner != null and wwOwner != '' " >
             and DJ_ITRN_AKP.WW_OWNER = #{wwOwner}
         </if>
-        <!-- 当前最大刀头号 -->
+        /*  */
         <if test="maxDjh != null and maxDjh != '' " >
             and DJ_ITRN_AKP.MAX_DJH = #{maxDjh}
         </if>
-        <!-- 当前RFID -->
+        /*  */
         <if test="rfid != null and rfid != '' " >
             and DJ_ITRN_AKP.RFID = #{rfid}
         </if>
-        <!-- 外委资材单号 -->
+        /*  */
         <if test="zcCode != null and zcCode != '' " >
             and DJ_ITRN_AKP.ZC_CODE = #{zcCode}
+        </if>
+        /*  */
+        <if test="casecode != null and casecode != '' " >
+            and DJ_ITRN_AKP.CASECODE = #{casecode}
+        </if>
+        /*  */
+        <if test="cKanbanCode != null and cKanbanCode != '' " >
+            and DJ_ITRN_AKP.C_KANBAN_CODE = #{cKanbanCode}
+        </if>
+        /*  */
+        <if test="note != null and note != '' " >
+            and DJ_ITRN_AKP.NOTE = #{note}
+        </if>
+        /*  */
+        <if test="wwType != null and wwType != '' " >
+            and DJ_ITRN_AKP.WW_TYPE = #{wwType}
+        </if>
+        /*  */
+        <if test="qty != null and qty != '' " >
+            and DJ_ITRN_AKP.QTY = #{qty}
         </if>
         /*DJ_ITRN_AKP end*/
     </select>
 
-    <!--根据vo查询 -->
+    <!-- 根据vo查询 -->
     <select id="getDjItrnAkp" parameterType="com.common.vo.DjItrnAkpVO" resultMap="djItrnAkpQueryMap">
         SELECT
         /*DJ_ITRN_AKP begin*/
-        <!-- 序列 -->
-        DJ_ITRN_AKP.ID as 'DJ_ITRN_AKP.ID',
-        <!-- 批次 -->
-        DJ_ITRN_AKP.BATCHNO as 'DJ_ITRN_AKP.BATCHNO',
-        <!-- 仓库 ‘FSDJ’ -->
-        DJ_ITRN_AKP.WH_CODE as 'DJ_ITRN_AKP.WH_CODE',
-        <!-- 供应商号 -->
-        DJ_ITRN_AKP.OWNER_CODE as 'DJ_ITRN_AKP.OWNER_CODE',
-        <!-- 物料号，加外围类型 -->
-        DJ_ITRN_AKP.MTL_CODE as 'DJ_ITRN_AKP.MTL_CODE',
-        <!-- 规格型号 -->
-        DJ_ITRN_AKP.GGXH as 'DJ_ITRN_AKP.GGXH',
-        <!-- 工位 -->
-        DJ_ITRN_AKP.GONGW as 'DJ_ITRN_AKP.GONGW',
-        <!-- 生产线 -->
-        DJ_ITRN_AKP.SHENGCX as 'DJ_ITRN_AKP.SHENGCX',
-        <!-- 刀具号 -->
-        DJ_ITRN_AKP.DAOJ_CASE as 'DJ_ITRN_AKP.DAOJ_CASE',
-        <!-- 加工寿命 -->
-        DJ_ITRN_AKP.JGSM as 'DJ_ITRN_AKP.JGSM',
-        <!-- 价格 -->
-        DJ_ITRN_AKP.PRICE as 'DJ_ITRN_AKP.PRICE',
-        <!-- 类型：N生成 U领用 R归还 S1车间刃磨 S2外委刃磨 S3直接外委 SR刃磨归还 SD刃磨报废 D报废 -->
-        DJ_ITRN_AKP.TYPE as 'DJ_ITRN_AKP.TYPE',
-        <!-- 外委单号 -->
-        DJ_ITRN_AKP.WWCODE as 'DJ_ITRN_AKP.WWCODE',
-        <!-- 实际加工寿命，加工次数 -->
-        DJ_ITRN_AKP.JGCS as 'DJ_ITRN_AKP.JGCS',
-        <!-- 刀具轮回次数，值为 palabel_cms 中remark03(车间刃磨次数)+remark04(外委刃磨次数)+1 -->
-        DJ_ITRN_AKP.LHCS as 'DJ_ITRN_AKP.LHCS',
-        <!-- 归还类型 1外委归还 2刃磨归还 3报废 -->
-        DJ_ITRN_AKP.RETURN_TYPE as 'DJ_ITRN_AKP.RETURN_TYPE',
-        <!-- 创建时间 -->
-        DJ_ITRN_AKP.CREATE_DATE as 'DJ_ITRN_AKP.CREATE_DATE',
-        <!-- 创建人 -->
-        DJ_ITRN_AKP.CREATE_BY as 'DJ_ITRN_AKP.CREATE_BY',
-        <!-- 加工次数 -->
-        DJ_ITRN_AKP.PROCESS_TIMES as 'DJ_ITRN_AKP.PROCESS_TIMES',
-        <!-- 刃磨次数 -->
-        DJ_ITRN_AKP.SHARPEN_TIMES as 'DJ_ITRN_AKP.SHARPEN_TIMES',
-        <!-- 报废原因 -->
-        DJ_ITRN_AKP.BF_CAUSE as 'DJ_ITRN_AKP.BF_CAUSE',
-        <!-- 报废状态（0.断刀1.丢刀2.到寿3.出库报废4.其他） -->
-        DJ_ITRN_AKP.BF_STATUS as 'DJ_ITRN_AKP.BF_STATUS',
-        <!-- 刀签号 -->
-        DJ_ITRN_AKP.CASECODE as 'DJ_ITRN_AKP.CASECODE',
-        <!-- 领料条码,'CK' -->
-        DJ_ITRN_AKP.C_KANBAN_CODE as 'DJ_ITRN_AKP.C_KANBAN_CODE',
-        <!-- 备注长文本 -->
-        DJ_ITRN_AKP.not as 'DJ_ITRN_AKP.not',
-        <!-- 出库看板号“DJLY” -->
-        DJ_ITRN_AKP.KANBAN_CODE as 'DJ_ITRN_AKP.KANBAN_CODE',
-        <!-- 外委供应商 -->
-        DJ_ITRN_AKP.WW_OWNER as 'DJ_ITRN_AKP.WW_OWNER',
-        <!-- 当前最大刀头号 -->
-        DJ_ITRN_AKP.MAX_DJH as 'DJ_ITRN_AKP.MAX_DJH',
-        <!-- 当前RFID -->
-        DJ_ITRN_AKP.RFID as 'DJ_ITRN_AKP.RFID',
-        <!-- 外委资材单号 -->
-        DJ_ITRN_AKP.ZC_CODE as 'DJ_ITRN_AKP.ZC_CODE'
+        /*  */
+        DJ_ITRN_AKP.BATCHNO,
+        /*  */
+        DJ_ITRN_AKP.WH_CODE,
+        /*  */
+        DJ_ITRN_AKP.OWNER_CODE,
+        /*  */
+        DJ_ITRN_AKP.MTL_CODE,
+        /*  */
+        DJ_ITRN_AKP.GGXH,
+        /*  */
+        DJ_ITRN_AKP.GONGW,
+        /*  */
+        DJ_ITRN_AKP.SHENGCX,
+        /*  */
+        DJ_ITRN_AKP.DAOJ_CASE,
+        /*  */
+        DJ_ITRN_AKP.JGSM,
+        /*  */
+        DJ_ITRN_AKP.PRICE,
+        /*  */
+        DJ_ITRN_AKP.TYPE,
+        /*  */
+        DJ_ITRN_AKP.WWCODE,
+        /*  */
+        DJ_ITRN_AKP.JGCS,
+        /*  */
+        DJ_ITRN_AKP.LHCS,
+        /*  */
+        DJ_ITRN_AKP.RETURN_TYPE,
+        /*  */
+        DJ_ITRN_AKP.CREATE_DATE,
+        /*  */
+        DJ_ITRN_AKP.CREATE_BY,
+        /*  */
+        DJ_ITRN_AKP.SHARPEN_TIMES,
+        /*  */
+        DJ_ITRN_AKP.BF_CAUSE,
+        /*  */
+        DJ_ITRN_AKP.BF_STATUS,
+        /*  */
+        DJ_ITRN_AKP.KANBAN_CODE,
+        /*  */
+        DJ_ITRN_AKP.WW_OWNER,
+        /*  */
+        DJ_ITRN_AKP.MAX_DJH,
+        /*  */
+        DJ_ITRN_AKP.RFID,
+        /*  */
+        DJ_ITRN_AKP.ZC_CODE,
+        /*  */
+        DJ_ITRN_AKP.CASECODE,
+        /*  */
+        DJ_ITRN_AKP.C_KANBAN_CODE,
+        /*  */
+        DJ_ITRN_AKP.NOTE,
+        /*  */
+        DJ_ITRN_AKP.WW_TYPE,
+        /*  */
+        DJ_ITRN_AKP.QTY
         /*DJ_ITRN_AKP end*/
-        FROM DJ_ITRN_AKP as DJ_ITRN_AKP
+        FROM DJ_ITRN_AKP
         WHERE
-            1 = 1 AND  DJ_ITRN_AKP.is_del = 0
+            1 = 1
         /*DJ_ITRN_AKP begin*/
-        <!-- 序列 -->
-        <if test="id != null and id != '' " >
-            and DJ_ITRN_AKP.ID = #{id}
-        </if>
-        <!-- 批次 -->
+        /*  */
         <if test="batchno != null and batchno != '' " >
             and DJ_ITRN_AKP.BATCHNO = #{batchno}
         </if>
-        <!-- 仓库 ‘FSDJ’ -->
+        /*  */
         <if test="whCode != null and whCode != '' " >
             and DJ_ITRN_AKP.WH_CODE = #{whCode}
         </if>
-        <!-- 供应商号 -->
+        /*  */
         <if test="ownerCode != null and ownerCode != '' " >
             and DJ_ITRN_AKP.OWNER_CODE = #{ownerCode}
         </if>
-        <!-- 物料号，加外围类型 -->
+        /*  */
         <if test="mtlCode != null and mtlCode != '' " >
             and DJ_ITRN_AKP.MTL_CODE = #{mtlCode}
         </if>
-        <!-- 规格型号 -->
+        /*  */
         <if test="ggxh != null and ggxh != '' " >
             and DJ_ITRN_AKP.GGXH = #{ggxh}
         </if>
-        <!-- 工位 -->
+        /*  */
         <if test="gongw != null and gongw != '' " >
             and DJ_ITRN_AKP.GONGW = #{gongw}
         </if>
-        <!-- 生产线 -->
+        /*  */
         <if test="shengcx != null and shengcx != '' " >
             and DJ_ITRN_AKP.SHENGCX = #{shengcx}
         </if>
-        <!-- 刀具号 -->
+        /*  */
         <if test="daojCase != null and daojCase != '' " >
             and DJ_ITRN_AKP.DAOJ_CASE = #{daojCase}
         </if>
-        <!-- 加工寿命 -->
+        /*  */
         <if test="jgsm != null and jgsm != '' " >
             and DJ_ITRN_AKP.JGSM = #{jgsm}
         </if>
-        <!-- 价格 -->
+        /*  */
         <if test="price != null and price != '' " >
             and DJ_ITRN_AKP.PRICE = #{price}
         </if>
-        <!-- 类型：N生成 U领用 R归还 S1车间刃磨 S2外委刃磨 S3直接外委 SR刃磨归还 SD刃磨报废 D报废 -->
+        /*  */
         <if test="type != null and type != '' " >
             and DJ_ITRN_AKP.TYPE = #{type}
         </if>
-        <!-- 外委单号 -->
+        /*  */
         <if test="wwcode != null and wwcode != '' " >
             and DJ_ITRN_AKP.WWCODE = #{wwcode}
         </if>
-        <!-- 实际加工寿命，加工次数 -->
+        /*  */
         <if test="jgcs != null and jgcs != '' " >
             and DJ_ITRN_AKP.JGCS = #{jgcs}
         </if>
-        <!-- 刀具轮回次数，值为 palabel_cms 中remark03(车间刃磨次数)+remark04(外委刃磨次数)+1 -->
+        /*  */
         <if test="lhcs != null and lhcs != '' " >
             and DJ_ITRN_AKP.LHCS = #{lhcs}
         </if>
-        <!-- 归还类型 1外委归还 2刃磨归还 3报废 -->
+        /*  */
         <if test="returnType != null and returnType != '' " >
             and DJ_ITRN_AKP.RETURN_TYPE = #{returnType}
         </if>
-        <!-- 创建时间 -->
+        /*  */
         <if test="createDate != null and createDate != '' " >
             and DJ_ITRN_AKP.CREATE_DATE = #{createDate}
         </if>
-        <!-- 创建人 -->
+        /*  */
         <if test="createBy != null and createBy != '' " >
             and DJ_ITRN_AKP.CREATE_BY = #{createBy}
         </if>
-        <!-- 加工次数 -->
-        <if test="processTimes != null and processTimes != '' " >
-            and DJ_ITRN_AKP.PROCESS_TIMES = #{processTimes}
-        </if>
-        <!-- 刃磨次数 -->
+        /*  */
         <if test="sharpenTimes != null and sharpenTimes != '' " >
             and DJ_ITRN_AKP.SHARPEN_TIMES = #{sharpenTimes}
         </if>
-        <!-- 报废原因 -->
+        /*  */
         <if test="bfCause != null and bfCause != '' " >
             and DJ_ITRN_AKP.BF_CAUSE = #{bfCause}
         </if>
-        <!-- 报废状态（0.断刀1.丢刀2.到寿3.出库报废4.其他） -->
+        /*  */
         <if test="bfStatus != null and bfStatus != '' " >
             and DJ_ITRN_AKP.BF_STATUS = #{bfStatus}
         </if>
-        <!-- 刀签号 -->
-        <if test="casecode != null and casecode != '' " >
-            and DJ_ITRN_AKP.CASECODE = #{casecode}
-        </if>
-        <!-- 领料条码,'CK' -->
-        <if test="cKanbanCode != null and cKanbanCode != '' " >
-            and DJ_ITRN_AKP.C_KANBAN_CODE = #{cKanbanCode}
-        </if>
-        <!-- 备注长文本 -->
-        <if test="not != null and not != '' " >
-            and DJ_ITRN_AKP.not = #{not}
-        </if>
-        <!-- 出库看板号“DJLY” -->
+        /*  */
         <if test="kanbanCode != null and kanbanCode != '' " >
             and DJ_ITRN_AKP.KANBAN_CODE = #{kanbanCode}
         </if>
-        <!-- 外委供应商 -->
+        /*  */
         <if test="wwOwner != null and wwOwner != '' " >
             and DJ_ITRN_AKP.WW_OWNER = #{wwOwner}
         </if>
-        <!-- 当前最大刀头号 -->
+        /*  */
         <if test="maxDjh != null and maxDjh != '' " >
             and DJ_ITRN_AKP.MAX_DJH = #{maxDjh}
         </if>
-        <!-- 当前RFID -->
+        /*  */
         <if test="rfid != null and rfid != '' " >
             and DJ_ITRN_AKP.RFID = #{rfid}
         </if>
-        <!-- 外委资材单号 -->
+        /*  */
         <if test="zcCode != null and zcCode != '' " >
             and DJ_ITRN_AKP.ZC_CODE = #{zcCode}
+        </if>
+        /*  */
+        <if test="casecode != null and casecode != '' " >
+            and DJ_ITRN_AKP.CASECODE = #{casecode}
+        </if>
+        /*  */
+        <if test="cKanbanCode != null and cKanbanCode != '' " >
+            and DJ_ITRN_AKP.C_KANBAN_CODE = #{cKanbanCode}
+        </if>
+        /*  */
+        <if test="note != null and note != '' " >
+            and DJ_ITRN_AKP.NOTE = #{note}
+        </if>
+        /*  */
+        <if test="wwType != null and wwType != '' " >
+            and DJ_ITRN_AKP.WW_TYPE = #{wwType}
+        </if>
+        /*  */
+        <if test="qty != null and qty != '' " >
+            and DJ_ITRN_AKP.QTY = #{qty}
         </if>
         /*DJ_ITRN_AKP end*/
     </select>

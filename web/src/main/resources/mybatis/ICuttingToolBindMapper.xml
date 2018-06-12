@@ -36,6 +36,8 @@
         <result property="jgsm" column="cutting_tool_bind.jgsm"/>
         <!-- 后加的刀具唯一码 -->
         <result property="uninCode" column="cutting_tool_bind.unin_code"/>
+        <!-- 是否使用 1是 0 否 -->
+        <result property="inUser" column="cutting_tool_bind.in_user"/>
         <!-- 材料刀编号 -->
         <association property="cuttingTool"  column="cutting_tool.code" resultMap="cuttingToolBindCuttingToolMap"/>
         <!-- RIFD编码 -->
@@ -126,6 +128,8 @@
             <result property="unicode" column="rfid_container.unicode"/>
             <!-- 操作人姓名 -->
             <result property="operatorName" column="rfid_container.operator_name"/>
+            <!-- 最后操作时间 -->
+            <result property="operatorTime" column="rfid_container.operator_time"/>
         </resultMap>
     <!--添加-->
     <insert id="addCuttingToolBind" parameterType="com.common.pojo.CuttingToolBind">
@@ -161,7 +165,9 @@
             <!-- 标准成本加工寿命，单次加工寿命 -->
             jgsm,
             <!-- 后加的刀具唯一码 -->
-            unin_code
+            unin_code,
+            <!-- 是否使用 1是 0 否 -->
+            in_user
         )
         VALUES (
             <!-- id -->
@@ -195,7 +201,9 @@
             <!-- 标准成本加工寿命，单次加工寿命 -->
             #{jgsm},
             <!-- 后加的刀具唯一码 -->
-            #{uninCode}
+            #{uninCode},
+            <!-- 是否使用 1是 0 否 -->
+            #{inUser}
         )
     </insert>
 
@@ -286,6 +294,10 @@
             <if test="uninCode != null and uninCode != '' " >
                 and unin_code =  #{uninCode}
             </if>
+            <!-- 是否使用 1是 0 否 -->
+            <if test="inUser != null and inUser != '' " >
+                and in_user =  #{inUser}
+            </if>
     </delete>
 
     <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
@@ -352,6 +364,10 @@
             <if test="uninCode != null and uninCode != '' " >
                 unin_code =  #{uninCode},
             </if>
+            <!-- 是否使用 1是 0 否 -->
+            <if test="inUser != null and inUser != '' " >
+                in_user =  #{inUser},
+            </if>
             <!-- id -->
             id = #{id}
         WHERE
@@ -395,6 +411,8 @@
             cutting_tool_bind.jgsm as 'cutting_tool_bind.jgsm',
             <!-- 后加的刀具唯一码 -->
             cutting_tool_bind.unin_code as 'cutting_tool_bind.unin_code',
+            <!-- 是否使用 1是 0 否 -->
+            cutting_tool_bind.in_user as 'cutting_tool_bind.in_user',
         /*cuttingToolBind end*/
         /*cutting_tool begin*/
             <!-- 材料刀id -->
@@ -478,7 +496,9 @@
             <!-- 刀具的唯一码 -->
             rfid_container.unicode as 'rfid_container.unicode',
             <!-- 操作人姓名 -->
-            rfid_container.operator_name as 'rfid_container.operator_name'
+            rfid_container.operator_name as 'rfid_container.operator_name',
+            <!-- 最后操作时间 -->
+            rfid_container.operator_time as 'rfid_container.operator_time'
         /*rfid_container end*/
         FROM cutting_tool_bind as cutting_tool_bind
         LEFT JOIN cutting_tool as cutting_tool ON cutting_tool.code = cutting_tool_bind.cutting_tool_code
@@ -489,6 +509,9 @@
             <!-- id -->
             <if test="id != null and id != '' " >
                 and cutting_tool_bind.id = #{id}
+            </if>
+            <if test="unbind != null and unbind != '' " >
+                and cutting_tool_bind.rfid_code is NULL
             </if>
             <!-- 编码 -->
             <if test="code != null and code != '' " >
@@ -549,6 +572,10 @@
             <!-- 后加的刀具唯一码 -->
             <if test="uninCode != null and uninCode != '' " >
                 and cutting_tool_bind.unin_code = #{uninCode}
+            </if>
+            <!-- 是否使用 1是 0 否 -->
+            <if test="inUser != null and inUser != '' " >
+                and cutting_tool_bind.in_user = #{inUser}
             </if>
         /*cutting_tool_bind end*/
         /*cutting_tool begin*/
@@ -717,6 +744,13 @@
             <if test="rfidContainerVO.operatorName != null and rfidContainerVO.operatorName != '' " >
                 and rfid_container.operator_name = #{rfidContainerVO.operatorName}
             </if>
+            <!-- 最后操作时间 -->
+            <if test="rfidContainerVO.operatorTime != null and rfidContainerVO.operatorTime != '' " >
+                and rfid_container.operator_time &lt;=  #{rfidContainerVO.operatorTimeEnd}
+            </if>
+            <if test="rfidContainerVO.operatorTime != null and rfidContainerVO.operatorTime != '' " >
+                and rfid_container.operator_time &gt;= #{rfidContainerVO.operatorTimeBegin}
+            </if>
             </if>
         /*rfid_container end*/
         ORDER BY cutting_tool_bind.id desc
@@ -798,6 +832,10 @@
         <!-- 后加的刀具唯一码 -->
         <if test="uninCode != null and uninCode != '' " >
             and cutting_tool_bind.unin_code = #{uninCode}
+        </if>
+        <!-- 是否使用 1是 0 否 -->
+        <if test="inUser != null and inUser != '' " >
+            and cutting_tool_bind.in_user = #{inUser}
         </if>
         /*cutting_tool_bind end*/
         /*cutting_tool begin*/
@@ -966,6 +1004,13 @@
         <if test="rfidContainerVO.operatorName != null and rfidContainerVO.operatorName != '' " >
             and rfid_container.operator_name = #{rfidContainerVO.operatorName}
         </if>
+        <!-- 最后操作时间 -->
+        <if test="rfidContainerVO.operatorTime != null and rfidContainerVO.operatorTime != '' " >
+            and rfid_container.operator_time &lt;=  #{rfidContainerVO.operatorTimeEnd}
+        </if>
+        <if test="rfidContainerVO.operatorTime != null and rfidContainerVO.operatorTime != '' " >
+            and rfid_container.operator_time &gt;= #{rfidContainerVO.operatorTimeBegin}
+        </if>
         </if>
         /*rfid_container end*/
     </select>
@@ -1006,6 +1051,8 @@
         cutting_tool_bind.jgsm as 'cutting_tool_bind.jgsm',
         <!-- 后加的刀具唯一码 -->
         cutting_tool_bind.unin_code as 'cutting_tool_bind.unin_code',
+        <!-- 是否使用 1是 0 否 -->
+        cutting_tool_bind.in_user as 'cutting_tool_bind.in_user',
         /*cutting_tool_bind end*/
         /*cutting_tool begin*/
         <!-- 材料刀id -->
@@ -1089,7 +1136,9 @@
         <!-- 刀具的唯一码 -->
         rfid_container.unicode as 'rfid_container.unicode',
         <!-- 操作人姓名 -->
-        rfid_container.operator_name as 'rfid_container.operator_name'
+        rfid_container.operator_name as 'rfid_container.operator_name',
+        <!-- 最后操作时间 -->
+        rfid_container.operator_time as 'rfid_container.operator_time'
         /*rfid_container end*/
         FROM cutting_tool_bind as cutting_tool_bind
         LEFT JOIN cutting_tool as cutting_tool ON cutting_tool.code = cutting_tool_bind.cutting_tool_code
@@ -1160,6 +1209,10 @@
         <!-- 后加的刀具唯一码 -->
         <if test="uninCode != null and uninCode != '' " >
             and cutting_tool_bind.unin_code = #{uninCode}
+        </if>
+        <!-- 是否使用 1是 0 否 -->
+        <if test="inUser != null and inUser != '' " >
+            and cutting_tool_bind.in_user = #{inUser}
         </if>
         /*cutting_tool_bind end*/
         /*cutting_tools begin*/
@@ -1328,7 +1381,21 @@
         <if test="rfidContainerVO.operatorName != null and rfidContainerVO.operatorName != '' " >
             and rfid_container.operator_name = #{rfidContainerVO.operatorName}
         </if>
+        <!-- 最后操作时间 -->
+        <if test="rfidContainerVO.operatorTime != null and rfidContainerVO.operatorTime != '' " >
+            and rfid_container.operator_time &lt;=  #{rfidContainerVO.operatorTimeEnd}
+        </if>
+        <if test="rfidContainerVO.operatorTime != null and rfidContainerVO.operatorTime != '' " >
+            and rfid_container.operator_time &gt;= #{rfidContainerVO.operatorTimeBegin}
+        </if>
         </if>
         /*rfid_container end*/
     </select>
+
+    <update id="unBindCuttingToolData" parameterType="com.common.vo.CuttingToolBindVO">
+        UPDATE cutting_tool_bind
+        SET
+        rfid_container_code =  NULL
+        WHERE cutting_tool_bind.code = #{code}
+    </update>
 </mapper>

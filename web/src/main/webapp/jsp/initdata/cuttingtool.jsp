@@ -665,7 +665,8 @@
             </th>
             <td >
                 <select name="grinding"  class="u-sel hidder" maxlength="2">
-                    <option value="1" selected="selected">厂内修磨</option>
+                    <option value="" selected="selected">请选择</option>
+                    <option value="1">厂内修磨</option>
                     <option value="2">厂外修磨</option>
                     <option value="3">厂外涂层</option>
                 </select>

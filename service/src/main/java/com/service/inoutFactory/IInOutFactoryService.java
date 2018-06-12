@@ -22,7 +22,7 @@ public interface IInOutFactoryService {
      * @return
      * @throws Exception
      */
-    public CuttingToolBind getCuttingToolBind(CuttingToolBindVO cuttingToolBindVO) throws Exception;
+    public CuttingToolBind getCuttingToolBind(CuttingToolBindVO cuttingToolBindVO,Integer operationKey) throws Exception;
 
     /**
      * 获取场内刃磨记录数

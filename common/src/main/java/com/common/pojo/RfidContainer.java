@@ -1,6 +1,7 @@
 package com.common.pojo;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -60,7 +61,7 @@ public class RfidContainer implements Serializable{
     * @fieldType  Integer
     * @Description  操作人
      */
-    private Integer operatorCode;
+    private String operatorCode;
     /**
      * @fieldName prevOperation
     * @fieldType  String
@@ -85,6 +86,12 @@ public class RfidContainer implements Serializable{
     * @Description  操作人姓名
      */
     private String operatorName;
+    /**
+     * @fieldName operatorTime
+    * @fieldType  Timestamp
+    * @Description  最后操作时间
+     */
+    private Timestamp operatorTime;
 
 
     private List<AuthCustomer> authCustomerList;
@@ -144,11 +151,11 @@ public class RfidContainer implements Serializable{
     public void setIsDel(Integer isDel) {
         this.isDel = isDel;
     }
-    public Integer getOperatorCode() {
+    public String getOperatorCode() {
         return operatorCode;
     }
 
-    public void setOperatorCode(Integer operatorCode) {
+    public void setOperatorCode(String operatorCode) {
         this.operatorCode = operatorCode;
     }
     public String getPrevOperation() {
@@ -178,6 +185,13 @@ public class RfidContainer implements Serializable{
 
     public void setOperatorName(String operatorName) {
         this.operatorName = operatorName;
+    }
+    public Timestamp getOperatorTime() {
+        return operatorTime;
+    }
+
+    public void setOperatorTime(Timestamp operatorTime) {
+        this.operatorTime = operatorTime;
     }
 
 

@@ -1,10 +1,15 @@
 package com.service.inoutFactory.impl;
 
+import com.common.constants.CuttingToolConsumeTypeEnum;
 import com.common.constants.GrindingEnum;
+import com.common.constants.OperationEnum;
 import com.common.constants.OutWayEnum;
 import com.common.mapper.*;
 import com.common.pojo.*;
 import com.common.utils.UUID;
+import com.common.utils.exception.ExceptionConstans;
+import com.common.utils.exception.SelfDefinedException;
+import com.common.utils.loadConfig.IMessageSourceHanlder;
 import com.common.vo.*;
 import com.service.inoutFactory.IInOutFactoryService;
 import com.service.inoutFactory.vo.HistoryVO;
@@ -46,6 +51,8 @@ public class InOutFactoryServiceImpl implements IInOutFactoryService{
 
     @Autowired
     private ICuttingToolMapper cuttingToolMapper;
+    @Autowired
+    private IMessageSourceHanlder messageSourceHanlder;
 
     /**
      * 根据RFID 获取刀具信息
@@ -54,8 +61,22 @@ public class InOutFactoryServiceImpl implements IInOutFactoryService{
      * @throws Exception
      */
     @Override
-    public CuttingToolBind getCuttingToolBind(CuttingToolBindVO cuttingToolBindVO) throws Exception {
-        return cuttingToolBindMapper.getCuttingToolBind(cuttingToolBindVO);
+    public CuttingToolBind getCuttingToolBind(CuttingToolBindVO cuttingToolBindVO,Integer operationKey) throws Exception {
+        CuttingToolBind cuttingToolBind = cuttingToolBindMapper.getCuttingToolBind(cuttingToolBindVO);
+        if (StringUtils.isBlank(cuttingToolBind.getCuttingTool().getGrinding())){
+            throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.GRINDING_TYPE_ERROR_MESSAGE));
+        }
+        if (operationKey == OperationEnum.Cutting_tool_Inside.getKey()){
+            if (!cuttingToolBind.getCuttingTool().getGrinding().equals(GrindingEnum.inside.getKey())){
+                throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.GRINDING_TYPE_ERROR_MESSAGE));
+            }
+        }
+        if (operationKey == OperationEnum.Cutting_tool_OutSide.getKey()){
+            if (cuttingToolBind.getCuttingTool().getGrinding().equals(GrindingEnum.inside.getKey())){
+                throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.GRINDING_TYPE_ERROR_MESSAGE));
+            }
+        }
+        return cuttingToolBind;
     }
 
     @Override
@@ -101,8 +122,29 @@ public class InOutFactoryServiceImpl implements IInOutFactoryService{
             MaterialInventoryVO materialInventoryVO = new MaterialInventoryVO();
             materialInventoryVO.setCuttingToolCode(sharpenVO.getCuttingToolCode());
             MaterialInventory materialInventory = materialInventoryMapper.getMaterialInventory(materialInventoryVO);
-//            materialInventory.set
-
+            if (null  == materialInventory){
+                materialInventory = new MaterialInventory();
+                materialInventory.setIsDel(0);
+                materialInventory.setCuttingToolCode(cuttingTool.getCode());
+                materialInventory.setPrepareLibraryCount(0);
+                materialInventory.setProductLineCount(0);
+                materialInventory.setToExchangeCount(0);
+                materialInventory.setGrindingOutCount(0);
+                materialInventory.setScrapCount(0);
+                materialInventory.setForGrindingInCount(0);
+                materialInventory.setForGrindingOutCount(0);
+                materialInventoryMapper.addMaterialInventory(materialInventory);
+            }
+            if (cuttingTool.getConsumeType().equals(CuttingToolConsumeTypeEnum.griding_zt.getKey())
+                    ||cuttingTool.getConsumeType().equals(CuttingToolConsumeTypeEnum.griding_zt.getKey())){
+                materialInventory.setForGrindingInCount(materialInventory.getForGrindingInCount()-1<=0?0:materialInventory.getForGrindingInCount()-1);
+                if (cuttingTool.getGrinding().equals(GrindingEnum.outside_tuceng.getKey())){
+                    materialInventory.setForGrindingOutCount(materialInventory.getForGrindingOutCount()+sharpenVO.getCount());
+                }else{
+                    materialInventory.setPrepareLibraryCount(materialInventory.getPrepareLibraryCount()+sharpenVO.getCount());
+                }
+            }
+            materialInventoryMapper.updMaterialInventory(materialInventory);
         }
     }
 
@@ -163,10 +205,10 @@ public class InOutFactoryServiceImpl implements IInOutFactoryService{
                 cuttingToolBindVO.setBladeCode(sharpenVO.getCuttingToolBladeCode());
                 CuttingToolBind cuttingToolBind = cuttingToolBindMapper.getCuttingToolBind(cuttingToolBindVO);
                 if (outSideVO.getOutWay().equals(OutWayEnum.tuceng.getKey())){
-                    cuttingToolBind.setSharpenTimes(cuttingToolBind.getSharpenTimes()==null?2:cuttingToolBind.getSharpenTimes()+2);
+                    cuttingToolBind.setSharpenTimes(cuttingToolBind.getSharpenTimes()==null?1:cuttingToolBind.getSharpenTimes()+1);
                 }
                 cuttingToolBind.setLhcs(cuttingToolBind.getLhcs()==null?1:cuttingToolBind.getLhcs()+1);
-                cuttingToolBind.setQimingSharpenTimes(cuttingToolBind.getQimingSharpenTimes()==null?1:cuttingToolBind.getQimingSharpenTimes()+1);
+                cuttingToolBind.setQimingSharpenTimes(cuttingToolBind.getQimingSharpenTimes()==null?2:cuttingToolBind.getQimingSharpenTimes()+2);
                 cuttingToolBindMapper.updCuttingToolBind(cuttingToolBind);
             }
             outsideFactoryMapper.addOutsideFactory(outsideFactory);
@@ -188,11 +230,14 @@ public class InOutFactoryServiceImpl implements IInOutFactoryService{
                 materialInventory.setForGrindingInCount(0);
                 materialInventory.setForGrindingOutCount(0);
                 materialInventoryMapper.addMaterialInventory(materialInventory);
-            } else {
+            }
+            if (cuttingTool.getConsumeType().equals(CuttingToolConsumeTypeEnum.griding_zt.getKey())
+                    ||cuttingTool.getConsumeType().equals(CuttingToolConsumeTypeEnum.griding_dp.getKey())){
                 materialInventory.setForGrindingOutCount(materialInventory.getForGrindingOutCount()-sharpenVO.getCount()<0?0:materialInventory.getForGrindingOutCount()-sharpenVO.getCount());
                 materialInventory.setGrindingOutCount(materialInventory.getGrindingOutCount()+sharpenVO.getCount());
                 materialInventoryMapper.updMaterialInventory(materialInventory);
             }
+
         }
     }
 

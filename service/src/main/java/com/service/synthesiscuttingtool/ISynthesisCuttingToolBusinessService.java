@@ -2,6 +2,7 @@ package com.service.synthesiscuttingtool;
 
 import com.common.pojo.*;
 import com.common.vo.ProductLineVO;
+import com.common.vo.RfidContainerVO;
 import com.service.orders.vo.WriteBackVO;
 import com.service.synthesiscuttingtool.vo.*;
 
@@ -83,6 +84,15 @@ public interface ISynthesisCuttingToolBusinessService {
      * @throws Exception
      */
     public SynthesisCuttingToolBindleRecords unBindData(UnBindEquipmentVO unBindEquipmentVO,AuthCustomer authCustomer) throws Exception;
+
+
+    /**
+     * 刀具拆分获取标签盒
+     * @param rfidContainerVO
+     * @return
+     * @throws Exception
+     */
+    public RfidContainer queryRFIDForUnConfig(RfidContainerVO rfidContainerVO) throws Exception;
 
     public void insideFactory() throws Exception;
 

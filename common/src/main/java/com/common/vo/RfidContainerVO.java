@@ -1,6 +1,7 @@
 package com.common.vo;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -96,6 +97,25 @@ public class RfidContainerVO implements Serializable{
     * @Description  操作人姓名
      */
     private String operatorName;
+
+    /**
+     * @fieldName operatorTime
+    * @fieldType  Timestamp
+    * @Description  最后操作时间 开始时间
+     */
+    private Timestamp operatorTimeBegin;
+    /**
+     * @fieldName operatorTime
+    * @fieldType  Timestamp
+    * @Description  最后操作时间 结束时间
+     */
+    private Timestamp operatorTimeEnd;
+    /**
+     * @fieldName operatorTime
+    * @fieldType  Timestamp
+    * @Description  最后操作时间
+     */
+    private Timestamp operatorTime;
 
 
     private List<AuthCustomerVO> authCustomerVOList;
@@ -224,6 +244,28 @@ public class RfidContainerVO implements Serializable{
 
     public void setOperatorName(String operatorName) {
         this.operatorName = operatorName;
+    }
+    public Timestamp getOperatorTimeBegin() {
+        return operatorTimeBegin;
+    }
+
+    public void setOperatorTimeBegin(Timestamp operatorTimeBegin) {
+        this.operatorTimeBegin = operatorTimeBegin;
+    }
+
+    public Timestamp getOperatorTimeEnd() {
+        return operatorTimeEnd;
+    }
+
+    public void setOperatorTimeEnd(Timestamp operatorTimeEnd) {
+        this.operatorTimeEnd = operatorTimeEnd;
+    }
+    public Timestamp getOperatorTime() {
+        return operatorTime;
+    }
+
+    public void setOperatorTime(Timestamp operatorTime) {
+        this.operatorTime = operatorTime;
     }
 
 

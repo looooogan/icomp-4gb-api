@@ -37,6 +37,15 @@ public enum  OperationEnum {
         this.identify = identify;
     }
 
+    public static OperationEnum getEnumByKey(Integer key){
+        for (OperationEnum operationEnum : values()) {
+            if (operationEnum.getKey() == key){
+                return operationEnum;
+            }
+        }
+        return null;
+    }
+
     public String getName() {
         return name;
     }

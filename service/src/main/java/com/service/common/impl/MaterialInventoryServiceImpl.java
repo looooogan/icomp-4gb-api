@@ -67,6 +67,14 @@ public class MaterialInventoryServiceImpl implements IMaterialInventoryService{
         materialInventory.setCuttingTool(cuttingTool);
         materialInventory.setCuttingToolCode(cuttingTool.getCode());
         materialInventory.setIsDel(0);
+        materialInventory.setScrapCount(0);
+        materialInventory.setGrindingOutCount(0);
+        materialInventory.setForGrindingOutCount(0);
+        materialInventory.setForGrindingInCount(0);
+        materialInventory.setProductLineCount(0);
+        materialInventory.setToExchangeCount(0);
+        materialInventory.setToInstallCount(0);
+        materialInventory.setToUninstallCount(0);
         materialInventoryMapper.addMaterialInventory(materialInventory);
     }
 

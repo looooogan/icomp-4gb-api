@@ -43,11 +43,8 @@ public class DjQiMingDBServiceImpl implements IDjQiMingDBService{
      */
     @Override
     public OutApplyVO getInfo(OutApplyVO outApplyVO) throws Exception {
-//        DjOutapplyAkpVO djOutapplyAkpVO = new DjOutapplyAkpVO();
-//        djOutapplyAkpVO.setApplyno();
-
         DjOutapplyAkpVO djOutapplyAkpVO = new DjOutapplyAkpVO();
-        djOutapplyAkpVO.setClient(outApplyVO.getDjOutapplyAkp().getClient());
+        djOutapplyAkpVO.setApplyno(outApplyVO.getDjOutapplyAkp().getApplyno());
         djOutapplyAkpVO.setAuditid(QiMingOrderEnum.approved.getKey());
         DjOutapplyAkp djOutapplyAkp = djOutapplyAkpMapper.getDjOutapplyAkp(djOutapplyAkpVO);
 
@@ -71,6 +68,7 @@ public class DjQiMingDBServiceImpl implements IDjQiMingDBService{
         outApplyVO.setDjMtlAkp(djMtlAkp);
         outApplyVO.setDjOutapplyAkp(djOutapplyAkp);
         outApplyVO.setSusr20(susr20);
+        outApplyVO.setMaxDJH(susr20);
         outApplyVO.setUnitqty(unitqty);
         return outApplyVO;
     }

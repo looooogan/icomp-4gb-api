@@ -333,7 +333,6 @@ public class DjOutapplyAkpVO implements Serializable{
     public void setMessage(String message) {
         this.message = message;
     }
-
     public String getDumplogo() {
         return dumplogo;
     }
@@ -341,7 +340,6 @@ public class DjOutapplyAkpVO implements Serializable{
     public void setDumplogo(String dumplogo) {
         this.dumplogo = dumplogo;
     }
-
     public String getExternalpurstorage() {
         return externalpurstorage;
     }

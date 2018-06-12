@@ -130,4 +130,6 @@ public class QimingRecordsServiceImpl implements IQimingRecordsService{
     public List<QimingRecords> getAllQimingRecord(QimingRecordsVO qimingRecordsVO) throws Exception{
         return qimingRecordsMapper.getQimingRecordsByPage(qimingRecordsVO);
     }
+
+
 }

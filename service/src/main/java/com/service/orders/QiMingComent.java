@@ -22,10 +22,7 @@ import java.util.List;
 @Component("qimingComponent")
 public class QiMingComent {
 
-    @Autowired
-    private ICuttingToolBindService cuttingToolBindService;
-    @Autowired
-    private IQimingRecordsService qimingRecordsService;
+
     @Autowired
     private IAuthCustomerService authCustomerService;
 
@@ -37,17 +34,13 @@ public class QiMingComent {
     private IOutApplyBusinessService outApplyService;
 
     @Autowired
-    private IDjOwnerAkpService djOwnerAkpService;
-    @Autowired
     private IDjOutapplyAkpService djOutapplyAkpService;
     @Autowired
     private IDjCircleKanbanAkpService djCircleKanbanAkpService;
-    @Autowired
-    private IDjMtlAkpService djMtlAkpService;
+
     @Autowired
     private IDjQiMingDBService qiMingDBService;
-    @Autowired
-    private IDjItrnAkpService djItrnAkpService;
+
     @Autowired
     private ICuttingToolService cuttingToolService;
     @Autowired
@@ -95,6 +88,7 @@ public class QiMingComent {
             searchOutLiberaryVO.setLocation(djOutapplyAkp.getLocation());
             searchOutLiberaryVO.setUnitqty(djOutapplyAkp.getUnitqty());
             searchOutLiberaryVO.setCuttingToolType(cuttingTool.getType());
+            searchOutLiberaryVO.setCuttingToolConsumeType(cuttingTool.getConsumeType());
             searchOutLiberaryVO.setGrinding(cuttingTool.getGrinding());
             searchOutLiberaryVO.setDjOutapplyAkp(djOutapplyAkp);
             searchOutLiberaryVOS.add(searchOutLiberaryVO);
@@ -108,32 +102,27 @@ public class QiMingComent {
      * @throws Exception
      */
     public void outApply(OutApplyVO outApplyVO) throws Exception{
-
-
-
         //查询启明数据库出库信息
         outApplyVO = qiMingDBService.getInfo(outApplyVO);
-
         //出库 将数据写入icomp数据库
         outApplyService.outApplyData(outApplyVO);
-
         //修改启明数据
-        qiMingDBService.updateDjOutapplyAkpForOut(outApplyVO);
+//        qiMingDBService.updateDjOutapplyAkpForOut(outApplyVO);
         //组织回写数据
         writeBackService.writeBackOutLibrary(outApplyVO);
     }
 
     /**
-     * 刀具绑定
+     * 刀具绑定 旧版本
      * @throws Exception
      */
     public void bindCuttingTool(WBCuttingToolBindVO wbCuttingToolBindVO) throws Exception{
-        cuttingToolBusinessService.addBind(wbCuttingToolBindVO.getCuttingToolBind());
-        //回写数据
-        AuthCustomerVO authCustomerVO = new AuthCustomerVO();
-        authCustomerVO.setCode(wbCuttingToolBindVO.getAuthCustomer().getCode());
-        wbCuttingToolBindVO.setAuthCustomer(authCustomerService.getAuthCustomer(authCustomerVO));
-        writeBackService.writeBackCuttingToolBind(wbCuttingToolBindVO);
+//        cuttingToolBusinessService.addBind0609(wbCuttingToolBindVO.getCuttingToolBind());
+//        //回写数据
+//        AuthCustomerVO authCustomerVO = new AuthCustomerVO();
+//        authCustomerVO.setCode(wbCuttingToolBindVO.getAuthCustomer().getCode());
+//        wbCuttingToolBindVO.setAuthCustomer(authCustomerService.getAuthCustomer(authCustomerVO));
+//        writeBackService.writeBackCuttingToolBind(wbCuttingToolBindVO);
     }
 
     public void insideFactory() throws Exception{

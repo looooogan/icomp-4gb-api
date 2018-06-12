@@ -17,6 +17,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+
 /**
  * Created by logan on 2018/5/6.
  */
@@ -69,8 +71,9 @@ public class AuthBusinessServiceImpl implements IAuthBusinessService {
             rfidContainer.setCode(UUID.getInstance());
             rfidContainer.setLaserCode(authCustomer.getRfidContainer().getLaserCode());
             rfidContainer.setLabelType(RFIDEnum.employee.getKey());
-            rfidContainer.setOperatorCode(OperationEnum.Employee_code_Init.getKey());
+            rfidContainer.getPrevKey(OperationEnum.Employee_code_Init.getKey());
             rfidContainer.setOperatorName(OperationEnum.Employee_code_Init.getName());
+            rfidContainer.setOperatorTime(new Timestamp(System.currentTimeMillis()));
             rfidContainerMapper.addRfidContainer(rfidContainer);
         }else if (rfidContainer.getOperatorCode()== null || rfidContainer.getOperatorCode()== 0){
             rfidContainer.setPrevKey(rfidContainer.getOperatorCode());
@@ -79,6 +82,7 @@ public class AuthBusinessServiceImpl implements IAuthBusinessService {
             rfidContainer.setLabelType(RFIDEnum.employee.getKey());
             rfidContainer.setOperatorCode(OperationEnum.Employee_code_Init.getKey());
             rfidContainer.setOperatorName(OperationEnum.Employee_code_Init.getName());
+            rfidContainer.setOperatorTime(new Timestamp(System.currentTimeMillis()));
             rfidContainerMapper.updRfidContainer(rfidContainer);
         }else {
             throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.RFID_IN_USE));
@@ -109,6 +113,9 @@ public class AuthBusinessServiceImpl implements IAuthBusinessService {
         if (null!=authCustomerVO.getRfidContainerVO()&&!StringUtils.isBlank(authCustomerVO.getRfidContainerVO().getLaserCode())){
             loginVo.setRfidContainerVO(authCustomerVO.getRfidContainerVO());
             authCustomer = authCustomerMapper.getAuthCustomer(loginVo);
+            if (null == authCustomer){
+                throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.AUTH_CUSTOMER_NOTEXISTS));
+            }
             return authCustomer;
         }
 

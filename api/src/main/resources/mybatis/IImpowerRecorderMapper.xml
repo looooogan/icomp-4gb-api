@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.mapper.IImpowerRecorderMapper">
+    <resultMap id="impowerRecorderQueryMap" type="com.common.pojo.ImpowerRecorder">
+        <!-- 授权记录标识 -->
+        <id property="id" column="impower_recorder.id"/>
+
+        <!-- 刀具号 -->
+        <result property="toolCode" column="impower_recorder.tool_code"/>
+        <!-- 创建时间 -->
+        <result property="createTime" column="impower_recorder.create_time"/>
+        <!-- 授权人code -->
+        <result property="impowerUser" column="impower_recorder.impower_user"/>
+        <!-- 授权人名称 -->
+        <result property="impowerUserName" column="impower_recorder.impower_user_name"/>
+        <!-- 授权原因 -->
+        <result property="reasonKey" column="impower_recorder.reason_key"/>
+        <!-- 授权原因文本 -->
+        <result property="reasonValue" column="impower_recorder.reason_value"/>
+        <!-- 刀具状态 -->
+        <result property="currentStatusKey" column="impower_recorder.current_status_key"/>
+        <!-- 当前状态文本 -->
+        <result property="currentStatusName" column="impower_recorder.current_status_name"/>
+        <!-- 操作key -->
+        <result property="operatorKey" column="impower_recorder.operator_key"/>
+        <!-- 操作文本 -->
+        <result property="operatorValue" column="impower_recorder.operator_value"/>
+        <!-- 操作者code -->
+        <result property="operatorUserCode" column="impower_recorder.operator_user_code"/>
+        <!-- 操作者姓名 -->
+        <result property="operatorUserName" column="impower_recorder.operator_user_name"/>
+        <!-- 简述 -->
+        <result property="resume" column="impower_recorder.resume"/>
+        <!-- 逻辑删除 -->
+        <result property="isDel" column="impower_recorder.is_del"/>
+        <!-- rfid标签 -->
+        <result property="rfidLasercode" column="impower_recorder.rfid_laserCode"/>
+    </resultMap>
+    <!--添加-->
+    <insert id="addImpowerRecorder" parameterType="com.common.pojo.ImpowerRecorder">
+        INSERT INTO impower_recorder (
+            <!-- 授权记录标识 -->
+            id,
+            <!-- 刀具号 -->
+            tool_code,
+            <!-- 创建时间 -->
+            create_time,
+            <!-- 授权人code -->
+            impower_user,
+            <!-- 授权人名称 -->
+            impower_user_name,
+            <!-- 授权原因 -->
+            reason_key,
+            <!-- 授权原因文本 -->
+            reason_value,
+            <!-- 刀具状态 -->
+            current_status_key,
+            <!-- 当前状态文本 -->
+            current_status_name,
+            <!-- 操作key -->
+            operator_key,
+            <!-- 操作文本 -->
+            operator_value,
+            <!-- 操作者code -->
+            operator_user_code,
+            <!-- 操作者姓名 -->
+            operator_user_name,
+            <!-- 简述 -->
+            resume,
+            <!-- 逻辑删除 -->
+            is_del,
+            <!-- rfid标签 -->
+            rfid_laserCode
+        )
+        VALUES (
+            <!-- 授权记录标识 -->
+            #{id},
+            <!-- 刀具号 -->
+            #{toolCode},
+            <!-- 创建时间 -->
+            #{createTime},
+            <!-- 授权人code -->
+            #{impowerUser},
+            <!-- 授权人名称 -->
+            #{impowerUserName},
+            <!-- 授权原因 -->
+            #{reasonKey},
+            <!-- 授权原因文本 -->
+            #{reasonValue},
+            <!-- 刀具状态 -->
+            #{currentStatusKey},
+            <!-- 当前状态文本 -->
+            #{currentStatusName},
+            <!-- 操作key -->
+            #{operatorKey},
+            <!-- 操作文本 -->
+            #{operatorValue},
+            <!-- 操作者code -->
+            #{operatorUserCode},
+            <!-- 操作者姓名 -->
+            #{operatorUserName},
+            <!-- 简述 -->
+            #{resume},
+            <!-- 逻辑删除 -->
+            #{isDel},
+            <!-- rfid标签 -->
+            #{rfidLasercode}
+        )
+    </insert>
+
+    <!--删除-->
+    <delete id="delImpowerRecorder" parameterType="com.common.pojo.ImpowerRecorder">
+        DELETE
+        FROM impower_recorder
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--逻辑删除-->
+    <delete id="delImpowerRecorderForLogic" parameterType="com.common.pojo.ImpowerRecorder">
+        UPDATE impower_recorder SET
+        is_del = 1
+        WHERE
+            1 = 1
+            and id = #{id}
+    </delete>
+
+    <!--根据VO删除-->
+    <delete id="delImpowerRecorderByVo" parameterType="com.common.vo.ImpowerRecorderVO">
+        UPDATE impower_recorder SET is_del = 1
+        WHERE
+            1=1
+            <!-- 授权记录标识 -->
+            <if test="id != null and id != '' " >
+                and id =  #{id}
+            </if>
+            <!-- 刀具号 -->
+            <if test="toolCode != null and toolCode != '' " >
+                and tool_code =  #{toolCode}
+            </if>
+            <!-- 创建时间 -->
+            <if test="createTime != null and createTime != '' " >
+                and create_time =  #{createTime}
+            </if>
+            <!-- 授权人code -->
+            <if test="impowerUser != null and impowerUser != '' " >
+                and impower_user =  #{impowerUser}
+            </if>
+            <!-- 授权人名称 -->
+            <if test="impowerUserName != null and impowerUserName != '' " >
+                and impower_user_name =  #{impowerUserName}
+            </if>
+            <!-- 授权原因 -->
+            <if test="reasonKey != null and reasonKey != '' " >
+                and reason_key =  #{reasonKey}
+            </if>
+            <!-- 授权原因文本 -->
+            <if test="reasonValue != null and reasonValue != '' " >
+                and reason_value =  #{reasonValue}
+            </if>
+            <!-- 刀具状态 -->
+            <if test="currentStatusKey != null and currentStatusKey != '' " >
+                and current_status_key =  #{currentStatusKey}
+            </if>
+            <!-- 当前状态文本 -->
+            <if test="currentStatusName != null and currentStatusName != '' " >
+                and current_status_name =  #{currentStatusName}
+            </if>
+            <!-- 操作key -->
+            <if test="operatorKey != null and operatorKey != '' " >
+                and operator_key =  #{operatorKey}
+            </if>
+            <!-- 操作文本 -->
+            <if test="operatorValue != null and operatorValue != '' " >
+                and operator_value =  #{operatorValue}
+            </if>
+            <!-- 操作者code -->
+            <if test="operatorUserCode != null and operatorUserCode != '' " >
+                and operator_user_code =  #{operatorUserCode}
+            </if>
+            <!-- 操作者姓名 -->
+            <if test="operatorUserName != null and operatorUserName != '' " >
+                and operator_user_name =  #{operatorUserName}
+            </if>
+            <!-- 简述 -->
+            <if test="resume != null and resume != '' " >
+                and resume =  #{resume}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                and is_del =  #{isDel}
+            </if>
+            <!-- rfid标签 -->
+            <if test="rfidLasercode != null and rfidLasercode != '' " >
+                and rfid_laserCode =  #{rfidLasercode}
+            </if>
+    </delete>
+
+    <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
+    <update id="updImpowerRecorder" parameterType="com.common.pojo.ImpowerRecorder">
+        UPDATE impower_recorder
+        SET
+            <!-- 刀具号 -->
+            <if test="toolCode != null and toolCode != '' " >
+                tool_code =  #{toolCode},
+            </if>
+            <!-- 创建时间 -->
+            <if test="createTime != null and createTime != '' " >
+                create_time =  #{createTime},
+            </if>
+            <!-- 授权人code -->
+            <if test="impowerUser != null and impowerUser != '' " >
+                impower_user =  #{impowerUser},
+            </if>
+            <!-- 授权人名称 -->
+            <if test="impowerUserName != null and impowerUserName != '' " >
+                impower_user_name =  #{impowerUserName},
+            </if>
+            <!-- 授权原因 -->
+            <if test="reasonKey != null and reasonKey != '' " >
+                reason_key =  #{reasonKey},
+            </if>
+            <!-- 授权原因文本 -->
+            <if test="reasonValue != null and reasonValue != '' " >
+                reason_value =  #{reasonValue},
+            </if>
+            <!-- 刀具状态 -->
+            <if test="currentStatusKey != null and currentStatusKey != '' " >
+                current_status_key =  #{currentStatusKey},
+            </if>
+            <!-- 当前状态文本 -->
+            <if test="currentStatusName != null and currentStatusName != '' " >
+                current_status_name =  #{currentStatusName},
+            </if>
+            <!-- 操作key -->
+            <if test="operatorKey != null and operatorKey != '' " >
+                operator_key =  #{operatorKey},
+            </if>
+            <!-- 操作文本 -->
+            <if test="operatorValue != null and operatorValue != '' " >
+                operator_value =  #{operatorValue},
+            </if>
+            <!-- 操作者code -->
+            <if test="operatorUserCode != null and operatorUserCode != '' " >
+                operator_user_code =  #{operatorUserCode},
+            </if>
+            <!-- 操作者姓名 -->
+            <if test="operatorUserName != null and operatorUserName != '' " >
+                operator_user_name =  #{operatorUserName},
+            </if>
+            <!-- 简述 -->
+            <if test="resume != null and resume != '' " >
+                resume =  #{resume},
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                is_del =  #{isDel},
+            </if>
+            <!-- rfid标签 -->
+            <if test="rfidLasercode != null and rfidLasercode != '' " >
+                rfid_laserCode =  #{rfidLasercode},
+            </if>
+            <!-- 授权记录标识 -->
+            id = #{id}
+        WHERE
+            1 = 1
+            and id = #{id}
+    </update>
+
+    <!--分页查询 -->
+    <select id="getImpowerRecorderByPage" parameterType="com.common.vo.ImpowerRecorderVO" resultMap="impowerRecorderQueryMap">
+        SELECT
+        /*impowerRecorder begin*/
+            <!-- 授权记录标识 -->
+            impower_recorder.id as 'impower_recorder.id',
+            <!-- 刀具号 -->
+            impower_recorder.tool_code as 'impower_recorder.tool_code',
+            <!-- 创建时间 -->
+            impower_recorder.create_time as 'impower_recorder.create_time',
+            <!-- 授权人code -->
+            impower_recorder.impower_user as 'impower_recorder.impower_user',
+            <!-- 授权人名称 -->
+            impower_recorder.impower_user_name as 'impower_recorder.impower_user_name',
+            <!-- 授权原因 -->
+            impower_recorder.reason_key as 'impower_recorder.reason_key',
+            <!-- 授权原因文本 -->
+            impower_recorder.reason_value as 'impower_recorder.reason_value',
+            <!-- 刀具状态 -->
+            impower_recorder.current_status_key as 'impower_recorder.current_status_key',
+            <!-- 当前状态文本 -->
+            impower_recorder.current_status_name as 'impower_recorder.current_status_name',
+            <!-- 操作key -->
+            impower_recorder.operator_key as 'impower_recorder.operator_key',
+            <!-- 操作文本 -->
+            impower_recorder.operator_value as 'impower_recorder.operator_value',
+            <!-- 操作者code -->
+            impower_recorder.operator_user_code as 'impower_recorder.operator_user_code',
+            <!-- 操作者姓名 -->
+            impower_recorder.operator_user_name as 'impower_recorder.operator_user_name',
+            <!-- 简述 -->
+            impower_recorder.resume as 'impower_recorder.resume',
+            <!-- 逻辑删除 -->
+            impower_recorder.is_del as 'impower_recorder.is_del',
+            <!-- rfid标签 -->
+            impower_recorder.rfid_laserCode as 'impower_recorder.rfid_laserCode'
+        /*impowerRecorder end*/
+        FROM impower_recorder as impower_recorder
+        WHERE
+            1 = 1 AND  impower_recorder.is_del = 0
+        /*impower_recorder begin*/
+            <!-- 授权记录标识 -->
+            <if test="id != null and id != '' " >
+                and impower_recorder.id = #{id}
+            </if>
+            <!-- 刀具号 -->
+            <if test="toolCode != null and toolCode != '' " >
+                and impower_recorder.tool_code = #{toolCode}
+            </if>
+            <!-- 创建时间 -->
+            <if test="createTime != null and createTime != '' " >
+                and impower_recorder.create_time &lt;= #{createTimeEnd}
+            </if>
+            <if test="createTime != null and createTime != '' " >
+                and impower_recorder.create_time &gt;= #{createTimeBegin}
+            </if>
+            <!-- 授权人code -->
+            <if test="impowerUser != null and impowerUser != '' " >
+                and impower_recorder.impower_user = #{impowerUser}
+            </if>
+            <!-- 授权人名称 -->
+            <if test="impowerUserName != null and impowerUserName != '' " >
+                and impower_recorder.impower_user_name = #{impowerUserName}
+            </if>
+            <!-- 授权原因 -->
+            <if test="reasonKey != null and reasonKey != '' " >
+                and impower_recorder.reason_key = #{reasonKey}
+            </if>
+            <!-- 授权原因文本 -->
+            <if test="reasonValue != null and reasonValue != '' " >
+                and impower_recorder.reason_value = #{reasonValue}
+            </if>
+            <!-- 刀具状态 -->
+            <if test="currentStatusKey != null and currentStatusKey != '' " >
+                and impower_recorder.current_status_key = #{currentStatusKey}
+            </if>
+            <!-- 当前状态文本 -->
+            <if test="currentStatusName != null and currentStatusName != '' " >
+                and impower_recorder.current_status_name = #{currentStatusName}
+            </if>
+            <!-- 操作key -->
+            <if test="operatorKey != null and operatorKey != '' " >
+                and impower_recorder.operator_key = #{operatorKey}
+            </if>
+            <!-- 操作文本 -->
+            <if test="operatorValue != null and operatorValue != '' " >
+                and impower_recorder.operator_value = #{operatorValue}
+            </if>
+            <!-- 操作者code -->
+            <if test="operatorUserCode != null and operatorUserCode != '' " >
+                and impower_recorder.operator_user_code = #{operatorUserCode}
+            </if>
+            <!-- 操作者姓名 -->
+            <if test="operatorUserName != null and operatorUserName != '' " >
+                and impower_recorder.operator_user_name = #{operatorUserName}
+            </if>
+            <!-- 简述 -->
+            <if test="resume != null and resume != '' " >
+                and impower_recorder.resume = #{resume}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="isDel != null and isDel != '' " >
+                and impower_recorder.is_del = #{isDel}
+            </if>
+            <!-- rfid标签 -->
+            <if test="rfidLasercode != null and rfidLasercode != '' " >
+                and impower_recorder.rfid_laserCode = #{rfidLasercode}
+            </if>
+        /*impower_recorder end*/
+        ORDER BY impower_recorder.id desc
+        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
+        LIMIT #{startRecord},#{pageSize}
+        </if>
+    </select>
+
+
+    <!--查询记录数-->
+    <select id="getImpowerRecorderCount" parameterType="com.common.vo.ImpowerRecorderVO" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM impower_recorder as impower_recorder
+        WHERE
+            1 = 1 AND  impower_recorder.is_del = 0
+        /*impower_recorder begin*/
+        <!-- 授权记录标识 -->
+        <if test="id != null and id != '' " >
+            and impower_recorder.id = #{id}
+        </if>
+        <!-- 刀具号 -->
+        <if test="toolCode != null and toolCode != '' " >
+            and impower_recorder.tool_code = #{toolCode}
+        </if>
+        <!-- 创建时间 -->
+        <if test="createTime != null and createTime != '' " >
+            and impower_recorder.create_time &lt;= #{createTimeEnd}
+        </if>
+        <if test="createTime != null and createTime != '' " >
+            and impower_recorder.create_time &gt;= #{createTimeBegin}
+        </if>
+        <!-- 授权人code -->
+        <if test="impowerUser != null and impowerUser != '' " >
+            and impower_recorder.impower_user = #{impowerUser}
+        </if>
+        <!-- 授权人名称 -->
+        <if test="impowerUserName != null and impowerUserName != '' " >
+            and impower_recorder.impower_user_name = #{impowerUserName}
+        </if>
+        <!-- 授权原因 -->
+        <if test="reasonKey != null and reasonKey != '' " >
+            and impower_recorder.reason_key = #{reasonKey}
+        </if>
+        <!-- 授权原因文本 -->
+        <if test="reasonValue != null and reasonValue != '' " >
+            and impower_recorder.reason_value = #{reasonValue}
+        </if>
+        <!-- 刀具状态 -->
+        <if test="currentStatusKey != null and currentStatusKey != '' " >
+            and impower_recorder.current_status_key = #{currentStatusKey}
+        </if>
+        <!-- 当前状态文本 -->
+        <if test="currentStatusName != null and currentStatusName != '' " >
+            and impower_recorder.current_status_name = #{currentStatusName}
+        </if>
+        <!-- 操作key -->
+        <if test="operatorKey != null and operatorKey != '' " >
+            and impower_recorder.operator_key = #{operatorKey}
+        </if>
+        <!-- 操作文本 -->
+        <if test="operatorValue != null and operatorValue != '' " >
+            and impower_recorder.operator_value = #{operatorValue}
+        </if>
+        <!-- 操作者code -->
+        <if test="operatorUserCode != null and operatorUserCode != '' " >
+            and impower_recorder.operator_user_code = #{operatorUserCode}
+        </if>
+        <!-- 操作者姓名 -->
+        <if test="operatorUserName != null and operatorUserName != '' " >
+            and impower_recorder.operator_user_name = #{operatorUserName}
+        </if>
+        <!-- 简述 -->
+        <if test="resume != null and resume != '' " >
+            and impower_recorder.resume = #{resume}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="isDel != null and isDel != '' " >
+            and impower_recorder.is_del = #{isDel}
+        </if>
+        <!-- rfid标签 -->
+        <if test="rfidLasercode != null and rfidLasercode != '' " >
+            and impower_recorder.rfid_laserCode = #{rfidLasercode}
+        </if>
+        /*impower_recorder end*/
+    </select>
+
+    <!--根据vo查询 -->
+    <select id="getImpowerRecorder" parameterType="com.common.vo.ImpowerRecorderVO" resultMap="impowerRecorderQueryMap">
+        SELECT
+        /*impower_recorder begin*/
+        <!-- 授权记录标识 -->
+        impower_recorder.id as 'impower_recorder.id',
+        <!-- 刀具号 -->
+        impower_recorder.tool_code as 'impower_recorder.tool_code',
+        <!-- 创建时间 -->
+        impower_recorder.create_time as 'impower_recorder.create_time',
+        <!-- 授权人code -->
+        impower_recorder.impower_user as 'impower_recorder.impower_user',
+        <!-- 授权人名称 -->
+        impower_recorder.impower_user_name as 'impower_recorder.impower_user_name',
+        <!-- 授权原因 -->
+        impower_recorder.reason_key as 'impower_recorder.reason_key',
+        <!-- 授权原因文本 -->
+        impower_recorder.reason_value as 'impower_recorder.reason_value',
+        <!-- 刀具状态 -->
+        impower_recorder.current_status_key as 'impower_recorder.current_status_key',
+        <!-- 当前状态文本 -->
+        impower_recorder.current_status_name as 'impower_recorder.current_status_name',
+        <!-- 操作key -->
+        impower_recorder.operator_key as 'impower_recorder.operator_key',
+        <!-- 操作文本 -->
+        impower_recorder.operator_value as 'impower_recorder.operator_value',
+        <!-- 操作者code -->
+        impower_recorder.operator_user_code as 'impower_recorder.operator_user_code',
+        <!-- 操作者姓名 -->
+        impower_recorder.operator_user_name as 'impower_recorder.operator_user_name',
+        <!-- 简述 -->
+        impower_recorder.resume as 'impower_recorder.resume',
+        <!-- 逻辑删除 -->
+        impower_recorder.is_del as 'impower_recorder.is_del',
+        <!-- rfid标签 -->
+        impower_recorder.rfid_laserCode as 'impower_recorder.rfid_laserCode'
+        /*impower_recorder end*/
+        FROM impower_recorder as impower_recorder
+        WHERE
+            1 = 1 AND  impower_recorder.is_del = 0
+        /*impower_recorder begin*/
+        <!-- 授权记录标识 -->
+        <if test="id != null and id != '' " >
+            and impower_recorder.id = #{id}
+        </if>
+        <!-- 刀具号 -->
+        <if test="toolCode != null and toolCode != '' " >
+            and impower_recorder.tool_code = #{toolCode}
+        </if>
+        <!-- 创建时间 -->
+        <if test="createTime != null and createTime != '' " >
+            and impower_recorder.create_time &lt;= #{createTimeEnd}
+        </if>
+        <if test="createTime != null and createTime != '' " >
+            and impower_recorder.create_time &gt;= #{createTimeBegin}
+        </if>
+        <!-- 授权人code -->
+        <if test="impowerUser != null and impowerUser != '' " >
+            and impower_recorder.impower_user = #{impowerUser}
+        </if>
+        <!-- 授权人名称 -->
+        <if test="impowerUserName != null and impowerUserName != '' " >
+            and impower_recorder.impower_user_name = #{impowerUserName}
+        </if>
+        <!-- 授权原因 -->
+        <if test="reasonKey != null and reasonKey != '' " >
+            and impower_recorder.reason_key = #{reasonKey}
+        </if>
+        <!-- 授权原因文本 -->
+        <if test="reasonValue != null and reasonValue != '' " >
+            and impower_recorder.reason_value = #{reasonValue}
+        </if>
+        <!-- 刀具状态 -->
+        <if test="currentStatusKey != null and currentStatusKey != '' " >
+            and impower_recorder.current_status_key = #{currentStatusKey}
+        </if>
+        <!-- 当前状态文本 -->
+        <if test="currentStatusName != null and currentStatusName != '' " >
+            and impower_recorder.current_status_name = #{currentStatusName}
+        </if>
+        <!-- 操作key -->
+        <if test="operatorKey != null and operatorKey != '' " >
+            and impower_recorder.operator_key = #{operatorKey}
+        </if>
+        <!-- 操作文本 -->
+        <if test="operatorValue != null and operatorValue != '' " >
+            and impower_recorder.operator_value = #{operatorValue}
+        </if>
+        <!-- 操作者code -->
+        <if test="operatorUserCode != null and operatorUserCode != '' " >
+            and impower_recorder.operator_user_code = #{operatorUserCode}
+        </if>
+        <!-- 操作者姓名 -->
+        <if test="operatorUserName != null and operatorUserName != '' " >
+            and impower_recorder.operator_user_name = #{operatorUserName}
+        </if>
+        <!-- 简述 -->
+        <if test="resume != null and resume != '' " >
+            and impower_recorder.resume = #{resume}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="isDel != null and isDel != '' " >
+            and impower_recorder.is_del = #{isDel}
+        </if>
+        <!-- rfid标签 -->
+        <if test="rfidLasercode != null and rfidLasercode != '' " >
+            and impower_recorder.rfid_laserCode = #{rfidLasercode}
+        </if>
+        /*impower_recorder end*/
+    </select>
+</mapper>

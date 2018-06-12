@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
  * Created by logan on 2018/5/27.
  */
 @Service("fastQuery")
-public class FastQueryImpl implements IFastQueryService {
+public class FastQueryServiceImpl implements IFastQueryService {
     @Autowired
     private IRfidContainerMapper rfidContainerMapper;
     @Autowired
@@ -30,6 +30,12 @@ public class FastQueryImpl implements IFastQueryService {
     @Autowired
     private IMessageSourceHanlder messageSourceHanlder;
 
+    /**
+     * 快速查询接口
+     * @param fastQueryVO 查询条件封装
+     * @return
+     * @throws Exception
+     */
     @Override
     public FastQueryVO fastQuery(FastQueryVO fastQueryVO) throws Exception {
         RfidContainerVO rfidContainerVO = new RfidContainerVO();
@@ -39,25 +45,69 @@ public class FastQueryImpl implements IFastQueryService {
             throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.RFID_NOT_EXISTS));
         }
 
-        if (rfidContainer.getBindType().equals(RFIDEnum.employee.getKey())){
+        if (rfidContainer.getLabelType().equals(RFIDEnum.employee.getKey())){
             AuthCustomerVO authCustomerVO = new AuthCustomerVO();
             authCustomerVO.setRfidContainerVO(rfidContainerVO);
             fastQueryVO.setAuthCustomer(authCustomerMapper.getAuthCustomer(authCustomerVO));
         }
 
-        if (rfidContainer.getBindType().equals(RFIDEnum.equipment.getKey())){
+        if (rfidContainer.getLabelType().equals(RFIDEnum.equipment.getKey())){
             ProductLineEquipmentVO equipmentVO = new ProductLineEquipmentVO();
             equipmentVO.setRfidContainerVO(rfidContainerVO);
             fastQueryVO.setEquipment(equipmentMapper.getProductLineEquipment(equipmentVO));
         }
 
-        if (rfidContainer.getBindType().equals(RFIDEnum.cutting_tool.getKey())){
+        if (rfidContainer.getLabelType().equals(RFIDEnum.cutting_tool.getKey())){
             CuttingToolBindVO cuttingToolBindVO = new CuttingToolBindVO();
             cuttingToolBindVO.setRfidContainerVO(rfidContainerVO);
             fastQueryVO.setCuttingToolBind(cuttingToolBindMapper.getCuttingToolBind(cuttingToolBindVO));
         }
 
-        if (rfidContainer.getBindType().equals(RFIDEnum.synthesis_cutting_tool.getKey())){
+        if (rfidContainer.getLabelType().equals(RFIDEnum.synthesis_cutting_tool.getKey())){
+            SynthesisCuttingToolBindVO synthesisCuttingToolBindVO = new SynthesisCuttingToolBindVO();
+            synthesisCuttingToolBindVO.setRfidContainerVO(rfidContainerVO);
+            fastQueryVO.setSynthesisCuttingToolBind(synthesisCuttingToolBindMapper.getSynthesisCuttingToolBind(synthesisCuttingToolBindVO));
+        }
+        return fastQueryVO;
+    }
+
+
+    /**
+     * 为绑定查询标签
+     * @param fastQueryVO 查询条件封装
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public FastQueryVO queryForBind(FastQueryVO fastQueryVO) throws Exception {
+        RfidContainerVO rfidContainerVO = new RfidContainerVO();
+        rfidContainerVO.setLaserCode(fastQueryVO.getRfidLaserCode());
+        RfidContainer rfidContainer = rfidContainerMapper.getRfidContainer(rfidContainerVO);
+
+        // null标签正常流程
+        if (null==rfidContainer){
+            return fastQueryVO;
+        }
+
+        if (rfidContainer.getLabelType().equals(RFIDEnum.employee.getKey())){
+            AuthCustomerVO authCustomerVO = new AuthCustomerVO();
+            authCustomerVO.setRfidContainerVO(rfidContainerVO);
+            fastQueryVO.setAuthCustomer(authCustomerMapper.getAuthCustomer(authCustomerVO));
+        }
+
+        if (rfidContainer.getLabelType().equals(RFIDEnum.equipment.getKey())){
+            ProductLineEquipmentVO equipmentVO = new ProductLineEquipmentVO();
+            equipmentVO.setRfidContainerVO(rfidContainerVO);
+            fastQueryVO.setEquipment(equipmentMapper.getProductLineEquipment(equipmentVO));
+        }
+
+        if (rfidContainer.getLabelType().equals(RFIDEnum.cutting_tool.getKey())){
+            CuttingToolBindVO cuttingToolBindVO = new CuttingToolBindVO();
+            cuttingToolBindVO.setRfidContainerVO(rfidContainerVO);
+            fastQueryVO.setCuttingToolBind(cuttingToolBindMapper.getCuttingToolBind(cuttingToolBindVO));
+        }
+
+        if (rfidContainer.getLabelType().equals(RFIDEnum.synthesis_cutting_tool.getKey())){
             SynthesisCuttingToolBindVO synthesisCuttingToolBindVO = new SynthesisCuttingToolBindVO();
             synthesisCuttingToolBindVO.setRfidContainerVO(rfidContainerVO);
             fastQueryVO.setSynthesisCuttingToolBind(synthesisCuttingToolBindMapper.getSynthesisCuttingToolBind(synthesisCuttingToolBindVO));

@@ -9,6 +9,7 @@ import com.common.pojo.CuttingTool;
 import com.common.pojo.CuttingToolBind;
 import com.common.pojo.DjItrnAkp;
 import com.common.utils.OrderNumHandler;
+import com.common.utils.UUID;
 import com.common.vo.CuttingToolBindVO;
 import com.common.vo.CuttingToolVO;
 import com.common.vo.DjItrnAkpVO;
@@ -50,6 +51,9 @@ public class InOutFactoryComent {
 
 
         Integer batchNo = djItrnAkpService.getMaxBatchNo();
+        if (null == batchNo){
+            batchNo = 1;
+        }
         for (SharpenVO sharpenVO : insideVO.getSharpenVOS()) {
             CuttingToolBind cuttingToolBind = null;
             if (!StringUtils.isBlank(sharpenVO.getCuttingToolBladeCode())){
@@ -64,32 +68,26 @@ public class InOutFactoryComent {
             //根据刀身码查询
             djItrnAkpVO.setDaojCase(sharpenVO.getCuttingToolBusinessCode());
             djItrnAkp = djItrnAkpService.getLast(djItrnAkpVO);
-            if (null!= djItrnAkp){
-
-                if (null == batchNo){
-                    batchNo = 1;
-                }
-                CuttingToolVO cuttingToolVO = new CuttingToolVO();
-                cuttingToolVO.setBusinessCode(sharpenVO.getCuttingToolBusinessCode());
-                CuttingTool cuttingTool = cuttingToolService.getCuttingTool(cuttingToolVO);
-                if (null == cuttingTool){
-                    continue;
-                }
-
-                DjItrnAkp djItrnAkpNew = djItrnAkp;
-                djItrnAkpNew.setId(null);
-                djItrnAkpNew.setBatchno(batchNo+1);
-                djItrnAkpNew.setCreateDate(new Timestamp(System.currentTimeMillis()));
-                if (cuttingToolBind!=null){
-                    djItrnAkpNew.setJgcs(cuttingToolBind.getJgcs()+"");
-                    djItrnAkpNew.setLhcs(cuttingToolBind.getLhcs()+"");
-                    djItrnAkpNew.setRfid(cuttingToolBind.getRfidContainer().getLaserCode());
-                }
-                djItrnAkpNew.setCreateDate(new Timestamp(System.currentTimeMillis()));
-                djItrnAkpNew.setType(QiMingOptionEnum.inside_sharpening.getKey());
-                djItrnAkpNew.setNote(OperationEnum.Cutting_tool_Inside.getName());
-                djItrnAkpService.addDjItrnAkp(djItrnAkpNew);
+            if (null == djItrnAkp){
+                djItrnAkp = new DjItrnAkp();
             }
+            CuttingToolVO cuttingToolVO = new CuttingToolVO();
+            cuttingToolVO.setBusinessCode(sharpenVO.getCuttingToolBusinessCode());
+            CuttingTool cuttingTool = cuttingToolService.getCuttingTool(cuttingToolVO);
+            if (null == cuttingTool){
+                continue;
+            }
+            djItrnAkp.setCode(UUID.getInstance());
+            djItrnAkp.setBatchno(batchNo+1);
+            djItrnAkp.setCreateDate(new Timestamp(System.currentTimeMillis()));
+//            if (cuttingToolBind!=null){
+//                djItrnAkp.setJgcs(cuttingToolBind.getJgcs()+"");
+//                djItrnAkp.setLhcs(cuttingToolBind.getLhcs()+"");
+//                djItrnAkp.setRfid(cuttingToolBind.getRfidContainer().getLaserCode());
+//            }
+            djItrnAkp.setType(QiMingOptionEnum.inside_sharpening.getKey());
+            djItrnAkp.setNote(OperationEnum.Cutting_tool_Inside.getName());
+            djItrnAkpService.addDjItrnAkp(djItrnAkp);
         }
     }
 
@@ -106,7 +104,7 @@ public class InOutFactoryComent {
 
         Integer batchNo = djItrnAkpService.getMaxBatchNo();
         if (null == batchNo){
-            batchNo = 1;
+            batchNo = 0;
         }
 
         DjItrnAkp djItrnAkp = null;
@@ -125,35 +123,35 @@ public class InOutFactoryComent {
             //根据刀身码查询
             djItrnAkpVO.setDaojCase(sharpenVO.getCuttingToolBusinessCode());
             djItrnAkp = djItrnAkpService.getLast(djItrnAkpVO);
-            if (null!= djItrnAkp){
-                CuttingToolVO cuttingToolVO = new CuttingToolVO();
-                cuttingToolVO.setBusinessCode(sharpenVO.getCuttingToolBusinessCode());
-                CuttingTool cuttingTool = cuttingToolService.getCuttingTool(cuttingToolVO);
-
-
-                DjItrnAkp djItrnAkpNew = djItrnAkp;
-                djItrnAkpNew.setId(null);
-                djItrnAkpNew.setBatchno(batchNo+1);
-                djItrnAkpNew.setCreateDate(new Timestamp(System.currentTimeMillis()));
-                if (cuttingToolBind!=null){
-                    djItrnAkpNew.setJgcs(cuttingToolBind.getJgcs()+"");
-                    djItrnAkpNew.setLhcs(cuttingToolBind.getLhcs()+"");
-                    djItrnAkpNew.setRfid(cuttingToolBind.getRfidContainer().getLaserCode());
-                }
-                if (cuttingTool.getGrinding().equals(GrindingEnum.outside_tuceng.getKey())){
-                    djItrnAkpNew.setType(QiMingOptionEnum.outside_coating.getKey());
-                    djItrnAkpNew.setNote(OperationEnum.Cutting_tool_Inside_Coating.getName());
-                }
-                if (cuttingTool.getGrinding().equals(GrindingEnum.outside.getKey())){
-                    djItrnAkpNew.setType(QiMingOptionEnum.outside_sharpening.getKey());
-                    djItrnAkpNew.setNote(OperationEnum.Cutting_tool_OutSide.getName());
-                }
-                djItrnAkpNew.setWwOwner(outSideVO.getSharpenProviderCode());
-                djItrnAkpNew.setWwcode(wwcode);
-                djItrnAkpNew.setZcCode(outSideVO.getZcCode());
-                djItrnAkpNew.setCreateDate(new Timestamp(System.currentTimeMillis()));
-                djItrnAkpService.addDjItrnAkp(djItrnAkpNew);
+            if (null == djItrnAkp){
+                djItrnAkp = new DjItrnAkp();
             }
+            CuttingToolVO cuttingToolVO = new CuttingToolVO();
+            cuttingToolVO.setBusinessCode(sharpenVO.getCuttingToolBusinessCode());
+            CuttingTool cuttingTool = cuttingToolService.getCuttingTool(cuttingToolVO);
+
+            djItrnAkp.setCode(UUID.getInstance());
+            djItrnAkp.setBatchno(batchNo+1);
+            djItrnAkp.setCreateDate(new Timestamp(System.currentTimeMillis()));
+//            if (cuttingToolBind!=null){
+//                djItrnAkp.setJgcs(cuttingToolBind.getJgcs()+"");
+//                djItrnAkp.setLhcs(cuttingToolBind.getLhcs()+"");
+//                djItrnAkp.setRfid(cuttingToolBind.getRfidContainer().getLaserCode());
+//            }
+            if (cuttingTool.getGrinding().equals(GrindingEnum.outside_tuceng.getKey())){
+                djItrnAkp.setType(QiMingOptionEnum.outside_coating.getKey());
+                djItrnAkp.setNote(OperationEnum.Cutting_tool_Inside_Coating.getName());
+            }
+            if (cuttingTool.getGrinding().equals(GrindingEnum.outside.getKey())){
+                djItrnAkp.setType(QiMingOptionEnum.outside_sharpening.getKey());
+                djItrnAkp.setNote(OperationEnum.Cutting_tool_OutSide.getName());
+            }
+            djItrnAkp.setWwOwner(outSideVO.getSharpenProviderCode());
+            djItrnAkp.setWwcode(wwcode);
+            djItrnAkp.setZcCode(outSideVO.getZcCode());
+            djItrnAkpService.addDjItrnAkp(djItrnAkp);
+
+
         }
 
     }

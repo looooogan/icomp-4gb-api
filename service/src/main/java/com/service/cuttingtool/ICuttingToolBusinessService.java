@@ -1,7 +1,9 @@
 package com.service.cuttingtool;
 
+import com.common.pojo.AuthCustomer;
 import com.common.pojo.CuttingToolBind;
 import com.common.vo.CuttingToolBindVO;
+import com.service.orders.vo.WBCuttingToolBindVO;
 
 import java.util.List;
 
@@ -28,10 +30,19 @@ public interface ICuttingToolBusinessService {
 
 
     /**
-     * 绑定材料刀
+     * 绑定材料刀  版本更新  注释掉 保证编译
      * @param cuttingToolBind
      * @throws Exception
      */
-    public void addBind(CuttingToolBind cuttingToolBind) throws Exception;
+    public void addBindOld(CuttingToolBind cuttingToolBind) throws Exception;
+
+
+    /**
+     * 绑定材料刀
+     * @param cuttingToolBind
+     * @param authCustomer
+     * @throws Exception
+     */
+    public void addBind0609(CuttingToolBind cuttingToolBind, AuthCustomer authCustomer) throws Exception;
 
 }

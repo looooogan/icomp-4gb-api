@@ -28,6 +28,8 @@
         <result property="unicode" column="rfid_container.unicode"/>
         <!-- 操作人姓名 -->
         <result property="operatorName" column="rfid_container.operator_name"/>
+        <!-- 最后操作时间 -->
+        <result property="operatorTime" column="rfid_container.operator_time"/>
     </resultMap>
     <!--添加-->
     <insert id="addRfidContainer" parameterType="com.common.pojo.RfidContainer">
@@ -55,7 +57,9 @@
             <!-- 刀具的唯一码 -->
             unicode,
             <!-- 操作人姓名 -->
-            operator_name
+            operator_name,
+            <!-- 最后操作时间 -->
+            operator_time
         )
         VALUES (
             <!-- RFID载体ID -->
@@ -81,7 +85,9 @@
             <!-- 刀具的唯一码 -->
             #{unicode},
             <!-- 操作人姓名 -->
-            #{operatorName}
+            #{operatorName},
+            <!-- 最后操作时间 -->
+            #{operatorTime}
         )
     </insert>
 
@@ -156,6 +162,10 @@
             <if test="operatorName != null and operatorName != '' " >
                 and operator_name =  #{operatorName}
             </if>
+            <!-- 最后操作时间 -->
+            <if test="operatorTime != null" >
+                and operator_time =  #{operatorTime}
+            </if>
     </delete>
 
     <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
@@ -206,6 +216,10 @@
             <if test="operatorName != null and operatorName != '' " >
                 operator_name =  #{operatorName},
             </if>
+            <!-- 最后操作时间 -->
+            <if test="operatorTime != null" >
+                operator_time =  #{operatorTime},
+            </if>
             <!-- RFID载体ID -->
             id = #{id}
         WHERE
@@ -240,7 +254,9 @@
             <!-- 刀具的唯一码 -->
             rfid_container.unicode as 'rfid_container.unicode',
             <!-- 操作人姓名 -->
-            rfid_container.operator_name as 'rfid_container.operator_name'
+            rfid_container.operator_name as 'rfid_container.operator_name',
+            <!-- 最后操作时间 -->
+            rfid_container.operator_time as 'rfid_container.operator_time'
         /*rfidContainer end*/
         FROM rfid_container as rfid_container
         WHERE
@@ -387,7 +403,9 @@
         <!-- 刀具的唯一码 -->
         rfid_container.unicode as 'rfid_container.unicode',
         <!-- 操作人姓名 -->
-        rfid_container.operator_name as 'rfid_container.operator_name'
+        rfid_container.operator_name as 'rfid_container.operator_name',
+        <!-- 最后操作时间 -->
+        rfid_container.operator_time as 'rfid_container.operator_time'
         /*rfid_container end*/
         FROM rfid_container as rfid_container
         WHERE

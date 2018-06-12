@@ -9,6 +9,8 @@ import com.common.utils.exception.SelfDefinedException;
 import com.common.utils.loadConfig.IMessageSourceHanlder;
 import com.common.vo.*;
 import com.service.orders.vo.WriteBackVO;
+import com.service.rfid.RfidModel;
+import com.service.rfid.bo.RFIDBO;
 import com.service.synthesiscuttingtool.ISynthesisCuttingToolBusinessService;
 import com.service.synthesiscuttingtool.vo.*;
 import org.apache.commons.lang3.StringUtils;
@@ -29,70 +31,42 @@ public class SynthesisCuttingToolBusinessServiceImpl implements ISynthesisCuttin
 
     @Autowired
     private ISynthesisCuttingToolMapper synthesisCuttingToolMapper;
-
     @Autowired
     private ISynthesisCuttingToolConfigMapper synthesisCuttingToolConfigMapper;
-
     @Autowired
     private ISynthesisCuttingToolLocationConfigMapper synthesisCuttingToolLocationConfigMapper;
-
     @Autowired
     private ISynthesisCuttingToolBindMapper synthesisCuttingToolBindMapper;
-
     @Autowired
     private ISynthesisCuttingToolLocationMapper synthesisCuttingToolLocationMapper;
-
     @Autowired
     private ISynthesisCuttingToolExchangeMapper exchangeMapper;
-
     @Autowired
     private IMaterialInventoryMapper materialInventoryMapper;
-
     @Autowired
     private ICuttingToolMapper cuttingToolMapper;
-
-    @Qualifier
-    private IInsideFactoryMapper insideFactoryMapper;
-
     @Autowired
     private ISynthesisCuttingToolMaterialInventoryMapper sMaterialInventoryMapper;
-
     @Autowired
     private ISynthesisCuttingToolProductionRecordsMapper sProductionRecordsMapper;
-
     @Autowired
     private ICuttingToolProductionRecordsMapper cuttingToolProductionRecordsMapper;
-
     @Autowired
     private IRfidContainerMapper rfidContainerMapper;
-
     @Autowired
     private ICuttingToolBindMapper cuttingToolBindMapper;
-
     @Autowired
     private ISynthesisCuttingToolMaterialInventoryMapper synthesismaterialInventoryMapper;
-
     @Autowired
     private IProductLineMapper productLineMapper;
-
     @Autowired
     private ISynthesisCuttingToolBindleRecordsMapper bindleRecordsMapper;
-
-    @Autowired
-    private IProductLineAxleMapper productLineAxleMapper;
-    @Autowired
-    private IProductLineAssemblylineMapper productLineAssemblylineMapper;
-    @Autowired
-    private IProductLineEquipmentMapper productLineEquipmentMapper;
-    @Autowired
-    private IProductLineProcessMapper productLineProcessMapper;
-    @Autowired
-    private IProductLinePartsMapper productLinePartsMapper;
     @Autowired
     private IAuthCustomerMapper authCustomerMapper;
     @Autowired
     private IMessageSourceHanlder messageSourceHanlder;
-
+    @Autowired
+    private RfidModel rfidModel;
 
 
     /**
@@ -109,22 +83,32 @@ public class SynthesisCuttingToolBusinessServiceImpl implements ISynthesisCuttin
             RfidContainerVO rfidContainerVO = new RfidContainerVO();
             rfidContainerVO.setLaserCode(synthesisCuttingToolInitVO.getRfidCode());
             RfidContainer rfidContainer = rfidContainerMapper.getRfidContainer(rfidContainerVO);
-
+            if (null == rfidContainer){
+                throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.SYNTHESISCUTTINGTOOL_NOT_EXISTS));
+            }
             SynthesisCuttingToolBindVO synthesisCuttingToolBindVO = new SynthesisCuttingToolBindVO();
             synthesisCuttingToolBindVO.setRfidContainerCode(rfidContainer.getCode());
             synthesisCuttingToolBindVO.setId(0);
             SynthesisCuttingToolBind synthesisCuttingToolBind = synthesisCuttingToolBindMapper.getSynthesisCuttingToolBind(synthesisCuttingToolBindVO);
-
+            if(null == synthesisCuttingToolBind){
+                throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.SYNTHESISCUTTINGTOOL_NOT_EXISTS));
+            }
             synthesisCuttingToolConfigVO.setSynthesisCuttingToolCode(synthesisCuttingToolBind.getSynthesisCuttingToolCode());
         }
         if (!StringUtils.isBlank(synthesisCuttingToolInitVO.getSynthesisCode())){
             SynthesisCuttingToolVO synthesisCuttingToolVO = new SynthesisCuttingToolVO();
             synthesisCuttingToolVO.setSynthesisCode(synthesisCuttingToolInitVO.getSynthesisCode());
             SynthesisCuttingTool synthesisCuttingTool = synthesisCuttingToolMapper.getSynthesisCuttingTool(synthesisCuttingToolVO);
+            if(null == synthesisCuttingTool){
+                throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.SYNTHESISCUTTINGTOOL_NOT_EXISTS));
+            }
             synthesisCuttingToolConfigVO.setSynthesisCuttingToolCode(synthesisCuttingTool.getCode());
         }
 
         SynthesisCuttingToolConfig synthesisCuttingToolConfig = synthesisCuttingToolConfigMapper.getSynthesisCuttingToolConfig(synthesisCuttingToolConfigVO);
+        if (null == synthesisCuttingToolConfig){
+            throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.SYNTHESISCUTTINGTOOL_CONFIG_NOT_EXISTS));
+        }
         SynthesisCuttingToolLocationConfigVO locationConfigVO = new SynthesisCuttingToolLocationConfigVO();
         locationConfigVO.setSynthesisCuttingToolConfigId(synthesisCuttingToolConfig.getId());
         synthesisCuttingToolConfig.setSynthesisCuttingToolLocationConfigList(synthesisCuttingToolLocationConfigMapper.getSynthesisCuttingToolLocationConfigByPage(locationConfigVO));
@@ -146,7 +130,9 @@ public class SynthesisCuttingToolBusinessServiceImpl implements ISynthesisCuttin
         SynthesisCuttingToolBindVO synthesisCuttingToolBindVO = new SynthesisCuttingToolBindVO();
         synthesisCuttingToolBindVO.setRfidContainerVO(rfidContainerVO);
         SynthesisCuttingToolBind synthesisCuttingToolBind = synthesisCuttingToolBindMapper.getSynthesisCuttingToolBind(synthesisCuttingToolBindVO);
-
+        if (null == synthesisCuttingToolBind){
+            throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.SYNTHESISCUTTINGTOOL_NOT_EXISTS));
+        }
         SynthesisCuttingToolLocationVO synthesisCuttingToolLocationVO = new SynthesisCuttingToolLocationVO();
         synthesisCuttingToolLocationVO.setSynthesisCuttingToolBindCode(synthesisCuttingToolBind.getCode());
         List<SynthesisCuttingToolLocation> locations = synthesisCuttingToolLocationMapper.getSynthesisCuttingToolLocationByPage(synthesisCuttingToolLocationVO);
@@ -178,6 +164,7 @@ public class SynthesisCuttingToolBusinessServiceImpl implements ISynthesisCuttin
                 rfidContainer.setLabelType(RFIDEnum.synthesis_cutting_tool.getKey());
                 rfidContainer.setOperatorCode(OperationEnum.SynthesisCuttingTool_Init.getKey());
                 rfidContainer.setOperatorName(OperationEnum.SynthesisCuttingTool_Init.getName());
+                rfidContainer.setOperatorTime(new Timestamp(System.currentTimeMillis()));
                 rfidContainerMapper.addRfidContainer(rfidContainer);
             }else if (rfidContainer.getOperatorCode()==null ||rfidContainer.getOperatorCode() == 0){
                 rfidContainer.setPrevKey(rfidContainer.getOperatorCode());
@@ -186,6 +173,7 @@ public class SynthesisCuttingToolBusinessServiceImpl implements ISynthesisCuttin
                 rfidContainer.setLabelType(RFIDEnum.synthesis_cutting_tool.getKey());
                 rfidContainer.setOperatorCode(OperationEnum.SynthesisCuttingTool_Init.getKey());
                 rfidContainer.setOperatorName(OperationEnum.SynthesisCuttingTool_Init.getName());
+                rfidContainer.setOperatorTime(new Timestamp(System.currentTimeMillis()));
                 rfidContainerMapper.updRfidContainer(rfidContainer);
             }else {
                 throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.RFID_IN_USE));
@@ -197,14 +185,6 @@ public class SynthesisCuttingToolBusinessServiceImpl implements ISynthesisCuttin
             synthesisCuttingToolBind.setCode(UUID.getInstance());
             synthesisCuttingToolBind.setRfidContainerCode(rfidContainer.getCode());
             synthesisCuttingToolBindMapper.addSynthesisCuttingToolBind(synthesisCuttingToolBind);
-
-            //添加数据
-//            for (SynthesisCuttingToolLocation location : synthesisCuttingToolBind.getSynthesisCuttingToolLocationList()){
-//                location.setIsDel(0);
-////                location.setSynthesisCuttingToolBindRfid(rfidContainer.s());
-//                location.setSynthesisCuttingToolBindCode(synthesisCuttingToolBind.getCode());
-//                synthesisCuttingToolLocationMapper.addSynthesisCuttingToolLocation(location);
-//            }
 
             SynthesisCuttingToolMaterialInventoryVO materialInventoryVO = new SynthesisCuttingToolMaterialInventoryVO();
             materialInventoryVO.setSynthesisCuttingToolCode(synthesisCuttingToolBind.getSynthesisCuttingToolCode());
@@ -224,6 +204,18 @@ public class SynthesisCuttingToolBusinessServiceImpl implements ISynthesisCuttin
                 materialInventory.setPrepareLibraryCount(materialInventory.getPrepareLibraryCount()+1);
                 synthesismaterialInventoryMapper.updSynthesisCuttingToolMaterialInventory(materialInventory);
             }
+
+            //添加数据
+            for (SynthesisCuttingToolLocation location : synthesisCuttingToolBind.getSynthesisCuttingToolLocationList()){
+//                CuttingToolVO cuttingToolVO = new CuttingToolVO();
+//                cuttingToolVO.setBusinessCode(location.get);
+                location.setSynthesisCuttingToolCode(synthesisCuttingToolBind.getSynthesisCuttingToolCode());
+                location.setIsDel(0);
+                location.setSynthesisCuttingToolBindCode(synthesisCuttingToolBind.getCode());
+                synthesisCuttingToolLocationMapper.addSynthesisCuttingToolLocation(location);
+            }
+
+            //修改材料刀库存
 
         }
 
@@ -247,6 +239,7 @@ public class SynthesisCuttingToolBusinessServiceImpl implements ISynthesisCuttin
         sRfidContainerVO.setLaserCode(exChangeVO.getSynthesisCuttingToolBind().getRfidContainer().getLaserCode());
         RfidContainer sRfidContainer = rfidContainerMapper.getRfidContainer(sRfidContainerVO);
 
+        //todo 是否为全部换装
 
         //删除原有刀具信息
         SynthesisCuttingToolLocationVO synthesisCuttingToolLocationVO = new SynthesisCuttingToolLocationVO();
@@ -294,7 +287,7 @@ public class SynthesisCuttingToolBusinessServiceImpl implements ISynthesisCuttin
                 synthesismaterialInventoryMapper.addSynthesisCuttingToolMaterialInventory(synthesisMaterialInventory);
             } else {
                 synthesisMaterialInventory.setPrepareLibraryCount(synthesisMaterialInventory.getPrepareLibraryCount() + 1);
-                synthesisMaterialInventory.setToInstallCount((synthesisMaterialInventory.getToInstallCount() - 1) >= 0 ? synthesisMaterialInventory.getToInstallCount() - 1 : 0);
+                synthesisMaterialInventory.setToExchangeCount((synthesisMaterialInventory.getToExchangeCount() - 1) >= 0 ? synthesisMaterialInventory.getToExchangeCount() - 1 : 0);
                 synthesismaterialInventoryMapper.updSynthesisCuttingToolMaterialInventory(synthesisMaterialInventory);
             }
         }
@@ -359,14 +352,21 @@ public class SynthesisCuttingToolBusinessServiceImpl implements ISynthesisCuttin
             CuttingToolBindVO cuttingToolBindVO = new CuttingToolBindVO();
             cuttingToolBindVO.setRfidContainerVO(upRfidVO);
             CuttingToolBind cuttingToolBind = cuttingToolBindMapper.getCuttingToolBind(cuttingToolBindVO);
-            cuttingToolBind.setRfidContainerCode("");
-            cuttingToolBindMapper.updCuttingToolBind(cuttingToolBind);
+
+
             RfidContainer upRfid = cuttingToolBind.getRfidContainer();
             upRfid.setPrevOperation(upRfid.getOperatorName());
             upRfid.setPrevKey(upRfid.getOperatorCode());
             upRfid.setOperatorCode(OperationEnum.SynthesisCuttingTool_Exchange.getKey());
             upRfid.setOperatorName(OperationEnum.SynthesisCuttingTool_Exchange.getName());
             rfidContainerMapper.updRfidContainer(upRfid);
+
+
+//            cuttingToolBind.setRfidContainerCode(null);
+//            CuttingToolBindVO unbindVo = new CuttingToolBindVO();
+//            unbindVo.setCode(cuttingToolBind.getCode());
+//            cuttingToolBindMapper.unBindCuttingToolData(unbindVo);
+
             //修改库存
 
         }
@@ -382,7 +382,8 @@ public class SynthesisCuttingToolBusinessServiceImpl implements ISynthesisCuttin
             materialInventoryVO.setCuttingToolCode(cuttingTool.getCode());
             MaterialInventory materialInventory = materialInventoryMapper.getMaterialInventory(materialInventoryVO);
 
-            if (null == materialInventory) {
+
+            if (null == materialInventory){
                 materialInventory = new MaterialInventory();
                 materialInventory.setIsDel(0);
                 materialInventory.setCuttingToolCode(cuttingTool.getCode());
@@ -391,33 +392,38 @@ public class SynthesisCuttingToolBusinessServiceImpl implements ISynthesisCuttin
                 materialInventory.setToExchangeCount(0);
                 materialInventory.setGrindingOutCount(0);
                 materialInventory.setScrapCount(0);
-                if (cuttingTool.getGrinding().equals(GrindingEnum.inside.getKey())) {
-                    materialInventory.setForGrindingInCount(downCuttingToolVO.getDownCount());
-                    materialInventory.setForGrindingOutCount(0);
-                } else {
-                    materialInventory.setForGrindingInCount(0);
-                    materialInventory.setForGrindingOutCount(downCuttingToolVO.getDownCount());
-                }
+                materialInventory.setForGrindingInCount(0);
+                materialInventory.setForGrindingOutCount(0);
                 materialInventoryMapper.addMaterialInventory(materialInventory);
-            } else {
-                if (cuttingTool.getGrinding().equals(GrindingEnum.inside.getKey())) {
-                    materialInventory.setForGrindingInCount(materialInventory.getForGrindingInCount() + downCuttingToolVO.getDownCount());
-                } else {
-                    materialInventory.setForGrindingOutCount(materialInventory.getForGrindingOutCount() + downCuttingToolVO.getDownCount());
+            }
+//            if (sRfidContainer.getOperatorCode()==OperationEnum.SynthesisCuttingTool_Config.getKey()
+//                    ||sRfidContainer.getOperatorCode()==OperationEnum.SynthesisCuttingTool_Exchange.getKey()){
+////                    materialInventory.setPrepareLibraryCount(materialInventory.getPrepareLibraryCount()-downCuttingToolVO.getDownCount()<=0?0:materialInventory.getPrepareLibraryCount()-downCuttingToolVO.getDownCount());
+//            }
+            if (sRfidContainer.getOperatorCode()==OperationEnum.SynthesisCuttingTool_UnInstall.getKey()){
+                if (cuttingTool.getConsumeType().equals(CuttingToolConsumeTypeEnum.griding_dp.getKey())||
+                        cuttingTool.getConsumeType().equals(CuttingToolConsumeTypeEnum.griding_zt.getKey())){
+                    if (cuttingTool.getGrinding().equals(GrindingEnum.inside.getKey())){
+                        materialInventory.setForGrindingInCount(materialInventory.getForGrindingInCount()+downCuttingToolVO.getDownCount());
+                    }else{
+                        materialInventory.setForGrindingOutCount(materialInventory.getGrindingOutCount()+downCuttingToolVO.getDownCount());
+                    }
                 }
-                if ((materialInventory.getPrepareLibraryCount() + ctLibCount * downCuttingToolVO.getDownCount() < 0)) {
-                    materialInventory.setPrepareLibraryCount(0);
-                } else {
-                    materialInventory.setPrepareLibraryCount(materialInventory.getPrepareLibraryCount() + ctLibCount * downCuttingToolVO.getDownCount());
+                if (cuttingTool.getConsumeType().equals(CuttingToolConsumeTypeEnum.single_use_dp.getKey())){
+                    materialInventory.setScrapCount(materialInventory.getScrapCount()+downCuttingToolVO.getDownCount());
                 }
-
-                if ((materialInventory.getToExchangeCount() + ctExchangeCount * downCuttingToolVO.getDownCount() < 0)) {
-                    materialInventory.setToExchangeCount(0);
-                } else {
-                    materialInventory.setToExchangeCount(materialInventory.getToExchangeCount() + ctExchangeCount * downCuttingToolVO.getDownCount());
-                }
+                materialInventory.setToExchangeCount(materialInventory.getToExchangeCount()-downCuttingToolVO.getDownCount()<=0?0:materialInventory.getToExchangeCount()-downCuttingToolVO.getDownCount());
                 materialInventoryMapper.updMaterialInventory(materialInventory);
             }
+
+//                materialInventory.setPrepareLibraryCount(materialInventory.getPrepareLibraryCount()+downCuttingToolVO.getDownCount());
+
+//            if (sRfidContainer.getOperatorCode()!=OperationEnum.SynthesisCuttingTool_Init.getKey()
+//                    &&sRfidContainer.getOperatorCode()!=OperationEnum.SynthesisCuttingTool_Config.getKey()
+//                    &&sRfidContainer.getOperatorCode()!=OperationEnum.SynthesisCuttingTool_Exchange.getKey()){
+//                materialInventoryMapper.updMaterialInventory(materialInventory);
+//            }
+
             //换下刀具绑定RFID
             if (!StringUtils.isBlank(downCuttingToolVO.getDownRfidCode())) {
                 RfidContainerVO ctRfidContainerVO = new RfidContainerVO();
@@ -430,8 +436,8 @@ public class SynthesisCuttingToolBusinessServiceImpl implements ISynthesisCuttin
                     ctRfidContainer.setCode(UUID.getInstance());
                     ctRfidContainer.setLaserCode(downCuttingToolVO.getDownRfidCode());
                     ctRfidContainer.setLabelType(RFIDEnum.cutting_tool.getKey());
-                    ctRfidContainer.setOperatorCode(OperationEnum.SynthesisCuttingTool_UnConfig.getKey());
-                    ctRfidContainer.setOperatorName(OperationEnum.SynthesisCuttingTool_UnConfig.getName());
+                    ctRfidContainer.setOperatorCode(OperationEnum.SynthesisCuttingTool_Exchange.getKey());
+                    ctRfidContainer.setOperatorName(OperationEnum.SynthesisCuttingTool_Exchange.getName());
                     rfidContainerMapper.addRfidContainer(ctRfidContainer);
                 } else if (ctRfidContainer.getOperatorCode() == null || ctRfidContainer.getOperatorCode() == 0 ||
                         ctRfidContainer.getOperatorCode() == OperationEnum.SynthesisCuttingTool_Exchange.getKey() ||
@@ -441,31 +447,36 @@ public class SynthesisCuttingToolBusinessServiceImpl implements ISynthesisCuttin
                     ctRfidContainer.setPrevOperation(ctRfidContainer.getOperatorName());
                     ctRfidContainer.setUseCount(ctRfidContainer.getUseCount() + 1);
                     ctRfidContainer.setLabelType(RFIDEnum.cutting_tool.getKey());
-                    ctRfidContainer.setOperatorCode(OperationEnum.SynthesisCuttingTool_UnConfig.getKey());
-                    ctRfidContainer.setOperatorName(OperationEnum.SynthesisCuttingTool_UnConfig.getName());
+                    ctRfidContainer.setOperatorCode(OperationEnum.SynthesisCuttingTool_Exchange.getKey());
+                    ctRfidContainer.setOperatorName(OperationEnum.SynthesisCuttingTool_Exchange.getName());
                     rfidContainerMapper.updRfidContainer(ctRfidContainer);
                 } else {
                     throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.RFID_IN_USE));
                 }
 
-                CuttingToolBindVO cuttingToolBindVO = new CuttingToolBindVO();
-                cuttingToolBindVO.setBladeCode(downCuttingToolVO.getBladeCode());
-                CuttingToolBind cuttingToolBind = cuttingToolBindMapper.getCuttingToolBind(cuttingToolBindVO);
-                if (cuttingToolBind == null) {
+                CuttingToolBind cuttingToolBind = null;
+                if (StringUtils.isBlank(downCuttingToolVO.getBladeCode())){
                     cuttingToolBind = new CuttingToolBind();
-                }
-                cuttingToolBind.setIsDel(0);
-                cuttingToolBind.setCode(UUID.getInstance());
-                cuttingToolBind.setRfidContainerCode(ctRfidContainer.getCode());
-                cuttingToolBind.setCuttingToolCode(cuttingTool.getCode());
-                cuttingToolBind.setBladeCode(downCuttingToolVO.getBladeCode());
-                if (null == cuttingToolBind) {
+                    cuttingToolBind = new CuttingToolBind();
+                    cuttingToolBind.setCode(UUID.getInstance());
+                    cuttingToolBind.setIsDel(0);
+                    cuttingToolBind.setCuttingToolCode(cuttingTool.getCode());
                     cuttingToolBindMapper.addCuttingToolBind(cuttingToolBind);
-                } else {
-                    cuttingToolBindMapper.updCuttingToolBind(cuttingToolBind);
+                }else{
+                    CuttingToolBindVO cuttingToolBindVO = new CuttingToolBindVO();
+                    cuttingToolBindVO.setBladeCode(downCuttingToolVO.getBladeCode());
+                    cuttingToolBind = cuttingToolBindMapper.getCuttingToolBind(cuttingToolBindVO);
                 }
+//                cuttingToolBind.setRfidContainerCode(ctRfidContainer.getCode());
+//                cuttingToolBind.setBladeCode(downCuttingToolVO.getBladeCode());
+//                cuttingToolBindMapper.updCuttingToolBind(cuttingToolBind);
             }
         }
+        RFIDBO rfidbo = new RFIDBO();
+        rfidbo.setLabelType(RFIDEnum.synthesis_cutting_tool.getKey());
+        rfidbo.setLaserCode(sRfidContainer.getLaserCode());
+        rfidbo.setPrevOperationKey(OperationEnum.SynthesisCuttingTool_Exchange.getKey());
+        rfidModel.updateRfidStatusTemp(rfidbo);
     }
 
 
@@ -554,33 +565,33 @@ public class SynthesisCuttingToolBusinessServiceImpl implements ISynthesisCuttin
                 materialInventory.setToExchangeCount(0);
                 materialInventory.setGrindingOutCount(0);
                 materialInventory.setScrapCount(0);
+                materialInventory.setForGrindingInCount(0);
+                materialInventory.setForGrindingOutCount(0);
+                materialInventoryMapper.addMaterialInventory(materialInventory);
+            }
+            if (rfidContainer.getOperatorCode()==OperationEnum.SynthesisCuttingTool_UnInstall.getKey()){
+                materialInventory.setToExchangeCount(materialInventory.getToExchangeCount()-downCuttingToolVO.getDownCount()<=0?0:materialInventory.getToExchangeCount()-downCuttingToolVO.getDownCount());
+            }
+            if (rfidContainer.getOperatorCode()==OperationEnum.SynthesisCuttingTool_Config.getKey()
+                    ||rfidContainer.getOperatorCode()==OperationEnum.SynthesisCuttingTool_Exchange.getKey()){
+                materialInventory.setPrepareLibraryCount(materialInventory.getPrepareLibraryCount()-downCuttingToolVO.getDownCount()<=0?0:materialInventory.getPrepareLibraryCount()-downCuttingToolVO.getDownCount());
+            }
+            if (cuttingTool.getConsumeType().equals(CuttingToolConsumeTypeEnum.griding_dp.getKey())||
+                    cuttingTool.getConsumeType().equals(CuttingToolConsumeTypeEnum.griding_zt.getKey())){
                 if (cuttingTool.getGrinding().equals(GrindingEnum.inside.getKey())){
                     materialInventory.setForGrindingInCount(downCuttingToolVO.getDownCount());
-                    materialInventory.setForGrindingOutCount(0);
                 }else{
-                    materialInventory.setForGrindingInCount(0);
                     materialInventory.setForGrindingOutCount(downCuttingToolVO.getDownCount());
                 }
-                materialInventoryMapper.addMaterialInventory(materialInventory);
-            }else{
-                if (cuttingTool.getGrinding().equals(GrindingEnum.inside.getKey())){
-                    materialInventory.setForGrindingInCount(materialInventory.getForGrindingInCount()+downCuttingToolVO.getDownCount());
-                }else{
-                    materialInventory.setForGrindingOutCount(materialInventory.getForGrindingOutCount()+downCuttingToolVO.getDownCount());
-                }
-                if ((materialInventory.getPrepareLibraryCount()+ctLibCount*downCuttingToolVO.getDownCount()<0)){
-                    materialInventory.setPrepareLibraryCount(0);
-                }else{
-                    materialInventory.setPrepareLibraryCount(materialInventory.getPrepareLibraryCount()+ctLibCount*downCuttingToolVO.getDownCount());
-                }
-
-                if ((materialInventory.getToExchangeCount()+ctExchangeCount*downCuttingToolVO.getDownCount()<0)){
-                    materialInventory.setToExchangeCount(0);
-                }else{
-                    materialInventory.setToExchangeCount(materialInventory.getToExchangeCount()+ctExchangeCount*downCuttingToolVO.getDownCount());
-                }
-                materialInventoryMapper.updMaterialInventory(materialInventory);
             }
+            if (cuttingTool.getConsumeType().equals(CuttingToolConsumeTypeEnum.single_use_dp.getKey())){
+                materialInventory.setScrapCount(downCuttingToolVO.getDownCount());
+            }
+            if (cuttingTool.getConsumeType().equals(CuttingToolConsumeTypeEnum.other.getKey())){
+                materialInventory.setPrepareLibraryCount(downCuttingToolVO.getDownCount());
+            }
+            materialInventoryMapper.updMaterialInventory(materialInventory);
+
 
            //换下刀具绑定RFID
             if (!StringUtils.isBlank(downCuttingToolVO.getDownRfidCode())){
@@ -613,25 +624,22 @@ public class SynthesisCuttingToolBusinessServiceImpl implements ISynthesisCuttin
                     throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.RFID_IN_USE));
                 }
 
-                CuttingToolBindVO cuttingToolBindVO = new CuttingToolBindVO();
-                cuttingToolBindVO.setBladeCode(downCuttingToolVO.getBladeCode());
-                CuttingToolBind cuttingToolBind = cuttingToolBindMapper.getCuttingToolBind(cuttingToolBindVO);
-                if (cuttingToolBind == null){
+                CuttingToolBind cuttingToolBind = null;
+                if (StringUtils.isBlank(downCuttingToolVO.getBladeCode())){
                     cuttingToolBind = new CuttingToolBind();
-                }
-                cuttingToolBind.setRfidContainer(ctRfidContainer);
-                cuttingToolBind.setRfidContainerCode(ctRfidContainer.getCode());
-                cuttingToolBind.setIsDel(0);
-                cuttingToolBind.setCode(UUID.getInstance());
-                cuttingToolBind.setRfidContainerCode(rfidContainer.getCode());
-                cuttingToolBind.setCuttingToolCode(cuttingTool.getCode());
-                cuttingToolBind.setBladeCode(downCuttingToolVO.getBladeCode());
-                if (null == cuttingToolBind){
+                    cuttingToolBind = new CuttingToolBind();
+                    cuttingToolBind.setCode(UUID.getInstance());
+                    cuttingToolBind.setIsDel(0);
+                    cuttingToolBind.setCuttingToolCode(cuttingTool.getCode());
                     cuttingToolBindMapper.addCuttingToolBind(cuttingToolBind);
-                }else {
-                    cuttingToolBindMapper.updCuttingToolBind(cuttingToolBind);
+                }else{
+                    CuttingToolBindVO cuttingToolBindVO = new CuttingToolBindVO();
+                    cuttingToolBindVO.setBladeCode(downCuttingToolVO.getBladeCode());
+                    cuttingToolBind = cuttingToolBindMapper.getCuttingToolBind(cuttingToolBindVO);
                 }
-
+                cuttingToolBind.setRfidContainerCode(ctRfidContainer.getCode());
+                cuttingToolBind.setBladeCode(downCuttingToolVO.getBladeCode());
+                cuttingToolBindMapper.updCuttingToolBind(cuttingToolBind);
             }
 
         }
@@ -783,8 +791,8 @@ public class SynthesisCuttingToolBusinessServiceImpl implements ISynthesisCuttin
 
         rfidContainer.setPrevKey(rfidContainer.getOperatorCode());
         rfidContainer.setPrevOperation(rfidContainer.getOperatorName());
-        rfidContainer.setOperatorName(OperationEnum.SynthesisCuttingTool_UnInstall.getName());
-        rfidContainer.setOperatorCode(OperationEnum.SynthesisCuttingTool_UnInstall.getKey());
+        rfidContainer.setOperatorName(OperationEnum.SynthesisCuttingTool_Install.getName());
+        rfidContainer.setOperatorCode(OperationEnum.SynthesisCuttingTool_Install.getKey());
         rfidContainerMapper.updRfidContainer(rfidContainer);
 
         //更新合成刀库存
@@ -822,29 +830,22 @@ public class SynthesisCuttingToolBusinessServiceImpl implements ISynthesisCuttin
                 materialInventory.setCuttingToolCode(location.getCuttingTool().getCode());
                 materialInventory.setPrepareLibraryCount(0);
                 materialInventory.setProductLineCount(0);
-                materialInventory.setToExchangeCount(location.getCount());
+                materialInventory.setToExchangeCount(0);
                 materialInventory.setGrindingOutCount(0);
                 materialInventory.setScrapCount(0);
                 materialInventory.setForGrindingOutCount(0);
                 materialInventory.setForGrindingInCount(0);
                 materialInventoryMapper.addMaterialInventory(materialInventory);
-            } else {
-                materialInventory.setToExchangeCount(materialInventory.getToExchangeCount()+location.getCount());
-                if (toExchangeCount<0){
-                    if (location.getCuttingTool().getGrinding().equals("1")){
-                        materialInventory.setForGrindingInCount((materialInventory.getForGrindingInCount()-location.getCount())<0?0:materialInventory.getForGrindingInCount()-location.getCount());
-                    }else{
-                        materialInventory.setForGrindingOutCount((materialInventory.getForGrindingOutCount()-location.getCount())<0?0:materialInventory.getForGrindingOutCount()-location.getCount());
-                    }
-                    materialInventory.setProductLineCount((materialInventory.getProductLineCount()-location.getCount())<0?0:materialInventory.getProductLineCount()-location.getCount());
-                }
-                if(libCount<0){
-                    materialInventory.setProductLineCount((materialInventory.getProductLineCount()-location.getCount())<0?0:materialInventory.getProductLineCount()-location.getCount());
-                }
-                materialInventory.setToExchangeCount(materialInventory.getToExchangeCount()+location.getCount());
-                materialInventory.setProductLineCount(materialInventory.getProductLineCount()-location.getCount()<0?0:materialInventory.getProductLineCount()-location.getCount());
-                materialInventoryMapper.updMaterialInventory(materialInventory);
             }
+            materialInventory.setProductLineCount(materialInventory.getProductLineCount()+location.getCount());
+            if (rfidContainer.getOperatorCode() == OperationEnum.SynthesisCuttingTool_UnInstall.getKey()){
+                materialInventory.setToExchangeCount(materialInventory.getToExchangeCount()-location.getCount()<0?0:materialInventory.getToExchangeCount()-location.getCount());
+            }else{
+                materialInventory.setPrepareLibraryCount(materialInventory.getPrepareLibraryCount()-location.getCount()<0?0:materialInventory.getPrepareLibraryCount()-location.getCount());
+            }
+//            materialInventory.setToExchangeCount(materialInventory.getToExchangeCount()+location.getCount());
+//            materialInventory.setProductLineCount(materialInventory.getProductLineCount()-location.getCount()<0?0:materialInventory.getProductLineCount()-location.getCount());
+            materialInventoryMapper.updMaterialInventory(materialInventory);
         }
     }
 
@@ -909,11 +910,6 @@ public class SynthesisCuttingToolBusinessServiceImpl implements ISynthesisCuttin
         RfidContainerVO rfidContainerVO = new RfidContainerVO();
         rfidContainerVO.setLaserCode(unBindEquipmentVO.getBindRfid());
         RfidContainer rfidContainer = rfidContainerMapper.getRfidContainer(rfidContainerVO);
-        rfidContainer.setPrevOperation(rfidContainer.getOperatorName());
-        rfidContainer.setPrevKey(rfidContainer.getOperatorCode());
-        rfidContainer.setOperatorCode(OperationEnum.SynthesisCuttingTool_UnInstall.getKey());
-        rfidContainer.setOperatorName(OperationEnum.SynthesisCuttingTool_UnInstall.getName());
-        rfidContainerMapper.updRfidContainer(rfidContainer);
 
         //更新合成刀生产记录
         SynthesisCuttingToolProductionRecords synthesisCuttingToolProductionRecords = new SynthesisCuttingToolProductionRecords();
@@ -984,32 +980,58 @@ public class SynthesisCuttingToolBusinessServiceImpl implements ISynthesisCuttin
 
             //更新材料刀库存
 
+
+
             MaterialInventoryVO materialInventoryVO = new MaterialInventoryVO();
             materialInventoryVO.setCuttingToolCode(location.getCuttingTool().getCode());
             MaterialInventory materialInventory = materialInventoryMapper.getMaterialInventory(materialInventoryVO);
-
-
             if (null == materialInventory) {
                 materialInventory = new MaterialInventory();
                 materialInventory.setIsDel(0);
                 materialInventory.setCuttingToolCode(location.getCuttingTool().getCode());
                 materialInventory.setPrepareLibraryCount(0);
                 materialInventory.setProductLineCount(0);
-                materialInventory.setToExchangeCount(1);
+                materialInventory.setToExchangeCount(0);
                 materialInventory.setGrindingOutCount(0);
                 materialInventory.setScrapCount(0);
                 materialInventory.setForGrindingOutCount(0);
                 materialInventory.setForGrindingInCount(0);
                 materialInventoryMapper.addMaterialInventory(materialInventory);
-            } else {
-                materialInventory.setToExchangeCount(materialInventory.getToExchangeCount()+location.getCount());
-                materialInventory.setProductLineCount(materialInventory.getProductLineCount()-location.getCount()<0?0:materialInventory.getProductLineCount()-location.getCount());
-                materialInventoryMapper.updMaterialInventory(materialInventory);
             }
+            if (location.getCuttingTool().getConsumeType().equals(CuttingToolConsumeTypeEnum.griding_dp.getKey())||
+                    location.getCuttingTool().getConsumeType().equals(CuttingToolConsumeTypeEnum.griding_zt.getKey())){
+                materialInventory.setToExchangeCount(materialInventory.getForGrindingInCount()+location.getCount());
+            }
+            if (location.getCuttingTool().getConsumeType().equals(CuttingToolConsumeTypeEnum.single_use_dp.getKey())){
+                materialInventory.setScrapCount(materialInventory.getScrapCount()+location.getCount());
+            }
+            if (location.getCuttingTool().getConsumeType().equals(CuttingToolConsumeTypeEnum.other.getKey())){
+                materialInventory.setPrepareLibraryCount(materialInventory.getPrepareLibraryCount()+location.getCount());
+            }
+            materialInventoryMapper.updMaterialInventory(materialInventory);
+
         }
+        rfidContainer.setPrevOperation(rfidContainer.getOperatorName());
+        rfidContainer.setPrevKey(rfidContainer.getOperatorCode());
+        rfidContainer.setOperatorCode(OperationEnum.SynthesisCuttingTool_UnInstall.getKey());
+        rfidContainer.setOperatorName(OperationEnum.SynthesisCuttingTool_UnInstall.getName());
+        rfidContainerMapper.updRfidContainer(rfidContainer);
 //        productLine.setSynthesisCuttingToolCode(null);
 //        productLineMapper.updProductLine(productLine);
         return bindleRecords;
+    }
+
+    @Override
+    public RfidContainer queryRFIDForUnConfig(RfidContainerVO rfidContainerVO) throws Exception {
+        RfidContainer rfidContainer = rfidContainerMapper.getRfidContainer(rfidContainerVO);
+        if (null == rfidContainer){
+            return null;
+        }
+        if (rfidContainer.getOperatorCode()!=OperationEnum.SynthesisCuttingTool_UnConfig.getKey()
+                &&rfidContainer.getOperatorCode()!=OperationEnum.RFID_Clear.getKey()){
+            throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.RFID_IN_USE));
+        }
+        return null;
     }
 
     @Override

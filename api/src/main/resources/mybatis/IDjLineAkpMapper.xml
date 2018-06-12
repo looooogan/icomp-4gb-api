@@ -11,7 +11,7 @@
     </resultMap>
     <!-- 添加 -->
     <insert id="addDjLineAkp" parameterType="com.common.pojo.DjLineAkp">
-        INSERT INTO DJ_LINE_AKP (
+        INSERT INTO FCCCMS.DJ_LINE_AKP (
             /* 生产线代码 */
             LINE_CODE,
             /* 生产线名称 */
@@ -28,7 +28,7 @@
     <!-- 删除 -->
     <delete id="delDjLineAkp" parameterType="com.common.pojo.DjLineAkp">
         DELETE
-        FROM DJ_LINE_AKP
+        FROM FCCCMS.DJ_LINE_AKP
         WHERE
             1 = 1
             and LINE_CODE = #{lineCode}
@@ -36,7 +36,7 @@
 
     <!-- 逻辑删除 -->
     <delete id="delDjLineAkpForLogic" parameterType="com.common.pojo.DjLineAkp">
-        DELETE FROM  DJ_LINE_AKP
+        DELETE FROM  FCCCMS.DJ_LINE_AKP
         WHERE
             1 = 1
             and LINE_CODE = #{lineCode}
@@ -44,7 +44,7 @@
 
     <!-- 根据VO删除 -->
     <delete id="delDjLineAkpByVo" parameterType="com.common.vo.DjLineAkpVO">
-        DELETE FROM DJ_LINE_AKP
+        DELETE FROM FCCCMS.DJ_LINE_AKP
         WHERE
         1=1
         /* 生产线代码 */
@@ -59,7 +59,7 @@
 
     <!-- 更新,如果属性不为null 则更新该属性,根据id更新 -->
     <update id="updDjLineAkp" parameterType="com.common.pojo.DjLineAkp">
-        UPDATE DJ_LINE_AKP
+        UPDATE FCCCMS.DJ_LINE_AKP
         SET
         /* 生产线名称 */
         <if test="lineName != null and lineName != '' " >
@@ -81,10 +81,10 @@
         /* 生产线名称 */
         LINE_NAME
         /*djLineAkp end*/
-        FROM DJ_LINE_AKP
+        FROM FCCCMS.DJ_LINE_AKP
         WHERE
         1 = 1
-        /*DJ_LINE_AKP begin*/
+        /*FCCCMS.DJ_LINE_AKP begin*/
         /* 生产线代码 */
         <if test="lineCode != null and lineCode != '' " >
             and LINE_CODE = #{lineCode}
@@ -93,7 +93,7 @@
         <if test="lineName != null and lineName != '' " >
             and LINE_NAME = #{lineName}
         </if>
-        /*DJ_LINE_AKP end*/
+        /*FCCCMS.DJ_LINE_AKP end*/
         ORDER BY LINE_CODE desc
     </select>
 
@@ -101,10 +101,10 @@
     <!-- 查询记录数 -->
     <select id="getDjLineAkpCount" parameterType="com.common.vo.DjLineAkpVO" resultType="java.lang.Integer">
         SELECT COUNT(1)
-        FROM DJ_LINE_AKP
+        FROM FCCCMS.DJ_LINE_AKP
         WHERE
         1 = 1
-        /*DJ_LINE_AKP begin*/
+        /*FCCCMS.DJ_LINE_AKP begin*/
         /* 生产线代码 */
         <if test="lineCode != null and lineCode != '' " >
             and LINE_CODE = #{lineCode}
@@ -113,22 +113,22 @@
         <if test="lineName != null and lineName != '' " >
             and LINE_NAME = #{lineName}
         </if>
-        /*DJ_LINE_AKP end*/
+        /*FCCCMS.DJ_LINE_AKP end*/
     </select>
 
     <!-- 根据vo查询 -->
     <select id="getDjLineAkp" parameterType="com.common.vo.DjLineAkpVO" resultMap="djLineAkpQueryMap">
         SELECT
-        /*DJ_LINE_AKP begin*/
+        /*FCCCMS.DJ_LINE_AKP begin*/
         /* 生产线代码 */
         LINE_CODE,
         /* 生产线名称 */
         LINE_NAME
-        /*DJ_LINE_AKP end*/
-        FROM DJ_LINE_AKP
+        /*FCCCMS.DJ_LINE_AKP end*/
+        FROM FCCCMS.DJ_LINE_AKP
         WHERE
         1 = 1
-        /*DJ_LINE_AKP begin*/
+        /*FCCCMS.DJ_LINE_AKP begin*/
         /* 生产线代码 */
         <if test="lineCode != null and lineCode != '' " >
             and LINE_CODE = #{lineCode}
@@ -137,6 +137,6 @@
         <if test="lineName != null and lineName != '' " >
             and LINE_NAME = #{lineName}
         </if>
-        /*DJ_LINE_AKP end*/
+        /*FCCCMS.DJ_LINE_AKP end*/
     </select>
 </mapper>

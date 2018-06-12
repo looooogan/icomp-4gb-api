@@ -25,10 +25,20 @@ public class SearchOutLiberaryVO {
     private String unitqty;
     //刀具类型
     private String cuttingToolType;
+    //刀具类型
+    private String cuttingToolConsumeType;
     //修模方式
     private String grinding;
 
     private DjOutapplyAkp djOutapplyAkp;
+
+    public String getCuttingToolConsumeType() {
+        return cuttingToolConsumeType;
+    }
+
+    public void setCuttingToolConsumeType(String cuttingToolConsumeType) {
+        this.cuttingToolConsumeType = cuttingToolConsumeType;
+    }
 
     public DjOutapplyAkp getDjOutapplyAkp() {
         return djOutapplyAkp;

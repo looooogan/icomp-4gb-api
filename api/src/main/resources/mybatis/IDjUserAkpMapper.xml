@@ -17,7 +17,7 @@
     </resultMap>
     <!-- 添加 -->
     <insert id="addDjUserAkp" parameterType="com.common.pojo.DjUserAkp">
-        INSERT INTO DJ_USER_AKP (
+        INSERT INTO FCCCMS.DJ_USER_AKP (
             /* 用户ID */
             USER_ID,
             /* 用户名 */
@@ -46,7 +46,7 @@
     <!-- 删除 -->
     <delete id="delDjUserAkp" parameterType="com.common.pojo.DjUserAkp">
         DELETE
-        FROM DJ_USER_AKP
+        FROM FCCCMS.DJ_USER_AKP
         WHERE
             1 = 1
             and USER_ID = #{userId}
@@ -54,7 +54,7 @@
 
     <!-- 逻辑删除 -->
     <delete id="delDjUserAkpForLogic" parameterType="com.common.pojo.DjUserAkp">
-        DELETE FROM  DJ_USER_AKP
+        DELETE FROM  FCCCMS.DJ_USER_AKP
         WHERE
             1 = 1
             and USER_ID = #{userId}
@@ -62,7 +62,7 @@
 
     <!-- 根据VO删除 -->
     <delete id="delDjUserAkpByVo" parameterType="com.common.vo.DjUserAkpVO">
-        DELETE FROM DJ_USER_AKP
+        DELETE FROM FCCCMS.DJ_USER_AKP
         WHERE
         1=1
         /* 用户ID */
@@ -89,7 +89,7 @@
 
     <!-- 更新,如果属性不为null 则更新该属性,根据id更新 -->
     <update id="updDjUserAkp" parameterType="com.common.pojo.DjUserAkp">
-        UPDATE DJ_USER_AKP
+        UPDATE FCCCMS.DJ_USER_AKP
         SET
         /* 用户名 */
         <if test="userName != null and userName != '' " >
@@ -129,10 +129,10 @@
         /* 性别 */
         TITLE
         /*djUserAkp end*/
-        FROM DJ_USER_AKP
+        FROM FCCCMS.DJ_USER_AKP
         WHERE
         1 = 1
-        /*DJ_USER_AKP begin*/
+        /*FCCCMS.DJ_USER_AKP begin*/
         /* 用户ID */
         <if test="userId != null and userId != '' " >
             and USER_ID = #{userId}
@@ -153,7 +153,7 @@
         <if test="title != null and title != '' " >
             and TITLE = #{title}
         </if>
-        /*DJ_USER_AKP end*/
+        /*FCCCMS.DJ_USER_AKP end*/
         ORDER BY USER_ID desc
     </select>
 
@@ -161,10 +161,10 @@
     <!-- 查询记录数 -->
     <select id="getDjUserAkpCount" parameterType="com.common.vo.DjUserAkpVO" resultType="java.lang.Integer">
         SELECT COUNT(1)
-        FROM DJ_USER_AKP
+        FROM FCCCMS.DJ_USER_AKP
         WHERE
         1 = 1
-        /*DJ_USER_AKP begin*/
+        /*FCCCMS.DJ_USER_AKP begin*/
         /* 用户ID */
         <if test="userId != null and userId != '' " >
             and USER_ID = #{userId}
@@ -185,13 +185,13 @@
         <if test="title != null and title != '' " >
             and TITLE = #{title}
         </if>
-        /*DJ_USER_AKP end*/
+        /*FCCCMS.DJ_USER_AKP end*/
     </select>
 
     <!-- 根据vo查询 -->
     <select id="getDjUserAkp" parameterType="com.common.vo.DjUserAkpVO" resultMap="djUserAkpQueryMap">
         SELECT
-        /*DJ_USER_AKP begin*/
+        /*FCCCMS.DJ_USER_AKP begin*/
         /* 用户ID */
         USER_ID,
         /* 用户名 */
@@ -202,11 +202,11 @@
         NAME,
         /* 性别 */
         TITLE
-        /*DJ_USER_AKP end*/
-        FROM DJ_USER_AKP
+        /*FCCCMS.DJ_USER_AKP end*/
+        FROM FCCCMS.DJ_USER_AKP
         WHERE
         1 = 1
-        /*DJ_USER_AKP begin*/
+        /*FCCCMS.DJ_USER_AKP begin*/
         /* 用户ID */
         <if test="userId != null and userId != '' " >
             and USER_ID = #{userId}
@@ -227,6 +227,6 @@
         <if test="title != null and title != '' " >
             and TITLE = #{title}
         </if>
-        /*DJ_USER_AKP end*/
+        /*FCCCMS.DJ_USER_AKP end*/
     </select>
 </mapper>

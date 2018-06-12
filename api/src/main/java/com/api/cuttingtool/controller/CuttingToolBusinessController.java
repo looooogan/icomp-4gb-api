@@ -11,6 +11,7 @@ import com.common.vo.QimingRecordsVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.service.common.IDjOutapplyAkpService;
 import com.service.common.IQimingRecordsService;
+import com.service.cuttingtool.CuttingToolComent;
 import com.service.cuttingtool.ICuttingToolBusinessService;
 import com.service.orders.QiMingComent;
 import com.service.orders.vo.WBCuttingToolBindVO;
@@ -41,6 +42,8 @@ public class CuttingToolBusinessController extends BaseController{
 
     @Autowired
     private QiMingComent qiMingComent;
+    @Autowired
+    private CuttingToolComent cuttingToolComent;
 
     @RequestMapping("getUnbind")
     @ResponseBody
@@ -48,25 +51,32 @@ public class CuttingToolBusinessController extends BaseController{
         return cuttingToolBusinessService.getBindByCode(cuttingToolBindVO);
     }
 
-    @RequestMapping("bind")
+    @RequestMapping("bindold")
     @ResponseBody
-    public void bind(@RequestBody CuttingToolBind cuttingToolBind, @RequestHeader("loginUserCode") String authCustomerCode) throws Exception{
+    public void bindold(@RequestBody CuttingToolBind cuttingToolBind, @RequestHeader("loginUserCode") String authCustomerCode) throws Exception{
         WBCuttingToolBindVO wbCuttingToolBindVO = new WBCuttingToolBindVO();
         AuthCustomer authCustomer = new AuthCustomer();
         authCustomer.setCode(authCustomerCode);
         wbCuttingToolBindVO.setCuttingToolBind(cuttingToolBind);
         wbCuttingToolBindVO.setAuthCustomer(authCustomer);
         qiMingComent.bindCuttingTool(wbCuttingToolBindVO);
-//        cuttingToolBusinessService.addBind(cuttingToolBind);
     }
 
+    @RequestMapping("bind")
+    @ResponseBody
+    public void bind(@RequestBody List<CuttingToolBind> cuttingToolBinds, @RequestHeader("loginUserCode") String authCustomerCode) throws Exception{
+        WBCuttingToolBindVO wbCuttingToolBindVO = new WBCuttingToolBindVO();
+        AuthCustomer authCustomer = new AuthCustomer();
+        authCustomer.setCode(authCustomerCode);
+        wbCuttingToolBindVO.setCuttingToolBinds(cuttingToolBinds);
+        wbCuttingToolBindVO.setAuthCustomer(authCustomer);
+        cuttingToolComent.bindCuttingTool(wbCuttingToolBindVO);
+    }
 
     @RequestMapping("queryOutOrder")
     @ResponseBody
     public List<DjOutapplyAkp> queryOutOrder() throws Exception{
-        DjOutapplyAkpVO djOutapplyAkpVO = new DjOutapplyAkpVO();
-        djOutapplyAkpVO.setAuditid("2");
-        return djOutapplyAkpService.getDjOutapplyAkpByPage(djOutapplyAkpVO);
+        return cuttingToolComent.getOutedOrders();
     }
 
     @RequestMapping("queryBladeCodes")

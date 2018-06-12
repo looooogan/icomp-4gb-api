@@ -1,8 +1,7 @@
 package com.common.pojo;
 
 import java.io.Serializable;
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.util.Date;
 
 /**
 * Created by jiangchenkeji
@@ -79,7 +78,7 @@ public class DjOutapplyAkp implements Serializable{
     * @fieldType  Date
     * @Description  读取时间
      */
-    private Timestamp outdate;
+    private Date outdate;
     /**
      * @fieldName message
     * @fieldType  String
@@ -88,9 +87,6 @@ public class DjOutapplyAkp implements Serializable{
     private String message;
     /**
      * @fieldName dumplogo
-dumplogo
-vdumplogo
-dumplogo
     * @fieldType  String
     * @Description  转储标识'N'
      */
@@ -130,7 +126,7 @@ dumplogo
     * @fieldType  Date
     * @Description  创建时间
      */
-    private Timestamp createDate;
+    private Date createDate;
     /**
      * @fieldName status
     * @fieldType  String
@@ -184,7 +180,7 @@ dumplogo
     * @fieldType  Date
     * @Description  
      */
-    private Timestamp lastModifyDate;
+    private Date lastModifyDate;
 
 
 
@@ -261,7 +257,13 @@ dumplogo
     public void setMtldocitem(Integer mtldocitem) {
         this.mtldocitem = mtldocitem;
     }
+    public Date getOutdate() {
+        return outdate;
+    }
 
+    public void setOutdate(Date outdate) {
+        this.outdate = outdate;
+    }
     public String getMessage() {
         return message;
     }
@@ -269,7 +271,6 @@ dumplogo
     public void setMessage(String message) {
         this.message = message;
     }
-
     public String getDumplogo() {
         return dumplogo;
     }
@@ -277,7 +278,6 @@ dumplogo
     public void setDumplogo(String dumplogo) {
         this.dumplogo = dumplogo;
     }
-
     public String getExternalpurstorage() {
         return externalpurstorage;
     }
@@ -312,6 +312,13 @@ dumplogo
 
     public void setWhCode(String whCode) {
         this.whCode = whCode;
+    }
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
     public String getStatus() {
         return status;
@@ -369,28 +376,14 @@ dumplogo
     public void setJhj(String jhj) {
         this.jhj = jhj;
     }
-
-    public Timestamp getOutdate() {
-        return outdate;
-    }
-
-    public void setOutdate(Timestamp outdate) {
-        this.outdate = outdate;
-    }
-
-    public Timestamp getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Timestamp createDate) {
-        this.createDate = createDate;
-    }
-
-    public Timestamp getLastModifyDate() {
+    public Date getLastModifyDate() {
         return lastModifyDate;
     }
 
-    public void setLastModifyDate(Timestamp lastModifyDate) {
+    public void setLastModifyDate(Date lastModifyDate) {
         this.lastModifyDate = lastModifyDate;
     }
+
+
+
 }

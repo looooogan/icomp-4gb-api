@@ -86,4 +86,11 @@ public interface ICuttingToolBindMapper {
     */
     public CuttingToolBind getCuttingToolBind(CuttingToolBindVO cuttingToolBindVO) throws Exception;
 
+    /**
+     * 解绑
+     * @param cuttingToolBindVO
+     * @throws Exception
+     */
+    public void unBindCuttingToolData(CuttingToolBindVO cuttingToolBindVO) throws Exception;
+
 }

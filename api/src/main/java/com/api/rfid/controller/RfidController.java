@@ -30,7 +30,11 @@ public class RfidController extends BaseController{
     public FastQueryVO querySyn(@RequestBody FastQueryVO fastQueryVO) throws Exception{
         return fastQueryService.fastQuery(fastQueryVO);
     }
-
+    @RequestMapping("queryForBind")
+    @ResponseBody
+    public FastQueryVO queryForBind(@RequestBody FastQueryVO fastQueryVO) throws Exception{
+        return fastQueryService.fastQuery(fastQueryVO);
+    }
 
 
 }

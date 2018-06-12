@@ -2,18 +2,22 @@ package com.api.common.controller;
 
 
 import com.api.base.controller.BaseController;
+import com.common.pojo.ImpowerRecorder;
 import com.common.pojo.ProductLine;
 import com.common.pojo.SynthesisCuttingToolBindleRecords;
 import com.common.vo.ProductLineVO;
 import com.common.vo.SynthesisCuttingToolBindleRecordsVO;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.service.common.*;
+import com.service.impower.IImpowerRecorderService;
+import com.service.rfid.IFlowCheckService;
+import com.service.rfid.vo.FlowCheckVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,19 +35,10 @@ public class SynthesisCuttingToolBindleRecordsController extends BaseController{
 
     @Autowired
     private ISynthesisCuttingToolBindleRecordsService synthesisCuttingToolBindleRecordsService;
-
     @Autowired
-    private IProductLineAssemblylineService productLineAssemblylineService;
+    private IImpowerRecorderService impowerRecorderService;
     @Autowired
-    private IProductLineAxleService productLineAxleService;
-    @Autowired
-    private IProductLineEquipmentService productLineEquipmentService;
-    @Autowired
-    private IProductLinePartsService productLinePartsService;
-    @Autowired
-    private IProductLineProcessService productLineProcessService;
-    @Autowired
-    private ISynthesisCuttingToolService synthesisCuttingToolService;
+    private IFlowCheckService flowCheckService;
 
     /**
     * @Title: add
@@ -99,7 +94,15 @@ public class SynthesisCuttingToolBindleRecordsController extends BaseController{
 
     @RequestMapping(value = "searchLast",method = RequestMethod.POST)
     @ResponseBody
-    public SynthesisCuttingToolBindleRecords searchLast(@RequestBody SynthesisCuttingToolBindleRecordsVO synthesisCuttingToolBindleRecordsVO) throws  Exception{
+    public SynthesisCuttingToolBindleRecords searchLast(HttpServletResponse response,HttpServletRequest request, @RequestBody SynthesisCuttingToolBindleRecordsVO synthesisCuttingToolBindleRecordsVO) throws  Exception{
+        if (null !=request.getHeader("impower")){
+            Integer impowerkey = Integer.parseInt(request.getHeader("impower"));
+            ObjectMapper mapper = new ObjectMapper();
+            FlowCheckVO flowCheckVO = new FlowCheckVO();
+            flowCheckVO.setOperationCode(impowerkey);
+            flowCheckVO.setRfidLaserCode(synthesisCuttingToolBindleRecordsVO.getBindRfid());
+            response.addHeader("impower",mapper.writeValueAsString(flowCheckService.checkFlow(flowCheckVO)));
+        }
         return this.synthesisCuttingToolBindleRecordsService.getLastRecords(synthesisCuttingToolBindleRecordsVO);
     }
 

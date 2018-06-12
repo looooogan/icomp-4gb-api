@@ -125,6 +125,13 @@ public class CuttingToolBindVO implements Serializable{
     private String uninCode;
 
     /**
+     * @fieldName inUser
+    * @fieldType  String
+    * @Description  是否使用 1是 0 否
+     */
+    private String inUser;
+
+    /**
      * @fieldName cuttingToolCode
     * @fieldType  
     * @Description  材料刀编号
@@ -296,6 +303,13 @@ public class CuttingToolBindVO implements Serializable{
 
     public void setUninCode(String uninCode) {
         this.uninCode = uninCode;
+    }
+    public String getInUser() {
+        return inUser;
+    }
+
+    public void setInUser(String inUser) {
+        this.inUser = inUser;
     }
 
     public CuttingToolVO getCuttingToolVO() {

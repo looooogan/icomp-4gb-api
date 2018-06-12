@@ -23,10 +23,13 @@ public interface IDjWriteBackService {
      */
     public void writeBackCuttingToolBind(WBCuttingToolBindVO wbCuttingToolBindVO) throws Exception;
 
-//    /**
-//     * 刀具卸下
-//     * @param wbUnInstallVO
-//     * @throws Exception
-//     */
-//    public void writeBackUninstall(WBUnInstallVO wbUnInstallVO) throws Exception;
+
+    /**
+     * 出库0609
+     * @param outApplyVO
+     * @throws Exception
+     */
+    public void writeBackOutLibrary0609(OutApplyVO outApplyVO) throws Exception;
+
+
 }

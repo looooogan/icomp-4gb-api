@@ -17,7 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by logan on 2018/4/30.
@@ -64,7 +66,19 @@ public class ProductLineBusinessServiceImpl implements IProductLineBusinessServi
     public List<ProductLineEquipment> getEquipmentByAssemblyline(ProductLineVO productLineVO) throws Exception {
         List<ProductLine> productLines = productLineMapper.getProductLineByPage(productLineVO);
         List<ProductLineEquipment> productLineEquipments = new ArrayList<>();
+        Map<Integer,ProductLineEquipment> map = new HashMap<>();
+
         for(ProductLine productLine : productLines){
+            if (null == productLine.getProductLineEquipment()){
+                continue;
+            }
+            if (null != productLine.getProductLineEquipment().getRfidContainerCode()){
+                continue;
+            }
+            if (map.containsKey(productLine.getProductLineEquipment().getId())){
+                continue;
+            }
+            map.put(productLine.getProductLineEquipment().getId(),productLine.getProductLineEquipment());
             productLineEquipments.add(productLine.getProductLineEquipment());
         }
         return productLineEquipments;

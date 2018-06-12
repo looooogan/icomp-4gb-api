@@ -18,12 +18,12 @@ public interface IFastQueryService {
 
 
     /**
-     * @Title: querySyn
-     * @Description: 获取菜单权限列表
+     * @Title: queryForBind
+     * @Description:
      * @param fastQueryVO 查询条件封装
      * @throws Exception
      * @return: 查询结果
      */
-    public FastQueryVO querySyn(FastQueryVO fastQueryVO) throws Exception;
+    public FastQueryVO queryForBind(FastQueryVO fastQueryVO) throws Exception;
 
 }

@@ -27,7 +27,7 @@
     </resultMap>
     <!-- 添加 -->
     <insert id="addDjMtlAkp" parameterType="com.common.pojo.DjMtlAkp">
-        INSERT INTO DJ_MTL_AKP (
+        INSERT INTO FCCCMS.DJ_MTL_AKP (
         /* 供应商代码 */
         OWNER_CODE,
         /* 物料代码 */
@@ -76,21 +76,21 @@
     <!-- 删除 -->
     <delete id="delDjMtlAkp" parameterType="com.common.pojo.DjMtlAkp">
         DELETE
-        FROM DJ_MTL_AKP
+        FROM FCCCMS.DJ_MTL_AKP
         WHERE
         1 = 1 and OWNER_CODE = #{ownerCode}
     </delete>
 
     <!-- 逻辑删除 -->
     <delete id="delDjMtlAkpForLogic" parameterType="com.common.pojo.DjMtlAkp">
-        DELETE FROM  DJ_MTL_AKP
+        DELETE FROM  FCCCMS.DJ_MTL_AKP
         WHERE
         1 = 1 and OWNER_CODE = #{ownerCode}
     </delete>
 
     <!-- 根据VO删除 -->
     <delete id="delDjMtlAkpByVo" parameterType="com.common.vo.DjMtlAkpVO">
-        DELETE FROM DJ_MTL_AKP
+        DELETE FROM FCCCMS.DJ_MTL_AKP
         WHERE
         1=1 and OWNER_CODE = #{ownerCode}
         /* 供应商代码 */
@@ -137,7 +137,7 @@
 
     <!-- 更新,如果属性不为null 则更新该属性,根据id更新 -->
     <update id="updDjMtlAkp" parameterType="com.common.pojo.DjMtlAkp">
-        UPDATE DJ_MTL_AKP
+        UPDATE FCCCMS.DJ_MTL_AKP
         SET
         /* 供应商代码 */
         <if test="ownerCode != null and ownerCode != '' " >
@@ -206,10 +206,10 @@
         /* 刀具订货号 */
         ORDER_CODE
         /*djMtlAkp end*/
-        FROM DJ_MTL_AKP
+        FROM FCCCMS.DJ_MTL_AKP
         WHERE
         1 = 1
-        /*DJ_MTL_AKP begin*/
+        /*FCCCMS.DJ_MTL_AKP begin*/
         /* 供应商代码 */
         <if test="ownerCode != null and ownerCode != '' " >
             and OWNER_CODE = #{ownerCode}
@@ -250,7 +250,7 @@
         <if test="orderCode != null and orderCode != '' " >
             and ORDER_CODE = #{orderCode}
         </if>
-        /*DJ_MTL_AKP end*/
+        /*FCCCMS.DJ_MTL_AKP end*/
         ORDER BY  desc
     </select>
 
@@ -258,10 +258,10 @@
     <!-- 查询记录数 -->
     <select id="getDjMtlAkpCount" parameterType="com.common.vo.DjMtlAkpVO" resultType="java.lang.Integer">
         SELECT COUNT(1)
-        FROM DJ_MTL_AKP
+        FROM FCCCMS.DJ_MTL_AKP
         WHERE
         1 = 1
-        /*DJ_MTL_AKP begin*/
+        /*FCCCMS.DJ_MTL_AKP begin*/
         /* 供应商代码 */
         <if test="ownerCode != null and ownerCode != '' " >
             and OWNER_CODE = #{ownerCode}
@@ -302,13 +302,13 @@
         <if test="orderCode != null and orderCode != '' " >
             and ORDER_CODE = #{orderCode}
         </if>
-        /*DJ_MTL_AKP end*/
+        /*FCCCMS.DJ_MTL_AKP end*/
     </select>
 
     <!-- 根据vo查询 -->
     <select id="getDjMtlAkp" parameterType="com.common.vo.DjMtlAkpVO" resultMap="djMtlAkpQueryMap">
         SELECT
-        /*DJ_MTL_AKP begin*/
+        /*FCCCMS.DJ_MTL_AKP begin*/
         /* 供应商代码 */
         OWNER_CODE,
         /* 物料代码 */
@@ -329,11 +329,11 @@
         BRAND,
         /* 刀具订货号 */
         ORDER_CODE
-        /*DJ_MTL_AKP end*/
-        FROM DJ_MTL_AKP
+        /*FCCCMS.DJ_MTL_AKP end*/
+        FROM FCCCMS.DJ_MTL_AKP
         WHERE
         1 = 1
-        /*DJ_MTL_AKP begin*/
+        /*FCCCMS.DJ_MTL_AKP begin*/
         /* 供应商代码 */
         <if test="ownerCode != null and ownerCode != '' " >
             and OWNER_CODE = #{ownerCode}
@@ -374,6 +374,6 @@
         <if test="orderCode != null and orderCode != '' " >
             and ORDER_CODE = #{orderCode}
         </if>
-        /*DJ_MTL_AKP end*/
+        /*FCCCMS.DJ_MTL_AKP end*/
     </select>
 </mapper>

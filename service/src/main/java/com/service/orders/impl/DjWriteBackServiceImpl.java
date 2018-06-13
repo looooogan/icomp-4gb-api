@@ -182,7 +182,7 @@ public class DjWriteBackServiceImpl implements IDjWriteBackService {
             //todo 为提供用户与启明用户的匹配规则
 //            djItrnAkp.setCreateBy(outApplyVO.getOpratorName());
             djItrnAkp.setCreateDate(outApplyVO.getOpratorTime());
-            djItrnAkp.setKanbanCode(outApplyVO.getDjCircleKanbanAkp().getCKanbanCode());
+            djItrnAkp.setKanbanCode(outApplyVO.getDjOutapplyAkp().get);
             djItrnAkp.setMaxDjh(outApplyVO.getMaxDJH()+"");
             djItrnAkp.setDaojCase(outApplyVO.getDjMtlAkp().getSusr11());
             djItrnAkp.setCKanbanCode(outApplyVO.getDjOutapplyAkp().getLltm());

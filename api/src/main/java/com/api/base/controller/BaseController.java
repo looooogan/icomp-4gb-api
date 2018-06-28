@@ -1,7 +1,9 @@
 package com.api.base.controller;
 
 import com.common.utils.exception.SelfDefinedException;
+import com.service.common.IAuthCustomerService;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,6 +22,8 @@ import java.nio.charset.Charset;
  * @date: 2015-11-18 18:50:15
  */
 public class BaseController {
+
+
 
     /**
      *

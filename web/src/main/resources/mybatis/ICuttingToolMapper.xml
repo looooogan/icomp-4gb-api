@@ -518,9 +518,13 @@
             <if test="businessCode != null and businessCode != '' " >
                 and cutting_tool.business_code = #{businessCode}
             </if>
+            <!-- 业务编码 -->
+            <if test="likeBusinessCode != null and likeBusinessCode != '' " >
+                and cutting_tool.business_code LIKE CONCAT('%',#{likeBusinessCode},'%')
+            </if>
             <!-- 名称 -->
             <if test="name != null and name != '' " >
-                and cutting_tool.name = #{name}
+                and cutting_tool.name LIKE CONCAT('%',#{name},'%')
             </if>
             <!-- 刀具分类(0刀具1辅具2配套9其他） -->
             <if test="type != null and type != '' " >
@@ -536,7 +540,7 @@
             </if>
             <!-- 规格型号 -->
             <if test="specifications != null and specifications != '' " >
-                and cutting_tool.specifications = #{specifications}
+                and cutting_tool.specifications LIKE CONCAT('%',#{specifications},'%')
             </if>
             <!-- 刃口数 -->
             <if test="cutNumber != null and cutNumber != '' " >
@@ -645,9 +649,13 @@
         <if test="businessCode != null and businessCode != '' " >
             and cutting_tool.business_code = #{businessCode}
         </if>
+        <!-- 业务编码 -->
+        <if test="likeBusinessCode != null and likeBusinessCode != '' " >
+            and cutting_tool.business_code LIKE CONCAT('%',#{likeBusinessCode},'%')
+        </if>
         <!-- 名称 -->
         <if test="name != null and name != '' " >
-            and cutting_tool.name = #{name}
+            and cutting_tool.name LIKE CONCAT('%',#{name},'%')
         </if>
         <!-- 刀具分类(0刀具1辅具2配套9其他） -->
         <if test="type != null and type != '' " >
@@ -663,7 +671,7 @@
         </if>
         <!-- 规格型号 -->
         <if test="specifications != null and specifications != '' " >
-            and cutting_tool.specifications = #{specifications}
+            and cutting_tool.specifications LIKE CONCAT('%',#{specifications},'%')
         </if>
         <!-- 刃口数 -->
         <if test="cutNumber != null and cutNumber != '' " >
@@ -825,9 +833,13 @@
         <if test="businessCode != null and businessCode != '' " >
             and cutting_tool.business_code = #{businessCode}
         </if>
+        <!-- 业务编码 -->
+        <if test="likeBusinessCode != null and likeBusinessCode != '' " >
+            and cutting_tool.business_code LIKE CONCAT('%',#{likeBusinessCode},'%')
+        </if>
         <!-- 名称 -->
         <if test="name != null and name != '' " >
-            and cutting_tool.name = #{name}
+            and cutting_tool.name LIKE CONCAT('%',#{name},'%')
         </if>
         <!-- 刀具分类(0刀具1辅具2配套9其他） -->
         <if test="type != null and type != '' " >
@@ -843,7 +855,7 @@
         </if>
         <!-- 规格型号 -->
         <if test="specifications != null and specifications != '' " >
-            and cutting_tool.specifications = #{specifications}
+            and cutting_tool.specifications LIKE CONCAT('%',#{specifications},'%')
         </if>
         <!-- 刃口数 -->
         <if test="cutNumber != null and cutNumber != '' " >

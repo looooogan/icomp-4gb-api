@@ -30,6 +30,8 @@
         <result property="cuttingToolCode" column="cutting_tools_scrap.cutting_tool_code"/>
         <!-- 报废状态 1待刃磨 2待出厂 3备用刀 -->
         <result property="status" column="cutting_tools_scrap.status"/>
+        <!-- 消耗类别 -->
+        <result property="consumeType" column="cutting_tools_scrap.consume_type"/>
         <!--  -->
         <association property="cuttingTool"  column="cutting_tool.code" resultMap="cuttingToolsScrapCuttingToolMap"/>
     </resultMap>
@@ -93,7 +95,7 @@
             <result property="wuliaoCode" column="cutting_tool.wuliao_code"/>
         </resultMap>
     <!--添加-->
-    <insert id="addCuttingToolsScrap" parameterType="com.common.pojo.CuttingToolsScrap">
+    <insert id="addCuttingToolsScrap" useGeneratedKeys="true" keyProperty="id" parameterType="com.common.pojo.CuttingToolsScrap">
         INSERT INTO cutting_tools_scrap (
             <!-- 报废id -->
             id,
@@ -120,7 +122,9 @@
             <!--  -->
             cutting_tool_code,
             <!-- 报废状态 1待刃磨 2待出厂 3备用刀 -->
-            status
+            status,
+            <!-- 消耗类别 -->
+            consume_type
         )
         VALUES (
             <!-- 报废id -->
@@ -148,8 +152,13 @@
             <!--  -->
             #{cuttingToolCode},
             <!-- 报废状态 1待刃磨 2待出厂 3备用刀 -->
-            #{status}
+            #{status},
+            <!-- 消耗类别 -->
+            #{consumeType}
         )
+        <selectKey  resultType="java.lang.Integer"  order="AFTER"  keyProperty="id">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
     </insert>
 
     <!--删除-->
@@ -227,6 +236,10 @@
             <if test="status != null and status != '' " >
                 and status =  #{status}
             </if>
+            <!-- 消耗类别 -->
+            <if test="consumeType != null and consumeType != '' " >
+                and consume_type =  #{consumeType}
+            </if>
     </delete>
 
     <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
@@ -281,6 +294,10 @@
             <if test="status != null and status != '' " >
                 status =  #{status},
             </if>
+            <!-- 消耗类别 -->
+            <if test="consumeType != null and consumeType != '' " >
+                consume_type =  #{consumeType},
+            </if>
             <!-- 报废id -->
             id = #{id}
         WHERE
@@ -318,6 +335,8 @@
             cutting_tools_scrap.cutting_tool_code as 'cutting_tools_scrap.cutting_tool_code',
             <!-- 报废状态 1待刃磨 2待出厂 3备用刀 -->
             cutting_tools_scrap.status as 'cutting_tools_scrap.status',
+            <!-- 消耗类别 -->
+            cutting_tools_scrap.consume_type as 'cutting_tools_scrap.consume_type',
         /*cuttingToolsScrap end*/
         /*cutting_tool begin*/
             <!-- 材料刀id -->
@@ -436,6 +455,10 @@
             <!-- 报废状态 1待刃磨 2待出厂 3备用刀 -->
             <if test="status != null and status != '' " >
                 and cutting_tools_scrap.status = #{status}
+            </if>
+            <!-- 消耗类别 -->
+            <if test="consumeType != null and consumeType != '' " >
+                and cutting_tools_scrap.consume_type = #{consumeType}
             </if>
         /*cutting_tools_scrap end*/
         /*cutting_tool begin*/
@@ -624,6 +647,10 @@
         <if test="status != null and status != '' " >
             and cutting_tools_scrap.status = #{status}
         </if>
+        <!-- 消耗类别 -->
+        <if test="consumeType != null and consumeType != '' " >
+            and cutting_tools_scrap.consume_type = #{consumeType}
+        </if>
         /*cutting_tools_scrap end*/
         /*cutting_tool begin*/
         <if test="cuttingToolVO != null ">
@@ -773,6 +800,8 @@
         cutting_tools_scrap.cutting_tool_code as 'cutting_tools_scrap.cutting_tool_code',
         <!-- 报废状态 1待刃磨 2待出厂 3备用刀 -->
         cutting_tools_scrap.status as 'cutting_tools_scrap.status',
+        <!-- 消耗类别 -->
+        cutting_tools_scrap.consume_type as 'cutting_tools_scrap.consume_type',
         /*cutting_tools_scrap end*/
         /*cutting_tool begin*/
         <!-- 材料刀id -->
@@ -891,6 +920,10 @@
         <!-- 报废状态 1待刃磨 2待出厂 3备用刀 -->
         <if test="status != null and status != '' " >
             and cutting_tools_scrap.status = #{status}
+        </if>
+        <!-- 消耗类别 -->
+        <if test="consumeType != null and consumeType != '' " >
+            and cutting_tools_scrap.consume_type = #{consumeType}
         </if>
         /*cutting_tools_scrap end*/
         /*cutting_tools begin*/

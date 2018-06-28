@@ -39,31 +39,25 @@
                     },
                     {
                         title:'刃磨时间',
-                        name:'prepareLibraryCount',
+                        name:'createTime',
                         format : function(r){
-                            return '<span class="ui-grid-tdtx">'+numberformat(r.prepareLibraryCount)+'</span>';
+                            return '<span class="ui-grid-tdtx">'+fmtDate(r.createTime)+'</span>';
                         }
                     },
                     {
                         title:'刃磨数量',
                         name:'numberGrinding',
                         format : function(r){
-                            return '<span class="ui-grid-tdtx">'+numberformat(r.productLineCount)+'</span>';
+                            return '<span class="ui-grid-tdtx">'+numberformat(r.numberGrinding)+'</span>';
                         }
                     },
                     {
                         title:'刃磨设备',
-                        name:'productLineEquipment',
-                        format : function(r){
-                            return '<span class="ui-grid-tdtx">'+numberformat(r.toUninstallCount)+'</span>';
-                        }
+                        name:'equipmentName'
                     },
                     {
                         title:'操作人',
-                        name:'opratorName',
-                        format : function(r){
-                            return '<span class="ui-grid-tdtx">'+numberformat(r.forGrindingInCount)+'</span>';
-                        }
+                        name:'opratorName'
                     }
                 ],
                 success:function(d){
@@ -82,13 +76,21 @@
             return num;
         }
 
+        function fmtDate(obj){
+            var date =  new Date(obj);
+            var y = 1900+date.getYear();
+            var m = "0"+(date.getMonth()+1);
+            var d = "0"+date.getDate();
+            return y+"-"+m.substring(m.length-2,m.length)+"-"+d.substring(d.length-2,d.length);
+        }
+
         /**
          * 查询处理
          */
         function search(){
             var param = {
                 cuttingToolVO : {
-                    businessCode : $('#query_businessCode').val()
+                    likeBusinessCode : $('#query_businessCode').val()
                 },
                 pageSize:15,
                 currentPage : $('#currentPage').val()==""?1:$('#currentPage').val()
@@ -116,9 +118,6 @@
         }
 
 
-
-
-
         function pageClick(page){
             $('#currentPage').val(page);
             search();
@@ -143,7 +142,7 @@
             <table width="100%" class="m-frmtb">
                 <tr>
                     <th width="150">
-                        材料号
+                        物料号
                     </th>
                     <td>
                         <input type="text" id="query_businessCode" class="u-ipt" maxlength="50">

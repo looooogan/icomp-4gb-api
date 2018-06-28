@@ -1,5 +1,7 @@
 package com.common.mapper;
 
+import com.common.pojo.AuthCustomer;
+import com.common.pojo.CuttingToolBind;
 import com.common.pojo.CuttingToolBindleRecords;
 import com.common.pojo.SynthesisCuttingToolBindleRecords;
 import com.common.vo.CuttingToolBindleRecordsVO;
@@ -90,5 +92,6 @@ public interface ICuttingToolBindleRecordsMapper {
 
 
     public SynthesisCuttingToolBindleRecords getLastRecords(CuttingToolBindleRecordsVO cuttingToolBindleRecordsVO) throws Exception;
+
 
 }

@@ -11,7 +11,7 @@ import com.common.vo.RfidContainerVO;
 public class RFIDBindVO {
 
     private RfidContainerVO rfidContainerVO;
-    private AuthCustomer authCustomer;
+    private AuthCustomer loginUser;
     private AuthCustomerVO authCustomerVO;
     private OperationEnum operationEnum;
 
@@ -23,12 +23,12 @@ public class RFIDBindVO {
         this.rfidContainerVO = rfidContainerVO;
     }
 
-    public AuthCustomer getAuthCustomer() {
-        return authCustomer;
+    public AuthCustomer getLoginUser() {
+        return loginUser;
     }
 
-    public void setAuthCustomer(AuthCustomer authCustomer) {
-        this.authCustomer = authCustomer;
+    public void setLoginUser(AuthCustomer loginUser) {
+        this.loginUser = loginUser;
     }
 
     public AuthCustomerVO getAuthCustomerVO() {

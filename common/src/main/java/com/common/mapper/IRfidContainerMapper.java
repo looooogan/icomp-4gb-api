@@ -86,4 +86,14 @@ public interface IRfidContainerMapper {
     */
     public RfidContainer getRfidContainer(RfidContainerVO rfidContainerVO) throws Exception;
 
+
+    /**
+     * @Title: clearData
+     * @Description: 清空标签
+     * @param rfidContainerVO 查询条件封装
+     * @throws Exception
+     * @return: 查询结果
+     */
+    public void clearData(RfidContainerVO rfidContainerVO) throws Exception;
+
 }

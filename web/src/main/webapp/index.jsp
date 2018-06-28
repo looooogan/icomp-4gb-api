@@ -78,6 +78,7 @@
 						<li><a href="jsp/initdata/cuttingtool.jsp" target="center">刀具参数</a></li>
 						<li><a href="jsp/initdata/initMaterialInventory.jsp" target="center">非单品刀初始化</a></li>
 						<li><a href="jsp/initdata/initSynthesisConfig.jsp" target="center">合成道具参数</a></li>
+						<li><a href="jsp/initdata/synthesis_blade_code.jsp" target="center">合成刀刀身码</a></li>
 					</ul>
 				</dd>
 				<dt><span>系统配置</span></dt>

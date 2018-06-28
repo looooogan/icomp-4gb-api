@@ -158,11 +158,9 @@ public class ImpowerRecorderServiceImpl implements IImpowerRecorderService{
             }
 
             RfidContainerVO rfidContainerVO = new RfidContainerVO();
-            rfidContainerVO.setLaserCode(impowerRecorder.getRfidLasercode());
+            rfidContainerVO.setCode(impowerRecorder.getRfidLasercode());
             RfidContainer rfidContainer = rfidContainerMapper.getRfidContainer(rfidContainerVO);
-            //todo 换成 rfidContainer.getPrevKey()
-
-            ImpowerReasonEnum impowerReasonEnum = ImpowerReasonEnum.getImpowerRecorderByOperation(Integer.parseInt(impowerRecorder.getOperatorKey()),rfidContainer.getOperatorCode());
+            ImpowerReasonEnum impowerReasonEnum = ImpowerReasonEnum.getImpowerRecorderByOperation(Integer.parseInt(impowerRecorder.getOperatorKey()),rfidContainer.getPrevKey());
             impowerRecorder.setReasonKey(impowerReasonEnum.getReasonKey());
             impowerRecorder.setReasonValue(impowerReasonEnum.getResonValue());
             impowerRecorder.setResume(impowerReasonEnum.getResonValue());

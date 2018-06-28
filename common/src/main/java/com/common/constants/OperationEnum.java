@@ -25,7 +25,10 @@ public enum  OperationEnum {
     Fast_Query(18,"快速查询","Fast_Query"),
     Setting_RFID(19,"射频设置","Setting_RFID"),
     Picking(20,"领料","Picking"),
-    Audit(21,"审核","Audit");
+    Audit(21,"审核","Audit"),
+    UnBindRFID(22,"解绑","UnBindRFID"),
+    RunningMakeCode(29,"流转刀具打码","RunningMakeCode"),
+    SynthesisMakeCode(30,"合成刀打码","SynthesisMakeCode");
 
     private Integer key;
     private String name;

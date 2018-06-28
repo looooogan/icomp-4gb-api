@@ -257,7 +257,7 @@
                         artDialog(XHR.responseText, "OK");
                     },
                     success: function(data,textStatus) {
-                        console.log(data);
+                        artDialog("操作成功", "OK");
                         search();
                     },
                     headers: {
@@ -476,6 +476,7 @@
                 LocationConfig.type = $(this).find("select[name='type["+index+"]']").val();
                 LocationConfig.cuttingTool.businessCode = $(this).find("input[name='cuttingToolCode["+index+"]']").val();
                 LocationConfig.replaceCuttingTool1.businessCode = $(this).find("input[name='replaceCuttingToolCode1["+index+"]']").val();
+                console.log($(this).html());
                 LocationConfig.replaceCuttingTool2.businessCode = $(this).find("input[name='replaceCuttingToolCode2["+index+"]']").val();
                 LocationConfig.count = $(this).find("input[name='count["+index+"]']").val();
                 LocationConfigList.push(LocationConfig);
@@ -496,6 +497,7 @@
         }
 
         function add(){
+            console.log(initParam());
             console.log($('#synthesisCode').val());
             $.ajax({
                 type: "POST",
@@ -506,11 +508,8 @@
                     artDialog(XHR.responseText, "OK");
                 },
                 success: function(data,textStatus,response) {
-                    if(response.status == '200'){
-                        search();
-                    }else{
-                        artDialog(data, "OK");
-                    }
+                    artDialog("操作成功", "OK");
+                    search();
                 },
                 headers: {
                     "content-type":"application/json"
@@ -528,11 +527,8 @@
                     artDialog(XHR.responseText, "OK");
                 },
                 success: function(data,textStatus,response) {
-                    if(response.status == '200'){
-                        search();
-                    }else{
-                        artDialog(data, "OK");
-                    }
+                    artDialog("操作成功", "OK");
+                    search();
                 },
                 headers: {
                     "content-type":"application/json"

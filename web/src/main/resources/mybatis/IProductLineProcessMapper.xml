@@ -172,7 +172,7 @@
             </if>
             <!-- 名称 -->
             <if test="name != null and name != '' " >
-                and product_line_process.name = #{name}
+                and product_line_process.name LIKE CONCAT(CONCAT('%',#{name}),'%')
             </if>
             <!--  -->
             <if test="isDel != null and isDel != '' " >
@@ -187,7 +187,7 @@
             </if>
             <!-- 流水线名称 -->
             <if test="productLineAssemblylineVO.name != null and productLineAssemblylineVO.name != '' " >
-                and product_line_assemblyline.name = #{productLineAssemblylineVO.name}
+                and product_line_assemblyline.name LIKE CONCAT(CONCAT('%',#{productLineAssemblylineVO.name}),'%')
             </if>
             <!-- 流水线编码 -->
             <if test="productLineAssemblylineVO.code != null and productLineAssemblylineVO.code != '' " >
@@ -228,7 +228,7 @@
         </if>
         <!-- 名称 -->
         <if test="name != null and name != '' " >
-            and product_line_process.name = #{name}
+            and product_line_process.name LIKE CONCAT(CONCAT('%',#{name}),'%')
         </if>
         <!--  -->
         <if test="isDel != null and isDel != '' " >
@@ -243,7 +243,7 @@
         </if>
         <!-- 流水线名称 -->
         <if test="productLineAssemblylineVO.name != null and productLineAssemblylineVO.name != '' " >
-            and product_line_assemblyline.name = #{productLineAssemblylineVO.name}
+            and product_line_assemblyline.name LIKE "%"#{productLineAssemblylineVO.name}"%"
         </if>
         <!-- 流水线编码 -->
         <if test="productLineAssemblylineVO.code != null and productLineAssemblylineVO.code != '' " >
@@ -301,7 +301,7 @@
         </if>
         <!-- 名称 -->
         <if test="name != null and name != '' " >
-            and product_line_process.name = #{name}
+            and product_line_process.name LIKE "%"#{name}"%"
         </if>
         <!--  -->
         <if test="isDel != null and isDel != '' " >

@@ -264,7 +264,7 @@
                 and kezhang_name =  #{kezhangName}
             </if>
             <!-- 出库时间 -->
-            <if test="createTime != null and createTime != '' " >
+            <if test="createTime != null" >
                 and create_time =  #{createTime}
             </if>
     </delete>
@@ -334,7 +334,7 @@
                 kezhang_name =  #{kezhangName},
             </if>
             <!-- 出库时间 -->
-            <if test="createTime != null and createTime != '' " >
+            <if test="createTime != null" >
                 create_time =  #{createTime},
             </if>
             <!-- 出库id -->
@@ -511,10 +511,10 @@
                 and out_prepare_library.kezhang_name = #{kezhangName}
             </if>
             <!-- 出库时间 -->
-            <if test="createTime != null and createTime != '' " >
+            <if test="createTime != null" >
                 and out_prepare_library.create_time &lt;= #{createTimeEnd}
             </if>
-            <if test="createTime != null and createTime != '' " >
+            <if test="createTime != null" >
                 and out_prepare_library.create_time &gt;= #{createTimeBegin}
             </if>
         /*out_prepare_library end*/
@@ -714,10 +714,10 @@
             and out_prepare_library.kezhang_name = #{kezhangName}
         </if>
         <!-- 出库时间 -->
-        <if test="createTime != null and createTime != '' " >
+        <if test="createTime != null" >
             and out_prepare_library.create_time &lt;= #{createTimeEnd}
         </if>
-        <if test="createTime != null and createTime != '' " >
+        <if test="createTime != null" >
             and out_prepare_library.create_time &gt;= #{createTimeBegin}
         </if>
         /*out_prepare_library end*/
@@ -1006,10 +1006,10 @@
             and out_prepare_library.kezhang_name = #{kezhangName}
         </if>
         <!-- 出库时间 -->
-        <if test="createTime != null and createTime != '' " >
+        <if test="createTime != null" >
             and out_prepare_library.create_time &lt;= #{createTimeEnd}
         </if>
-        <if test="createTime != null and createTime != '' " >
+        <if test="createTime != null" >
             and out_prepare_library.create_time &gt;= #{createTimeBegin}
         </if>
         /*out_prepare_library end*/

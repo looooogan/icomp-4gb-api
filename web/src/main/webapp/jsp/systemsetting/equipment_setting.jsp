@@ -46,10 +46,9 @@
                     name:'type',
                     format:function(r){
                         if(r.type == '1'){
-                            return '<span class="ui-grid-tdtx">刃磨设备</span>';
-                        }
-                        if(r.type == '2'){
                             return '<span class="ui-grid-tdtx">加工设备</span>';
+                        }else{
+                            return '<span class="ui-grid-tdtx">刃磨设备</span>';
                         }
                     }
                 }
@@ -57,12 +56,12 @@
                     title:'是否绑定',
                     name:'statues',
                     format:function(r){
-                        if(r.statues == '1'){
+                        if(r.rfidContainerCode !=undefined){
                             return '<span class="ui-grid-tdtx">是</span>';
-                        }
-                        if(r.statues == '2'){
+                        }else{
                             return '<span class="ui-grid-tdtx">否</span>';
                         }
+
                     }
                 }
                 ,{
@@ -164,6 +163,7 @@
                 id:$('#id').val(),
                 name:$('#name').val(),
                 code:$('#code').val(),
+                type:$('#type').val()
             }
             $.ajax({
                 type: "POST",
@@ -174,11 +174,8 @@
                     artDialog(XHR.responseText, "OK");
                 },
                 success: function(data,textStatus,response) {
-                    if(response.status == '200'){
-                        search();
-                    }else{
-                        artDialog(data, "OK");
-                    }
+                    artDialog("操作成功", "OK");
+                    search();
                 },
                 headers: {
                     "content-type":"application/json"
@@ -189,7 +186,8 @@
         function add(){
             var param = {
                 name:$('#name').val(),
-                code:$('#code').val()
+                code:$('#code').val(),
+                type:$('#type').val()
             }
             $.ajax({
                 type: "POST",
@@ -200,11 +198,8 @@
                     artDialog(XHR.responseText, "OK");
                 },
                 success: function(data,textStatus,response) {
-                    if(response.status == '200'){
-                        search();
-                    }else{
-                        artDialog(data, "OK");
-                    }
+                    artDialog("操作成功", "OK");
+                    search();
                 },
                 headers: {
                     "content-type":"application/json"
@@ -232,6 +227,7 @@
                 $('#id').val(data.id);                              //partsID
                 $('#name').val(data.name);                              //partsID
                 $('#code').val(data.code);                              //partsID
+                $('#type').val(data.type);                              //partsID
             }
             $.dialog({
                 id:'partsEdit_dialog',
@@ -260,7 +256,7 @@
 
 <div class="ui-layout-north g-ct-tt">
     <div class="g-ct-ttc">
-        <span>系统配置> 零部件配置</span>
+        <span>系统配置> 设备配置</span>
         <%@ include file="../../head_div.jsp" %>
     </div>
 </div>
@@ -324,8 +320,8 @@
                 </th>
                 <td>
                     <select name="type" id="type" class="u-sel hidder" maxlength="2">
-                        <option value="1">刃磨设备</option>
-                        <option value="2">加工设备</option>
+                        <option value="1">加工设备</option>
+                        <option value="2">刃磨设备</option>
                     </select>
                 </td>
             </tr>

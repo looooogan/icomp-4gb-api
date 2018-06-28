@@ -210,6 +210,12 @@ public class CuttingToolVO implements Serializable{
      */
     private String wuliaoCode;
 
+    /**
+      * @fieldName wuliaoCode
+     * @fieldType  String
+     * @Description  物料编码
+     */
+    private String likeBusinessCode;
 
     private List<CuttingToolBindVO> cuttingToolBindVOList;
     private List<CuttingToolsScrapVO> cuttingToolsScrapVOList;
@@ -219,6 +225,14 @@ public class CuttingToolVO implements Serializable{
     private List<OutsideFactoryVO> outsideFactoryVOList;
     private List<OutsidefactoryhistoryVO> outsidefactoryhistoryVOList;
     private List<SynthesisCuttingToolLocationVO> synthesisCuttingToolLocationVOList;
+
+    public String getLikeBusinessCode() {
+        return likeBusinessCode;
+    }
+
+    public void setLikeBusinessCode(String likeBusinessCode) {
+        this.likeBusinessCode = likeBusinessCode;
+    }
 
     /**
      * @fieldName currentPage

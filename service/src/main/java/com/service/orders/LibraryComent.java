@@ -5,6 +5,7 @@ import com.common.pojo.CuttingTool;
 import com.common.pojo.DjCircleKanbanAkp;
 import com.common.pojo.DjOutapplyAkp;
 import com.common.pojo.QimingRecords;
+import com.common.utils.FCBCodeHandler;
 import com.common.utils.exception.ExceptionConstans;
 import com.common.utils.exception.SelfDefinedException;
 import com.common.utils.loadConfig.IMessageSourceHanlder;
@@ -15,10 +16,10 @@ import com.common.vo.QimingRecordsVO;
 import com.service.common.*;
 import com.service.orders.vo.OutApplyVO;
 import com.service.orders.vo.SearchOutLiberaryVO;
+import com.service.writeback.IDjWriteBackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,14 +83,14 @@ public class LibraryComent {
             }
             if (flag){
                 SearchOutLiberaryVO searchOutLiberaryVO = new SearchOutLiberaryVO();
-                DjCircleKanbanAkpVO djCircleKanbanAkpVO = new DjCircleKanbanAkpVO();
-                djCircleKanbanAkpVO.setCKanbanCode(djOutapplyAkp.getLltm());
-                DjCircleKanbanAkp djCircleKanbanAkp = djCircleKanbanAkpService.getDjCircleKanbanAkp(djCircleKanbanAkpVO);
-                if (null == djCircleKanbanAkp){
-                    throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.QM_DJOUTAPPLYAKP_MAP_ERROR));
-                }
+//                DjCircleKanbanAkpVO djCircleKanbanAkpVO = new DjCircleKanbanAkpVO();
+//                djCircleKanbanAkpVO.setCKanbanCode(djOutapplyAkp.getLltm());
+//                DjCircleKanbanAkp djCircleKanbanAkp = djCircleKanbanAkpService.getDjCircleKanbanAkp(djCircleKanbanAkpVO);
+//                if (null == djCircleKanbanAkp){
+//                    throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.QM_DJOUTAPPLYAKP_MAP_ERROR));
+//                }
                 CuttingToolVO cuttingToolVO = new CuttingToolVO();
-                cuttingToolVO.setBusinessCode(djCircleKanbanAkp.getLoc());
+                cuttingToolVO.setBusinessCode(FCBCodeHandler.fcbCodeHandler(djOutapplyAkp.getMtlno()));
                 CuttingTool cuttingTool = cuttingToolService.getCuttingTool(cuttingToolVO);
                 if (null == cuttingTool){
                     throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.QM_DJOUTAPPLYAKP_MAP_ERROR));
@@ -128,7 +129,6 @@ public class LibraryComent {
         //出库 将数据写入icomp数据库
         outApplyBusinessService.outApplyData(outApplyVO);
         //修改启明数据
-        //组织回写数据
         writeBackService.writeBackOutLibrary0609(outApplyVO);
     }
 

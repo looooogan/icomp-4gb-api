@@ -1,5 +1,6 @@
 package com.common.mapper;
 
+import com.common.pojo.ProductLineAssemblyline;
 import com.common.pojo.ProductLineEquipment;
 import com.common.vo.ProductLineEquipmentVO;
 
@@ -85,5 +86,15 @@ public interface IProductLineEquipmentMapper {
     * @return: 查询结果
     */
     public ProductLineEquipment getProductLineEquipment(ProductLineEquipmentVO productLineEquipmentVO) throws Exception;
+
+
+    /**
+     * @Title: clearRFIDData
+     * @Description: 清空标签
+     * @param productLineEquipment 清空数据
+     * @throws Exception
+     * @return: 查询结果
+     */
+    public void clearRFIDData(ProductLineEquipment productLineEquipment) throws Exception;
 
 }

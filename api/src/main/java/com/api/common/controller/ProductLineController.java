@@ -29,19 +29,6 @@ public class ProductLineController extends BaseController{
     @Autowired
     private IProductLineService productLineService;
 
-    @Autowired
-    private IProductLineAxleService productLineAxleService;
-    @Autowired
-    private IProductLineAssemblylineService productLineAssemblylineService;
-    @Autowired
-    private IProductLineEquipmentService productLineEquipmentService;
-    @Autowired
-    private IProductLineProcessService productLineProcessService;
-    @Autowired
-    private IProductLinePartsService productLinePartsService;
-    @Autowired
-    private ISynthesisCuttingToolService synthesisCuttingToolService;
-
     /**
     * @Title: add
     * @Description: 添加ProductLine

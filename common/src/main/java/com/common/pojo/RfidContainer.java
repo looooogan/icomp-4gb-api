@@ -58,7 +58,7 @@ public class RfidContainer implements Serializable{
     private Integer isDel;
     /**
      * @fieldName operatorCode
-    * @fieldType  Integer
+    * @fieldType  String
     * @Description  操作人
      */
     private String operatorCode;
@@ -92,6 +92,12 @@ public class RfidContainer implements Serializable{
     * @Description  最后操作时间
      */
     private Timestamp operatorTime;
+    /**
+     * @fieldName synthesisBladeCode
+    * @fieldType  String
+    * @Description  合成刀刀身码
+     */
+    private String synthesisBladeCode;
 
 
     private List<AuthCustomer> authCustomerList;
@@ -192,6 +198,13 @@ public class RfidContainer implements Serializable{
 
     public void setOperatorTime(Timestamp operatorTime) {
         this.operatorTime = operatorTime;
+    }
+    public String getSynthesisBladeCode() {
+        return synthesisBladeCode;
+    }
+
+    public void setSynthesisBladeCode(String synthesisBladeCode) {
+        this.synthesisBladeCode = synthesisBladeCode;
     }
 
 

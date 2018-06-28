@@ -62,6 +62,9 @@ public class SynthesisCuttingToolConfigServiceImpl implements ISynthesisCuttingT
         SynthesisCuttingToolVO synthesisCuttingToolVO = new SynthesisCuttingToolVO();
         synthesisCuttingToolVO.setSynthesisCode(synthesisCuttingToolConfig.getSynthesisCuttingTool().getSynthesisCode());
         synthesisCuttingToolVO.setIsDel(0);
+        if (StringUtils.isBlank(synthesisCuttingToolVO.getSynthesisCode())){
+            throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.SYNTHESISCUTTINGTOOL_SYNCODE_NULL));
+        }
         SynthesisCuttingTool synthesisCuttingToolTemp = synthesisCuttingToolMapper.getSynthesisCuttingTool(synthesisCuttingToolVO);
         if (synthesisCuttingToolTemp!= null){
             throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.SYNTHESISCUTTINGTOOL_CONFIG_EXISTS));
@@ -204,7 +207,7 @@ public class SynthesisCuttingToolConfigServiceImpl implements ISynthesisCuttingT
         synthesisCuttingToolLocationConfigVO.setSynthesisCuttingToolConfigId(synthesisCuttingToolConfig.getId());
         synthesisCuttingToolLocationConfigMapper.delSynthesisCuttingToolLocationConfigByVo(synthesisCuttingToolLocationConfigVO);
 
-        //添加具体配置
+        /*//添加具体配置
         CuttingToolVO cuttingToolVO;
         CuttingToolVO replaceCuttingToolVO;
         CuttingToolVO replaceCuttingToolVO2;
@@ -241,6 +244,86 @@ public class SynthesisCuttingToolConfigServiceImpl implements ISynthesisCuttingT
             locationConfig.setCuttingToolCode(cuttingToolTemp.getCode());
             if (null!=replaceCuttingToolTemp){
                 locationConfig.setReplaceCuttingToolCode1(replaceCuttingToolTemp.getCode());
+            }
+            if (null!=replaceCuttingToolTemp2){
+                locationConfig.setReplaceCuttingToolCode2(replaceCuttingToolTemp2.getCode());
+            }
+            locationConfig.setIsDel(0);
+            locationConfig.setSynthesisCuttingToolConfigId(synthesisCuttingToolConfig.getId());
+            synthesisCuttingToolLocationConfigMapper.addSynthesisCuttingToolLocationConfig(locationConfig);
+        }*/
+        //查询合成刀信息
+        SynthesisCuttingToolVO synthesisCuttingToolVO = new SynthesisCuttingToolVO();
+        synthesisCuttingToolVO.setSynthesisCode(synthesisCuttingToolConfig.getSynthesisCuttingTool().getSynthesisCode());
+        synthesisCuttingToolVO.setIsDel(0);
+        if (StringUtils.isBlank(synthesisCuttingToolVO.getSynthesisCode())){
+            throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.SYNTHESISCUTTINGTOOL_SYNCODE_NULL));
+        }
+
+        SynthesisCuttingTool synthesisCuttingTool = synthesisCuttingToolMapper.getSynthesisCuttingTool(synthesisCuttingToolVO);
+        if (null == synthesisCuttingTool){
+            throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.SYNTHESISCUTTINGTOOL_NOT_EXISTS));
+        }
+
+        //查询合成刀配置
+//        SynthesisCuttingToolConfigVO configVO = new SynthesisCuttingToolConfigVO();
+//        configVO.setId(synthesisCuttingToolConfig.getId());
+//        synthesisCuttingToolConfig = synthesisCuttingToolConfigMapper.getSynthesisCuttingToolConfig(configVO);
+//        if (null == synthesisCuttingToolConfig){
+//            throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.SYNTHESISCUTTINGTOOL_NOT_EXISTS));
+//        }
+        //添加具体配置
+        CuttingToolVO cuttingToolVO;
+        CuttingToolVO replaceCuttingToolVO1;
+        CuttingToolVO replaceCuttingToolVO2;
+        CuttingTool replaceCuttingToolTemp1 = null;
+        CuttingTool replaceCuttingToolTemp2 = null;
+        List<SynthesisCuttingToolLocationConfig> LocationConfigs = synthesisCuttingToolConfig.getSynthesisCuttingToolLocationConfigList();
+        for (SynthesisCuttingToolLocationConfig locationConfig : LocationConfigs) {
+            replaceCuttingToolTemp1 = null;
+            replaceCuttingToolTemp2 = null;
+            cuttingToolVO = new CuttingToolVO();
+            cuttingToolVO.setIsDel(0);
+            cuttingToolVO.setBusinessCode(locationConfig.getCuttingTool().getBusinessCode());
+            CuttingTool cuttingToolTemp = cuttingToolMapper.getCuttingTool(cuttingToolVO);
+            if (cuttingToolTemp == null){
+                throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.CUTTINGTOOL_NOT_EXISTS));
+            }
+
+            if (null!=cuttingToolTemp.getUserfulType()&&(!cuttingToolTemp.getUserfulType().equals(synthesisCuttingTool.getSynthesisCuttingToolTypeId()+""))
+                    &&cuttingToolTemp.getType().equals(CuttingToolTypeEnum.dj)){
+                throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.SYNTHESISCUTTINGTOOL_CTTYPE_NOTMATCH));
+            }
+
+            if (!cuttingToolTemp.getType().equals(locationConfig.getType())){
+                throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.SYNTHESISCUTTINGTOOL_CTTYPE_ERROR));
+            }
+
+            if (null == locationConfig.getCount() || locationConfig.getCount()<=0){
+                throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.SYNTHESISCUTTINGTOOL_CTCOUNT_ERROR));
+            }
+
+            if (!StringUtils.isBlank(locationConfig.getReplaceCuttingTool1().getBusinessCode())){
+                replaceCuttingToolVO1 = new CuttingToolVO();
+                replaceCuttingToolVO1.setIsDel(0);
+                replaceCuttingToolVO1.setBusinessCode(locationConfig.getReplaceCuttingTool1().getBusinessCode());
+                replaceCuttingToolTemp1 = cuttingToolMapper.getCuttingTool(replaceCuttingToolVO1);
+                if (replaceCuttingToolTemp1 == null){
+                    throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.CUTTINGTOOL_NOT_EXISTS));
+                }
+            }
+            if (!StringUtils.isBlank(locationConfig.getReplaceCuttingTool2().getBusinessCode())){
+                replaceCuttingToolVO2 = new CuttingToolVO();
+                replaceCuttingToolVO2.setIsDel(0);
+                replaceCuttingToolVO2.setBusinessCode(locationConfig.getReplaceCuttingTool2().getBusinessCode());
+                replaceCuttingToolTemp2 = cuttingToolMapper.getCuttingTool(replaceCuttingToolVO2);
+                if (replaceCuttingToolTemp2 == null){
+                    throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.CUTTINGTOOL_NOT_EXISTS));
+                }
+            }
+            locationConfig.setCuttingToolCode(cuttingToolTemp.getCode());
+            if (null!=replaceCuttingToolTemp1){
+                locationConfig.setReplaceCuttingToolCode1(replaceCuttingToolTemp1.getCode());
             }
             if (null!=replaceCuttingToolTemp2){
                 locationConfig.setReplaceCuttingToolCode2(replaceCuttingToolTemp2.getCode());

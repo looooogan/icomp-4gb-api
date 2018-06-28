@@ -1,16 +1,21 @@
 package com.api.inoutfactory.controller;
 
 import com.api.base.controller.BaseController;
+import com.api.inoutfactory.dto.InFactoryDTO;
 import com.common.constants.OperationEnum;
 import com.common.pojo.*;
+import com.common.utils.OrderNumHandler;
 import com.common.vo.*;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.service.common.IAuthCustomerService;
+import com.service.common.IDjItrnAkpService;
 import com.service.common.IDjOwnerAkpService;
 import com.service.impower.IImpowerRecorderService;
 import com.service.inoutFactory.IInOutFactoryService;
 import com.service.inoutFactory.InOutFactoryComent;
+import com.service.inoutFactory.bo.InOutGrindingBO;
+import com.service.inoutFactory.vo.InOutQueryVO;
 import com.service.inoutFactory.vo.InsideVO;
 import com.service.inoutFactory.vo.OutSideVO;
 import com.service.inoutFactory.vo.SharpenVO;
@@ -26,7 +31,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by logan on 2018/5/6.
@@ -47,6 +54,105 @@ public class OutFactoryController extends BaseController {
     private IFlowCheckService flowCheckService;
     @Autowired
     private IImpowerRecorderService impowerRecorderService;
+    @Autowired
+    private IDjItrnAkpService djItrnAkpService;
+
+
+    /**
+     * 为厂外刃磨查询信息
+     * @param
+     * @throws Exception
+     */
+    @RequestMapping("queryForOutGrinding")
+    @ResponseBody
+    public InOutQueryVO queryForOutGrinding() throws Exception{
+        InOutQueryVO inOutQueryVO = new InOutQueryVO();
+
+        DjOwnerAkpVO djOwnerAkpVO = new DjOwnerAkpVO();
+        inOutQueryVO.setDjOwnerAkps(djOwnerAkpService.getDjOwnerAkpByPage(djOwnerAkpVO));
+        String wwcode = djItrnAkpService.getMaxWWOrderNum();
+        if(StringUtils.isBlank(wwcode)){
+            wwcode = OrderNumHandler.orderNumInit();
+        }else {
+            wwcode = OrderNumHandler.getNextOrderNum(wwcode);
+        }
+        inOutQueryVO.setWwcode(wwcode);
+        return inOutQueryVO;
+    }
+
+    /**
+     * 扫码获取材料刀信息
+     * @param cuttingToolBindVO 材料刀具信息
+     * @param response 添加授权
+     * @param request 获取操作
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("getCuttingToolBind")
+    @ResponseBody
+    public CuttingToolBind getCuttingToolBind(@RequestBody CuttingToolBindVO cuttingToolBindVO, HttpServletResponse response, HttpServletRequest request) throws Exception{
+        if (null !=request.getHeader("impower")){
+            Integer impowerkey = Integer.parseInt(request.getHeader("impower"));
+            ObjectMapper mapper = new ObjectMapper();
+            FlowCheckVO flowCheckVO = new FlowCheckVO();
+            flowCheckVO.setOperationCode(impowerkey);
+            flowCheckVO.setRfidContainerVO(cuttingToolBindVO.getRfidContainerVO());
+            response.addHeader("impower",mapper.writeValueAsString(flowCheckService.checkFlow(flowCheckVO)));
+        }
+        return inOutFactoryService.getCuttingToolBind(cuttingToolBindVO, OperationEnum.Cutting_tool_OutSide.getKey());
+    }
+
+    /**
+     * 输入查询材料刀信息
+     * @param cuttingToolVO 材料刀具信息
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("getCuttingTool")
+    @ResponseBody
+    public CuttingTool getCuttingTool(@RequestBody CuttingToolVO cuttingToolVO) throws Exception{
+        return inOutFactoryService.getCuttingTool(cuttingToolVO, OperationEnum.Cutting_tool_OutSide);
+    }
+
+    /**
+     * 根据合成刀T号查询材料刀信息
+     * @param synthesisCuttingToolVO 合成刀信息
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("getCuttingToolByTCode")
+    @ResponseBody
+    public List<CuttingTool> getCuttingToolByTCode(@RequestBody SynthesisCuttingToolVO synthesisCuttingToolVO) throws Exception{
+        return inOutFactoryService.getCuttingToolByTCode(synthesisCuttingToolVO, OperationEnum.Cutting_tool_OutSide);
+    }
+
+
+    /**
+     * 厂外刃磨
+     * @param inFactoryDTO 刃磨信息
+     * @param authCustomerCode 登陆用户
+     * @throws Exception
+     */
+    @RequestMapping("outsideGrinding")
+    @ResponseBody
+    public void outsideGrinding(@RequestBody InFactoryDTO inFactoryDTO, @RequestHeader("loginUserCode") String authCustomerCode) throws Exception{
+        AuthCustomerVO loginUserVO = new AuthCustomerVO();
+        loginUserVO.setCode(authCustomerCode);
+        InOutGrindingBO inOutGrindingBO = new InOutGrindingBO();
+        inOutGrindingBO.setGrindingEquipment(inFactoryDTO.getGrindingEquipment());
+        inOutGrindingBO.setGrindingVOS(inFactoryDTO.getGrindingVOS());
+        inOutGrindingBO.setLoginUser(authCustomerService.getAuthCustomer(loginUserVO));
+        inOutGrindingBO.setOrderNum(inFactoryDTO.getOrderNum());
+        inOutGrindingBO.setZcCode(inFactoryDTO.getZcCode());
+        inOutGrindingBO.setQmSharpenProviderCode(inFactoryDTO.getSharpenProviderCode());
+        inOutGrindingBO.setQmSharpenProviderName(inFactoryDTO.getQmSharpenProviderName());
+        inOutGrindingBO.setOutWay(inFactoryDTO.getOutWay());
+        inOutGrindingBO.setHandlers(inFactoryDTO.getHandlers());
+        inOutGrindingBO.setSender(inFactoryDTO.getHandlers());
+        inOutFactoryComent.outSideGrinding(inOutGrindingBO);
+    }
+
+
 
     @RequestMapping("addSharpenProvider")
     @ResponseBody
@@ -63,19 +169,6 @@ public class OutFactoryController extends BaseController {
     }
 
 
-    @RequestMapping("getCuttingToolBind")
-    @ResponseBody
-    public CuttingToolBind getCuttingToolBind(@RequestBody CuttingToolBindVO cuttingToolBindVO, HttpServletResponse response, HttpServletRequest request) throws Exception{
-        if (null !=request.getHeader("impower")){
-            Integer impowerkey = Integer.parseInt(request.getHeader("impower"));
-            ObjectMapper mapper = new ObjectMapper();
-            FlowCheckVO flowCheckVO = new FlowCheckVO();
-            flowCheckVO.setOperationCode(impowerkey);
-            flowCheckVO.setRfidLaserCode(cuttingToolBindVO.getRfidContainerVO().getLaserCode());
-            response.addHeader("impower",mapper.writeValueAsString(flowCheckService.checkFlow(flowCheckVO)));
-        }
-        return inOutFactoryService.getCuttingToolBind(cuttingToolBindVO, OperationEnum.Cutting_tool_OutSide.getKey());
-    }
 
     @RequestMapping("countOutsideFactory")
     @ResponseBody
@@ -95,7 +188,7 @@ public class OutFactoryController extends BaseController {
         AuthCustomerVO authCustomerVO = new AuthCustomerVO();
         authCustomerVO.setCode(authCustomerCode);
         outSideVO.setAuthCustomer(authCustomerService.getAuthCustomer(authCustomerVO));
-        inOutFactoryComent.OutSideFactory(outSideVO);
+//        inOutFactoryComent.OutSideFactory(outSideVO);
 //        inOutFactoryService.addOutsideFactory(outSideVO);
     }
 
@@ -103,11 +196,5 @@ public class OutFactoryController extends BaseController {
     @ResponseBody
     public void addOutsideFactoryHistory(@RequestBody OutsideFactory outsideFactory) throws Exception{
         inOutFactoryService.addOutsideFactoryHistory(outsideFactory);
-    }
-
-    @RequestMapping("getCuttingTool")
-    @ResponseBody
-    public CuttingTool getCuttingTool(@RequestBody CuttingToolVO cuttingToolVO) throws Exception{
-        return inOutFactoryService.getCuttingTool(cuttingToolVO);
     }
 }

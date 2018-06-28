@@ -44,17 +44,23 @@ public class DjQiMingDBServiceImpl implements IDjQiMingDBService{
     @Override
     public OutApplyVO getInfo(OutApplyVO outApplyVO) throws Exception {
         DjOutapplyAkpVO djOutapplyAkpVO = new DjOutapplyAkpVO();
-        djOutapplyAkpVO.setApplyno(outApplyVO.getDjOutapplyAkp().getApplyno());
+        djOutapplyAkpVO.setApplyno(outApplyVO.getApplyno());
         djOutapplyAkpVO.setAuditid(QiMingOrderEnum.approved.getKey());
         DjOutapplyAkp djOutapplyAkp = djOutapplyAkpMapper.getDjOutapplyAkp(djOutapplyAkpVO);
+        outApplyVO.setDjOutapplyAkp(djOutapplyAkp);
+
 
         DjCircleKanbanAkpVO kanbanAkpVO = new DjCircleKanbanAkpVO();
         kanbanAkpVO.setCKanbanCode(djOutapplyAkp.getLltm());
         DjCircleKanbanAkp djCircleKanbanAkp = djCircleKanbanAkpMapper.getDjCircleKanbanAkp(kanbanAkpVO);
+        outApplyVO.setDjCircleKanbanAkp(djCircleKanbanAkp);
+
 
         DjMtlAkpVO djMtlAkpVO = new DjMtlAkpVO();
         djMtlAkpVO.setMtlCode(djCircleKanbanAkp.getMtlCode());
         DjMtlAkp djMtlAkp = djMtlAkpMapper.getDjMtlAkp(djMtlAkpVO);
+        outApplyVO.setDjMtlAkp(djMtlAkp);
+
         Integer susr20 = 0;
         Integer unitqty = 0;
         try {

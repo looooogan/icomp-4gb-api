@@ -2,13 +2,12 @@ package com.service.productline;
 
 import com.common.pojo.ProductLineAssemblyline;
 import com.common.pojo.ProductLineEquipment;
-import com.common.pojo.SynthesisCuttingTool;
-import com.common.pojo.SynthesisCuttingToolBind;
 import com.common.vo.ProductLineVO;
-import com.service.productline.vo.QueryEquipmentByRfidVO;
-import com.service.productline.vo.QuerySynthesisCuttingToolVO;
+import com.service.productline.bo.ProductLineBO;
+import com.service.productline.vo.QueryVO;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by logan on 2018/4/30.
@@ -32,19 +31,38 @@ public interface IProductLineBusinessService {
 
     /**
      * 初始化设备
-     * @param productLineEquipments 设备列表
+     * @param productLineBO 设备
      * @throws Exception
      */
-    public void addInitEquipment(ProductLineEquipment productLineEquipments) throws Exception;
+    public void addInitEquipment(ProductLineBO productLineBO) throws Exception;
 
 
     /**
-     * 根据RFID查询合成刀信息
-     * @param querySynthesisCuttingToolVO 查询条件
+     * 为安上设备查询信息
+     * @param productLineBO 设备
      * @throws Exception
      */
-    public SynthesisCuttingToolBind querySynthesisCuttingTool(QuerySynthesisCuttingToolVO querySynthesisCuttingToolVO) throws Exception;
+    public QueryVO queryForInstall(ProductLineBO productLineBO) throws Exception;
 
+    /**
+     * 安上设备
+     * @param productLineBO
+     * @throws Exception
+     */
+    public void installData(ProductLineBO productLineBO) throws Exception;
 
-    public QueryEquipmentByRfidVO queryEquipmentByRFID(QueryEquipmentByRfidVO queryEquipmentByRfidVO) throws Exception;
+    /**
+     * 为卸下设备查询信息
+     * @param productLineBO 设备
+     * @throws Exception
+     */
+    public QueryVO queryForUnInstall(ProductLineBO productLineBO) throws Exception;
+
+    /**
+     * 卸下设备
+     * @param productLineBO
+     * @throws Exception
+     */
+    public ProductLineBO unInstallData(ProductLineBO productLineBO) throws Exception;
+
 }

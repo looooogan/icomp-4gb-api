@@ -62,7 +62,7 @@
     </resultMap>
     <!-- 添加 -->
     <insert id="addDjOutapplyAkp" parameterType="com.common.pojo.DjOutapplyAkp">
-        INSERT INTO FCCCMS.DJ_OUTAPPLY_AKP (
+        INSERT INTO DJ_OUTAPPLY_AKP (
             /* 单号‘DJLY’用环境'800' */
             CLIENT,
             /* 单号‘DJLY’ */
@@ -183,7 +183,7 @@
     <!-- 删除 -->
     <delete id="delDjOutapplyAkp" parameterType="com.common.pojo.DjOutapplyAkp">
         DELETE
-        FROM FCCCMS.DJ_OUTAPPLY_AKP
+        FROM DJ_OUTAPPLY_AKP
         WHERE
             1 = 1
             and CLIENT = #{client}
@@ -191,7 +191,7 @@
 
     <!-- 逻辑删除 -->
     <delete id="delDjOutapplyAkpForLogic" parameterType="com.common.pojo.DjOutapplyAkp">
-        DELETE FROM  FCCCMS.DJ_OUTAPPLY_AKP
+        DELETE FROM  DJ_OUTAPPLY_AKP
         WHERE
             1 = 1
             and CLIENT = #{client}
@@ -199,7 +199,7 @@
 
     <!-- 根据VO删除 -->
     <delete id="delDjOutapplyAkpByVo" parameterType="com.common.vo.DjOutapplyAkpVO">
-        DELETE FROM FCCCMS.DJ_OUTAPPLY_AKP
+        DELETE FROM DJ_OUTAPPLY_AKP
         WHERE
             1=1
             /* 单号‘DJLY’用环境'800' */
@@ -318,7 +318,7 @@
 
     <!-- 更新,如果属性不为null 则更新该属性,根据id更新 -->
     <update id="updDjOutapplyAkp" parameterType="com.common.pojo.DjOutapplyAkp">
-        UPDATE FCCCMS.DJ_OUTAPPLY_AKP
+        UPDATE DJ_OUTAPPLY_AKP
         SET
             /* 单号‘DJLY’ */
 
@@ -497,10 +497,10 @@
             /*  */
             LAST_MODIFY_DATE AS LAST_MODIFY_DATE
         /*djOutapplyAkp end*/
-        FROM FCCCMS.DJ_OUTAPPLY_AKP
+        FROM DJ_OUTAPPLY_AKP
         WHERE
             1 = 1
-        /*FCCCMS.DJ_OUTAPPLY_AKP begin*/
+        /*DJ_OUTAPPLY_AKP begin*/
             /* 单号‘DJLY’用环境'800' */
             <if test="client != null and client != '' " >
                 and CLIENT = #{client}
@@ -613,7 +613,7 @@
             <if test="lastModifyDate != null and lastModifyDate != '' " >
                 and LAST_MODIFY_DATE = #{lastModifyDate}
             </if>
-        /*FCCCMS.DJ_OUTAPPLY_AKP end*/
+        /*DJ_OUTAPPLY_AKP end*/
         ORDER BY CLIENT desc
     </select>
 
@@ -621,10 +621,10 @@
     <!-- 查询记录数 -->
     <select id="getDjOutapplyAkpCount" parameterType="com.common.vo.DjOutapplyAkpVO" resultType="java.lang.Integer">
         SELECT COUNT(1)
-        FROM FCCCMS.DJ_OUTAPPLY_AKP
+        FROM DJ_OUTAPPLY_AKP
         WHERE
             1 = 1
-        /*FCCCMS.DJ_OUTAPPLY_AKP begin*/
+        /*DJ_OUTAPPLY_AKP begin*/
         /* 单号‘DJLY’用环境'800' */
         <if test="client != null and client != '' " >
             and CLIENT = #{client}
@@ -737,13 +737,13 @@
         <if test="lastModifyDate != null and lastModifyDate != '' " >
             and LAST_MODIFY_DATE = #{lastModifyDate}
         </if>
-        /*FCCCMS.DJ_OUTAPPLY_AKP end*/
+        /*DJ_OUTAPPLY_AKP end*/
     </select>
 
     <!-- 根据vo查询 -->
     <select id="getDjOutapplyAkp" parameterType="com.common.vo.DjOutapplyAkpVO" resultMap="djOutapplyAkpQueryMap">
         SELECT
-        /*FCCCMS.DJ_OUTAPPLY_AKP begin*/
+        /*DJ_OUTAPPLY_AKP begin*/
         /* 单号‘DJLY’用环境'800' */
         CLIENT,
         /* 单号‘DJLY’ */
@@ -800,11 +800,11 @@
         JHJ,
         /*  */
         LAST_MODIFY_DATE
-        /*FCCCMS.DJ_OUTAPPLY_AKP end*/
-        FROM FCCCMS.DJ_OUTAPPLY_AKP
+        /*DJ_OUTAPPLY_AKP end*/
+        FROM DJ_OUTAPPLY_AKP
         WHERE
             1 = 1
-        /*FCCCMS.DJ_OUTAPPLY_AKP begin*/
+        /*DJ_OUTAPPLY_AKP begin*/
         /* 单号‘DJLY’用环境'800' */
         <if test="client != null and client != '' " >
             and CLIENT = #{client}
@@ -917,6 +917,6 @@
         <if test="lastModifyDate != null and lastModifyDate != '' " >
             and LAST_MODIFY_DATE = #{lastModifyDate}
         </if>
-        /*FCCCMS.DJ_OUTAPPLY_AKP end*/
+        /*DJ_OUTAPPLY_AKP end*/
     </select>
 </mapper>

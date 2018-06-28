@@ -6,6 +6,7 @@ import com.common.pojo.ImpowerRecorder;
 import com.common.pojo.ProductLine;
 import com.common.pojo.SynthesisCuttingToolBindleRecords;
 import com.common.vo.ProductLineVO;
+import com.common.vo.RfidContainerVO;
 import com.common.vo.SynthesisCuttingToolBindleRecordsVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.service.common.*;
@@ -95,14 +96,15 @@ public class SynthesisCuttingToolBindleRecordsController extends BaseController{
     @RequestMapping(value = "searchLast",method = RequestMethod.POST)
     @ResponseBody
     public SynthesisCuttingToolBindleRecords searchLast(HttpServletResponse response,HttpServletRequest request, @RequestBody SynthesisCuttingToolBindleRecordsVO synthesisCuttingToolBindleRecordsVO) throws  Exception{
-        if (null !=request.getHeader("impower")){
-            Integer impowerkey = Integer.parseInt(request.getHeader("impower"));
-            ObjectMapper mapper = new ObjectMapper();
-            FlowCheckVO flowCheckVO = new FlowCheckVO();
-            flowCheckVO.setOperationCode(impowerkey);
-            flowCheckVO.setRfidLaserCode(synthesisCuttingToolBindleRecordsVO.getBindRfid());
-            response.addHeader("impower",mapper.writeValueAsString(flowCheckService.checkFlow(flowCheckVO)));
-        }
+//        if (null !=request.getHeader("impower")){
+//            Integer impowerkey = Integer.parseInt(request.getHeader("impower"));
+//            ObjectMapper mapper = new ObjectMapper();
+//            FlowCheckVO flowCheckVO = new FlowCheckVO();
+//            flowCheckVO.setOperationCode(impowerkey);
+//            RfidContainerVO rfidContainerVO = new RfidContainerVO();
+//            flowCheckVO.setRfidContainerVO(synthesisCuttingToolBindleRecordsVO.getBindRfid());
+//            response.addHeader("impower",mapper.writeValueAsString(flowCheckService.checkFlow(flowCheckVO)));
+//        }
         return this.synthesisCuttingToolBindleRecordsService.getLastRecords(synthesisCuttingToolBindleRecordsVO);
     }
 

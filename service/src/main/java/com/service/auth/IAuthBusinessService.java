@@ -2,6 +2,8 @@ package com.service.auth;
 
 import com.common.pojo.AuthCustomer;
 import com.common.vo.AuthCustomerVO;
+import com.service.auth.bo.AuthBO;
+
 /**
  * Created by logan on 2018/5/6.
  */
@@ -17,10 +19,10 @@ public interface IAuthBusinessService {
 
     /**
      * 初始化员工卡
-     * @param authCustomer 换装结果
+     * @param authBO 业务数据封装
      * @throws Exception
      */
-    public void addInitAuthCustomer(AuthCustomer authCustomer) throws Exception;
+    public void addInitAuthCustomer(AuthBO authBO) throws Exception;
 
     /**
      * pda设备登陆

@@ -59,7 +59,10 @@
                     },
                     {
                         title:'出厂日期',
-                        name:'manufactureDate'
+                        name:'manufactureDate',
+                        format : function(r){
+                            return '<span class="ui-grid-tdtx">'+fmtDate(r.manufactureDate)+'</span>';
+                        }
                     },
                     {
                         title:'经手人',
@@ -123,7 +126,13 @@
 
 
 
-
+        function fmtDate(obj){
+            var date =  new Date(obj);
+            var y = 1900+date.getYear();
+            var m = "0"+(date.getMonth()+1);
+            var d = "0"+date.getDate();
+            return y+"-"+m.substring(m.length-2,m.length)+"-"+d.substring(d.length-2,d.length);
+        }
 
         function pageClick(page){
             $('#currentPage').val(page);

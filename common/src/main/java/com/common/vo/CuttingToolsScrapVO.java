@@ -117,6 +117,13 @@ public class CuttingToolsScrapVO implements Serializable{
     private String status;
 
     /**
+     * @fieldName consumeType
+    * @fieldType  String
+    * @Description  消耗类别
+     */
+    private String consumeType;
+
+    /**
      * @fieldName cuttingToolCode
     * @fieldType  
     * @Description  
@@ -267,6 +274,13 @@ public class CuttingToolsScrapVO implements Serializable{
 
     public void setStatus(String status) {
         this.status = status;
+    }
+    public String getConsumeType() {
+        return consumeType;
+    }
+
+    public void setConsumeType(String consumeType) {
+        this.consumeType = consumeType;
     }
 
     public CuttingToolVO getCuttingToolVO() {

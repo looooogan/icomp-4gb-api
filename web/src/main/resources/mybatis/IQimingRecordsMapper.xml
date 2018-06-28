@@ -221,7 +221,7 @@
                 and kezhang_code =  #{kezhangCode}
             </if>
             <!--  -->
-            <if test="createTime != null and createTime != '' " >
+            <if test="createTime != null" >
                 and create_time =  #{createTime}
             </if>
             <!--  -->
@@ -303,7 +303,7 @@
                 kezhang_code =  #{kezhangCode},
             </if>
             <!--  -->
-            <if test="createTime != null and createTime != '' " >
+            <if test="createTime != null" >
                 create_time =  #{createTime},
             </if>
             <!--  -->
@@ -439,10 +439,10 @@
                 and qiming_records.kezhang_code = #{kezhangCode}
             </if>
             <!--  -->
-            <if test="createTime != null and createTime != '' " >
+            <if test="createTime != null" >
                 and qiming_records.create_time &lt;= #{createTimeEnd}
             </if>
-            <if test="createTime != null and createTime != '' " >
+            <if test="createTime != null" >
                 and qiming_records.create_time &gt;= #{createTimeBegin}
             </if>
             <!--  -->
@@ -537,10 +537,10 @@
             and qiming_records.kezhang_code = #{kezhangCode}
         </if>
         <!--  -->
-        <if test="createTime != null and createTime != '' " >
+        <if test="createTime != null" >
             and qiming_records.create_time &lt;= #{createTimeEnd}
         </if>
-        <if test="createTime != null and createTime != '' " >
+        <if test="createTime != null" >
             and qiming_records.create_time &gt;= #{createTimeBegin}
         </if>
         <!--  -->
@@ -672,10 +672,10 @@
             and qiming_records.kezhang_code = #{kezhangCode}
         </if>
         <!--  -->
-        <if test="createTime != null and createTime != '' " >
+        <if test="createTime != null" >
             and qiming_records.create_time &lt;= #{createTimeEnd}
         </if>
-        <if test="createTime != null and createTime != '' " >
+        <if test="createTime != null" >
             and qiming_records.create_time &gt;= #{createTimeBegin}
         </if>
         <!--  -->

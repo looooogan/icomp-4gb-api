@@ -1,20 +1,24 @@
 package com.service.rfid.vo;
 
+import com.common.vo.RfidContainerVO;
+
 /**
  * Created by logan on 2018/5/27.
  */
 public class FlowCheckVO {
 
-    private String rfidLaserCode;
+//    private String rfidLaserCode;
 
     private Integer operationCode;
 
-    public String getRfidLaserCode() {
-        return rfidLaserCode;
+    private RfidContainerVO rfidContainerVO;
+
+    public RfidContainerVO getRfidContainerVO() {
+        return rfidContainerVO;
     }
 
-    public void setRfidLaserCode(String rfidLaserCode) {
-        this.rfidLaserCode = rfidLaserCode;
+    public void setRfidContainerVO(RfidContainerVO rfidContainerVO) {
+        this.rfidContainerVO = rfidContainerVO;
     }
 
     public Integer getOperationCode() {

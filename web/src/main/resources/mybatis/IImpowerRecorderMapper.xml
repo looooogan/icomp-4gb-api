@@ -141,7 +141,7 @@
                 and tool_code =  #{toolCode}
             </if>
             <!-- 创建时间 -->
-            <if test="createTime != null and createTime != '' " >
+            <if test="createTime != null" >
                 and create_time =  #{createTime}
             </if>
             <!-- 授权人code -->
@@ -207,7 +207,7 @@
                 tool_code =  #{toolCode},
             </if>
             <!-- 创建时间 -->
-            <if test="createTime != null and createTime != '' " >
+            <if test="createTime != null" >
                 create_time =  #{createTime},
             </if>
             <!-- 授权人code -->
@@ -319,10 +319,10 @@
                 and impower_recorder.tool_code = #{toolCode}
             </if>
             <!-- 创建时间 -->
-            <if test="createTime != null and createTime != '' " >
+            <if test="createTime != null" >
                 and impower_recorder.create_time &lt;= #{createTimeEnd}
             </if>
-            <if test="createTime != null and createTime != '' " >
+            <if test="createTime != null" >
                 and impower_recorder.create_time &gt;= #{createTimeBegin}
             </if>
             <!-- 授权人code -->
@@ -401,10 +401,10 @@
             and impower_recorder.tool_code = #{toolCode}
         </if>
         <!-- 创建时间 -->
-        <if test="createTime != null and createTime != '' " >
+        <if test="createTime != null" >
             and impower_recorder.create_time &lt;= #{createTimeEnd}
         </if>
-        <if test="createTime != null and createTime != '' " >
+        <if test="createTime != null" >
             and impower_recorder.create_time &gt;= #{createTimeBegin}
         </if>
         <!-- 授权人code -->
@@ -512,10 +512,10 @@
             and impower_recorder.tool_code = #{toolCode}
         </if>
         <!-- 创建时间 -->
-        <if test="createTime != null and createTime != '' " >
+        <if test="createTime != null" >
             and impower_recorder.create_time &lt;= #{createTimeEnd}
         </if>
-        <if test="createTime != null and createTime != '' " >
+        <if test="createTime != null" >
             and impower_recorder.create_time &gt;= #{createTimeBegin}
         </if>
         <!-- 授权人code -->

@@ -9,9 +9,19 @@ public class UpCuttingToolVO {
 
     private Integer upCount;
 
-    private String rfidCode;
+    private String upRfidLaserCode;
 
     private String bladeCode;
+
+    private String businessCode;
+
+    public String getBusinessCode() {
+        return businessCode;
+    }
+
+    public void setBusinessCode(String businessCode) {
+        this.businessCode = businessCode;
+    }
 
     public String getBladeCode() {
         return bladeCode;
@@ -21,12 +31,12 @@ public class UpCuttingToolVO {
         this.bladeCode = bladeCode;
     }
 
-    public String getRfidCode() {
-        return rfidCode;
+    public String getUpRfidLaserCode() {
+        return upRfidLaserCode;
     }
 
-    public void setRfidCode(String rfidCode) {
-        this.rfidCode = rfidCode;
+    public void setUpRfidLaserCode(String upRfidLaserCode) {
+        this.upRfidLaserCode = upRfidLaserCode;
     }
 
     public String getUpCode() {

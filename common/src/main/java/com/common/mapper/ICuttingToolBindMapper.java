@@ -93,4 +93,14 @@ public interface ICuttingToolBindMapper {
      */
     public void unBindCuttingToolData(CuttingToolBindVO cuttingToolBindVO) throws Exception;
 
+
+    /**
+     * @Title: clearRFIDData
+     * @Description: 清空标签
+     * @param cuttingToolBind 清空数据
+     * @throws Exception
+     * @return: 查询结果
+     */
+    public void clearRFIDData(CuttingToolBind cuttingToolBind) throws Exception;
+
 }

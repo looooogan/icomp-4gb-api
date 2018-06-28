@@ -1,6 +1,7 @@
 package com.common.mapper;
 
 import com.common.pojo.AuthCustomer;
+import com.common.pojo.ProductLineAssemblyline;
 import com.common.vo.AuthCustomerVO;
 
 import java.util.List;
@@ -85,5 +86,14 @@ public interface IAuthCustomerMapper {
     * @return: 查询结果
     */
     public AuthCustomer getAuthCustomer(AuthCustomerVO authCustomerVO) throws Exception;
+
+    /**
+     * @Title: clearRFIDData
+     * @Description: 清空标签
+     * @param authCustomer 清空数据
+     * @throws Exception
+     * @return: 查询结果
+     */
+    public void clearRFIDData(AuthCustomer authCustomer) throws Exception;
 
 }

@@ -11,7 +11,7 @@
     </resultMap>
     <!-- 添加 -->
     <insert id="addDjOwnerAkp" parameterType="com.common.pojo.DjOwnerAkp">
-        INSERT INTO FCCCMS.DJ_OWNER_AKP (
+        INSERT INTO DJ_OWNER_AKP (
             /* 供应商代码 */
             OWNER_CODE,
             /* 供应商名称 */
@@ -28,7 +28,7 @@
     <!-- 删除 -->
     <delete id="delDjOwnerAkp" parameterType="com.common.pojo.DjOwnerAkp">
         DELETE
-        FROM FCCCMS.DJ_OWNER_AKP
+        FROM DJ_OWNER_AKP
         WHERE
             1 = 1
             and OWNER_CODE = #{ownerCode}
@@ -36,7 +36,7 @@
 
     <!-- 逻辑删除 -->
     <delete id="delDjOwnerAkpForLogic" parameterType="com.common.pojo.DjOwnerAkp">
-        DELETE FROM  FCCCMS.DJ_OWNER_AKP
+        DELETE FROM  DJ_OWNER_AKP
         WHERE
             1 = 1
             and OWNER_CODE = #{ownerCode}
@@ -44,7 +44,7 @@
 
     <!-- 根据VO删除 -->
     <delete id="delDjOwnerAkpByVo" parameterType="com.common.vo.DjOwnerAkpVO">
-        DELETE FROM FCCCMS.DJ_OWNER_AKP
+        DELETE FROM DJ_OWNER_AKP
         WHERE
         1=1
         /* 供应商代码 */
@@ -59,7 +59,7 @@
 
     <!-- 更新,如果属性不为null 则更新该属性,根据id更新 -->
     <update id="updDjOwnerAkp" parameterType="com.common.pojo.DjOwnerAkp">
-        UPDATE FCCCMS.DJ_OWNER_AKP
+        UPDATE DJ_OWNER_AKP
         SET
         /* 供应商名称 */
         <if test="name != null and name != '' " >
@@ -81,10 +81,10 @@
         /* 供应商名称 */
         NAME
         /*djOwnerAkp end*/
-        FROM FCCCMS.DJ_OWNER_AKP
+        FROM DJ_OWNER_AKP
         WHERE
         1 = 1
-        /*FCCCMS.DJ_OWNER_AKP begin*/
+        /*DJ_OWNER_AKP begin*/
         /* 供应商代码 */
         <if test="ownerCode != null and ownerCode != '' " >
             and OWNER_CODE = #{ownerCode}
@@ -93,7 +93,7 @@
         <if test="name != null and name != '' " >
             and NAME = #{name}
         </if>
-        /*FCCCMS.DJ_OWNER_AKP end*/
+        /*DJ_OWNER_AKP end*/
         ORDER BY OWNER_CODE desc
     </select>
 
@@ -101,10 +101,10 @@
     <!-- 查询记录数 -->
     <select id="getDjOwnerAkpCount" parameterType="com.common.vo.DjOwnerAkpVO" resultType="java.lang.Integer">
         SELECT COUNT(1)
-        FROM FCCCMS.DJ_OWNER_AKP
+        FROM DJ_OWNER_AKP
         WHERE
         1 = 1
-        /*FCCCMS.DJ_OWNER_AKP begin*/
+        /*DJ_OWNER_AKP begin*/
         /* 供应商代码 */
         <if test="ownerCode != null and ownerCode != '' " >
             and OWNER_CODE = #{ownerCode}
@@ -113,22 +113,22 @@
         <if test="name != null and name != '' " >
             and NAME = #{name}
         </if>
-        /*FCCCMS.DJ_OWNER_AKP end*/
+        /*DJ_OWNER_AKP end*/
     </select>
 
     <!-- 根据vo查询 -->
     <select id="getDjOwnerAkp" parameterType="com.common.vo.DjOwnerAkpVO" resultMap="djOwnerAkpQueryMap">
         SELECT
-        /*FCCCMS.DJ_OWNER_AKP begin*/
+        /*DJ_OWNER_AKP begin*/
         /* 供应商代码 */
         OWNER_CODE,
         /* 供应商名称 */
         NAME
-        /*FCCCMS.DJ_OWNER_AKP end*/
-        FROM FCCCMS.DJ_OWNER_AKP
+        /*DJ_OWNER_AKP end*/
+        FROM DJ_OWNER_AKP
         WHERE
         1 = 1
-        /*FCCCMS.DJ_OWNER_AKP begin*/
+        /*DJ_OWNER_AKP begin*/
         /* 供应商代码 */
         <if test="ownerCode != null and ownerCode != '' " >
             and OWNER_CODE = #{ownerCode}
@@ -137,6 +137,6 @@
         <if test="name != null and name != '' " >
             and NAME = #{name}
         </if>
-        /*FCCCMS.DJ_OWNER_AKP end*/
+        /*DJ_OWNER_AKP end*/
     </select>
 </mapper>

@@ -1130,4 +1130,11 @@
         </if>
         /*auth_agency end*/
     </select>
+
+    <!--清空RFID -->
+    <update id="clearRFIDData" parameterType="com.common.pojo.AuthCustomer">
+        UPDATE auth_customer
+        SET rfid_container_code = NULL
+        WHERE id = #{id}
+    </update>
 </mapper>

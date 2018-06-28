@@ -62,10 +62,10 @@
                         title:'加工工艺',
                         name:'d_productLineParts'
                     },
-                    {
-                        title:'轴名称',
-                        name:'d_productLineAxle'
-                    },
+//                    {
+//                        title:'轴名称',
+//                        name:'d_productLineAxle'
+//                    },
                     {
                         title: '操作',
                         name: '',
@@ -201,10 +201,11 @@
                     }else if(eqStr == ""){
                         alert("请选择设备名称");
                         return;
-                    }else if(axleStr == ""){
-                        alert("请选择轴编号");
-                        return;
                     }
+//                    else if(axleStr == ""){
+//                        alert("请选择轴编号");
+//                        return;
+//                    }
                     var partFlag = false;
                     var synthesisParametersFlag = false;
                     var toolDurableFlag = false;
@@ -356,7 +357,7 @@
                 type: "POST",
                 url: "/productLineEquipment/list",
                 dataType: "json",
-                data: JSON.stringify({}),
+                data: JSON.stringify({'type':1}),
                 error: function (XHR, textStatus, errorThrown) {
                     artDialog(XHR.responseText, "OK");
                 },
@@ -485,7 +486,7 @@
                 d.d_productLineEquipment = d.productLineEquipment.name;
                 d.d_synthesisCuttingTool = d.synthesisCuttingTool.synthesisCode;
                 d.d_productLineParts = d.productLineParts.name;
-                d.d_productLineAxle = d.productLineAxle.name;
+//                d.d_productLineAxle = d.productLineAxle.name;
             })
             return data;
         }
@@ -614,17 +615,17 @@
                 S_editInit(data.productLineEquipment.code,'Equipment','s_DivEquipment');
                 S_editInit(data.synthesisCuttingTool.code,'DivSynthesisParameters','s_SynthesisParameters');
                 $(OplinkEditForm.DivEquipment).val(data.productLineEquipment.code);
-                $("select[name='DivAxle']").val(data.productLineEquipment.code);
+//                $("select[name='DivAxle']").val(data.productLineEquipment.code);
                 $("select[name='Parts_select']").val(data.productLineParts.code);
                 $("select[name='SynthesisParameters']").val(data.synthesisCuttingTool.code);
                 $(OplinkEditForm.DivToolDurable).val(data.toolDurable);
-                $(OplinkEditForm.DivAxle).val(data.productLineAxle.code);//机构
+//                $(OplinkEditForm.DivAxle).val(data.productLineAxle.code);
 
                 title = '${session.lang.EditOplinkTitle}';
 
                 <!-- 2017/08/21 宋健 变更↓↓↓　dazhong@YMSC -->
                 $("#equip").attr("style","display:none");
-                $("#axle").attr("style","display:none");
+//                $("#axle").attr("style","display:none");
                 $("#s_DivEquipment").attr("style","display:block");
                 $("#DivAxle").attr("style","display:block");
                 $("#div1").attr("style","height:60px;");
@@ -774,18 +775,18 @@
                     <input type="hidden" name="DivEquipments"  class="listVal" />
                     <div id="equip" style="width: 275px;height: 125px;overflow-y:scroll;padding: 5px;"></div>
                 </td>
-                <th width="150" id="axTd">
-                    轴编号
-                </th>
-                <td>
-                    <div id="DivAxle" style='display: none;'>
-                        <select class="u-sel" name="DivAxle"  id="axleCodes_select">
-                            <option value="">--请选择--</option>
-                        </select>
-                    </div>
-                    <input type="hidden" name="DivAxles"  class="listVal" />
-                    <div id="axle" style="width: 144px;height: 125px;padding: 5px;"></div>
-                </td>
+                <%--<th width="150" id="axTd">--%>
+                    <%--轴编号--%>
+                <%--</th>--%>
+                <%--<td>--%>
+                    <%--<div id="DivAxle" style='display: none;'>--%>
+                        <%--<select class="u-sel" name="DivAxle"  id="axleCodes_select">--%>
+                            <%--<option value="">--请选择--</option>--%>
+                        <%--</select>--%>
+                    <%--</div>--%>
+                    <%--<input type="hidden" name="DivAxles"  class="listVal" />--%>
+                    <%--<div id="axle" style="width: 144px;height: 125px;padding: 5px;"></div>--%>
+                <%--</td>--%>
             </tr>
         </table>
         <div>

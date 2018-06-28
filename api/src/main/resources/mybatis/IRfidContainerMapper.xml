@@ -30,65 +30,74 @@
         <result property="operatorName" column="rfid_container.operator_name"/>
         <!-- 最后操作时间 -->
         <result property="operatorTime" column="rfid_container.operator_time"/>
+        <!-- 合成刀刀身码 -->
+        <result property="synthesisBladeCode" column="rfid_container.synthesis_blade_code"/>
     </resultMap>
     <!--添加-->
-    <insert id="addRfidContainer" parameterType="com.common.pojo.RfidContainer">
+    <insert id="addRfidContainer" useGeneratedKeys="true" keyProperty="id" parameterType="com.common.pojo.RfidContainer">
         INSERT INTO rfid_container (
-            <!-- RFID载体ID -->
-            id,
-            <!-- RFID标签 -->
-            code,
-            <!-- 使用次数 -->
-            use_count,
-            <!-- 激光识别码 -->
-            laser_code,
-            <!-- 绑定类型(0RFID 1 激光码 2 工具盘 9 其他) -->
-            bind_type,
-            <!-- 标签类型（0库位标签，1单品刀，2合成刀具，3员工卡，4设备，5容器，6备刀库） -->
-            label_type,
-            <!-- 删除区分(0有效1删除) -->
-            is_del,
-            <!-- 操作人 -->
-            operator_code,
-            <!-- 上次操作 -->
-            prev_operation,
-            <!-- 上次操作key -->
-            prev_key,
-            <!-- 刀具的唯一码 -->
-            unicode,
-            <!-- 操作人姓名 -->
-            operator_name,
-            <!-- 最后操作时间 -->
-            operator_time
+        <!-- RFID载体ID -->
+        id,
+        <!-- RFID标签 -->
+        code,
+        <!-- 使用次数 -->
+        use_count,
+        <!-- 激光识别码 -->
+        laser_code,
+        <!-- 绑定类型(0RFID 1 激光码 2 工具盘 9 其他) -->
+        bind_type,
+        <!-- 标签类型（0库位标签，1单品刀，2合成刀具，3员工卡，4设备，5容器，6备刀库） -->
+        label_type,
+        <!-- 删除区分(0有效1删除) -->
+        is_del,
+        <!-- 操作人 -->
+        operator_code,
+        <!-- 上次操作 -->
+        prev_operation,
+        <!-- 上次操作key -->
+        prev_key,
+        <!-- 刀具的唯一码 -->
+        unicode,
+        <!-- 操作人姓名 -->
+        operator_name,
+        <!-- 最后操作时间 -->
+        operator_time,
+        <!-- 合成刀刀身码 -->
+        synthesis_blade_code
         )
         VALUES (
-            <!-- RFID载体ID -->
-            #{id},
-            <!-- RFID标签 -->
-            #{code},
-            <!-- 使用次数 -->
-            #{useCount},
-            <!-- 激光识别码 -->
-            #{laserCode},
-            <!-- 绑定类型(0RFID 1 激光码 2 工具盘 9 其他) -->
-            #{bindType},
-            <!-- 标签类型（0库位标签，1单品刀，2合成刀具，3员工卡，4设备，5容器，6备刀库） -->
-            #{labelType},
-            <!-- 删除区分(0有效1删除) -->
-            #{isDel},
-            <!-- 操作人 -->
-            #{operatorCode},
-            <!-- 上次操作 -->
-            #{prevOperation},
-            <!-- 上次操作key -->
-            #{prevKey},
-            <!-- 刀具的唯一码 -->
-            #{unicode},
-            <!-- 操作人姓名 -->
-            #{operatorName},
-            <!-- 最后操作时间 -->
-            #{operatorTime}
+        <!-- RFID载体ID -->
+        #{id},
+        <!-- RFID标签 -->
+        #{code},
+        <!-- 使用次数 -->
+        #{useCount},
+        <!-- 激光识别码 -->
+        #{laserCode},
+        <!-- 绑定类型(0RFID 1 激光码 2 工具盘 9 其他) -->
+        #{bindType},
+        <!-- 标签类型（0库位标签，1单品刀，2合成刀具，3员工卡，4设备，5容器，6备刀库） -->
+        #{labelType},
+        <!-- 删除区分(0有效1删除) -->
+        #{isDel},
+        <!-- 操作人 -->
+        #{operatorCode},
+        <!-- 上次操作 -->
+        #{prevOperation},
+        <!-- 上次操作key -->
+        #{prevKey},
+        <!-- 刀具的唯一码 -->
+        #{unicode},
+        <!-- 操作人姓名 -->
+        #{operatorName},
+        <!-- 最后操作时间 -->
+        #{operatorTime},
+        <!-- 合成刀刀身码 -->
+        #{synthesisBladeCode}
         )
+        <selectKey  resultType="java.lang.Integer"  order="AFTER"  keyProperty="id">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
     </insert>
 
     <!--删除-->
@@ -96,8 +105,8 @@
         DELETE
         FROM rfid_container
         WHERE
-            1 = 1
-            and id = #{id}
+        1 = 1
+        and id = #{id}
     </delete>
 
     <!--逻辑删除-->
@@ -105,225 +114,172 @@
         UPDATE rfid_container SET
         is_del = 1
         WHERE
-            1 = 1
-            and id = #{id}
+        1 = 1
+        and id = #{id}
     </delete>
 
     <!--根据VO删除-->
     <delete id="delRfidContainerByVo" parameterType="com.common.vo.RfidContainerVO">
         UPDATE rfid_container SET is_del = 1
         WHERE
-            1=1
-            <!-- RFID载体ID -->
-            <if test="id != null and id != '' " >
-                and id =  #{id}
-            </if>
-            <!-- RFID标签 -->
-            <if test="code != null and code != '' " >
-                and code =  #{code}
-            </if>
-            <!-- 使用次数 -->
-            <if test="useCount != null and useCount != '' " >
-                and use_count =  #{useCount}
-            </if>
-            <!-- 激光识别码 -->
-            <if test="laserCode != null and laserCode != '' " >
-                and laser_code =  #{laserCode}
-            </if>
-            <!-- 绑定类型(0RFID 1 激光码 2 工具盘 9 其他) -->
-            <if test="bindType != null and bindType != '' " >
-                and bind_type =  #{bindType}
-            </if>
-            <!-- 标签类型（0库位标签，1单品刀，2合成刀具，3员工卡，4设备，5容器，6备刀库） -->
-            <if test="labelType != null and labelType != '' " >
-                and label_type =  #{labelType}
-            </if>
-            <!-- 删除区分(0有效1删除) -->
-            <if test="isDel != null and isDel != '' " >
-                and is_del =  #{isDel}
-            </if>
-            <!-- 操作人 -->
-            <if test="operatorCode != null and operatorCode != '' " >
-                and operator_code =  #{operatorCode}
-            </if>
-            <!-- 上次操作 -->
-            <if test="prevOperation != null and prevOperation != '' " >
-                and prev_operation =  #{prevOperation}
-            </if>
-            <!-- 上次操作key -->
-            <if test="prevKey != null and prevKey != '' " >
-                and prev_key =  #{prevKey}
-            </if>
-            <!-- 刀具的唯一码 -->
-            <if test="unicode != null and unicode != '' " >
-                and unicode =  #{unicode}
-            </if>
-            <!-- 操作人姓名 -->
-            <if test="operatorName != null and operatorName != '' " >
-                and operator_name =  #{operatorName}
-            </if>
-            <!-- 最后操作时间 -->
-            <if test="operatorTime != null" >
-                and operator_time =  #{operatorTime}
-            </if>
+        1=1
+        <!-- RFID载体ID -->
+        <if test="id != null and id != '' " >
+            and id =  #{id}
+        </if>
+        <!-- RFID标签 -->
+        <if test="code != null and code != '' " >
+            and code =  #{code}
+        </if>
+        <!-- 使用次数 -->
+        <if test="useCount != null and useCount != '' " >
+            and use_count =  #{useCount}
+        </if>
+        <!-- 激光识别码 -->
+        <if test="laserCode != null and laserCode != '' " >
+            and laser_code =  #{laserCode}
+        </if>
+        <!-- 绑定类型(0RFID 1 激光码 2 工具盘 9 其他) -->
+        <if test="bindType != null and bindType != '' " >
+            and bind_type =  #{bindType}
+        </if>
+        <!-- 标签类型（0库位标签，1单品刀，2合成刀具，3员工卡，4设备，5容器，6备刀库） -->
+        <if test="labelType != null and labelType != '' " >
+            and label_type =  #{labelType}
+        </if>
+        <!-- 删除区分(0有效1删除) -->
+        <if test="isDel != null and isDel != '' " >
+            and is_del =  #{isDel}
+        </if>
+        <!-- 操作人 -->
+        <if test="operatorCode != null and operatorCode != '' " >
+            and operator_code =  #{operatorCode}
+        </if>
+        <!-- 上次操作 -->
+        <if test="prevOperation != null and prevOperation != '' " >
+            and prev_operation =  #{prevOperation}
+        </if>
+        <!-- 上次操作key -->
+        <if test="prevKey != null and prevKey != '' " >
+            and prev_key =  #{prevKey}
+        </if>
+        <!-- 刀具的唯一码 -->
+        <if test="unicode != null and unicode != '' " >
+            and unicode =  #{unicode}
+        </if>
+        <!-- 操作人姓名 -->
+        <if test="operatorName != null and operatorName != '' " >
+            and operator_name =  #{operatorName}
+        </if>
+        <!-- 最后操作时间 -->
+        <if test="operatorTime != null" >
+            and operator_time =  #{operatorTime}
+        </if>
+        <!-- 合成刀刀身码 -->
+        <if test="synthesisBladeCode != null and synthesisBladeCode != '' " >
+            and synthesis_blade_code =  #{synthesisBladeCode}
+        </if>
     </delete>
 
     <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
     <update id="updRfidContainer" parameterType="com.common.pojo.RfidContainer">
         UPDATE rfid_container
         SET
-            <!-- RFID标签 -->
-            <if test="code != null and code != '' " >
-                code =  #{code},
-            </if>
-            <!-- 使用次数 -->
-            <if test="useCount != null and useCount != '' " >
-                use_count =  #{useCount},
-            </if>
-            <!-- 激光识别码 -->
-            <if test="laserCode != null and laserCode != '' " >
-                laser_code =  #{laserCode},
-            </if>
-            <!-- 绑定类型(0RFID 1 激光码 2 工具盘 9 其他) -->
-            <if test="bindType != null and bindType != '' " >
-                bind_type =  #{bindType},
-            </if>
-            <!-- 标签类型（0库位标签，1单品刀，2合成刀具，3员工卡，4设备，5容器，6备刀库） -->
-            <if test="labelType != null and labelType != '' " >
-                label_type =  #{labelType},
-            </if>
-            <!-- 删除区分(0有效1删除) -->
-            <if test="isDel != null and isDel != '' " >
-                is_del =  #{isDel},
-            </if>
-            <!-- 操作人 -->
-            <if test="operatorCode != null and operatorCode != '' " >
-                operator_code =  #{operatorCode},
-            </if>
-            <!-- 上次操作 -->
-            <if test="prevOperation != null and prevOperation != '' " >
-                prev_operation =  #{prevOperation},
-            </if>
-            <!-- 上次操作key -->
-            <if test="prevKey != null and prevKey != '' " >
-                prev_key =  #{prevKey},
-            </if>
-            <!-- 刀具的唯一码 -->
-            <if test="unicode != null and unicode != '' " >
-                unicode =  #{unicode},
-            </if>
-            <!-- 操作人姓名 -->
-            <if test="operatorName != null and operatorName != '' " >
-                operator_name =  #{operatorName},
-            </if>
-            <!-- 最后操作时间 -->
-            <if test="operatorTime != null" >
-                operator_time =  #{operatorTime},
-            </if>
-            <!-- RFID载体ID -->
-            id = #{id}
+        <!-- RFID标签 -->
+        <if test="code != null and code != '' " >
+            code =  #{code},
+        </if>
+        <!-- 使用次数 -->
+        <if test="useCount != null and useCount != '' " >
+            use_count =  #{useCount},
+        </if>
+        <!-- 激光识别码 -->
+        <if test="laserCode != null and laserCode != '' " >
+            laser_code =  #{laserCode},
+        </if>
+        <!-- 绑定类型(0RFID 1 激光码 2 工具盘 9 其他) -->
+        <if test="bindType != null and bindType != '' " >
+            bind_type =  #{bindType},
+        </if>
+        <!-- 标签类型（0库位标签，1单品刀，2合成刀具，3员工卡，4设备，5容器，6备刀库） -->
+        <if test="labelType != null and labelType != '' " >
+            label_type =  #{labelType},
+        </if>
+        <!-- 删除区分(0有效1删除) -->
+        <if test="isDel != null and isDel != '' " >
+            is_del =  #{isDel},
+        </if>
+        <!-- 操作人 -->
+        <if test="operatorCode != null and operatorCode != '' " >
+            operator_code =  #{operatorCode},
+        </if>
+        <!-- 上次操作 -->
+        <if test="prevOperation != null and prevOperation != '' " >
+            prev_operation =  #{prevOperation},
+        </if>
+        <!-- 上次操作key -->
+        <if test="prevKey != null and prevKey != '' " >
+            prev_key =  #{prevKey},
+        </if>
+        <!-- 刀具的唯一码 -->
+        <if test="unicode != null and unicode != '' " >
+            unicode =  #{unicode},
+        </if>
+        <!-- 操作人姓名 -->
+        <if test="operatorName != null and operatorName != '' " >
+            operator_name =  #{operatorName},
+        </if>
+        <!-- 最后操作时间 -->
+        <if test="operatorTime != null" >
+            operator_time =  #{operatorTime},
+        </if>
+        <!-- 合成刀刀身码 -->
+        <if test="synthesisBladeCode != null and synthesisBladeCode != '' " >
+            synthesis_blade_code =  #{synthesisBladeCode},
+        </if>
+        <!-- RFID载体ID -->
+        id = #{id}
         WHERE
-            1 = 1
-            and id = #{id}
+        1 = 1
+        and id = #{id}
     </update>
 
     <!--分页查询 -->
     <select id="getRfidContainerByPage" parameterType="com.common.vo.RfidContainerVO" resultMap="rfidContainerQueryMap">
         SELECT
         /*rfidContainer begin*/
-            <!-- RFID载体ID -->
-            rfid_container.id as 'rfid_container.id',
-            <!-- RFID标签 -->
-            rfid_container.code as 'rfid_container.code',
-            <!-- 使用次数 -->
-            rfid_container.use_count as 'rfid_container.use_count',
-            <!-- 激光识别码 -->
-            rfid_container.laser_code as 'rfid_container.laser_code',
-            <!-- 绑定类型(0RFID 1 激光码 2 工具盘 9 其他) -->
-            rfid_container.bind_type as 'rfid_container.bind_type',
-            <!-- 标签类型（0库位标签，1单品刀，2合成刀具，3员工卡，4设备，5容器，6备刀库） -->
-            rfid_container.label_type as 'rfid_container.label_type',
-            <!-- 删除区分(0有效1删除) -->
-            rfid_container.is_del as 'rfid_container.is_del',
-            <!-- 操作人 -->
-            rfid_container.operator_code as 'rfid_container.operator_code',
-            <!-- 上次操作 -->
-            rfid_container.prev_operation as 'rfid_container.prev_operation',
-            <!-- 上次操作key -->
-            rfid_container.prev_key as 'rfid_container.prev_key',
-            <!-- 刀具的唯一码 -->
-            rfid_container.unicode as 'rfid_container.unicode',
-            <!-- 操作人姓名 -->
-            rfid_container.operator_name as 'rfid_container.operator_name',
-            <!-- 最后操作时间 -->
-            rfid_container.operator_time as 'rfid_container.operator_time'
+        <!-- RFID载体ID -->
+        rfid_container.id as 'rfid_container.id',
+        <!-- RFID标签 -->
+        rfid_container.code as 'rfid_container.code',
+        <!-- 使用次数 -->
+        rfid_container.use_count as 'rfid_container.use_count',
+        <!-- 激光识别码 -->
+        rfid_container.laser_code as 'rfid_container.laser_code',
+        <!-- 绑定类型(0RFID 1 激光码 2 工具盘 9 其他) -->
+        rfid_container.bind_type as 'rfid_container.bind_type',
+        <!-- 标签类型（0库位标签，1单品刀，2合成刀具，3员工卡，4设备，5容器，6备刀库） -->
+        rfid_container.label_type as 'rfid_container.label_type',
+        <!-- 删除区分(0有效1删除) -->
+        rfid_container.is_del as 'rfid_container.is_del',
+        <!-- 操作人 -->
+        rfid_container.operator_code as 'rfid_container.operator_code',
+        <!-- 上次操作 -->
+        rfid_container.prev_operation as 'rfid_container.prev_operation',
+        <!-- 上次操作key -->
+        rfid_container.prev_key as 'rfid_container.prev_key',
+        <!-- 刀具的唯一码 -->
+        rfid_container.unicode as 'rfid_container.unicode',
+        <!-- 操作人姓名 -->
+        rfid_container.operator_name as 'rfid_container.operator_name',
+        <!-- 最后操作时间 -->
+        rfid_container.operator_time as 'rfid_container.operator_time',
+        <!-- 合成刀刀身码 -->
+        rfid_container.synthesis_blade_code as 'rfid_container.synthesis_blade_code'
         /*rfidContainer end*/
         FROM rfid_container as rfid_container
         WHERE
-            1 = 1 AND  rfid_container.is_del = 0
-        /*rfid_container begin*/
-            <!-- RFID载体ID -->
-            <if test="id != null and id != '' " >
-                and rfid_container.id = #{id}
-            </if>
-            <!-- RFID标签 -->
-            <if test="code != null and code != '' " >
-                and rfid_container.code = #{code}
-            </if>
-            <!-- 使用次数 -->
-            <if test="useCount != null and useCount != '' " >
-                and rfid_container.use_count = #{useCount}
-            </if>
-            <!-- 激光识别码 -->
-            <if test="laserCode != null and laserCode != '' " >
-                and rfid_container.laser_code = #{laserCode}
-            </if>
-            <!-- 绑定类型(0RFID 1 激光码 2 工具盘 9 其他) -->
-            <if test="bindType != null and bindType != '' " >
-                and rfid_container.bind_type = #{bindType}
-            </if>
-            <!-- 标签类型（0库位标签，1单品刀，2合成刀具，3员工卡，4设备，5容器，6备刀库） -->
-            <if test="labelType != null and labelType != '' " >
-                and rfid_container.label_type = #{labelType}
-            </if>
-            <!-- 删除区分(0有效1删除) -->
-            <if test="isDel != null and isDel != '' " >
-                and rfid_container.is_del = #{isDel}
-            </if>
-            <!-- 操作人 -->
-            <if test="operatorCode != null and operatorCode != '' " >
-                and rfid_container.operator_code = #{operatorCode}
-            </if>
-            <!-- 上次操作 -->
-            <if test="prevOperation != null and prevOperation != '' " >
-                and rfid_container.prev_operation = #{prevOperation}
-            </if>
-            <!-- 上次操作key -->
-            <if test="prevKey != null and prevKey != '' " >
-                and rfid_container.prev_key = #{prevKey}
-            </if>
-            <!-- 刀具的唯一码 -->
-            <if test="unicode != null and unicode != '' " >
-                and rfid_container.unicode = #{unicode}
-            </if>
-            <!-- 操作人姓名 -->
-            <if test="operatorName != null and operatorName != '' " >
-                and rfid_container.operator_name = #{operatorName}
-            </if>
-        /*rfid_container end*/
-        ORDER BY rfid_container.id desc
-        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
-        LIMIT #{startRecord},#{pageSize}
-        </if>
-    </select>
-
-
-    <!--查询记录数-->
-    <select id="getRfidContainerCount" parameterType="com.common.vo.RfidContainerVO" resultType="java.lang.Integer">
-        SELECT COUNT(1)
-        FROM rfid_container as rfid_container
-        WHERE
-            1 = 1 AND  rfid_container.is_del = 0
+        1 = 1 AND  rfid_container.is_del = 0
         /*rfid_container begin*/
         <!-- RFID载体ID -->
         <if test="id != null and id != '' " >
@@ -372,6 +328,91 @@
         <!-- 操作人姓名 -->
         <if test="operatorName != null and operatorName != '' " >
             and rfid_container.operator_name = #{operatorName}
+        </if>
+        <!-- 最后操作时间 -->
+        <if test="operatorTime != null" >
+            and rfid_container.operator_time &lt;= #{operatorTimeEnd}
+        </if>
+        <if test="operatorTime != null" >
+            and rfid_container.operator_time &gt;= #{operatorTimeBegin}
+        </if>
+        <!-- 合成刀刀身码 -->
+        <if test="synthesisBladeCode != null and synthesisBladeCode != '' " >
+            and rfid_container.synthesis_blade_code = #{synthesisBladeCode}
+        </if>
+        /*rfid_container end*/
+        ORDER BY rfid_container.id desc
+        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
+            LIMIT #{startRecord},#{pageSize}
+        </if>
+    </select>
+
+
+    <!--查询记录数-->
+    <select id="getRfidContainerCount" parameterType="com.common.vo.RfidContainerVO" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM rfid_container as rfid_container
+        WHERE
+        1 = 1 AND  rfid_container.is_del = 0
+        /*rfid_container begin*/
+        <!-- RFID载体ID -->
+        <if test="id != null and id != '' " >
+            and rfid_container.id = #{id}
+        </if>
+        <!-- RFID标签 -->
+        <if test="code != null and code != '' " >
+            and rfid_container.code = #{code}
+        </if>
+        <!-- 使用次数 -->
+        <if test="useCount != null and useCount != '' " >
+            and rfid_container.use_count = #{useCount}
+        </if>
+        <!-- 激光识别码 -->
+        <if test="laserCode != null and laserCode != '' " >
+            and rfid_container.laser_code = #{laserCode}
+        </if>
+        <!-- 绑定类型(0RFID 1 激光码 2 工具盘 9 其他) -->
+        <if test="bindType != null and bindType != '' " >
+            and rfid_container.bind_type = #{bindType}
+        </if>
+        <!-- 标签类型（0库位标签，1单品刀，2合成刀具，3员工卡，4设备，5容器，6备刀库） -->
+        <if test="labelType != null and labelType != '' " >
+            and rfid_container.label_type = #{labelType}
+        </if>
+        <!-- 删除区分(0有效1删除) -->
+        <if test="isDel != null and isDel != '' " >
+            and rfid_container.is_del = #{isDel}
+        </if>
+        <!-- 操作人 -->
+        <if test="operatorCode != null and operatorCode != '' " >
+            and rfid_container.operator_code = #{operatorCode}
+        </if>
+        <!-- 上次操作 -->
+        <if test="prevOperation != null and prevOperation != '' " >
+            and rfid_container.prev_operation = #{prevOperation}
+        </if>
+        <!-- 上次操作key -->
+        <if test="prevKey != null and prevKey != '' " >
+            and rfid_container.prev_key = #{prevKey}
+        </if>
+        <!-- 刀具的唯一码 -->
+        <if test="unicode != null and unicode != '' " >
+            and rfid_container.unicode = #{unicode}
+        </if>
+        <!-- 操作人姓名 -->
+        <if test="operatorName != null and operatorName != '' " >
+            and rfid_container.operator_name = #{operatorName}
+        </if>
+        <!-- 最后操作时间 -->
+        <if test="operatorTime != null" >
+            and rfid_container.operator_time &lt;= #{operatorTimeEnd}
+        </if>
+        <if test="operatorTime != null" >
+            and rfid_container.operator_time &gt;= #{operatorTimeBegin}
+        </if>
+        <!-- 合成刀刀身码 -->
+        <if test="synthesisBladeCode != null and synthesisBladeCode != '' " >
+            and rfid_container.synthesis_blade_code = #{synthesisBladeCode}
         </if>
         /*rfid_container end*/
     </select>
@@ -405,11 +446,13 @@
         <!-- 操作人姓名 -->
         rfid_container.operator_name as 'rfid_container.operator_name',
         <!-- 最后操作时间 -->
-        rfid_container.operator_time as 'rfid_container.operator_time'
+        rfid_container.operator_time as 'rfid_container.operator_time',
+        <!-- 合成刀刀身码 -->
+        rfid_container.synthesis_blade_code as 'rfid_container.synthesis_blade_code'
         /*rfid_container end*/
         FROM rfid_container as rfid_container
         WHERE
-            1 = 1 AND  rfid_container.is_del = 0
+        1 = 1 AND  rfid_container.is_del = 0
         /*rfid_container begin*/
         <!-- RFID载体ID -->
         <if test="id != null and id != '' " >
@@ -459,6 +502,85 @@
         <if test="operatorName != null and operatorName != '' " >
             and rfid_container.operator_name = #{operatorName}
         </if>
+        <!-- 最后操作时间 -->
+        <if test="operatorTime != null" >
+            and rfid_container.operator_time &lt;= #{operatorTimeEnd}
+        </if>
+        <if test="operatorTime != null" >
+            and rfid_container.operator_time &gt;= #{operatorTimeBegin}
+        </if>
+        <!-- 合成刀刀身码 -->
+        <if test="synthesisBladeCode != null and synthesisBladeCode != '' " >
+            and rfid_container.synthesis_blade_code = #{synthesisBladeCode}
+        </if>
         /*rfid_container end*/
     </select>
+
+
+    <update id="clearData" parameterType="com.common.vo.RfidContainerVO">
+      UPDATE rfid_container SET  laser_code = NULL
+      WHERE 1=1 AND  rfid_container.is_del = 0
+        /*rfid_container begin*/
+        <!-- RFID载体ID -->
+        <if test="id != null and id != '' " >
+            and rfid_container.id = #{id}
+        </if>
+        <!-- RFID标签 -->
+        <if test="code != null and code != '' " >
+            and rfid_container.code = #{code}
+        </if>
+        <!-- 使用次数 -->
+        <if test="useCount != null and useCount != '' " >
+            and rfid_container.use_count = #{useCount}
+        </if>
+        <!-- 激光识别码 -->
+        <if test="laserCode != null and laserCode != '' " >
+            and rfid_container.laser_code = #{laserCode}
+        </if>
+        <!-- 绑定类型(0RFID 1 激光码 2 工具盘 9 其他) -->
+        <if test="bindType != null and bindType != '' " >
+            and rfid_container.bind_type = #{bindType}
+        </if>
+        <!-- 标签类型（0库位标签，1单品刀，2合成刀具，3员工卡，4设备，5容器，6备刀库） -->
+        <if test="labelType != null and labelType != '' " >
+            and rfid_container.label_type = #{labelType}
+        </if>
+        <!-- 删除区分(0有效1删除) -->
+        <if test="isDel != null and isDel != '' " >
+            and rfid_container.is_del = #{isDel}
+        </if>
+        <!-- 操作人 -->
+        <if test="operatorCode != null and operatorCode != '' " >
+            and rfid_container.operator_code = #{operatorCode}
+        </if>
+        <!-- 上次操作 -->
+        <if test="prevOperation != null and prevOperation != '' " >
+            and rfid_container.prev_operation = #{prevOperation}
+        </if>
+        <!-- 上次操作key -->
+        <if test="prevKey != null and prevKey != '' " >
+            and rfid_container.prev_key = #{prevKey}
+        </if>
+        <!-- 刀具的唯一码 -->
+        <if test="unicode != null and unicode != '' " >
+            and rfid_container.unicode = #{unicode}
+        </if>
+        <!-- 操作人姓名 -->
+        <if test="operatorName != null and operatorName != '' " >
+            and rfid_container.operator_name = #{operatorName}
+        </if>
+        <!-- 最后操作时间 -->
+        <if test="operatorTime != null" >
+            and rfid_container.operator_time &lt;= #{operatorTimeEnd}
+        </if>
+        <if test="operatorTime != null" >
+            and rfid_container.operator_time &gt;= #{operatorTimeBegin}
+        </if>
+        <!-- 合成刀刀身码 -->
+        <if test="synthesisBladeCode != null and synthesisBladeCode != '' " >
+            and rfid_container.synthesis_blade_code = #{synthesisBladeCode}
+        </if>
+        /*rfid_container end*/
+
+    </update>
 </mapper>

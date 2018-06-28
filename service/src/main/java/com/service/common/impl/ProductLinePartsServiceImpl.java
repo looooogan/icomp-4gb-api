@@ -3,6 +3,9 @@ package com.service.common.impl;
 
 import com.common.mapper.IProductLinePartsMapper;
 import com.common.pojo.ProductLineParts;
+import com.common.utils.exception.ExceptionConstans;
+import com.common.utils.exception.SelfDefinedException;
+import com.common.utils.loadConfig.IMessageSourceHanlder;
 import com.common.vo.ProductLinePartsVO;
 import com.service.common.IProductLinePartsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,8 @@ public class ProductLinePartsServiceImpl implements IProductLinePartsService{
 
     @Autowired
     private IProductLinePartsMapper productLinePartsMapper;
+    @Autowired
+    private IMessageSourceHanlder messageSourceHanlder;
 
 
 
@@ -34,6 +39,12 @@ public class ProductLinePartsServiceImpl implements IProductLinePartsService{
     */
     @Override
     public void addProductLineParts(ProductLineParts productLineParts) throws Exception{
+        ProductLinePartsVO productLinePartsVO = new ProductLinePartsVO();
+        productLinePartsVO.setCode(productLineParts.getCode());
+        ProductLineParts partsTmp = productLinePartsMapper.getProductLineParts(productLinePartsVO);
+        if (null != partsTmp){
+            throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.LINE_PARTS_EXISTS));
+        }
         productLineParts.setIsDel(0);
         productLinePartsMapper.addProductLineParts(productLineParts);
     }
@@ -83,6 +94,12 @@ public class ProductLinePartsServiceImpl implements IProductLinePartsService{
     */
     @Override
     public void updProductLineParts(ProductLineParts productLineParts) throws Exception{
+        ProductLinePartsVO productLinePartsVO = new ProductLinePartsVO();
+        productLinePartsVO.setCode(productLineParts.getCode());
+        ProductLineParts partsTmp = productLinePartsMapper.getProductLineParts(productLinePartsVO);
+        if (null != partsTmp&&partsTmp.getId()!=productLineParts.getId()){
+            throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.LINE_PARTS_EXISTS));
+        }
         productLinePartsMapper.updProductLineParts(productLineParts);
     }
 

@@ -67,7 +67,7 @@
     </resultMap>
     <!-- 添加 -->
     <insert id="addDjItrnAkp" parameterType="com.common.pojo.DjItrnAkp">
-        INSERT INTO FCCCMS.DJ_ITRN_AKP (
+        INSERT INTO DJ_ITRN_AKP (
             /*  */
             BATCHNO,
             /*  */
@@ -200,21 +200,21 @@
     <!-- 删除 -->
     <delete id="delDjItrnAkp" parameterType="com.common.pojo.DjItrnAkp">
         DELETE
-        FROM FCCCMS.DJ_ITRN_AKP
+        FROM DJ_ITRN_AKP
         WHERE
             1 = 1
     </delete>
 
     <!-- 逻辑删除 -->
     <delete id="delDjItrnAkpForLogic" parameterType="com.common.pojo.DjItrnAkp">
-        DELETE FROM  FCCCMS.DJ_ITRN_AKP
+        DELETE FROM  DJ_ITRN_AKP
         WHERE
             1 = 1
     </delete>
 
     <!-- 根据VO删除 -->
     <delete id="delDjItrnAkpByVo" parameterType="com.common.vo.DjItrnAkpVO">
-        DELETE FROM FCCCMS.DJ_ITRN_AKP
+        DELETE FROM DJ_ITRN_AKP
         WHERE
             1=1
             /*  */
@@ -345,7 +345,7 @@
 
     <!-- 更新,如果属性不为null 则更新该属性,根据id更新 -->
     <update id="updDjItrnAkp" parameterType="com.common.pojo.DjItrnAkp">
-        UPDATE FCCCMS.DJ_ITRN_AKP
+        UPDATE DJ_ITRN_AKP
         SET
             /*  */
             <if test="batchno != null and batchno != '' " >
@@ -543,10 +543,10 @@
             /*  */
             code AS code
         /*djItrnAkp end*/
-        FROM FCCCMS.DJ_ITRN_AKP
+        FROM DJ_ITRN_AKP
         WHERE
             1 = 1
-        /*FCCCMS.DJ_ITRN_AKP begin*/
+        /*DJ_ITRN_AKP begin*/
             /*  */
             <if test="batchno != null and batchno != '' " >
                 and BATCHNO = #{batchno}
@@ -671,7 +671,7 @@
             <if test="code != null and code != '' " >
                 and code = #{code}
             </if>
-        /*FCCCMS.DJ_ITRN_AKP end*/
+        /*DJ_ITRN_AKP end*/
         ORDER BY  desc
     </select>
 
@@ -679,10 +679,10 @@
     <!-- 查询记录数 -->
     <select id="getDjItrnAkpCount" parameterType="com.common.vo.DjItrnAkpVO" resultType="java.lang.Integer">
         SELECT COUNT(1)
-        FROM FCCCMS.DJ_ITRN_AKP
+        FROM DJ_ITRN_AKP
         WHERE
             1 = 1
-        /*FCCCMS.DJ_ITRN_AKP begin*/
+        /*DJ_ITRN_AKP begin*/
         /*  */
         <if test="batchno != null and batchno != '' " >
             and BATCHNO = #{batchno}
@@ -807,13 +807,13 @@
         <if test="code != null and code != '' " >
             and code = #{code}
         </if>
-        /*FCCCMS.DJ_ITRN_AKP end*/
+        /*DJ_ITRN_AKP end*/
     </select>
 
     <!-- 根据vo查询 -->
     <select id="getDjItrnAkp" parameterType="com.common.vo.DjItrnAkpVO" resultMap="djItrnAkpQueryMap">
         SELECT
-        /*FCCCMS.DJ_ITRN_AKP begin*/
+        /*DJ_ITRN_AKP begin*/
         /*  */
         BATCHNO,
         /*  */
@@ -876,11 +876,11 @@
         QTY,
         /*  */
         code
-        /*FCCCMS.DJ_ITRN_AKP end*/
-        FROM FCCCMS.DJ_ITRN_AKP
+        /*DJ_ITRN_AKP end*/
+        FROM DJ_ITRN_AKP
         WHERE
             1 = 1
-        /*FCCCMS.DJ_ITRN_AKP begin*/
+        /*DJ_ITRN_AKP begin*/
         /*  */
         <if test="batchno != null and batchno != '' " >
             and BATCHNO = #{batchno}
@@ -1005,14 +1005,14 @@
         <if test="code != null and code != '' " >
             and code = #{code}
         </if>
-        /*FCCCMS.DJ_ITRN_AKP end*/
+        /*DJ_ITRN_AKP end*/
     </select>
 
 
     <!-- 获取最后一条记录 -->
     <select id="getLast" parameterType="com.common.vo.DjItrnAkpVO" resultMap="djItrnAkpQueryMap">
         SELECT
-        /*FCCCMS.DJ_ITRN_AKP begin*/
+        /*DJ_ITRN_AKP begin*/
         /*  */
         BATCHNO,
         /*  */
@@ -1075,11 +1075,11 @@
         QTY,
         /*  */
         code
-        /*FCCCMS.DJ_ITRN_AKP end*/
-        FROM FCCCMS.DJ_ITRN_AKP
+        /*DJ_ITRN_AKP end*/
+        FROM DJ_ITRN_AKP
         WHERE
         1 = 1 and ROWNUM = 1
-        /*FCCCMS.DJ_ITRN_AKP begin*/
+        /*DJ_ITRN_AKP begin*/
         /*  */
         <if test="batchno != null and batchno != '' " >
             and BATCHNO = #{batchno}
@@ -1204,15 +1204,15 @@
         <if test="code != null and code != '' " >
             and code = #{code}
         </if>
-        /*FCCCMS.DJ_ITRN_AKP end*/
+        /*DJ_ITRN_AKP end*/
         ORDER BY CREATE_DATE DESC
     </select>
 
     <select id="getMaxBatchNo" resultType="java.lang.Integer">
-        SELECT MAX(BATCHNO) FROM FCCCMS.DJ_ITRN_AKP
+        SELECT MAX(BATCHNO) FROM DJ_ITRN_AKP
     </select>
 
     <select id="getMaxWWOrderNum" resultType="java.lang.String">
-        SELECT MAX(WWCODE) FROM FCCCMS.DJ_ITRN_AKP
+        SELECT MAX(WWCODE) FROM DJ_ITRN_AKP
     </select>
 </mapper>

@@ -224,7 +224,7 @@
             </if>
             <!-- 名称 -->
             <if test="name != null and name != '' " >
-                and product_line_equipment.name = #{name}
+                and product_line_equipment.name LIKE "%"#{name}"%"
             </if>
             <!-- 设备类型(0:加工设备1:对刀设备2:专机) -->
             <if test="type != null and type != '' " >

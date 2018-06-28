@@ -1,0 +1,693 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.mapper.ISynthesisBladeCodeMapper">
+    <resultMap id="synthesisBladeCodeQueryMap" type="com.common.pojo.SynthesisBladeCode">
+        <!-- 标识 -->
+        <id property="id" column="synthesis_blade_code.id"/>
+
+        <!-- 唯一code -->
+        <result property="code" column="synthesis_blade_code.code"/>
+        <!-- 刀身码 -->
+        <result property="bladeCode" column="synthesis_blade_code.blade_code"/>
+        <!-- 状态 1已使用  -->
+        <result property="status" column="synthesis_blade_code.status"/>
+        <!-- 逻辑删除 -->
+        <result property="isDel" column="synthesis_blade_code.is_del"/>
+        <!-- 范围最大值 -->
+        <result property="maxValue" column="synthesis_blade_code.max_value"/>
+        <!-- 范围最小值 -->
+        <result property="minValue" column="synthesis_blade_code.min_value"/>
+        <!--  -->
+        <result property="synthesisCuttingToolCode" column="synthesis_blade_code.synthesis_cutting_tool_code"/>
+        <!-- 数值 -->
+        <result property="intValue" column="synthesis_blade_code.int_value"/>
+        <!--  -->
+        <association property="synthesisCuttingTool"  column="synthesis_cutting_tool.code" resultMap="synthesisBladeCodeSynthesisCuttingToolMap"/>
+    </resultMap>
+    <resultMap id="synthesisBladeCodeSynthesisCuttingToolMap" type="com.common.pojo.SynthesisCuttingTool">
+        <!-- id -->
+        <id property="id" column="synthesis_cutting_tool.id"/>
+
+        <!-- 编码 -->
+        <result property="code" column="synthesis_cutting_tool.code"/>
+        <!-- 合成刀业务编码 -->
+        <result property="synthesisCode" column="synthesis_cutting_tool.synthesis_code"/>
+        <!-- 图纸url -->
+        <result property="picUrl" column="synthesis_cutting_tool.pic_url"/>
+        <!-- 逻辑删除 -->
+        <result property="isDel" column="synthesis_cutting_tool.is_del"/>
+        <!-- 合成刀类型  -->
+        <result property="synthesisCuttingToolTypeId" column="synthesis_cutting_tool.synthesis_cutting_tool_type_id"/>
+    </resultMap>
+    <!--添加-->
+    <insert id="addSynthesisBladeCode" useGeneratedKeys="true" keyProperty="id" parameterType="com.common.pojo.SynthesisBladeCode">
+        INSERT INTO synthesis_blade_code (
+        <!-- 标识 -->
+        id,
+        <!-- 唯一code -->
+        code,
+        <!-- 刀身码 -->
+        blade_code,
+        <!-- 状态 1已使用  -->
+        status,
+        <!-- 逻辑删除 -->
+        is_del,
+        <!-- 范围最大值 -->
+        max_value,
+        <!-- 范围最小值 -->
+        min_value,
+        <!--  -->
+        synthesis_cutting_tool_code,
+        <!-- 数值 -->
+        int_value
+        )
+        VALUES (
+        <!-- 标识 -->
+        #{id},
+        <!-- 唯一code -->
+        #{code},
+        <!-- 刀身码 -->
+        #{bladeCode},
+        <!-- 状态 1已使用  -->
+        #{status},
+        <!-- 逻辑删除 -->
+        #{isDel},
+        <!-- 范围最大值 -->
+        #{maxValue},
+        <!-- 范围最小值 -->
+        #{minValue},
+        <!--  -->
+        #{synthesisCuttingToolCode},
+        <!-- 数值 -->
+        #{intValue}
+        )
+        <selectKey  resultType="java.lang.Integer"  order="AFTER"  keyProperty="id">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <!--删除-->
+    <delete id="delSynthesisBladeCode" parameterType="com.common.pojo.SynthesisBladeCode">
+        DELETE
+        FROM synthesis_blade_code
+        WHERE
+        1 = 1
+        and id = #{id}
+    </delete>
+
+    <!--逻辑删除-->
+    <delete id="delSynthesisBladeCodeForLogic" parameterType="com.common.pojo.SynthesisBladeCode">
+        UPDATE synthesis_blade_code SET
+        is_del = 1
+        WHERE
+        1 = 1
+        and id = #{id}
+    </delete>
+
+    <!--根据VO删除-->
+    <delete id="delSynthesisBladeCodeByVo" parameterType="com.common.vo.SynthesisBladeCodeVO">
+        UPDATE synthesis_blade_code SET is_del = 1
+        WHERE
+        1=1
+        <!-- 标识 -->
+        <if test="id != null and id != '' " >
+            and id =  #{id}
+        </if>
+        <!-- 唯一code -->
+        <if test="code != null and code != '' " >
+            and code =  #{code}
+        </if>
+        <!-- 刀身码 -->
+        <if test="bladeCode != null and bladeCode != '' " >
+            and blade_code =  #{bladeCode}
+        </if>
+        <!-- 状态 1已使用  -->
+        <if test="status != null and status != '' " >
+            and status =  #{status}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="isDel != null and isDel != '' " >
+            and is_del =  #{isDel}
+        </if>
+        <!-- 范围最大值 -->
+        <if test="maxValue != null and maxValue != '' " >
+            and max_value =  #{maxValue}
+        </if>
+        <!-- 范围最小值 -->
+        <if test="minValue != null and minValue != '' " >
+            and min_value =  #{minValue}
+        </if>
+        <!--  -->
+        <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+            and synthesis_cutting_tool_code =  #{synthesisCuttingToolCode}
+        </if>
+        <!-- 数值 -->
+        <if test="intValue != null and intValue != '' " >
+            and int_value =  #{intValue}
+        </if>
+    </delete>
+
+    <!--更新,如果属性不为null 则更新该属性,根据id更新 -->
+    <update id="updSynthesisBladeCode" parameterType="com.common.pojo.SynthesisBladeCode">
+        UPDATE synthesis_blade_code
+        SET
+        <!-- 唯一code -->
+        <if test="code != null and code != '' " >
+            code =  #{code},
+        </if>
+        <!-- 刀身码 -->
+        <if test="bladeCode != null and bladeCode != '' " >
+            blade_code =  #{bladeCode},
+        </if>
+        <!-- 状态 1已使用  -->
+        <if test="status != null and status != '' " >
+            status =  #{status},
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="isDel != null and isDel != '' " >
+            is_del =  #{isDel},
+        </if>
+        <!-- 范围最大值 -->
+        <if test="maxValue != null and maxValue != '' " >
+            max_value =  #{maxValue},
+        </if>
+        <!-- 范围最小值 -->
+        <if test="minValue != null and minValue != '' " >
+            min_value =  #{minValue},
+        </if>
+        <!--  -->
+        <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+            synthesis_cutting_tool_code =  #{synthesisCuttingToolCode},
+        </if>
+        <!-- 数值 -->
+        <if test="intValue != null and intValue != '' " >
+            int_value =  #{intValue},
+        </if>
+        <!-- 标识 -->
+        id = #{id}
+        WHERE
+        1 = 1
+        and id = #{id}
+    </update>
+
+    <!--分页查询 -->
+    <select id="getSynthesisBladeCodeByPage" parameterType="com.common.vo.SynthesisBladeCodeVO" resultMap="synthesisBladeCodeQueryMap">
+        SELECT
+        /*synthesisBladeCode begin*/
+        <!-- 标识 -->
+        synthesis_blade_code.id as 'synthesis_blade_code.id',
+        <!-- 唯一code -->
+        synthesis_blade_code.code as 'synthesis_blade_code.code',
+        <!-- 刀身码 -->
+        synthesis_blade_code.blade_code as 'synthesis_blade_code.blade_code',
+        <!-- 状态 1已使用  -->
+        synthesis_blade_code.status as 'synthesis_blade_code.status',
+        <!-- 逻辑删除 -->
+        synthesis_blade_code.is_del as 'synthesis_blade_code.is_del',
+        <!-- 范围最大值 -->
+        synthesis_blade_code.max_value as 'synthesis_blade_code.max_value',
+        <!-- 范围最小值 -->
+        synthesis_blade_code.min_value as 'synthesis_blade_code.min_value',
+        <!--  -->
+        synthesis_blade_code.synthesis_cutting_tool_code as 'synthesis_blade_code.synthesis_cutting_tool_code',
+        <!-- 数值 -->
+        synthesis_blade_code.int_value as 'synthesis_blade_code.int_value',
+        /*synthesisBladeCode end*/
+        /*synthesis_cutting_tool begin*/
+        <!-- id -->
+        synthesis_cutting_tool.id as 'synthesis_cutting_tool.id',
+        <!-- 编码 -->
+        synthesis_cutting_tool.code as 'synthesis_cutting_tool.code',
+        <!-- 合成刀业务编码 -->
+        synthesis_cutting_tool.synthesis_code as 'synthesis_cutting_tool.synthesis_code',
+        <!-- 图纸url -->
+        synthesis_cutting_tool.pic_url as 'synthesis_cutting_tool.pic_url',
+        <!-- 逻辑删除 -->
+        synthesis_cutting_tool.is_del as 'synthesis_cutting_tool.is_del',
+        <!-- 合成刀类型  -->
+        synthesis_cutting_tool.synthesis_cutting_tool_type_id as 'synthesis_cutting_tool.synthesis_cutting_tool_type_id'
+        /*synthesis_cutting_tool end*/
+        FROM synthesis_blade_code as synthesis_blade_code
+        LEFT JOIN synthesis_cutting_tool as synthesis_cutting_tool ON synthesis_cutting_tool.code = synthesis_blade_code.synthesis_cutting_tool_code
+        WHERE
+        1 = 1 AND  synthesis_blade_code.is_del = 0
+        /*synthesis_blade_code begin*/
+        <!-- 标识 -->
+        <if test="id != null and id != '' " >
+            and synthesis_blade_code.id = #{id}
+        </if>
+        <!-- 唯一code -->
+        <if test="code != null and code != '' " >
+            and synthesis_blade_code.code = #{code}
+        </if>
+        <!-- 刀身码 -->
+        <if test="bladeCode != null and bladeCode != '' " >
+            and synthesis_blade_code.blade_code = #{bladeCode}
+        </if>
+        <!-- 状态 1已使用  -->
+        <if test="status != null and status != '' " >
+            and synthesis_blade_code.status = #{status}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="isDel != null and isDel != '' " >
+            and synthesis_blade_code.is_del = #{isDel}
+        </if>
+        <!-- 范围最大值 -->
+        <if test="maxValue != null and maxValue != '' " >
+            and synthesis_blade_code.max_value = #{maxValue}
+        </if>
+        <!-- 范围最小值 -->
+        <if test="minValue != null and minValue != '' " >
+            and synthesis_blade_code.min_value = #{minValue}
+        </if>
+        <!--  -->
+        <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+            and synthesis_blade_code.synthesis_cutting_tool_code = #{synthesisCuttingToolCode}
+        </if>
+        <!-- 数值 -->
+        <if test="intValue != null and intValue != '' " >
+            and synthesis_blade_code.int_value = #{intValue}
+        </if>
+        /*synthesis_blade_code end*/
+        /*synthesis_cutting_tool begin*/
+        <if test="synthesisCuttingToolVO != null ">
+            <!-- id -->
+            <if test="synthesisCuttingToolVO.id != null and synthesisCuttingToolVO.id != '' " >
+                and synthesis_cutting_tool.id = #{synthesisCuttingToolVO.id}
+            </if>
+            <!-- 编码 -->
+            <if test="synthesisCuttingToolVO.code != null and synthesisCuttingToolVO.code != '' " >
+                and synthesis_cutting_tool.code = #{synthesisCuttingToolVO.code}
+            </if>
+            <!-- 合成刀业务编码 -->
+            <if test="synthesisCuttingToolVO.synthesisCode != null and synthesisCuttingToolVO.synthesisCode != '' " >
+                and synthesis_cutting_tool.synthesis_code = #{synthesisCuttingToolVO.synthesisCode}
+            </if>
+            <!-- 图纸url -->
+            <if test="synthesisCuttingToolVO.picUrl != null and synthesisCuttingToolVO.picUrl != '' " >
+                and synthesis_cutting_tool.pic_url = #{synthesisCuttingToolVO.picUrl}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="synthesisCuttingToolVO.isDel != null and synthesisCuttingToolVO.isDel != '' " >
+                and synthesis_cutting_tool.is_del = #{synthesisCuttingToolVO.isDel}
+            </if>
+            <!-- 合成刀类型  -->
+            <if test="synthesisCuttingToolVO.synthesisCuttingToolTypeId != null and synthesisCuttingToolVO.synthesisCuttingToolTypeId != '' " >
+                and synthesis_cutting_tool.synthesis_cutting_tool_type_id = #{synthesisCuttingToolVO.synthesisCuttingToolTypeId}
+            </if>
+        </if>
+        /*synthesis_cutting_tool end*/
+        ORDER BY synthesis_blade_code.id desc
+        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
+            LIMIT #{startRecord},#{pageSize}
+        </if>
+    </select>
+
+
+    <!--查询记录数-->
+    <select id="getSynthesisBladeCodeCount" parameterType="com.common.vo.SynthesisBladeCodeVO" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM synthesis_blade_code as synthesis_blade_code
+        LEFT JOIN synthesis_cutting_tool as synthesis_cutting_tool ON synthesis_cutting_tool.code = synthesis_blade_code.synthesis_cutting_tool_code
+        WHERE
+        1 = 1 AND  synthesis_blade_code.is_del = 0
+        /*synthesis_blade_code begin*/
+        <!-- 标识 -->
+        <if test="id != null and id != '' " >
+            and synthesis_blade_code.id = #{id}
+        </if>
+        <!-- 唯一code -->
+        <if test="code != null and code != '' " >
+            and synthesis_blade_code.code = #{code}
+        </if>
+        <!-- 刀身码 -->
+        <if test="bladeCode != null and bladeCode != '' " >
+            and synthesis_blade_code.blade_code = #{bladeCode}
+        </if>
+        <!-- 状态 1已使用  -->
+        <if test="status != null and status != '' " >
+            and synthesis_blade_code.status = #{status}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="isDel != null and isDel != '' " >
+            and synthesis_blade_code.is_del = #{isDel}
+        </if>
+        <!-- 范围最大值 -->
+        <if test="maxValue != null and maxValue != '' " >
+            and synthesis_blade_code.max_value = #{maxValue}
+        </if>
+        <!-- 范围最小值 -->
+        <if test="minValue != null and minValue != '' " >
+            and synthesis_blade_code.min_value = #{minValue}
+        </if>
+        <!--  -->
+        <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+            and synthesis_blade_code.synthesis_cutting_tool_code = #{synthesisCuttingToolCode}
+        </if>
+        <!-- 数值 -->
+        <if test="intValue != null and intValue != '' " >
+            and synthesis_blade_code.int_value = #{intValue}
+        </if>
+        /*synthesis_blade_code end*/
+        /*synthesis_cutting_tool begin*/
+        <if test="synthesisCuttingToolVO != null ">
+            <!-- id -->
+            <if test="synthesisCuttingToolVO.id != null and synthesisCuttingToolVO.id != '' " >
+                and synthesis_cutting_tool.id = #{synthesisCuttingToolVO.id}
+            </if>
+            <!-- 编码 -->
+            <if test="synthesisCuttingToolVO.code != null and synthesisCuttingToolVO.code != '' " >
+                and synthesis_cutting_tool.code = #{synthesisCuttingToolVO.code}
+            </if>
+            <!-- 合成刀业务编码 -->
+            <if test="synthesisCuttingToolVO.synthesisCode != null and synthesisCuttingToolVO.synthesisCode != '' " >
+                and synthesis_cutting_tool.synthesis_code = #{synthesisCuttingToolVO.synthesisCode}
+            </if>
+            <!-- 图纸url -->
+            <if test="synthesisCuttingToolVO.picUrl != null and synthesisCuttingToolVO.picUrl != '' " >
+                and synthesis_cutting_tool.pic_url = #{synthesisCuttingToolVO.picUrl}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="synthesisCuttingToolVO.isDel != null and synthesisCuttingToolVO.isDel != '' " >
+                and synthesis_cutting_tool.is_del = #{synthesisCuttingToolVO.isDel}
+            </if>
+            <!-- 合成刀类型  -->
+            <if test="synthesisCuttingToolVO.synthesisCuttingToolTypeId != null and synthesisCuttingToolVO.synthesisCuttingToolTypeId != '' " >
+                and synthesis_cutting_tool.synthesis_cutting_tool_type_id = #{synthesisCuttingToolVO.synthesisCuttingToolTypeId}
+            </if>
+        </if>
+        /*synthesis_cutting_tool end*/
+    </select>
+
+    <!--根据vo查询 -->
+    <select id="getSynthesisBladeCode" parameterType="com.common.vo.SynthesisBladeCodeVO" resultMap="synthesisBladeCodeQueryMap">
+        SELECT
+        /*synthesis_blade_code begin*/
+        <!-- 标识 -->
+        synthesis_blade_code.id as 'synthesis_blade_code.id',
+        <!-- 唯一code -->
+        synthesis_blade_code.code as 'synthesis_blade_code.code',
+        <!-- 刀身码 -->
+        synthesis_blade_code.blade_code as 'synthesis_blade_code.blade_code',
+        <!-- 状态 1已使用  -->
+        synthesis_blade_code.status as 'synthesis_blade_code.status',
+        <!-- 逻辑删除 -->
+        synthesis_blade_code.is_del as 'synthesis_blade_code.is_del',
+        <!-- 范围最大值 -->
+        synthesis_blade_code.max_value as 'synthesis_blade_code.max_value',
+        <!-- 范围最小值 -->
+        synthesis_blade_code.min_value as 'synthesis_blade_code.min_value',
+        <!--  -->
+        synthesis_blade_code.synthesis_cutting_tool_code as 'synthesis_blade_code.synthesis_cutting_tool_code',
+        <!-- 数值 -->
+        synthesis_blade_code.int_value as 'synthesis_blade_code.int_value',
+        /*synthesis_blade_code end*/
+        /*synthesis_cutting_tool begin*/
+        <!-- id -->
+        synthesis_cutting_tool.id as 'synthesis_cutting_tool.id',
+        <!-- 编码 -->
+        synthesis_cutting_tool.code as 'synthesis_cutting_tool.code',
+        <!-- 合成刀业务编码 -->
+        synthesis_cutting_tool.synthesis_code as 'synthesis_cutting_tool.synthesis_code',
+        <!-- 图纸url -->
+        synthesis_cutting_tool.pic_url as 'synthesis_cutting_tool.pic_url',
+        <!-- 逻辑删除 -->
+        synthesis_cutting_tool.is_del as 'synthesis_cutting_tool.is_del',
+        <!-- 合成刀类型  -->
+        synthesis_cutting_tool.synthesis_cutting_tool_type_id as 'synthesis_cutting_tool.synthesis_cutting_tool_type_id'
+        /*synthesis_cutting_tool end*/
+        FROM synthesis_blade_code as synthesis_blade_code
+        LEFT JOIN synthesis_cutting_tool as synthesis_cutting_tool ON synthesis_cutting_tool.code = synthesis_blade_code.synthesis_cutting_tool_code
+        WHERE
+        1 = 1 AND  synthesis_blade_code.is_del = 0
+        /*synthesis_blade_code begin*/
+        <!-- 标识 -->
+        <if test="id != null and id != '' " >
+            and synthesis_blade_code.id = #{id}
+        </if>
+        <!-- 唯一code -->
+        <if test="code != null and code != '' " >
+            and synthesis_blade_code.code = #{code}
+        </if>
+        <!-- 刀身码 -->
+        <if test="bladeCode != null and bladeCode != '' " >
+            and synthesis_blade_code.blade_code = #{bladeCode}
+        </if>
+        <!-- 状态 1已使用  -->
+        <if test="status != null and status != '' " >
+            and synthesis_blade_code.status = #{status}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="isDel != null and isDel != '' " >
+            and synthesis_blade_code.is_del = #{isDel}
+        </if>
+        <!-- 范围最大值 -->
+        <if test="maxValue != null and maxValue != '' " >
+            and synthesis_blade_code.max_value = #{maxValue}
+        </if>
+        <!-- 范围最小值 -->
+        <if test="minValue != null and minValue != '' " >
+            and synthesis_blade_code.min_value = #{minValue}
+        </if>
+        <!--  -->
+        <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+            and synthesis_blade_code.synthesis_cutting_tool_code = #{synthesisCuttingToolCode}
+        </if>
+        <!-- 数值 -->
+        <if test="intValue != null and intValue != '' " >
+            and synthesis_blade_code.int_value = #{intValue}
+        </if>
+        /*synthesis_blade_code end*/
+        /*synthesis_cutting_tools begin*/
+        <if test="synthesisCuttingToolVO != null ">
+            <!-- id -->
+            <if test="synthesisCuttingToolVO.id != null and synthesisCuttingToolVO.id != '' " >
+                and synthesis_cutting_tools.id = #{synthesisCuttingToolVO.id}
+            </if>
+            <!-- 编码 -->
+            <if test="synthesisCuttingToolVO.code != null and synthesisCuttingToolVO.code != '' " >
+                and synthesis_cutting_tools.code = #{synthesisCuttingToolVO.code}
+            </if>
+            <!-- 合成刀业务编码 -->
+            <if test="synthesisCuttingToolVO.synthesisCode != null and synthesisCuttingToolVO.synthesisCode != '' " >
+                and synthesis_cutting_tools.synthesis_code = #{synthesisCuttingToolVO.synthesisCode}
+            </if>
+            <!-- 图纸url -->
+            <if test="synthesisCuttingToolVO.picUrl != null and synthesisCuttingToolVO.picUrl != '' " >
+                and synthesis_cutting_tools.pic_url = #{synthesisCuttingToolVO.picUrl}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="synthesisCuttingToolVO.isDel != null and synthesisCuttingToolVO.isDel != '' " >
+                and synthesis_cutting_tools.is_del = #{synthesisCuttingToolVO.isDel}
+            </if>
+            <!-- 合成刀类型  -->
+            <if test="synthesisCuttingToolVO.synthesisCuttingToolTypeId != null and synthesisCuttingToolVO.synthesisCuttingToolTypeId != '' " >
+                and synthesis_cutting_tools.synthesis_cutting_tool_type_id = #{synthesisCuttingToolVO.synthesisCuttingToolTypeId}
+            </if>
+        </if>
+        /*synthesis_cutting_tool end*/
+    </select>
+
+    <!--分组  分页查询 -->
+    <select id="getSynthesisBladeCodeForGroup" parameterType="com.common.vo.SynthesisBladeCodeVO" resultMap="synthesisBladeCodeQueryMap">
+        SELECT
+        /*synthesisBladeCode begin*/
+        <!-- 标识 -->
+        synthesis_blade_code.id as 'synthesis_blade_code.id',
+        <!-- 唯一code -->
+        synthesis_blade_code.code as 'synthesis_blade_code.code',
+        <!-- 刀身码 -->
+        synthesis_blade_code.blade_code as 'synthesis_blade_code.blade_code',
+        <!-- 状态 1已使用  -->
+        synthesis_blade_code.status as 'synthesis_blade_code.status',
+        <!-- 逻辑删除 -->
+        synthesis_blade_code.is_del as 'synthesis_blade_code.is_del',
+        <!-- 范围最大值 -->
+        synthesis_blade_code.max_value as 'synthesis_blade_code.max_value',
+        <!-- 范围最小值 -->
+        synthesis_blade_code.min_value as 'synthesis_blade_code.min_value',
+        <!-- 数值 -->
+        synthesis_blade_code.int_value as 'synthesis_blade_code.int_value',
+        <!--  -->
+        synthesis_blade_code.synthesis_cutting_tool_code as 'synthesis_blade_code.synthesis_cutting_tool_code',
+        /*synthesisBladeCode end*/
+        /*synthesis_cutting_tool begin*/
+        <!-- id -->
+        synthesis_cutting_tool.id as 'synthesis_cutting_tool.id',
+        <!-- 编码 -->
+        synthesis_cutting_tool.code as 'synthesis_cutting_tool.code',
+        <!-- 合成刀业务编码 -->
+        synthesis_cutting_tool.synthesis_code as 'synthesis_cutting_tool.synthesis_code',
+        <!-- 图纸url -->
+        synthesis_cutting_tool.pic_url as 'synthesis_cutting_tool.pic_url',
+        <!-- 逻辑删除 -->
+        synthesis_cutting_tool.is_del as 'synthesis_cutting_tool.is_del',
+        <!-- 合成刀类型  -->
+        synthesis_cutting_tool.synthesis_cutting_tool_type_id as 'synthesis_cutting_tool.synthesis_cutting_tool_type_id'
+        /*synthesis_cutting_tool end*/
+        FROM synthesis_blade_code as synthesis_blade_code
+        LEFT JOIN synthesis_cutting_tool as synthesis_cutting_tool ON synthesis_cutting_tool.code = synthesis_blade_code.synthesis_cutting_tool_code
+        WHERE
+        1 = 1 AND  synthesis_blade_code.is_del = 0
+        /*synthesis_blade_code begin*/
+        <!-- 标识 -->
+        <if test="id != null and id != '' " >
+            and synthesis_blade_code.id = #{id}
+        </if>
+        <!-- 数值 -->
+        <if test="intValue != null and intValue != '' " >
+            and synthesis_blade_code.int_value = #{intValue}
+        </if>
+        <!-- 唯一code -->
+        <if test="code != null and code != '' " >
+            and synthesis_blade_code.code = #{code}
+        </if>
+        <!-- 刀身码 -->
+        <if test="bladeCode != null and bladeCode != '' " >
+            and synthesis_blade_code.blade_code = #{bladeCode}
+        </if>
+        <!-- 状态 1已使用  -->
+        <if test="status != null and status != '' " >
+            and synthesis_blade_code.status = #{status}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="isDel != null and isDel != '' " >
+            and synthesis_blade_code.is_del = #{isDel}
+        </if>
+        <!-- 范围最大值 -->
+        <if test="maxValue != null and maxValue != '' " >
+            and synthesis_blade_code.max_value = #{maxValue}
+        </if>
+        <!-- 范围最小值 -->
+        <if test="minValue != null and minValue != '' " >
+            and synthesis_blade_code.min_value = #{minValue}
+        </if>
+        <!--  -->
+        <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+            and synthesis_blade_code.synthesis_cutting_tool_code = #{synthesisCuttingToolCode}
+        </if>
+        /*synthesis_blade_code end*/
+        /*synthesis_cutting_tool begin*/
+        <if test="synthesisCuttingToolVO != null ">
+            <!-- id -->
+            <if test="synthesisCuttingToolVO.id != null and synthesisCuttingToolVO.id != '' " >
+                and synthesis_cutting_tool.id = #{synthesisCuttingToolVO.id}
+            </if>
+            <!-- 编码 -->
+            <if test="synthesisCuttingToolVO.code != null and synthesisCuttingToolVO.code != '' " >
+                and synthesis_cutting_tool.code = #{synthesisCuttingToolVO.code}
+            </if>
+            <!-- 合成刀业务编码 -->
+            <if test="synthesisCuttingToolVO.synthesisCode != null and synthesisCuttingToolVO.synthesisCode != '' " >
+                and synthesis_cutting_tool.synthesis_code = #{synthesisCuttingToolVO.synthesisCode}
+            </if>
+            <!-- 图纸url -->
+            <if test="synthesisCuttingToolVO.picUrl != null and synthesisCuttingToolVO.picUrl != '' " >
+                and synthesis_cutting_tool.pic_url = #{synthesisCuttingToolVO.picUrl}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="synthesisCuttingToolVO.isDel != null and synthesisCuttingToolVO.isDel != '' " >
+                and synthesis_cutting_tool.is_del = #{synthesisCuttingToolVO.isDel}
+            </if>
+            <!-- 合成刀类型  -->
+            <if test="synthesisCuttingToolVO.synthesisCuttingToolTypeId != null and synthesisCuttingToolVO.synthesisCuttingToolTypeId != '' " >
+                and synthesis_cutting_tool.synthesis_cutting_tool_type_id = #{synthesisCuttingToolVO.synthesisCuttingToolTypeId}
+            </if>
+        </if>
+        /*synthesis_cutting_tool end*/
+        GROUP BY synthesis_cutting_tool.code
+        ORDER BY synthesis_blade_code.id desc
+        <if test="startRecord != null  and pageSize != null and pageSize !='' ">
+            LIMIT #{startRecord},#{pageSize}
+        </if>
+    </select>
+
+
+    <!--分组  查询记录数-->
+    <select id="getSynthesisBladeCodeCountForGroup" parameterType="com.common.vo.SynthesisBladeCodeVO" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM (SELECT synthesis_blade_code.id
+        FROM synthesis_blade_code as synthesis_blade_code
+        LEFT JOIN synthesis_cutting_tool as synthesis_cutting_tool ON synthesis_cutting_tool.code = synthesis_blade_code.synthesis_cutting_tool_code
+        WHERE
+        1 = 1 AND  synthesis_blade_code.is_del = 0
+        /*synthesis_blade_code begin*/
+        <!-- 标识 -->
+        <if test="id != null and id != '' " >
+            and synthesis_blade_code.id = #{id}
+        </if>
+        <!-- 唯一code -->
+        <if test="code != null and code != '' " >
+            and synthesis_blade_code.code = #{code}
+        </if>
+        <!-- 数值 -->
+        <if test="intValue != null and intValue != '' " >
+            and synthesis_blade_code.int_value = #{intValue}
+        </if>
+        <!-- 刀身码 -->
+        <if test="bladeCode != null and bladeCode != '' " >
+            and synthesis_blade_code.blade_code = #{bladeCode}
+        </if>
+        <!-- 状态 1已使用  -->
+        <if test="status != null and status != '' " >
+            and synthesis_blade_code.status = #{status}
+        </if>
+        <!-- 逻辑删除 -->
+        <if test="isDel != null and isDel != '' " >
+            and synthesis_blade_code.is_del = #{isDel}
+        </if>
+        <!-- 范围最大值 -->
+        <if test="maxValue != null and maxValue != '' " >
+            and synthesis_blade_code.max_value = #{maxValue}
+        </if>
+        <!-- 范围最小值 -->
+        <if test="minValue != null and minValue != '' " >
+            and synthesis_blade_code.min_value = #{minValue}
+        </if>
+        <!--  -->
+        <if test="synthesisCuttingToolCode != null and synthesisCuttingToolCode != '' " >
+            and synthesis_blade_code.synthesis_cutting_tool_code = #{synthesisCuttingToolCode}
+        </if>
+        /*synthesis_blade_code end*/
+        /*synthesis_cutting_tool begin*/
+        <if test="synthesisCuttingToolVO != null ">
+            <!-- id -->
+            <if test="synthesisCuttingToolVO.id != null and synthesisCuttingToolVO.id != '' " >
+                and synthesis_cutting_tool.id = #{synthesisCuttingToolVO.id}
+            </if>
+            <!-- 编码 -->
+            <if test="synthesisCuttingToolVO.code != null and synthesisCuttingToolVO.code != '' " >
+                and synthesis_cutting_tool.code = #{synthesisCuttingToolVO.code}
+            </if>
+            <!-- 合成刀业务编码 -->
+            <if test="synthesisCuttingToolVO.synthesisCode != null and synthesisCuttingToolVO.synthesisCode != '' " >
+                and synthesis_cutting_tool.synthesis_code = #{synthesisCuttingToolVO.synthesisCode}
+            </if>
+            <!-- 图纸url -->
+            <if test="synthesisCuttingToolVO.picUrl != null and synthesisCuttingToolVO.picUrl != '' " >
+                and synthesis_cutting_tool.pic_url = #{synthesisCuttingToolVO.picUrl}
+            </if>
+            <!-- 逻辑删除 -->
+            <if test="synthesisCuttingToolVO.isDel != null and synthesisCuttingToolVO.isDel != '' " >
+                and synthesis_cutting_tool.is_del = #{synthesisCuttingToolVO.isDel}
+            </if>
+            <!-- 合成刀类型  -->
+            <if test="synthesisCuttingToolVO.synthesisCuttingToolTypeId != null and synthesisCuttingToolVO.synthesisCuttingToolTypeId != '' " >
+                and synthesis_cutting_tool.synthesis_cutting_tool_type_id = #{synthesisCuttingToolVO.synthesisCuttingToolTypeId}
+            </if>
+        </if>
+        /*synthesis_cutting_tool end*/
+
+        GROUP BY synthesis_cutting_tool.code
+        ORDER BY synthesis_blade_code.id desc
+        ) as a
+    </select>
+
+    <select id="getMaxValue" resultType="java.lang.Integer">
+        SELECT MAX(max_value) from synthesis_blade_code
+    </select>
+
+    <select id="getMinValue" resultType="java.lang.Integer">
+        SELECT MIN(min_value) from synthesis_blade_code
+    </select>
+</mapper>

@@ -79,7 +79,7 @@
             <!-- 合成刀类型  -->
             <result property="synthesisCuttingToolTypeId" column="synthesis_cutting_tool.synthesis_cutting_tool_type_id"/>
             <!--  -->
-            <result property="abc" column="synthesis_cutting_tool.abc"/>
+
         </resultMap>
         <resultMap id="cuttingToolBindleRecordsProductLineEquipmentMap" type="com.common.pojo.ProductLineEquipment">
             <!-- 设备id -->
@@ -307,7 +307,7 @@
                 and operator =  #{operator}
             </if>
             <!-- 操作日期 -->
-            <if test="operatorTime != null and operatorTime != '' " >
+            <if test="operatorTime != null" >
                 and operator_time =  #{operatorTime}
             </if>
     </delete>
@@ -381,7 +381,7 @@
                 operator =  #{operator},
             </if>
             <!-- 操作日期 -->
-            <if test="operatorTime != null and operatorTime != '' " >
+            <if test="operatorTime != null" >
                 operator_time =  #{operatorTime},
             </if>
             <!-- id -->
@@ -456,7 +456,7 @@
             <!-- 合成刀类型  -->
             synthesis_cutting_tool.synthesis_cutting_tool_type_id as 'synthesis_cutting_tool.synthesis_cutting_tool_type_id',
             <!--  -->
-            synthesis_cutting_tool.abc as 'synthesis_cutting_tool.abc',
+
         /*synthesis_cutting_tool end*/
         /*product_line_equipment begin*/
             <!-- 设备id -->
@@ -587,10 +587,10 @@
                 and cutting_tool_bindle_records.operator = #{operator}
             </if>
             <!-- 操作日期 -->
-            <if test="operatorTime != null and operatorTime != '' " >
+            <if test="operatorTime != null" >
                 and cutting_tool_bindle_records.operator_time &lt;= #{operatorTimeEnd}
             </if>
-            <if test="operatorTime != null and operatorTime != '' " >
+            <if test="operatorTime != null" >
                 and cutting_tool_bindle_records.operator_time &gt;= #{operatorTimeBegin}
             </if>
         /*cutting_tool_bindle_records end*/
@@ -641,9 +641,7 @@
                 and synthesis_cutting_tool.synthesis_cutting_tool_type_id = #{synthesisCuttingToolVO.synthesisCuttingToolTypeId}
             </if>
             <!--  -->
-            <if test="synthesisCuttingToolVO.abc != null and synthesisCuttingToolVO.abc != '' " >
-                and synthesis_cutting_tool.abc = #{synthesisCuttingToolVO.abc}
-            </if>
+
             </if>
         /*synthesis_cutting_tool end*/
         /*product_line_equipment begin*/
@@ -835,10 +833,10 @@
             and cutting_tool_bindle_records.operator = #{operator}
         </if>
         <!-- 操作日期 -->
-        <if test="operatorTime != null and operatorTime != '' " >
+        <if test="operatorTime != null" >
             and cutting_tool_bindle_records.operator_time &lt;= #{operatorTimeEnd}
         </if>
-        <if test="operatorTime != null and operatorTime != '' " >
+        <if test="operatorTime != null" >
             and cutting_tool_bindle_records.operator_time &gt;= #{operatorTimeBegin}
         </if>
         /*cutting_tool_bindle_records end*/
@@ -889,9 +887,7 @@
             and synthesis_cutting_tool.synthesis_cutting_tool_type_id = #{synthesisCuttingToolVO.synthesisCuttingToolTypeId}
         </if>
         <!--  -->
-        <if test="synthesisCuttingToolVO.abc != null and synthesisCuttingToolVO.abc != '' " >
-            and synthesis_cutting_tool.abc = #{synthesisCuttingToolVO.abc}
-        </if>
+
         </if>
         /*synthesis_cutting_tool end*/
         /*product_line_equipment begin*/
@@ -1061,7 +1057,7 @@
         <!-- 合成刀类型  -->
         synthesis_cutting_tool.synthesis_cutting_tool_type_id as 'synthesis_cutting_tool.synthesis_cutting_tool_type_id',
         <!--  -->
-        synthesis_cutting_tool.abc as 'synthesis_cutting_tool.abc',
+
         /*synthesis_cutting_tool end*/
         /*product_line_equipment begin*/
         <!-- 设备id -->
@@ -1192,10 +1188,10 @@
             and cutting_tool_bindle_records.operator = #{operator}
         </if>
         <!-- 操作日期 -->
-        <if test="operatorTime != null and operatorTime != '' " >
+        <if test="operatorTime != null" >
             and cutting_tool_bindle_records.operator_time &lt;= #{operatorTimeEnd}
         </if>
-        <if test="operatorTime != null and operatorTime != '' " >
+        <if test="operatorTime != null" >
             and cutting_tool_bindle_records.operator_time &gt;= #{operatorTimeBegin}
         </if>
         /*cutting_tool_bindle_records end*/
@@ -1219,36 +1215,34 @@
         </if>
         </if>
         /*product_line_axle end*/
-        /*synthesis_cutting_tools begin*/
+        /*synthesis_cutting_tool begin*/
         <if test="synthesisCuttingToolVO != null and synthesisCuttingToolVO != ''">
         <!-- id -->
         <if test="synthesisCuttingToolVO.id != null and synthesisCuttingToolVO.id != '' " >
-            and synthesis_cutting_tools.id = #{synthesisCuttingToolVO.id}
+            and synthesis_cutting_tool.id = #{synthesisCuttingToolVO.id}
         </if>
         <!-- 编码 -->
         <if test="synthesisCuttingToolVO.code != null and synthesisCuttingToolVO.code != '' " >
-            and synthesis_cutting_tools.code = #{synthesisCuttingToolVO.code}
+            and synthesis_cutting_tool.code = #{synthesisCuttingToolVO.code}
         </if>
         <!-- 合成刀业务编码 -->
         <if test="synthesisCuttingToolVO.synthesisCode != null and synthesisCuttingToolVO.synthesisCode != '' " >
-            and synthesis_cutting_tools.synthesis_code = #{synthesisCuttingToolVO.synthesisCode}
+            and synthesis_cutting_tool.synthesis_code = #{synthesisCuttingToolVO.synthesisCode}
         </if>
         <!-- 图纸url -->
         <if test="synthesisCuttingToolVO.picUrl != null and synthesisCuttingToolVO.picUrl != '' " >
-            and synthesis_cutting_tools.pic_url = #{synthesisCuttingToolVO.picUrl}
+            and synthesis_cutting_tool.pic_url = #{synthesisCuttingToolVO.picUrl}
         </if>
         <!-- 逻辑删除 -->
         <if test="synthesisCuttingToolVO.isDel != null and synthesisCuttingToolVO.isDel != '' " >
-            and synthesis_cutting_tools.is_del = #{synthesisCuttingToolVO.isDel}
+            and synthesis_cutting_tool.is_del = #{synthesisCuttingToolVO.isDel}
         </if>
         <!-- 合成刀类型  -->
         <if test="synthesisCuttingToolVO.synthesisCuttingToolTypeId != null and synthesisCuttingToolVO.synthesisCuttingToolTypeId != '' " >
-            and synthesis_cutting_tools.synthesis_cutting_tool_type_id = #{synthesisCuttingToolVO.synthesisCuttingToolTypeId}
+            and synthesis_cutting_tool.synthesis_cutting_tool_type_id = #{synthesisCuttingToolVO.synthesisCuttingToolTypeId}
         </if>
         <!--  -->
-        <if test="synthesisCuttingToolVO.abc != null and synthesisCuttingToolVO.abc != '' " >
-            and synthesis_cutting_tools.abc = #{synthesisCuttingToolVO.abc}
-        </if>
+
         </if>
         /*synthesis_cutting_tool end*/
         /*product_line_equipments begin*/

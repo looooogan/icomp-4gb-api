@@ -85,6 +85,18 @@ public class InsideFactory implements Serializable{
     * @Description  刃磨时间
      */
     private Timestamp createTime;
+    /**
+     * @fieldName equipmentCode
+    * @fieldType  String
+    * @Description  刃磨设备
+     */
+    private String equipmentCode;
+    /**
+     * @fieldName equipmentName
+    * @fieldType  String
+    * @Description  设备名称
+     */
+    private String equipmentName;
 
     /**
      * @fieldName cuttingToolCode
@@ -186,6 +198,20 @@ public class InsideFactory implements Serializable{
 
     public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
+    }
+    public String getEquipmentCode() {
+        return equipmentCode;
+    }
+
+    public void setEquipmentCode(String equipmentCode) {
+        this.equipmentCode = equipmentCode;
+    }
+    public String getEquipmentName() {
+        return equipmentName;
+    }
+
+    public void setEquipmentName(String equipmentName) {
+        this.equipmentName = equipmentName;
     }
 
     public CuttingTool getCuttingTool() {

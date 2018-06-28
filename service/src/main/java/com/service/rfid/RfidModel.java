@@ -6,16 +6,26 @@ import com.common.mapper.IAuthCustomerMapper;
 import com.common.mapper.IRfidContainerMapper;
 import com.common.pojo.AuthCustomer;
 import com.common.pojo.RfidContainer;
+import com.common.pojo.SynthesisCuttingToolBind;
 import com.common.utils.UUID;
+import com.common.utils.exception.ExceptionConstans;
+import com.common.utils.exception.SelfDefinedException;
+import com.common.utils.loadConfig.IMessageSourceHanlder;
 import com.common.vo.AuthCustomerVO;
 import com.common.vo.RfidContainerVO;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.MapType;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.service.rfid.bo.RFIDBO;
 import com.service.rfid.vo.RFIDBindVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by logan on 2018/5/29.
@@ -26,6 +36,8 @@ public class RfidModel {
     private IRfidContainerMapper rfidContainerMapper;
     @Autowired
     private IAuthCustomerMapper authCustomerMapper;
+    @Autowired
+    private IMessageSourceHanlder messageSourceHanlder;
 
     @Deprecated
     public void updateRfidStatus(RFIDBO rfidbo) throws Exception{
@@ -62,26 +74,108 @@ public class RfidModel {
      * @throws Exception
      */
     public RfidContainer bindRFID(RFIDBindVO rfidBindVO) throws Exception{
+        RfidContainer rfidContainer = null;
+        if (null==rfidBindVO.getRfidContainerVO()
+                ||(StringUtils.isBlank(rfidBindVO.getRfidContainerVO().getLaserCode()) && StringUtils.isBlank(rfidBindVO.getRfidContainerVO().getSynthesisBladeCode()))){
+            return rfidContainer;
+        }
+        rfidContainer = rfidContainerMapper.getRfidContainer(rfidBindVO.getRfidContainerVO());
+        if (null!=rfidContainer){
+            throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.RFID_IN_USE));
+        }
+        rfidContainer = new RfidContainer();
+        rfidContainer.setIsDel(0);
+        rfidContainer.setUseCount(0);
+        rfidContainer.setCode(UUID.getInstance());
+        rfidContainer.setLaserCode(rfidBindVO.getRfidContainerVO().getLaserCode());
+        rfidContainer.setSynthesisBladeCode(rfidBindVO.getRfidContainerVO().getSynthesisBladeCode());
+        rfidContainer.setUseCount(rfidContainer.getUseCount()+1);
+        rfidContainer.setLabelType(getLabelType(rfidBindVO.getOperationEnum()));
+        rfidContainer.setPrevKey(rfidBindVO.getOperationEnum().getKey());
+        rfidContainer.setPrevOperation(rfidBindVO.getOperationEnum().getName());
+        rfidContainer.setOperatorCode(rfidBindVO.getLoginUser().getCode());
+        rfidContainer.setOperatorName(rfidBindVO.getLoginUser().getName());
+        rfidContainer.setOperatorTime(new Timestamp(System.currentTimeMillis()));
+        rfidContainerMapper.addRfidContainer(rfidContainer);
+        return rfidContainer;
+    }
+
+    /**
+     * 替换RFID标签
+     * @param rfidBindVO
+     * @return
+     * @throws Exception
+     */
+    public RfidContainer replaceRFID(RFIDBindVO rfidBindVO) throws Exception{
+        RfidContainer rfidContainer = null;
+        if (null==rfidBindVO.getRfidContainerVO()
+                ||(StringUtils.isBlank(rfidBindVO.getRfidContainerVO().getLaserCode()) && StringUtils.isBlank(rfidBindVO.getRfidContainerVO().getSynthesisBladeCode()))){
+            return rfidContainer;
+        }
+        rfidContainer = rfidContainerMapper.getRfidContainer(rfidBindVO.getRfidContainerVO());
+        if (null ==rfidContainer){
+            throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.RFID_NOT_EXISTS));
+        }
+        rfidContainer.setSynthesisBladeCode(rfidBindVO.getRfidContainerVO().getSynthesisBladeCode());
+        rfidContainer.setUseCount(rfidContainer.getUseCount()+1);
+        rfidContainer.setLabelType(getLabelType(rfidBindVO.getOperationEnum()));
+        rfidContainer.setPrevKey(rfidBindVO.getOperationEnum().getKey());
+        rfidContainer.setPrevOperation(rfidBindVO.getOperationEnum().getName());
+        rfidContainer.setOperatorCode(rfidBindVO.getLoginUser().getCode());
+        rfidContainer.setOperatorName(rfidBindVO.getLoginUser().getName());
+        rfidContainer.setOperatorTime(new Timestamp(System.currentTimeMillis()));
+        rfidContainerMapper.updRfidContainer(rfidContainer);
+        return rfidContainer;
+    }
+
+    /**
+     * 根据标签修改rfid标签状态
+     * @param rfidBindVO
+     * @return
+     * @throws Exception
+     */
+    public RfidContainer upRFIDStatus(RFIDBindVO rfidBindVO) throws Exception{
         RfidContainer rfidContainer = new RfidContainer();
-        if (StringUtils.isBlank(rfidBindVO.getRfidContainerVO().getLaserCode())){
+        if (null==rfidBindVO.getRfidContainerVO()
+                ||(StringUtils.isBlank(rfidBindVO.getRfidContainerVO().getLaserCode()) && StringUtils.isBlank(rfidBindVO.getRfidContainerVO().getSynthesisBladeCode()))){
             return rfidContainer;
         }
         rfidContainer = rfidContainerMapper.getRfidContainer(rfidBindVO.getRfidContainerVO());
         if (null == rfidContainer){
-            rfidContainer = new RfidContainer();
-            rfidContainer.setIsDel(0);
-            rfidContainer.setUseCount(1);
-            rfidContainer.setCode(UUID.getInstance());
-            rfidContainer.setLaserCode(rfidBindVO.getRfidContainerVO().getLaserCode());
-            rfidContainerMapper.addRfidContainer(rfidContainer);
+            throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.RFID_NOT_EXISTS));
         }
-        rfidContainer.setLabelType(getLabelType(rfidBindVO.getOperationEnum()));
         rfidContainer.setPrevKey(rfidBindVO.getOperationEnum().getKey());
         rfidContainer.setPrevOperation(rfidBindVO.getOperationEnum().getName());
-        rfidContainer.setOperatorCode(rfidBindVO.getAuthCustomer().getCode());
-        rfidContainer.setOperatorName(rfidBindVO.getAuthCustomer().getName());
+        rfidContainer.setOperatorCode(rfidBindVO.getLoginUser().getCode());
+        rfidContainer.setOperatorName(rfidBindVO.getLoginUser().getName());
+        rfidContainer.setOperatorTime(new Timestamp(System.currentTimeMillis()));
         rfidContainerMapper.updRfidContainer(rfidContainer);
         return rfidContainer;
+    }
+
+    /**
+     * 解绑rfid标签
+     * @param rfidBindVO
+     * @throws Exception
+     */
+    public void unBindRFID(RFIDBindVO rfidBindVO) throws Exception{
+        RfidContainer rfidContainer = new RfidContainer();
+        if (null==rfidBindVO.getRfidContainerVO()
+                ||(StringUtils.isBlank(rfidBindVO.getRfidContainerVO().getLaserCode()) && StringUtils.isBlank(rfidBindVO.getRfidContainerVO().getSynthesisBladeCode()))){
+            return;
+        }
+        rfidContainer = rfidContainerMapper.getRfidContainer(rfidBindVO.getRfidContainerVO());
+        if (null == rfidContainer){
+            return;
+        }
+//        rfidContainer.setSynthesisBladeCode("0");
+        rfidContainer.setLabelType(0);
+        rfidContainer.setPrevKey(rfidBindVO.getOperationEnum().getKey());
+        rfidContainer.setPrevOperation(rfidBindVO.getOperationEnum().getName());
+        rfidContainer.setOperatorCode(rfidBindVO.getLoginUser().getCode());
+        rfidContainer.setOperatorName(rfidBindVO.getLoginUser().getName());
+        rfidContainer.setOperatorTime(new Timestamp(System.currentTimeMillis()));
+        rfidContainerMapper.updRfidContainer(rfidContainer);
     }
 
     /**
@@ -124,5 +218,7 @@ public class RfidModel {
         }
         return 0;
     }
+
+
 
 }

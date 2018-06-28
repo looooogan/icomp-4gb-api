@@ -1,7 +1,6 @@
 package com.service.cuttingtool;
 
 import com.common.constants.CuttingToolConsumeTypeEnum;
-import com.common.constants.CuttingToolTypeEnum;
 import com.common.pojo.CuttingTool;
 import com.common.pojo.CuttingToolBind;
 import com.common.pojo.DjOutapplyAkp;
@@ -10,8 +9,9 @@ import com.common.vo.AuthCustomerVO;
 import com.common.vo.CuttingToolVO;
 import com.common.vo.DjOutapplyAkpVO;
 import com.service.common.*;
+import com.service.cuttingtool.bo.CuttingToolBindBO;
 import com.service.orders.IDjQiMingDBService;
-import com.service.orders.IDjWriteBackService;
+import com.service.writeback.IDjWriteBackService;
 import com.service.orders.IOutApplyBusinessService;
 import com.service.orders.vo.WBCuttingToolBindVO;
 import org.apache.commons.lang3.StringUtils;
@@ -84,6 +84,15 @@ public class CuttingToolComent {
         }
         //回写数据
         writeBackService.writeBackCuttingToolBind(wbCuttingToolBindVO);
+    }
+
+    /**
+     * 流转刀具绑定
+     * @param cuttingToolBindBO 业务数据封装
+     * @throws Exception
+     */
+    public void bindRunning(CuttingToolBindBO cuttingToolBindBO) throws Exception{
+        cuttingToolBusinessService.bindRunningData(cuttingToolBindBO);
     }
 
 }

@@ -402,6 +402,7 @@
             <if test="forGrindingOutCount != null and forGrindingOutCount != '' " >
                 and material_inventory.for_grinding_out_count = #{forGrindingOutCount}
             </if>
+
             <!-- 场外刃磨数量 -->
             <if test="grindingOutCount != null and grindingOutCount != '' " >
                 and material_inventory.grinding_out_count = #{grindingOutCount}
@@ -437,6 +438,10 @@
         /*material_inventory end*/
         /*cutting_tool begin*/
             <if test="cuttingToolVO != null ">
+            <!-- 业务编码 -->
+            <if test="cuttingToolVO.likeBusinessCode != null and cuttingToolVO.likeBusinessCode != '' " >
+                and cutting_tool.business_code LIKE CONCAT('%',#{cuttingToolVO.likeBusinessCode},'%')
+            </if>
             <!-- 材料刀id -->
             <if test="cuttingToolVO.id != null and cuttingToolVO.id != '' " >
                 and cutting_tool.id = #{cuttingToolVO.id}
@@ -621,6 +626,10 @@
         /*material_inventory end*/
         /*cutting_tool begin*/
         <if test="cuttingToolVO != null ">
+        <!-- 业务编码 -->
+        <if test="cuttingToolVO.likeBusinessCode != null and cuttingToolVO.likeBusinessCode != '' " >
+            and cutting_tool.business_code LIKE CONCAT('%',#{cuttingToolVO.likeBusinessCode},'%')
+        </if>
         <!-- 材料刀id -->
         <if test="cuttingToolVO.id != null and cuttingToolVO.id != '' " >
             and cutting_tool.id = #{cuttingToolVO.id}
@@ -886,6 +895,10 @@
         /*material_inventory end*/
         /*cutting_tools begin*/
         <if test="cuttingToolVO != null ">
+        <!-- 业务编码 -->
+        <if test="cuttingToolVO.likeBusinessCode != null and cuttingToolVO.likeBusinessCode != '' " >
+            and cutting_tool.business_code LIKE CONCAT('%',#{cuttingToolVO.likeBusinessCode},'%')
+        </if>
         <!-- 材料刀id -->
         <if test="cuttingToolVO.id != null and cuttingToolVO.id != '' " >
             and cutting_tools.id = #{cuttingToolVO.id}

@@ -119,11 +119,8 @@
                         artDialog(XHR.responseText, "OK");
                     },
                     success: function(data,textStatus,response) {
-                        if(response.status == '200'){
-                            search();
-                        }else{
-                            artDialog(data, "OK");
-                        }
+                        artDialog("操作成功", "OK");
+                        search();
                     },
                     headers: {
                         "content-type":"application/json"
@@ -150,11 +147,8 @@
                     artDialog(XHR.responseText, "OK");
                 },
                 success: function(data,textStatus,response) {
-                    if(response.status == '200'){
-                        search();
-                    }else{
-                        artDialog(data, "OK");
-                    }
+                    artDialog("操作成功", "OK");
+                    search();
                 },
                 headers: {
                     "content-type":"application/json"

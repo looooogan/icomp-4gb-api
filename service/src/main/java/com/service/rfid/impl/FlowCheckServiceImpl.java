@@ -6,6 +6,7 @@ import com.common.mapper.ICuttingToolMapper;
 import com.common.mapper.IRfidContainerMapper;
 import com.common.pojo.RfidContainer;
 import com.common.utils.exception.ExceptionConstans;
+import com.common.utils.exception.SelfDefinedException;
 import com.common.utils.loadConfig.IMessageSourceHanlder;
 import com.common.vo.RfidContainerVO;
 import com.service.rfid.DTO.FlowCheckDTO;
@@ -29,6 +30,8 @@ public class FlowCheckServiceImpl implements IFlowCheckService{
     @Autowired
     private ICuttingToolMapper cuttingToolMapper;
 
+    private String charCode = "iso8859-1";
+
     @Override
     public FlowCheckDTO checkFlow(FlowCheckVO flowCheckVO) throws Exception {
 
@@ -37,9 +40,10 @@ public class FlowCheckServiceImpl implements IFlowCheckService{
             return flowCheckDTO;
         }
 
-        RfidContainerVO rfidContainerVO = new RfidContainerVO();
-        rfidContainerVO.setLaserCode(flowCheckVO.getRfidLaserCode());
-        RfidContainer rfidContainer = rfidContainerMapper.getRfidContainer(rfidContainerVO);
+        RfidContainer rfidContainer = rfidContainerMapper.getRfidContainer(flowCheckVO.getRfidContainerVO());
+        if (rfidContainer == null){
+            throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.RFID_NOT_EXISTS));
+        }
 
         //刀具换装
         if (flowCheckVO.getOperationCode() == OperationEnum.SynthesisCuttingTool_Exchange.getKey()) {
@@ -64,12 +68,12 @@ public class FlowCheckServiceImpl implements IFlowCheckService{
         }
 
         //刀具刃磨
-        if (flowCheckVO.getOperationCode() == OperationEnum.Cutting_tool_Inside.getKey()||
-                flowCheckVO.getOperationCode() == OperationEnum.Cutting_tool_OutSide.getKey()||
-                flowCheckVO.getOperationCode() == OperationEnum.Cutting_tool_Inside_Coating.getKey()) {
-            return checkGrinding(rfidContainer);
-        }
-
+//        if (flowCheckVO.getOperationCode() == OperationEnum.Cutting_tool_Inside.getKey()||
+//                flowCheckVO.getOperationCode() == OperationEnum.Cutting_tool_OutSide.getKey()||
+//                flowCheckVO.getOperationCode() == OperationEnum.Cutting_tool_Inside_Coating.getKey()) {
+//            return checkGrinding(rfidContainer);
+//        }
+        flowCheckDTO.setType("1");
         return flowCheckDTO;
     }
 
@@ -83,12 +87,15 @@ public class FlowCheckServiceImpl implements IFlowCheckService{
             }
             if (rfidContainer.getPrevKey() == OperationEnum.SynthesisCuttingTool_Exchange.getKey()
                     ||rfidContainer.getPrevKey() == OperationEnum.SynthesisCuttingTool_Config.getKey()){
-                String message = messageSourceHanlder.getValue(ExceptionConstans.EXCHANGE_MESSAGE)+ExceptionConstans.MESSAGE_SUFXX+rfidContainer.getOperatorName();
-                flowCheckDTO.setMessage(new String(message.getBytes(),"iso8859-1"));
+                String message = messageSourceHanlder.getValue(ExceptionConstans.EXCHANGE_MESSAGE)+ExceptionConstans.MESSAGE_SUFXX+rfidContainer.getPrevOperation();
+//                flowCheckDTO.setMessage(new String(message.getBytes(),charCode));
+                flowCheckDTO.setMessage(message);
                 flowCheckDTO.setType("2");
                 break;
             }
-            flowCheckDTO.setMessage(messageSourceHanlder.getValue(ExceptionConstans.EXCHANGE_MESSAGE)+ExceptionConstans.MESSAGE_SUFXX+rfidContainer.getOperatorName());
+            String message = messageSourceHanlder.getValue(ExceptionConstans.CONFIG_MESSAGE)+ExceptionConstans.MESSAGE_SUFXX+rfidContainer.getPrevOperation();
+            flowCheckDTO.setMessage(new String(message.getBytes(),charCode));
+//            flowCheckDTO.setMessage(messageSourceHanlder.getValue(ExceptionConstans.EXCHANGE_MESSAGE)+ExceptionConstans.MESSAGE_SUFXX+rfidContainer.getPrevOperation());
             flowCheckDTO.setType("3");
         }while (1==2);
         return flowCheckDTO;
@@ -102,9 +109,10 @@ public class FlowCheckServiceImpl implements IFlowCheckService{
                 flowCheckDTO.setType("1");
                 break;
             }
-            String message = messageSourceHanlder.getValue(ExceptionConstans.CONFIG_MESSAGE)+ExceptionConstans.MESSAGE_SUFXX+rfidContainer.getOperatorName();
-            flowCheckDTO.setMessage(new String(message.getBytes(),"iso8859-1"));
-//            flowCheckDTO.setMessage(messageSourceHanlder.getValue(ExceptionConstans.CONFIG_MESSAGE+ExceptionConstans.MESSAGE_SUFXX+rfidContainer.getOperatorName()));
+            String message = messageSourceHanlder.getValue(ExceptionConstans.CONFIG_MESSAGE)+ExceptionConstans.MESSAGE_SUFXX+rfidContainer.getPrevOperation();
+            flowCheckDTO.setMessage(new String(message.getBytes(),charCode));
+//            flowCheckDTO.setMessage(message);
+//            flowCheckDTO.setMessage(messageSourceHanlder.getValue(ExceptionConstans.CONFIG_MESSAGE+ExceptionConstans.MESSAGE_SUFXX+rfidContainer.getPrevOperation()));
             flowCheckDTO.setType("3");
         }while (1==2);
         return flowCheckDTO;
@@ -121,14 +129,15 @@ public class FlowCheckServiceImpl implements IFlowCheckService{
             if (rfidContainer.getPrevKey() == OperationEnum.SynthesisCuttingTool_Exchange.getKey()
                     ||rfidContainer.getPrevKey() == OperationEnum.SynthesisCuttingTool_Config.getKey()
                     ||rfidContainer.getPrevKey() == OperationEnum.SynthesisCuttingTool_Init.getKey()){
-                message = messageSourceHanlder.getValue(ExceptionConstans.CONFIG_MESSAGE)+ExceptionConstans.MESSAGE_SUFXX+rfidContainer.getOperatorName();
+                message = messageSourceHanlder.getValue(ExceptionConstans.CONFIG_MESSAGE)+ExceptionConstans.MESSAGE_SUFXX+rfidContainer.getPrevOperation();
                 flowCheckDTO.setType("2");
                 break;
             }
-            message = messageSourceHanlder.getValue(ExceptionConstans.CONFIG_MESSAGE)+ExceptionConstans.MESSAGE_SUFXX+rfidContainer.getOperatorName();
+            message = messageSourceHanlder.getValue(ExceptionConstans.CONFIG_MESSAGE)+ExceptionConstans.MESSAGE_SUFXX+rfidContainer.getPrevOperation();
             flowCheckDTO.setType("3");
         }while (1==2);
-        flowCheckDTO.setMessage(new String(message.getBytes(),"iso8859-1"));
+//        flowCheckDTO.setMessage(message);
+        flowCheckDTO.setMessage(new String(message.getBytes(),charCode));
         return flowCheckDTO;
     }
 
@@ -159,11 +168,12 @@ public class FlowCheckServiceImpl implements IFlowCheckService{
                 message =messageSourceHanlder.getValue(ExceptionConstans.UnInstalled_MESSAGE);
             }
             if (StringUtils.isBlank(message)){
-                message = messageSourceHanlder.getValue(ExceptionConstans.CONFIG_MESSAGE)+ExceptionConstans.MESSAGE_SUFXX+rfidContainer.getOperatorName();
+                message = messageSourceHanlder.getValue(ExceptionConstans.CONFIG_MESSAGE)+ExceptionConstans.MESSAGE_SUFXX+rfidContainer.getPrevOperation();
             }
             flowCheckDTO.setType("3");
         }while (1==2);
-        flowCheckDTO.setMessage(new String(message.getBytes(),"iso8859-1"));
+//        flowCheckDTO.setMessage(message);
+        flowCheckDTO.setMessage(new String(message.getBytes(),charCode));
         return flowCheckDTO;
     }
 
@@ -174,9 +184,10 @@ public class FlowCheckServiceImpl implements IFlowCheckService{
                 flowCheckDTO.setType("1");
                 break;
             }
-            String message = messageSourceHanlder.getValue(ExceptionConstans.CONFIG_MESSAGE)+ExceptionConstans.MESSAGE_SUFXX+rfidContainer.getOperatorName();
-            flowCheckDTO.setMessage(new String(message.getBytes(),"iso8859-1"));
-//            flowCheckDTO.setMessage(messageSourceHanlder.getValue(ExceptionConstans.CONFIG_MESSAGE)+ExceptionConstans.MESSAGE_SUFXX+rfidContainer.getOperatorName());
+            String message = messageSourceHanlder.getValue(ExceptionConstans.CONFIG_MESSAGE)+ExceptionConstans.MESSAGE_SUFXX+rfidContainer.getPrevOperation();
+//            flowCheckDTO.setMessage(message);
+            flowCheckDTO.setMessage(new String(message.getBytes(),charCode));
+//            flowCheckDTO.setMessage(messageSourceHanlder.getValue(ExceptionConstans.CONFIG_MESSAGE)+ExceptionConstans.MESSAGE_SUFXX+rfidContainer.getPrevOperation());
             flowCheckDTO.setType("3");
         }while (1==2);
         return flowCheckDTO;
@@ -191,9 +202,10 @@ public class FlowCheckServiceImpl implements IFlowCheckService{
                 flowCheckDTO.setType("1");
                 break;
             }
-            String message = messageSourceHanlder.getValue(ExceptionConstans.CONFIG_MESSAGE)+ExceptionConstans.MESSAGE_SUFXX+rfidContainer.getOperatorName();
-            flowCheckDTO.setMessage(new String(message.getBytes(),"iso8859-1"));
-//            flowCheckDTO.setMessage(messageSourceHanlder.getValue(ExceptionConstans.CONFIG_MESSAGE)+ExceptionConstans.MESSAGE_SUFXX+rfidContainer.getOperatorName());
+            String message = messageSourceHanlder.getValue(ExceptionConstans.CONFIG_MESSAGE)+ExceptionConstans.MESSAGE_SUFXX+rfidContainer.getPrevOperation();
+//            flowCheckDTO.setMessage(message);
+            flowCheckDTO.setMessage(new String(message.getBytes(),charCode));
+//            flowCheckDTO.setMessage(messageSourceHanlder.getValue(ExceptionConstans.CONFIG_MESSAGE)+ExceptionConstans.MESSAGE_SUFXX+rfidContainer.getPrevOperation());
             flowCheckDTO.setType("3");
         }while (1==2);
         return flowCheckDTO;

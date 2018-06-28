@@ -7,6 +7,7 @@ import com.common.mapper.ICuttingToolMapper;
 import com.common.mapper.IOutPrepareLibraryMapper;
 import com.common.mapper.IQimingRecordsMapper;
 import com.common.pojo.*;
+import com.common.utils.BladeCodeHandler;
 import com.common.utils.UUID;
 import com.common.vo.CuttingToolVO;
 import com.common.vo.MaterialInventoryVO;
@@ -75,18 +76,9 @@ public class LibraryModel {
         QimingRecords qimingRecords = null;
         if (outApplyVO.getCuttingTool().getConsumeType().equals(ConsumeTypeEnum.Applicable_Bit.getKey())){
             //可刃磨钻头
-            List<CuttingToolBind> cuttingToolBinds= outApplyVO.getCuttingToolBinds();
+            CuttingToolBind cuttingToolBind = null;
             for (Integer i = 0; i < outApplyVO.getCuttingToolBinds().size(); i++) {
-                //创建材料刀bind
-                CuttingToolBind cuttingToolBind = new CuttingToolBind();
-                cuttingToolBind.setCuttingToolCode(outApplyVO.getCuttingTool().getCode());
-                outApplyVO.setSusr20(outApplyVO.getSusr20()+1);
-                cuttingToolBind.setBladeCode(outApplyVO.getDjMtlAkp().getMtlCode()+"-"+outApplyVO.getSusr20());
-                cuttingToolBind.setCode(UUID.getInstance());
-                cuttingToolBind.setLltm(outApplyVO.getDjOutapplyAkp().getLltm());
-                cuttingToolBind.setIsDel(0);
-                cuttingToolBindMapper.addCuttingToolBind(cuttingToolBind);
-                cuttingToolBinds.add(cuttingToolBind);
+                cuttingToolBind = outApplyVO.getCuttingToolBinds().get(i);
                 //添加历史记录
                 qimingRecords = new QimingRecords();
                 qimingRecords.setApplyNo(outApplyVO.getDjOutapplyAkp().getApplyno());
@@ -100,7 +92,6 @@ public class LibraryModel {
                 qimingRecords.setUnitqty(outApplyVO.getDjOutapplyAkp().getUnitqty());
                 qimingRecordsMapper.addQimingRecords(qimingRecords);
             }
-            outApplyVO.setCuttingToolBinds(cuttingToolBinds);
         }else {
             qimingRecords = new QimingRecords();
             qimingRecords.setApplyNo(outApplyVO.getDjOutapplyAkp().getApplyno());

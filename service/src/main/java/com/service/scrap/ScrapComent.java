@@ -1,8 +1,11 @@
 package com.service.scrap;
 
 import com.service.common.ICuttingToolBindService;
-import com.service.common.IDjItrnAkpService;
-import com.service.inoutFactory.IInOutFactoryService;
+import com.service.common.ICuttingToolService;
+import com.service.scrap.bo.ScrapBO;
+import com.service.scrap.vo.ScrapVO;
+import com.service.writeback.IDjWriteBackService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,16 +16,26 @@ import org.springframework.stereotype.Component;
 public class ScrapComent {
 
     @Autowired
-    private IInOutFactoryService inOutFactoryService;
-    @Autowired
     private ICuttingToolBindService cuttingToolBindService;
     @Autowired
-    private IDjItrnAkpService djItrnAkpService;
+    private ICuttingToolService cuttingToolService;
     @Autowired
     private IScrapService scrapService;
+    @Autowired
+    private IDjWriteBackService writeBackService;
 
 
-    public void scrap(ScrapVO scrapVO) throws Exception{
-//        scrapService.addScraps(scraps);
+
+    /**
+     * 刀具报废
+     * @param scrapBO
+     * @throws Exception
+     */
+    public void scrap(ScrapBO scrapBO) throws Exception{
+        //报废
+        scrapService.addScraps(scrapBO);
+        //数据回写
+        writeBackService.writeBackScrap(scrapBO);
     }
+
 }

@@ -207,7 +207,7 @@
                 and create_user =  #{createUser}
             </if>
             <!-- 创建时间 -->
-            <if test="createTime != null and createTime != '' " >
+            <if test="createTime != null" >
                 and create_time =  #{createTime}
             </if>
             <!--  -->
@@ -249,7 +249,7 @@
                 create_user =  #{createUser},
             </if>
             <!-- 创建时间 -->
-            <if test="createTime != null and createTime != '' " >
+            <if test="createTime != null" >
                 create_time =  #{createTime},
             </if>
             <!--  -->
@@ -403,10 +403,10 @@
                 and outsidefactoryhistory.create_user = #{createUser}
             </if>
             <!-- 创建时间 -->
-            <if test="createTime != null and createTime != '' " >
+            <if test="createTime != null" >
                 and outsidefactoryhistory.create_time &lt;= #{createTimeEnd}
             </if>
-            <if test="createTime != null and createTime != '' " >
+            <if test="createTime != null" >
                 and outsidefactoryhistory.create_time &gt;= #{createTimeBegin}
             </if>
             <!--  -->
@@ -615,10 +615,10 @@
             and outsidefactoryhistory.create_user = #{createUser}
         </if>
         <!-- 创建时间 -->
-        <if test="createTime != null and createTime != '' " >
+        <if test="createTime != null" >
             and outsidefactoryhistory.create_time &lt;= #{createTimeEnd}
         </if>
-        <if test="createTime != null and createTime != '' " >
+        <if test="createTime != null" >
             and outsidefactoryhistory.create_time &gt;= #{createTimeBegin}
         </if>
         <!--  -->
@@ -920,10 +920,10 @@
             and outsidefactoryhistory.create_user = #{createUser}
         </if>
         <!-- 创建时间 -->
-        <if test="createTime != null and createTime != '' " >
+        <if test="createTime != null" >
             and outsidefactoryhistory.create_time &lt;= #{createTimeEnd}
         </if>
-        <if test="createTime != null and createTime != '' " >
+        <if test="createTime != null" >
             and outsidefactoryhistory.create_time &gt;= #{createTimeBegin}
         </if>
         <!--  -->

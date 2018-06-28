@@ -204,7 +204,7 @@
             var param = {
                 cuttingToolVO : {
 //                    businessCode : $(printEditForm.businessCode).val(),
-                    businessCode : $(printForm.businessCode).val(),
+                    likeBusinessCode : $(printForm.likeBusinessCode).val(),
                 },
                 pageSize: 15,
                 currentPage: $(printForm.currentPage).val() == ""?1:$(printForm.currentPage).val()
@@ -281,7 +281,7 @@
                     </th>
 
                     <td>
-                        <input name="businessCode" type="text" class="u-ipt" maxlength="36" onkeyup="this.value=this.value.toUpperCase()">
+                        <input name="likeBusinessCode" type="text" class="u-ipt" maxlength="36" onkeyup="this.value=this.value.toUpperCase()">
                     </td>
                 </tr>
             </table>

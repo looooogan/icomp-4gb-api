@@ -13,6 +13,9 @@ import com.common.utils.loadConfig.IMessageSourceHanlder;
 import com.common.vo.AuthCustomerVO;
 import com.common.vo.RfidContainerVO;
 import com.service.auth.IAuthBusinessService;
+import com.service.auth.bo.AuthBO;
+import com.service.rfid.RfidModel;
+import com.service.rfid.vo.RFIDBindVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,18 +31,8 @@ public class AuthBusinessServiceImpl implements IAuthBusinessService {
 
     @Autowired
     private IAuthCustomerMapper customerMapper;
-
     @Autowired
-    private IAuthDepartmentMapper departmentMapper;
-
-    @Autowired
-    private IAuthPositionMapper positionMapper;
-
-    @Autowired
-    private IAuthAgencyMapper authAgencyMapper;
-
-    @Autowired
-    private IAuthAuthorizationMapper authorizationMapper;
+    private RfidModel rfidModel;
 
     @Autowired
     private IRfidContainerMapper rfidContainerMapper;
@@ -59,37 +52,21 @@ public class AuthBusinessServiceImpl implements IAuthBusinessService {
         return customerMapper.getAuthCustomer(authCustomerVO);
     }
 
+    /**
+     * 员工初始化
+     * @param authBO
+     * @throws Exception
+     */
     @Override
-    public void addInitAuthCustomer(AuthCustomer authCustomer) throws Exception {
-        RfidContainerVO rfidContainerVO = new RfidContainerVO();
-        rfidContainerVO.setLaserCode(authCustomer.getRfidContainer().getLaserCode());
-        RfidContainer rfidContainer = rfidContainerMapper.getRfidContainer(rfidContainerVO);
-        if (rfidContainer == null){
-            rfidContainer = new RfidContainer();
-            rfidContainer.setIsDel(0);
-            rfidContainer.setUseCount(1);
-            rfidContainer.setCode(UUID.getInstance());
-            rfidContainer.setLaserCode(authCustomer.getRfidContainer().getLaserCode());
-            rfidContainer.setLabelType(RFIDEnum.employee.getKey());
-            rfidContainer.getPrevKey(OperationEnum.Employee_code_Init.getKey());
-            rfidContainer.setOperatorName(OperationEnum.Employee_code_Init.getName());
-            rfidContainer.setOperatorTime(new Timestamp(System.currentTimeMillis()));
-            rfidContainerMapper.addRfidContainer(rfidContainer);
-        }else if (rfidContainer.getOperatorCode()== null || rfidContainer.getOperatorCode()== 0){
-            rfidContainer.setPrevKey(rfidContainer.getOperatorCode());
-            rfidContainer.setPrevOperation(rfidContainer.getOperatorName());
-            rfidContainer.setUseCount(rfidContainer.getUseCount()+1);
-            rfidContainer.setLabelType(RFIDEnum.employee.getKey());
-            rfidContainer.setOperatorCode(OperationEnum.Employee_code_Init.getKey());
-            rfidContainer.setOperatorName(OperationEnum.Employee_code_Init.getName());
-            rfidContainer.setOperatorTime(new Timestamp(System.currentTimeMillis()));
-            rfidContainerMapper.updRfidContainer(rfidContainer);
-        }else {
-            throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.RFID_IN_USE));
-        }
+    public void addInitAuthCustomer(AuthBO authBO) throws Exception {
+        RFIDBindVO rfidBindVO = new RFIDBindVO();
+        rfidBindVO.setRfidContainerVO(authBO.getAuthCustomerVO().getRfidContainerVO());
+        rfidBindVO.setLoginUser(authBO.getLoginUser());
+        rfidBindVO.setOperationEnum(OperationEnum.Employee_code_Init);
+        RfidContainer rfidContainer = rfidModel.bindRFID(rfidBindVO);
 
         AuthCustomerVO authCustomerVO = new AuthCustomerVO();
-        authCustomerVO.setEmployeeCode(authCustomer.getEmployeeCode());
+        authCustomerVO.setCode(authBO.getAuthCustomerVO().getCode());
         AuthCustomer authCustomerTmp = customerMapper.getAuthCustomer(authCustomerVO);
         authCustomerTmp.setRfidContainerCode(rfidContainer.getCode());
         customerMapper.updAuthCustomer(authCustomerTmp);

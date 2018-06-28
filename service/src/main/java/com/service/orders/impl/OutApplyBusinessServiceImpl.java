@@ -1,28 +1,21 @@
 package com.service.orders.impl;
 
 import com.common.constants.ConsumeTypeEnum;
-import com.common.constants.GrindingEnum;
 import com.common.mapper.*;
 import com.common.pojo.*;
-import com.common.utils.UUID;
-import com.common.utils.exception.ExceptionConstans;
-import com.common.utils.exception.SelfDefinedException;
 import com.common.utils.loadConfig.IMessageSourceHanlder;
 import com.common.vo.*;
 import com.service.cuttingtool.CuttingToolModel;
 import com.service.cuttingtool.bo.CuttingToolBindBO;
-import com.service.cuttingtool.vo.CuttingToolModelBO;
 import com.service.materialInventory.MaterialInventoryModel;
-import com.service.materialInventory.MaterialInventoryModelBO;
+import com.service.materialInventory.bo.MaterialInventoryBO;
 import com.service.orders.IOutApplyBusinessService;
 import com.service.orders.LibraryModel;
 import com.service.orders.vo.OutApplyVO;
-import com.service.orders.vo.WBOutApplyVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +47,7 @@ public class OutApplyBusinessServiceImpl implements IOutApplyBusinessService {
     public void outApplyData(OutApplyVO outApplyVO) throws Exception {
         //查询材料刀信息
         CuttingToolVO cuttingToolVO = new CuttingToolVO();
-        cuttingToolVO.setWuliaoCode(outApplyVO.getMtlCode());
+        cuttingToolVO.setBusinessCode(outApplyVO.getMtlCode());
         CuttingTool cuttingTool = cuttingToolMapper.getCuttingTool(cuttingToolVO);
         outApplyVO.setCuttingTool(cuttingTool);
         //查询领料员
@@ -71,11 +64,11 @@ public class OutApplyBusinessServiceImpl implements IOutApplyBusinessService {
             List<CuttingToolBind> cuttingToolBinds = new ArrayList<>();
             CuttingToolBindBO cuttingToolBindBO = null;
             for (CuttingToolBind cuttingToolBind : outApplyVO.getCuttingToolBinds()) {
-                if (StringUtils.isBlank(cuttingToolBind.getBladeCode())){
+                cuttingToolBindBO = new CuttingToolBindBO();
+                if (outApplyVO.getCuttingTool().getConsumeType().equals(ConsumeTypeEnum.Applicable_Bit.getKey())){
                     outApplyVO.setMaxDJH(outApplyVO.getMaxDJH()+1);
                     cuttingToolBindBO.setMaxDJH(outApplyVO.getMaxDJH());
                 }
-                cuttingToolBindBO = new CuttingToolBindBO();
                 cuttingToolBindBO.setCuttingToolBind(cuttingToolBind);
                 cuttingToolBindBO.setCuttingTool(outApplyVO.getCuttingTool());
                 cuttingToolBindBO.setLltm(outApplyVO.getDjOutapplyAkp().getLltm());
@@ -90,11 +83,11 @@ public class OutApplyBusinessServiceImpl implements IOutApplyBusinessService {
         //添加出库映射记录
         libraryModel.addQimingRecords(outApplyVO);
         //修改刀具库存
-        MaterialInventoryModelBO materialInventoryModelBO = new MaterialInventoryModelBO();
+        MaterialInventoryBO materialInventoryModelBO = new MaterialInventoryBO();
         materialInventoryModelBO.setCuttingTool(outApplyVO.getCuttingTool());
         materialInventoryModelBO.setUnitqty(outApplyVO.getUnitqty());
+        materialInventoryModelBO.setMtlCode(outApplyVO.getMtlCode());
         materialInventoryModel.OutApplyCuttingToolInventory(materialInventoryModelBO);
     }
-
 
 }

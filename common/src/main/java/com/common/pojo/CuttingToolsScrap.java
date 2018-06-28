@@ -91,6 +91,12 @@ public class CuttingToolsScrap implements Serializable{
     * @Description  报废状态 1待刃磨 2待出厂 3备用刀
      */
     private String status;
+    /**
+     * @fieldName consumeType
+    * @fieldType  String
+    * @Description  消耗类别
+     */
+    private String consumeType;
 
     /**
      * @fieldName cuttingToolCode
@@ -193,6 +199,13 @@ public class CuttingToolsScrap implements Serializable{
 
     public void setStatus(String status) {
         this.status = status;
+    }
+    public String getConsumeType() {
+        return consumeType;
+    }
+
+    public void setConsumeType(String consumeType) {
+        this.consumeType = consumeType;
     }
 
     public CuttingTool getCuttingTool() {

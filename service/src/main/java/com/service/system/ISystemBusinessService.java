@@ -13,7 +13,7 @@ public interface ISystemBusinessService {
      * @param changeRFIDVO
      * @throws Exception
      */
-    public void chagneRFIDForTool(ChangeRFIDVO changeRFIDVO) throws Exception;
+    public void chagneRFIDData(ChangeRFIDVO changeRFIDVO) throws Exception;
 
 
     /**
@@ -21,7 +21,7 @@ public interface ISystemBusinessService {
      * @param rfidQueryVO
      * @throws Exception
      */
-    public void clearRFID(RFIDQueryVO rfidQueryVO) throws Exception;
+    public void clearRFIDData(RFIDQueryVO rfidQueryVO) throws Exception;
 
 
     /**

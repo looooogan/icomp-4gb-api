@@ -165,9 +165,9 @@ public class ProductLineServiceImpl implements IProductLineService{
         for(int i = 0;i<shebeiIds.length;i++){
             //设备ID
             oplink.setEquipmentCode(shebeiIds[i]);
-            for(int j = 0;j<zhouIds.length;j++){
+//            for(int j = 0;j<zhouIds.length;j++){
                 //轴ID
-                oplink.setAxleCode(zhouIds[j]);
+//                oplink.setAxleCode(zhouIds[j]);
                 for(int l = 0;l<hechengdaoAndNaiyongdus.length;l++){
                     //零部件ID
                     oplink.setPartsCode(hechengdaoAndNaiyongdus[l].split(";")[0]);
@@ -182,7 +182,7 @@ public class ProductLineServiceImpl implements IProductLineService{
 //                    ret = iCOMPV01B08S013Service.oplinkAdd(oplink,langCode, langValue);
                 }
             }
-        }
+//        }
     }
 
     @Override

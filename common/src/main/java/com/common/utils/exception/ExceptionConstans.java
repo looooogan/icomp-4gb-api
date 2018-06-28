@@ -20,7 +20,10 @@ public class ExceptionConstans {
     public static String SYNTHESISCUTTINGTOOL_CTCOUNT_ERROR = "sctc_004";
     public static String SYNTHESISCUTTINGTOOL_NOT_EXISTS = "sctc_005";
     public static String SYNTHESISCUTTINGTOOL_CONFIG_NOT_EXISTS = "sctc_006";
-
+    public static String SYNTHESISCUTTINGTOOL_SYNCODE_NULL = "sctc_007";
+    //合成刀绑定提示
+    public static String SYNTHESIS_BIND_EXISTS = "ssb_001";
+    public static String SYNTHESIS_BIND_NOTEXISTS = "ssb_002";
     //材料刀提示
     public static String CUTTINGTOOL_NOT_EXISTS = "ctne_001";
     public static String CUTTINGTOOL_EXISTS = "ctne_002";
@@ -36,6 +39,11 @@ public class ExceptionConstans {
 
     //合成刀绑定记录
     public static String SBINDRECORDER_EXITS = "sbre_001";
+    //合成刀刀身码
+    public static String SYNTHESIS_BLADE_ERROR = "sb_001";
+    public static String SYNTHESIS_BLADE_TOOLEXISTS = "sb_002";
+    public static String SYNTHESIS_BLADE_NOTEXISTS = "sb_003";
+    public static String SYNTHESIS_BLADE_INUSE = "sb_004";
 
     //启明
     public static String QM_SUSR20_UNITQTY_CHANGE_ERROR = "qm_001";
@@ -48,6 +56,11 @@ public class ExceptionConstans {
     public static String UnInstalled_MESSAGE = "info_004";
     public static String UnConfig_MESSAGE = "info_005";
     public static String GRINDING_TYPE_ERROR_MESSAGE = "info_006";
+
+    //生产关联关系
+    public static String LINE_EQUIPMENT_EXISTS = "le_001";
+    public static String LINE_PARTS_EXISTS = "lp_001";
+    public static String LINE_PROSSES_EXISTS = "lps_001";
 
 
     public static String MESSAGE_SUFXX = " 上一步操作为:";

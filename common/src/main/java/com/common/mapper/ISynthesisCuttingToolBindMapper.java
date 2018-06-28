@@ -86,4 +86,14 @@ public interface ISynthesisCuttingToolBindMapper {
     */
     public SynthesisCuttingToolBind getSynthesisCuttingToolBind(SynthesisCuttingToolBindVO synthesisCuttingToolBindVO) throws Exception;
 
+
+    /**
+     * @Title: clearRFIDData
+     * @Description: 清空RFID标签
+     * @param synthesisCuttingToolBind
+     * @throws Exception
+     * @return: void
+     */
+    public void clearRFIDData(SynthesisCuttingToolBind synthesisCuttingToolBind) throws Exception;
+
 }

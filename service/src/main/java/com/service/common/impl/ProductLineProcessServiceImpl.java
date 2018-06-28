@@ -4,6 +4,9 @@ package com.service.common.impl;
 import com.common.mapper.IProductLineAssemblylineMapper;
 import com.common.mapper.IProductLineProcessMapper;
 import com.common.pojo.ProductLineProcess;
+import com.common.utils.exception.ExceptionConstans;
+import com.common.utils.exception.SelfDefinedException;
+import com.common.utils.loadConfig.IMessageSourceHanlder;
 import com.common.vo.ProductLineProcessVO;
 import com.service.common.IProductLineProcessService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,8 @@ public class ProductLineProcessServiceImpl implements IProductLineProcessService
 
     @Autowired
     private IProductLineProcessMapper productLineProcessMapper;
+    @Autowired
+    private IMessageSourceHanlder messageSourceHanlder;
 
     @Autowired
     private IProductLineAssemblylineMapper productLineAssemblylineMapper;
@@ -37,6 +42,12 @@ public class ProductLineProcessServiceImpl implements IProductLineProcessService
     */
     @Override
     public void addProductLineProcess(ProductLineProcess productLineProcess) throws Exception{
+        ProductLineProcessVO productLineProcessVO = new ProductLineProcessVO();
+        productLineProcessVO.setCode(productLineProcess.getCode());
+        ProductLineProcess processTMP = productLineProcessMapper.getProductLineProcess(productLineProcessVO);
+        if (null!=processTMP){
+            throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.LINE_PROSSES_EXISTS));
+        }
         productLineProcess.setIsDel(0);
         productLineProcessMapper.addProductLineProcess(productLineProcess);
     }
@@ -86,6 +97,12 @@ public class ProductLineProcessServiceImpl implements IProductLineProcessService
     */
     @Override
     public void updProductLineProcess(ProductLineProcess productLineProcess) throws Exception{
+        ProductLineProcessVO productLineProcessVO = new ProductLineProcessVO();
+        productLineProcessVO.setCode(productLineProcess.getCode());
+        ProductLineProcess processTMP = productLineProcessMapper.getProductLineProcess(productLineProcessVO);
+        if (null!=processTMP&&processTMP.getId()!=productLineProcess.getId()){
+            throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.LINE_PROSSES_EXISTS));
+        }
         productLineProcessMapper.updProductLineProcess(productLineProcess);
     }
 

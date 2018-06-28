@@ -2,7 +2,12 @@ package com.service.cuttingtool.bo;
 
 import com.common.pojo.CuttingTool;
 import com.common.pojo.CuttingToolBind;
+import com.common.vo.RfidContainerVO;
 import com.service.base.bo.BaseBO;
+import com.service.synthesiscuttingtool.vo.DownCuttingToolVO;
+import com.service.synthesiscuttingtool.vo.UpCuttingToolVO;
+
+import java.util.List;
 
 /**
  * Created by logan on 2018/6/11.
@@ -22,6 +27,46 @@ public class CuttingToolBindBO extends BaseBO{
     private Integer maxDJH;
 
     private String lltm;
+
+    private RfidContainerVO rfidContainerVO;
+
+    private List<UpCuttingToolVO> upCuttingToolVOS;
+
+    private List<DownCuttingToolVO> downCuttingToolVOS;
+
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public List<UpCuttingToolVO> getUpCuttingToolVOS() {
+        return upCuttingToolVOS;
+    }
+
+    public void setUpCuttingToolVOS(List<UpCuttingToolVO> upCuttingToolVOS) {
+        this.upCuttingToolVOS = upCuttingToolVOS;
+    }
+
+    public List<DownCuttingToolVO> getDownCuttingToolVOS() {
+        return downCuttingToolVOS;
+    }
+
+    public void setDownCuttingToolVOS(List<DownCuttingToolVO> downCuttingToolVOS) {
+        this.downCuttingToolVOS = downCuttingToolVOS;
+    }
+
+    public RfidContainerVO getRfidContainerVO() {
+        return rfidContainerVO;
+    }
+
+    public void setRfidContainerVO(RfidContainerVO rfidContainerVO) {
+        this.rfidContainerVO = rfidContainerVO;
+    }
 
     public String getLltm() {
         return lltm;

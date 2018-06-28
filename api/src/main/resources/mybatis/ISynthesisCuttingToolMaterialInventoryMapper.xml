@@ -42,10 +42,10 @@
             <!-- 合成刀类型  -->
             <result property="synthesisCuttingToolTypeId" column="synthesis_cutting_tool.synthesis_cutting_tool_type_id"/>
             <!--  -->
-            <result property="abc" column="synthesis_cutting_tool.abc"/>
+
         </resultMap>
     <!--添加-->
-    <insert id="addSynthesisCuttingToolMaterialInventory" parameterType="com.common.pojo.SynthesisCuttingToolMaterialInventory">
+    <insert id="addSynthesisCuttingToolMaterialInventory"  useGeneratedKeys="true" keyProperty="id" parameterType="com.common.pojo.SynthesisCuttingToolMaterialInventory">
         INSERT INTO synthesis_cutting_tool_material_inventory (
             <!-- 标识 -->
             id,
@@ -90,6 +90,9 @@
             <!-- 待组装数量 -->
             #{toInstallCount}
         )
+        <selectKey  resultType="java.lang.Integer"  order="AFTER"  keyProperty="id">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
     </insert>
 
     <!--删除-->
@@ -241,9 +244,9 @@
             <!-- 逻辑删除 -->
             synthesis_cutting_tool.is_del as 'synthesis_cutting_tool.is_del',
             <!-- 合成刀类型  -->
-            synthesis_cutting_tool.synthesis_cutting_tool_type_id as 'synthesis_cutting_tool.synthesis_cutting_tool_type_id',
+            synthesis_cutting_tool.synthesis_cutting_tool_type_id as 'synthesis_cutting_tool.synthesis_cutting_tool_type_id'
             <!--  -->
-            synthesis_cutting_tool.abc as 'synthesis_cutting_tool.abc'
+
         /*synthesis_cutting_tool end*/
         FROM synthesis_cutting_tool_material_inventory as synthesis_cutting_tool_material_inventory
         LEFT JOIN synthesis_cutting_tool as synthesis_cutting_tool ON synthesis_cutting_tool.code = synthesis_cutting_tool_material_inventory.synthesis_cutting_tool_code
@@ -318,9 +321,7 @@
                 and synthesis_cutting_tool.synthesis_cutting_tool_type_id = #{synthesisCuttingToolVO.synthesisCuttingToolTypeId}
             </if>
             <!--  -->
-            <if test="synthesisCuttingToolVO.abc != null and synthesisCuttingToolVO.abc != '' " >
-                and synthesis_cutting_tool.abc = #{synthesisCuttingToolVO.abc}
-            </if>
+
             </if>
         /*synthesis_cutting_tool end*/
         ORDER BY synthesis_cutting_tool_material_inventory.id desc
@@ -406,9 +407,7 @@
             and synthesis_cutting_tool.synthesis_cutting_tool_type_id = #{synthesisCuttingToolVO.synthesisCuttingToolTypeId}
         </if>
         <!--  -->
-        <if test="synthesisCuttingToolVO.abc != null and synthesisCuttingToolVO.abc != '' " >
-            and synthesis_cutting_tool.abc = #{synthesisCuttingToolVO.abc}
-        </if>
+
         </if>
         /*synthesis_cutting_tool end*/
     </select>
@@ -450,9 +449,9 @@
         <!-- 逻辑删除 -->
         synthesis_cutting_tool.is_del as 'synthesis_cutting_tool.is_del',
         <!-- 合成刀类型  -->
-        synthesis_cutting_tool.synthesis_cutting_tool_type_id as 'synthesis_cutting_tool.synthesis_cutting_tool_type_id',
+        synthesis_cutting_tool.synthesis_cutting_tool_type_id as 'synthesis_cutting_tool.synthesis_cutting_tool_type_id'
         <!--  -->
-        synthesis_cutting_tool.abc as 'synthesis_cutting_tool.abc'
+
         /*synthesis_cutting_tool end*/
         FROM synthesis_cutting_tool_material_inventory as synthesis_cutting_tool_material_inventory
         LEFT JOIN synthesis_cutting_tool as synthesis_cutting_tool ON synthesis_cutting_tool.code = synthesis_cutting_tool_material_inventory.synthesis_cutting_tool_code
@@ -500,36 +499,34 @@
             and synthesis_cutting_tool_material_inventory.to_install_count = #{toInstallCount}
         </if>
         /*synthesis_cutting_tool_material_inventory end*/
-        /*synthesis_cutting_tools begin*/
+        /*synthesis_cutting_tool begin*/
         <if test="synthesisCuttingToolVO != null ">
         <!-- id -->
         <if test="synthesisCuttingToolVO.id != null and synthesisCuttingToolVO.id != '' " >
-            and synthesis_cutting_tools.id = #{synthesisCuttingToolVO.id}
+            and synthesis_cutting_tool.id = #{synthesisCuttingToolVO.id}
         </if>
         <!-- 编码 -->
         <if test="synthesisCuttingToolVO.code != null and synthesisCuttingToolVO.code != '' " >
-            and synthesis_cutting_tools.code = #{synthesisCuttingToolVO.code}
+            and synthesis_cutting_tool.code = #{synthesisCuttingToolVO.code}
         </if>
         <!-- 合成刀业务编码 -->
         <if test="synthesisCuttingToolVO.synthesisCode != null and synthesisCuttingToolVO.synthesisCode != '' " >
-            and synthesis_cutting_tools.synthesis_code = #{synthesisCuttingToolVO.synthesisCode}
+            and synthesis_cutting_tool.synthesis_code = #{synthesisCuttingToolVO.synthesisCode}
         </if>
         <!-- 图纸url -->
         <if test="synthesisCuttingToolVO.picUrl != null and synthesisCuttingToolVO.picUrl != '' " >
-            and synthesis_cutting_tools.pic_url = #{synthesisCuttingToolVO.picUrl}
+            and synthesis_cutting_tool.pic_url = #{synthesisCuttingToolVO.picUrl}
         </if>
         <!-- 逻辑删除 -->
         <if test="synthesisCuttingToolVO.isDel != null and synthesisCuttingToolVO.isDel != '' " >
-            and synthesis_cutting_tools.is_del = #{synthesisCuttingToolVO.isDel}
+            and synthesis_cutting_tool.is_del = #{synthesisCuttingToolVO.isDel}
         </if>
         <!-- 合成刀类型  -->
         <if test="synthesisCuttingToolVO.synthesisCuttingToolTypeId != null and synthesisCuttingToolVO.synthesisCuttingToolTypeId != '' " >
-            and synthesis_cutting_tools.synthesis_cutting_tool_type_id = #{synthesisCuttingToolVO.synthesisCuttingToolTypeId}
+            and synthesis_cutting_tool.synthesis_cutting_tool_type_id = #{synthesisCuttingToolVO.synthesisCuttingToolTypeId}
         </if>
         <!--  -->
-        <if test="synthesisCuttingToolVO.abc != null and synthesisCuttingToolVO.abc != '' " >
-            and synthesis_cutting_tools.abc = #{synthesisCuttingToolVO.abc}
-        </if>
+
         </if>
         /*synthesis_cutting_tool end*/
     </select>

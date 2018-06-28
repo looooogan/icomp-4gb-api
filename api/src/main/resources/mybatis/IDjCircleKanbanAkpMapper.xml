@@ -53,7 +53,7 @@
     </resultMap>
     <!-- 添加 -->
     <insert id="addDjCircleKanbanAkp" parameterType="com.common.pojo.DjCircleKanbanAkp">
-        INSERT INTO FCCCMS.DJ_CIRCLE_KANBAN_AKP (
+        INSERT INTO DJ_CIRCLE_KANBAN_AKP (
         /* 仓库 */
         WH_CODE,
         /* 刀具条码，看板号 'CK' */
@@ -154,21 +154,21 @@
     <!-- 删除 -->
     <delete id="delDjCircleKanbanAkp" parameterType="com.common.pojo.DjCircleKanbanAkp">
         DELETE
-        FROM FCCCMS.DJ_CIRCLE_KANBAN_AKP
+        FROM DJ_CIRCLE_KANBAN_AKP
         WHERE
         1 = 1
     </delete>
 
     <!-- 逻辑删除 -->
     <delete id="delDjCircleKanbanAkpForLogic" parameterType="com.common.pojo.DjCircleKanbanAkp">
-        DELETE FROM  FCCCMS.DJ_CIRCLE_KANBAN_AKP
+        DELETE FROM  DJ_CIRCLE_KANBAN_AKP
         WHERE
         1 = 1
     </delete>
 
     <!-- 根据VO删除 -->
     <delete id="delDjCircleKanbanAkpByVo" parameterType="com.common.vo.DjCircleKanbanAkpVO">
-        DELETE FROM FCCCMS.DJ_CIRCLE_KANBAN_AKP
+        DELETE FROM DJ_CIRCLE_KANBAN_AKP
         WHERE
         1=1
         /* 仓库 */
@@ -267,7 +267,7 @@
 
     <!-- 更新,如果属性不为null 则更新该属性,根据id更新 -->
     <update id="updDjCircleKanbanAkp" parameterType="com.common.pojo.DjCircleKanbanAkp">
-        UPDATE FCCCMS.DJ_CIRCLE_KANBAN_AKP
+        UPDATE DJ_CIRCLE_KANBAN_AKP
         SET
         /* 仓库 */
         <if test="whCode != null and whCode != '' " >
@@ -416,10 +416,10 @@
         /* 总寿命 */
         LIFE_MAX as LIFE_MAX
         /*djCircleKanbanAkp end*/
-        FROM FCCCMS.DJ_CIRCLE_KANBAN_AKP
+        FROM DJ_CIRCLE_KANBAN_AKP
         WHERE
         1 = 1
-        /*FCCCMS.DJ_CIRCLE_KANBAN_AKP begin*/
+        /*DJ_CIRCLE_KANBAN_AKP begin*/
         /* 仓库 */
         <if test="whCode != null and whCode != '' " >
             and WH_CODE = #{whCode}
@@ -512,7 +512,7 @@
         <if test="lifeMax != null and lifeMax != '' " >
             and LIFE_MAX = #{lifeMax}
         </if>
-        /*FCCCMS.DJ_CIRCLE_KANBAN_AKP end*/
+        /*DJ_CIRCLE_KANBAN_AKP end*/
         ORDER BY  desc
     </select>
 
@@ -520,10 +520,10 @@
     <!-- 查询记录数 -->
     <select id="getDjCircleKanbanAkpCount" parameterType="com.common.vo.DjCircleKanbanAkpVO" resultType="java.lang.Integer">
         SELECT COUNT(1)
-        FROM FCCCMS.DJ_CIRCLE_KANBAN_AKP
+        FROM DJ_CIRCLE_KANBAN_AKP
         WHERE
         1 = 1
-        /*FCCCMS.DJ_CIRCLE_KANBAN_AKP begin*/
+        /*DJ_CIRCLE_KANBAN_AKP begin*/
         /* 仓库 */
         <if test="whCode != null and whCode != '' " >
             and WH_CODE = #{whCode}
@@ -616,13 +616,13 @@
         <if test="lifeMax != null and lifeMax != '' " >
             and LIFE_MAX = #{lifeMax}
         </if>
-        /*FCCCMS.DJ_CIRCLE_KANBAN_AKP end*/
+        /*DJ_CIRCLE_KANBAN_AKP end*/
     </select>
 
     <!-- 根据vo查询 -->
     <select id="getDjCircleKanbanAkp" parameterType="com.common.vo.DjCircleKanbanAkpVO" resultMap="djCircleKanbanAkpQueryMap">
         SELECT
-        /*FCCCMS.DJ_CIRCLE_KANBAN_AKP begin*/
+        /*DJ_CIRCLE_KANBAN_AKP begin*/
         /*djCircleKanbanAkp begin*/
         /* 仓库 */
         WH_CODE as WH_CODE,
@@ -670,11 +670,11 @@
         OUTSOURCING_FLAG as OUTSOURCING_FLAG,
         /* 总寿命 */
         LIFE_MAX as LIFE_MAX
-        /*FCCCMS.DJ_CIRCLE_KANBAN_AKP end*/
-        FROM FCCCMS.DJ_CIRCLE_KANBAN_AKP
+        /*DJ_CIRCLE_KANBAN_AKP end*/
+        FROM DJ_CIRCLE_KANBAN_AKP
         WHERE
         1 = 1
-        /*FCCCMS.DJ_CIRCLE_KANBAN_AKP begin*/
+        /*DJ_CIRCLE_KANBAN_AKP begin*/
         /* 仓库 */
         <if test="whCode != null and whCode != '' " >
             and WH_CODE = #{whCode}
@@ -767,6 +767,6 @@
         <if test="lifeMax != null and lifeMax != '' " >
             and LIFE_MAX = #{lifeMax}
         </if>
-        /*FCCCMS.DJ_CIRCLE_KANBAN_AKP end*/
+        /*DJ_CIRCLE_KANBAN_AKP end*/
     </select>
 </mapper>

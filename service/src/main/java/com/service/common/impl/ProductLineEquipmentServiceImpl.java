@@ -4,6 +4,9 @@ package com.service.common.impl;
 import com.common.mapper.IProductLineEquipmentMapper;
 import com.common.mapper.IRfidContainerMapper;
 import com.common.pojo.ProductLineEquipment;
+import com.common.utils.exception.ExceptionConstans;
+import com.common.utils.exception.SelfDefinedException;
+import com.common.utils.loadConfig.IMessageSourceHanlder;
 import com.common.vo.ProductLineEquipmentVO;
 import com.service.common.IProductLineEquipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,8 @@ public class ProductLineEquipmentServiceImpl implements IProductLineEquipmentSer
 
     @Autowired
     private IProductLineEquipmentMapper productLineEquipmentMapper;
+    @Autowired
+    private IMessageSourceHanlder messageSourceHanlder;
 
     @Autowired
     private IRfidContainerMapper rfidContainerMapper;
@@ -37,6 +42,12 @@ public class ProductLineEquipmentServiceImpl implements IProductLineEquipmentSer
     */
     @Override
     public void addProductLineEquipment(ProductLineEquipment productLineEquipment) throws Exception{
+        ProductLineEquipmentVO equipmentVO = new ProductLineEquipmentVO();
+        equipmentVO.setCode(productLineEquipment.getCode());
+        ProductLineEquipment equipmentTMP = productLineEquipmentMapper.getProductLineEquipment(equipmentVO);
+        if (null != equipmentTMP){
+            throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.LINE_EQUIPMENT_EXISTS));
+        }
         productLineEquipment.setIsDel(0);
         productLineEquipmentMapper.addProductLineEquipment(productLineEquipment);
     }
@@ -86,6 +97,12 @@ public class ProductLineEquipmentServiceImpl implements IProductLineEquipmentSer
     */
     @Override
     public void updProductLineEquipment(ProductLineEquipment productLineEquipment) throws Exception{
+        ProductLineEquipmentVO equipmentVO = new ProductLineEquipmentVO();
+        equipmentVO.setCode(productLineEquipment.getCode());
+        ProductLineEquipment equipmentTMP = productLineEquipmentMapper.getProductLineEquipment(equipmentVO);
+        if (null != equipmentTMP && equipmentTMP.getId()!=productLineEquipment.getId()){
+            throw new SelfDefinedException(messageSourceHanlder.getValue(ExceptionConstans.LINE_EQUIPMENT_EXISTS));
+        }
         productLineEquipmentMapper.updProductLineEquipment(productLineEquipment);
     }
 

@@ -84,10 +84,10 @@ public class CuttingToolBindVO implements Serializable{
 
     /**
      * @fieldName qimingSharpenTimes
-    * @fieldType  String
+    * @fieldType  Integer
     * @Description  启明刃磨次数 两次 场外涂层 
      */
-    private String qimingSharpenTimes;
+    private Integer qimingSharpenTimes;
 
     /**
      * @fieldName scapCase
@@ -130,6 +130,13 @@ public class CuttingToolBindVO implements Serializable{
     * @Description  是否使用 1是 0 否
      */
     private String inUser;
+
+    /**
+     * @fieldName processingCount
+    * @fieldType  Integer
+    * @Description  累计加工量
+     */
+    private Integer processingCount;
 
     /**
      * @fieldName cuttingToolCode
@@ -180,15 +187,6 @@ public class CuttingToolBindVO implements Serializable{
      */
     private Integer startRecord;
 
-    private Integer unbind;
-
-    public Integer getUnbind() {
-        return unbind;
-    }
-
-    public void setUnbind(Integer unbind) {
-        this.unbind = unbind;
-    }
 
     /* id */
     public Integer getId() {
@@ -262,11 +260,11 @@ public class CuttingToolBindVO implements Serializable{
     public void setSharpenTimes(Integer sharpenTimes) {
         this.sharpenTimes = sharpenTimes;
     }
-    public String getQimingSharpenTimes() {
+    public Integer getQimingSharpenTimes() {
         return qimingSharpenTimes;
     }
 
-    public void setQimingSharpenTimes(String qimingSharpenTimes) {
+    public void setQimingSharpenTimes(Integer qimingSharpenTimes) {
         this.qimingSharpenTimes = qimingSharpenTimes;
     }
     public String getScapCase() {
@@ -310,6 +308,13 @@ public class CuttingToolBindVO implements Serializable{
 
     public void setInUser(String inUser) {
         this.inUser = inUser;
+    }
+    public Integer getProcessingCount() {
+        return processingCount;
+    }
+
+    public void setProcessingCount(Integer processingCount) {
+        this.processingCount = processingCount;
     }
 
     public CuttingToolVO getCuttingToolVO() {

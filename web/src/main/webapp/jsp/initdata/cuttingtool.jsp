@@ -35,7 +35,7 @@
          */
         function search() {
             var param = {
-                businessCode: $(toolForm.businessCode).val(),
+                likeBusinessCode: $(toolForm.likeBusinessCode).val(),
                 name: $(toolForm.name).val(),
                 type: $(toolForm.type).val(),
                 specifications: $(toolForm.specifications).val(),
@@ -81,7 +81,7 @@
                 pagerpos: 'right',
                 pagercon: 'first,last,number,next,prev',
                 column: [{
-                    title: '刀具号',
+                    title: '物料号',
                     name: 'businessCode'
                 },{
                     title: '规格型号',
@@ -338,11 +338,8 @@
                     artDialog(XHR.responseText, "OK");
                 },
                 success: function(data,textStatus,response) {
-                    if(response.status == '200'){
-                        search();
-                    }else{
-                        artDialog(data, "OK");
-                    }
+                    artDialog("操作成功", "OK");
+                    search();
                 },
                 headers: {
                     "content-type":"application/json"
@@ -396,11 +393,7 @@
                     artDialog(XHR.responseText, "OK");
                 },
                 success: function(data,textStatus,response) {
-                    if(response.status == '200'){
-                        wd_tool(data, data.code, data);
-                    }else{
-                        artDialog(data, "OK");
-                    }
+                    wd_tool(data, data.code, data);
                 },
                 headers: {
                     "content-type":"application/json"
@@ -425,11 +418,8 @@
                         artDialog(XHR.responseText, "OK");
                     },
                     success: function(data,textStatus,response) {
-                        if(response.status == '200'){
-                            search();
-                        }else{
-                            artDialog(data, "OK");
-                        }
+                        artDialog("操作成功", "OK");
+                        search();(data, data.code, data);
                     },
                     headers: {
                         "content-type":"application/json"
@@ -461,18 +451,32 @@
             <table width="100%" class="m-frmtb">
                 <tr>
                     <th width="150">
-                        材料号
+                        物料号
                     </th>
                     <td>
                         <input name="currentPage" type="hidden" >
-                        <input name="businessCode" type="text" class="u-ipt" maxlength="16" onkeyup="this.value=this.value.toUpperCase()">
+                        <input name="likeBusinessCode" type="text" class="u-ipt" maxlength="16" onkeyup="this.value=this.value.toUpperCase()">
                     </td>
                     <th width="150">
-                        刀具名称
+                        库位码
                     </th>
                     <td>
-                        <input name="name" type="text" class="u-ipt" maxlength="40">
+                        <input name="libraryCode" type="text" class="u-ipt" maxlength="36">
                     </td>
+                    <th width="150">
+                        规格型号
+                    </th>
+                    <td>
+                        <input name="specifications" type="text" class="u-ipt" maxlength="150">
+                    </td>
+                    <%--<th width="150">--%>
+                        <%--刀具名称--%>
+                    <%--</th>--%>
+                    <%--<td>--%>
+                        <%--<input name="name" type="text" class="u-ipt" maxlength="40">--%>
+                    <%--</td>--%>
+                </tr>
+                <tr>
                     <th width="150">
                         刀具类别
                     </th>
@@ -484,20 +488,7 @@
                             <option value="3">配套</option>
                         </select>
                     </td>
-                </tr>
-                <tr>
-                    <th width="150">
-                        规格型号
-                    </th>
-                    <td>
-                        <input name="specifications" type="text" class="u-ipt" maxlength="150">
-                    </td>
-                    <th width="150">
-                        库位码
-                    </th>
-                    <td>
-                        <input name="libraryCode" type="text" class="u-ipt" maxlength="36">
-                    </td>
+
                 </tr>
             </table>
             <div class="g-fx1 f-fr">
@@ -558,7 +549,7 @@
 
             <tr>
                 <th width="150">
-                    材料号
+                    物料号
                 </th>
                 <td>
                     <input name="businessCode" type="text" class="u-ipt" maxlength="16" onkeyup="this.value=this.value.toUpperCase()" >

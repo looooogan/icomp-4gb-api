@@ -461,4 +461,12 @@
         </if>
         /*rfid_container end*/
     </select>
+
+
+    <!--清空RFID -->
+    <update id="clearRFIDData" parameterType="com.common.pojo.ProductLineEquipment">
+        UPDATE product_line_equipment
+        SET rfid_container_code = NULL
+        WHERE id = #{id}
+    </update>
 </mapper>
